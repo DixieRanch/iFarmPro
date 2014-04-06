@@ -8,7 +8,7 @@ gem 'will_paginate',        '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'jquery-rails',         '2.0.2'
 gem 'american_date',        '1.0.0'
-
+gem 'mechanize'
 
 group :development, :test do
   gem 'rspec-rails',        '2.11.0'
@@ -37,5 +37,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg',                   '0.12.2'
+  gem 'pg',                 '0.12.2'
 end

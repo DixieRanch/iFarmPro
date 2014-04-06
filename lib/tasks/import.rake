@@ -61,6 +61,22 @@ namespace :import do
     WeatherStation.all.each do |station|
       station_id = station.id_code
 
+      # using the mechanize gem
+      # agent = Mechanize.new
+      # agent.get("http://weather.nmsu.edu/ws/data/etform/nmcc-da-1/")
+
+      # edit start date
+      # agent.page.forms[0]['start_date'] = '2014-04-01'
+      # submit
+      # agent.page.forms[0].submit
+
+      # get data:
+      # date
+      # agent.page.search('table').search('th')[-1].text
+      # data
+      # agent.page.search('table').search('tr')[-1].search('td')[0].text
+      # agent.page.search('table').search('tr')[-1].search('td')[1].text
+      # agent.page.search('table').search('tr')[-1].search('td')[2].text
 
       url = "http://weather.nmsu.edu/climate/ws/data/#{station_id}/#{start_date}/0/#{end_date}/0/temperature/0/relative/humidity/0/wind/data/0/precipitation/0/solar/radiation/0/soil/temperature/0/reference/et/1/daily/units/0/qc/0/csv"
 

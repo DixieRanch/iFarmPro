@@ -106,7 +106,12 @@ namespace :import do
              id_code: "nmcc-da-1",
              db_col: "fabian_garcia" }
     WeatherStation.create(attr) if WeatherStation.all.empty?
-  end     
+  end
+
+  desc 'test task'
+  task test_task: :environment do
+    puts '-- rake output message for testing --'
+  end
 end
 
 namespace :db do

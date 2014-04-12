@@ -61,17 +61,13 @@ namespace :import do
     WeatherStation.all.each do |station|
       station_id = station.id_code
 
-      url = "http://weather.nmsu.edu/climate/ws/data/#{station_id}/#{start_date}/0/#{end_date}/0/temperature/0/relative/humidity/0/wind/data/0/precipitation/0/solar/radiation/0/soil/temperature/0/reference/et/1/daily/units/0/qc/0/csv"
+      page = post_weather_station_url(station_id,start_date,end_date)
 
-      open(url) do |f|
-        CSV.parse(f, headers: true) do |row|
-          if row[0]
-            @doy = row[0].to_date.yday
-            current_et = CurrentEt.find_by_doy(@doy)
-            current_et[station.db_col] = row[2]
-            current_et.save!
-          end
-        end
+      page.search('table')[1].search('tbody').search('tr').each do |row|
+        @doy = row.search('th')[0].text.to_date.yday
+        current_et = CurrentEt.find_by_doy(@doy)
+        current_et[station.db_col] = row.search('td')[6].text.to_f
+        current_et.save!
       end
 
       185.times do
@@ -97,11 +93,11 @@ namespace :import do
 
     end_date = Time.now.to_date.strftime('%F')
     start_date = (Time.now-180.days).strftime('%F')
-    page = post_weather_station_url('nmcc-da-1',start_date,end_date) # station id needs to come from table
+    page = post_weather_station_url('nmcc-da-1',start_date,end_date) # station id will come from table
     array = parse_weather_data(page)
 
     array.each do |arr|
-      puts "#{arr[:doy]}, #{arr[:eto]}"
+      puts "#{arr[:doy]}, #{arr[:eth]}"
     end
   end
 
@@ -121,7 +117,7 @@ namespace :import do
   def parse_weather_data(page)
     array = []
     page.search('table')[1].search('tbody').search('tr').each do |row|
-      array << {doy: row.search('th')[0].text.to_date.yday, eto: row.search('td')[7].text}
+      array << {doy: row.search('th')[0].text.to_date.yday, eth: row.search('td')[7].text}
     end
     array
   end

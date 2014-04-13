@@ -109,6 +109,10 @@ describe 'app lib tasks import.rake' do
     pending 'TODO'
   end
 
+  it 'should check that an empty ETh weather data point creates a nil entry in current_ets table' do
+    pending 'TODO'
+  end
+
 end
 
 

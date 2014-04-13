@@ -9,7 +9,7 @@ describe "Irrigation" do
     sign_in(user)
     Company.current_id = user.company.id
   end
-  
+
   describe "index page" do
 
     describe "previous irrigations list" do

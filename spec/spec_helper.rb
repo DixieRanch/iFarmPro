@@ -12,6 +12,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
+  require 'capybara/rspec'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -44,6 +45,9 @@ Spork.prefork do
     config.infer_base_class_for_anonymous_controllers = false
 
     config.tty = true
+
+    # Capybara DSL
+    config.include Capybara::DSL
   end
 end
 

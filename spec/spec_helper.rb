@@ -56,6 +56,13 @@ Spork.each_run do
 
 end
 
+Capybara.configure do |config|
+  #config.exact_options = true
+  #config.visible_text_only = true
+  config.match = :prefer_exact
+  config.ignore_hidden_elements = false
+end
+
 # --- Instructions ---
 # Sort the contents of this file into a Spork.prefork and a Spork.each_run
 # block.

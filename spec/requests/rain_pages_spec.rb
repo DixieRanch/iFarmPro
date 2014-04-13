@@ -21,6 +21,7 @@ describe 'Rain Page' do
     end
 
     it 'populates title' do
+      #pending 'pending update to capybara 2'
       expect(page).to have_title full_title('Rain')
     end
   end

@@ -91,7 +91,11 @@ describe "Farm" do
         click_button submit
       end
 
-      it { should have_selector 'title', text: "Edit #{new_name}" }
+      #it { should have_selector 'title', text: "Edit #{new_name}" } # old capybara version 1 style
+      it 'should have_selector title' do
+        expect(page).to have_title "Edit #{new_name}"
+      end
+
       it { should have_css '.alert-error' }
     end
 

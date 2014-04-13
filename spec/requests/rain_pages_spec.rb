@@ -16,8 +16,12 @@ describe 'Rain Page' do
   end
 
   describe 'page detail' do
-    it 'displays title' do
+    it 'displays header 1' do
       expect(page).to have_selector 'h1', text: 'Current Rain'
+    end
+
+    it 'populates title' do
+      expect(page).to have_title full_title('Rain')
     end
   end
 

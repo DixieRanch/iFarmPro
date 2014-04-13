@@ -66,7 +66,7 @@ namespace :import do
       page.search('table')[1].search('tbody').search('tr').each do |row|
         @doy = row.search('th')[0].text.to_date.yday
         current_et = CurrentEt.find_by_doy(@doy)
-        current_et[station.db_col] = row.search('td')[6].text.to_f
+        current_et[station.db_col] = row.search('td')[6].text
         current_et.save!
       end
 

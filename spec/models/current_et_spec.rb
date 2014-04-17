@@ -5,7 +5,7 @@ describe CurrentEt do
 
   subject { current_et }
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :doy }
     it { should have_db_column :fabian_garcia }
   end

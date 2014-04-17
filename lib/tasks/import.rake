@@ -1,5 +1,6 @@
 require 'csv'
 require 'open-uri'
+require 'tasks/extra'
 
 namespace :import do
   desc 'Import ETo data from csv file'
@@ -12,7 +13,7 @@ namespace :import do
       et.attributes = row.to_hash
       et.save!
     end
-  end  
+  end
 
   desc 'Import KCref data from csv file'
   task kc: :environment do
@@ -50,6 +51,8 @@ namespace :import do
     end
   end
 
+  task get
+
   desc 'Import Current Et data from csv file'
   task update_et: :environment do
 
@@ -61,7 +64,9 @@ namespace :import do
     WeatherStation.all.each do |station|
       station_id = station.id_code
 
-      page = post_weather_station_url(station_id,start_date,end_date)
+      #page = post_weather_station_url(station_id,start_date,end_date)
+      e = Tasks::Extra.new('http://weather.nmsu.edu/ws/data/etform', station_id, start_date, end_date)
+      page = e.fetch
 
       page.search('table')[1].search('tbody').search('tr').each do |row|
         @doy = row.search('th')[0].text.to_date.yday

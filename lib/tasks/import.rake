@@ -1,6 +1,5 @@
 require 'csv'
-require 'open-uri'
-require 'tasks/extra'
+require 'tasks/update_et'
 
 namespace :import do
   desc 'Import ETo data from csv file'
@@ -51,80 +50,18 @@ namespace :import do
     end
   end
 
-  task get
-
   desc 'Import Current Et data from csv file'
   task update_et: :environment do
-
-    end_date = Time.now.to_date
-    end_date = end_date.strftime('%F')
-    start_date = Time.now-180.days
-    start_date = start_date.strftime('%F')
-
-    WeatherStation.all.each do |station|
-      station_id = station.id_code
-
-      #page = post_weather_station_url(station_id,start_date,end_date)
-      e = Tasks::Extra.new('http://weather.nmsu.edu/ws/data/etform', station_id, start_date, end_date)
-      page = e.fetch
-
-      page.search('table')[1].search('tbody').search('tr').each do |row|
-        @doy = row.search('th')[0].text.to_date.yday
-        current_et = CurrentEt.find_by_doy(@doy)
-        current_et[station.db_col] = row.search('td')[6].text
-        current_et.save!
-      end
-
-      185.times do
-        @doy += 1
-        current_et = CurrentEt.find_by_doy(@doy)
-        current_et[station.db_col] = nil
-        current_et.save!
-      end
-    end
+    update_et = Tasks::UpdateEt.new('http://weather.nmsu.edu/ws/data/etform')
+    update_et.fetch_parse_update_pad_table
   end
 
   desc 'Add initial weather station'
   task initial_weather_station: :environment do
-    attr = { name: 'Fabian Garcia Research Center',
-             id_code: 'nmcc-da-1',
-             db_col: 'fabian_garcia' }
+    attr = {name: 'Fabian Garcia Research Center',
+            id_code: 'nmcc-da-1',
+            db_col: 'fabian_garcia'}
     WeatherStation.create(attr) if WeatherStation.all.empty?
-  end
-
-  desc 'test task'
-  task test_task: :environment do
-    puts '-- rake output message for testing --'
-
-    end_date = Time.now.to_date.strftime('%F')
-    start_date = (Time.now-180.days).strftime('%F')
-    page = post_weather_station_url('nmcc-da-1',start_date,end_date) # station id will come from table
-    array = parse_weather_data(page)
-
-    array.each do |arr|
-      puts "#{arr[:doy]}, #{arr[:eth]}"
-    end
-  end
-
-  def post_weather_station_url(weather_station, start_date, end_date)
-    # get weather page
-    agent = Mechanize.new
-    agent.get("http://weather.nmsu.edu/ws/data/etform/#{weather_station}/")
-
-    # edit start and end date
-    agent.page.forms[0]['start_date'] = start_date
-    agent.page.forms[0]['end_date'] = end_date
-
-    # submit
-    agent.page.forms[0].submit
-  end
-
-  def parse_weather_data(page)
-    array = []
-    page.search('table')[1].search('tbody').search('tr').each do |row|
-      array << {doy: row.search('th')[0].text.to_date.yday, eth: row.search('td')[7].text}
-    end
-    array
   end
 
 end

@@ -30,10 +30,6 @@ describe 'app lib tasks import.rake' do
     pending 'TODO'
   end
 
-  # it 'should execute test_task' do
-  #   Rake::Task['import:test_task'].invoke
-  # end
-
   it 'should test for the existence of db/et0.csv' do
     File.exist?('db/et0.csv').should == true
   end
@@ -103,14 +99,6 @@ describe 'app lib tasks import.rake' do
       expect(et.attributes).to eq row.to_hash
     end
 
-  end
-
-  it 'should load current_ets table with mocked url weather data' do
-    pending 'TODO'
-  end
-
-  it 'should check that an empty ETh weather data point creates a nil entry in current_ets table' do
-    pending 'TODO'
   end
 
 end

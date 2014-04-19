@@ -12,6 +12,8 @@ describe Tasks::UpdateEt do
   let(:rake) { Rake::Application.new }
   let(:task_path) { 'lib/tasks/import' }
 
+  let (:weather_station) { WeatherStation.find_by_name('Fabian Garcia Research Center') }
+
   before do
     Rake.application = rake
     Rake.application.rake_require(task_path, [Rails.root.to_s], '')
@@ -28,24 +30,81 @@ describe Tasks::UpdateEt do
 
   describe '#update' do
 
-    let (:weather_station) { WeatherStation.find_by_name('Fabian Garcia Research Center') }
+    # before(:each) do
+    #   Rake::Task['import:current_et'].invoke
+    #   update_et.update(array, weather_station)
+    # end
 
-    before(:each) do
-      #Rake::Task['import:current_et'].invoke
+    before(:all) do
+      Rake::Task['import:current_et'].invoke
       update_et.update(array, weather_station)
-      #puts array
     end
 
     context 'doy' do
 
       it 'verify doy 359' do
-        et = Et.find_by_doy(array[0][:doy], select: "doy, #{weather_station.db_col}")
-        expect(et.doy).to eq array[0][:doy].to_i
+        cet = CurrentEt.find_by_doy(array[0][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[0][:doy].to_i
       end
 
       it 'verify doy 360' do
-        et = Et.find_by_doy(array[1][:doy], select: "doy, #{weather_station.db_col}")
-        expect(et.doy).to eq array[1][:doy].to_i
+        cet = CurrentEt.find_by_doy(array[1][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[1][:doy].to_i
+      end
+
+      it 'verify doy 361' do
+        cet = CurrentEt.find_by_doy(array[2][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[2][:doy].to_i
+      end
+
+      it 'verify doy 362' do
+        cet = CurrentEt.find_by_doy(array[3][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[3][:doy].to_i
+      end
+
+      it 'verify doy 363' do
+        cet = CurrentEt.find_by_doy(array[4][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[4][:doy].to_i
+      end
+
+      it 'verify doy 364' do
+        cet = CurrentEt.find_by_doy(array[5][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[5][:doy].to_i
+      end
+
+      it 'verify doy 365' do
+        cet = CurrentEt.find_by_doy(array[6][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[6][:doy].to_i
+      end
+
+      it 'verify doy 1' do
+        cet = CurrentEt.find_by_doy(array[7][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[7][:doy].to_i
+      end
+
+      it 'verify doy 2' do
+        cet = CurrentEt.find_by_doy(array[8][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[8][:doy].to_i
+      end
+
+      it 'verify doy 3' do
+        cet = CurrentEt.find_by_doy(array[9][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[9][:doy].to_i
+      end
+
+      it 'verify doy 4' do
+        cet = CurrentEt.find_by_doy(array[10][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[10][:doy].to_i
+      end
+
+      it 'verify doy 5' do
+        cet = CurrentEt.find_by_doy(array[11][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[11][:doy].to_i
+      end
+
+      it 'verify doy 6' do
+        cet = CurrentEt.find_by_doy(array[12][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet.doy).to eq array[12][:doy].to_i
       end
 
     end
@@ -53,13 +112,68 @@ describe Tasks::UpdateEt do
     context 'eth' do
 
       it 'verify eth for day 359' do
-        pending 'need to get working'
-        #et = Et.find_by_doy(array[0][:doy], select: "doy, #{weather_station.db_col}")
-        #et = Et.find_by_doy(array[0][:doy])
-        # puts array[0][:doy]
-        # puts et.attributes
-        # value = BigDecimal(array[0][:eth])
-        # expect(et.fabian_garcia).to eq value
+        cet = CurrentEt.find_by_doy(array[0][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq nil
+      end
+
+      it 'verify eth for day 360' do
+        cet = CurrentEt.find_by_doy(array[1][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq nil
+      end
+
+      it 'verify eth for day 361' do
+        cet = CurrentEt.find_by_doy(array[2][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq nil
+      end
+
+      it 'verify eth for day 362' do
+        cet = CurrentEt.find_by_doy(array[3][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[3][:eth])
+      end
+
+      it 'verify eth for day 363' do
+        cet = CurrentEt.find_by_doy(array[4][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[4][:eth])
+      end
+
+      it 'verify eth for day 364' do
+        cet = CurrentEt.find_by_doy(array[5][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[5][:eth])
+      end
+
+      it 'verify eth for day 365' do
+        cet = CurrentEt.find_by_doy(array[6][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[6][:eth])
+      end
+
+      it 'verify eth for day 1' do
+        cet = CurrentEt.find_by_doy(array[7][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[7][:eth])
+      end
+
+      it 'verify eth for day 2' do
+        cet = CurrentEt.find_by_doy(array[8][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[8][:eth])
+      end
+
+      it 'verify eth for day 3' do
+        cet = CurrentEt.find_by_doy(array[9][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[9][:eth])
+      end
+
+      it 'verify eth for day 4' do
+        cet = CurrentEt.find_by_doy(array[10][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[10][:eth])
+      end
+
+      it 'verify eth for day 5' do
+        cet = CurrentEt.find_by_doy(array[11][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq BigDecimal(array[11][:eth])
+      end
+
+      it 'verify eth for day 6' do
+        cet = CurrentEt.find_by_doy(array[12][:doy], select: "doy, #{weather_station.db_col}")
+        expect(cet[weather_station.db_col]).to eq nil
       end
 
     end
@@ -178,6 +292,23 @@ describe Tasks::UpdateEt do
         expect(array[12][:eth].strip).to eq ''
       end
 
+    end
+
+  end
+
+  describe '#pad' do
+
+    before(:all) do
+      update_et.doy = 6
+      update_et.pad(weather_station)
+    end
+
+    it 'nilify eth' do
+      185.times do |i|
+        doy = 7 + i
+        current_et = CurrentEt.find_by_doy(doy)
+        expect(current_et[weather_station.db_col]).to eq nil
+      end
     end
 
   end

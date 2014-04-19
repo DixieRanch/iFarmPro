@@ -14,6 +14,7 @@ describe 'app lib tasks import.rake' do
   let(:task_path) { 'lib/tasks/import' }
   let(:agent) { Mechanize.new }
   let(:weather_url) { 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1' }
+  let(:page) { agent.get(weather_url) }
 
   before do
     Rake.application = rake
@@ -21,13 +22,63 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  it 'validates weather URL' do
-     agent.get(weather_url)
-     expect(agent.page.uri.to_s).to eq 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1/'
+  context 'get weather url' do
+
+    it 'parses URL' do
+      expect(page.uri.to_s).to eq 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1/'
+    end
+
+    it 'parses heading' do
+      expect(page.at('h1').content).to eq 'Request Daily Reference ET and GDD Data for Fabian Garcia RC'
+    end
+
   end
 
-  it 'validates some html structure from post data from weather url' do
-    pending 'TODO'
+  context 'post weather url' do
+
+    before(:all) do
+      end_date = Time.now.to_date.strftime('%F')
+      start_date = (Time.now-180.days).strftime('%F')
+      page.forms[0]['start_date'] = start_date
+      page.forms[0]['end_date'] = end_date
+      @page = page.forms[0].submit
+    end
+
+    it 'parses URL pre-post' do
+      expect(@page.uri.to_s).to eq 'http://weather.nmsu.edu/ws/data/etoutput/nmcc-da-1/'
+    end
+
+    it 'parses heading pre post' do
+      expect(@page.at('h1').content).to eq 'Fabian Garcia RC  ET and GDD Data'
+    end
+
+    it 'parses first header row' do
+      row = @page.search('table')[1].search('thead').search('tr')[0].search('th')
+      expect(row[0].text).to eq ''
+      expect(row[1].text).to eq 'Temperature'
+      expect(row[2].text).to eq 'RH'
+      expect(row[3].text).to eq 'Wind'
+      expect(row[4].text).to eq 'Solar Radiation'
+      expect(row[5].text).to eq 'Reference ET'
+      expect(row[6].text).to eq 'Growing Degree Days'
+    end
+
+    it 'parses second header row' do
+      row = @page.search('table')[1].search('thead').search('tr')[1].search('th')
+      expect(row[0].text).to eq 'Date'
+      expect(row[1].text).to eq 'Max'
+      expect(row[2].text).to eq 'Min'
+      expect(row[3].text).to eq 'Max'
+      expect(row[4].text).to eq 'Min'
+      expect(row[5].text).to eq 'Mean Speed'
+      expect(row[6].text).to eq 'Total'
+      expect(row[7].text).to eq 'ETh'
+      expect(row[8].text).to eq 'ETo'
+      expect(row[9].text).to eq 'ETr'
+      expect(row[10].text).to eq 'Daily'
+      expect(row[11].text).to eq 'Cumulative'
+    end
+
   end
 
   it 'should test for the existence of db/et0.csv' do

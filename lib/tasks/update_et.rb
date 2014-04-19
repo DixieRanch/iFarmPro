@@ -4,6 +4,7 @@ module Tasks
   class UpdateEt
 
     attr_reader :url
+    attr_writer :doy
 
     def initialize(url)
       @url = url

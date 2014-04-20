@@ -18,6 +18,7 @@ group :development, :test do
   gem 'annotate',           '2.5.0'
   gem 'puma'
   gem 'sqlite3'
+  gem "launchy"
 end
 
 # Gems used only for assets and not required

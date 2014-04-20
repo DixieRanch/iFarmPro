@@ -1,0 +1,17 @@
+<h1>Current Rain</h1>
+
+<table id="rain_table">
+  <thead>
+  <tr>
+    <th>Amount</th>
+    <th>Date</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @rains.each do |rain| %>
+  <tr>
+    <td><%= rain.amount %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

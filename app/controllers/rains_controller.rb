@@ -1,5 +1,5 @@
 class RainsController < ApplicationController
   def index
-    # comment
+    @rains = Rain.all
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "ApplicationPages" do
+describe 'ApplicationPages' do
   let(:user) { FactoryGirl.create(:user) }
   subject { page }
 
@@ -9,11 +9,11 @@ describe "ApplicationPages" do
     visit root_path
   end
 
-  describe "sidebar" do
+  describe 'sidebar' do
     
     it { should have_css '.sidebar-nav' }
 
-    context "when not signed in" do
+    context 'when not signed in' do
       before do
         click_link 'Sign out'
       end 
@@ -21,7 +21,7 @@ describe "ApplicationPages" do
       it { should_not have_css '.sidebar-nav' }
     end
 
-    context "when User has a farm" do
+    context 'when User has a farm' do
       before do
         click_link 'Sign out'
         Company.current_id = user.company.id
@@ -33,12 +33,14 @@ describe "ApplicationPages" do
     end
 
 
-    it "should have the correct links" do
-      click_link "Farms"
+    it 'should have the correct links' do
+      click_link 'Farms'
       expect(page).to have_selector 'title', text: full_title('Farms')
-      click_link "Irrigations"
+      click_link 'Irrigations'
       expect(page).to have_selector 'title', text: full_title('Irrigations')
-      click_link "Irrigation"
+      click_link 'Rain'
+      expect(page).to have_selector 'title', text: full_title('Rain')
+      click_link 'Irrigation'
       expect(page).to have_selector 'title', text: full_title('Next Irrigation')
     end
   end

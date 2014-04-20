@@ -1,10 +1,10 @@
 <h1>Current Rain</h1>
 
-<% if @rains.blank? %>
+<%# if @rains.blank? %>
     <h2>Nothing to see here</h2>
-<% else %>
-    <%= @rains[0].amount %>
-<% end %>
+<%# else %>
+    <%#= @rains[0].amount %>
+<%# end %>
 
 <table id="rain_table">
   <thead>
@@ -14,10 +14,10 @@
   </tr>
   </thead>
   <tbody>
-  <% @rains.each do |rain| %>
+  <% #@rains.each do |rain| %>
       <tr>
-        <td><%= rain.amount %></td>
+        <td><%#= rain.amount %></td>
       </tr>
-  <% end %>
+  <%# end %>
   </tbody>
 </table>

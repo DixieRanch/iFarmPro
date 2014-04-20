@@ -23,7 +23,8 @@ FactoryGirl.define do
   end
 
   factory :rain do
-    date '5/1/2013'
+    date '2014-04-20'
+    #date Time.now.to_date.strftime("%Y-%m-%d")
     amount 0.75
     farm
   end

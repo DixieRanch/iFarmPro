@@ -6,7 +6,6 @@ describe 'Rain' do
 
   before(:each) do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe 'index page' do
@@ -15,10 +14,11 @@ describe 'Rain' do
       visit rains_path
       Company.current_id = user.company.id
       FactoryGirl.create(:rain)
+      @rain = Rain.all
     end
 
     let(:rain) { FactoryGirl.create(:rain) }
-    let(:amount) { rain.amount }
+    let(:amount) { rain.amount.to_s }
     let(:date) { rain.date }
 
     # it { expect(current_path).to eq(rains_path) }
@@ -48,16 +48,36 @@ describe 'Rain' do
 
       it 'rain table should have Date column' do
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Date'
+        #save_and_open_page
+      end
+
+      it 'populates Amount column via instance variable' do
+        #pending 'TODO'
+        @rain.each do |rain|
+          puts "company_id: #{rain.company_id} amount: #{rain.amount} date: #{rain.date}"
+        end
+        expect(page).to have_selector 'table#rain_table tbody tr td', text: @rain[0].amount.to_s
       end
 
       it 'populates Amount column' do
-        pending 'TODO'
-        expect(page).to have_selector 'td', text: amount
+        #pending 'TODO'
+        @rain.each do |rain|
+          puts "company_id: #{rain.company_id} amount: #{rain.amount} date: #{rain.date}"
+        end
+        expect(page).to have_selector 'table#rain_table tbody tr td', text: amount
       end
 
       it 'populates Date column' do
         pending 'TODO'
         expect(page).to have_selector 'table#rain_table tbody tr td', text: date
+      end
+
+      it 'test for content' do
+        expect(page).to have_content('0.75')
+      end
+
+      it 'Nothing to see here' do
+        expect(page).to have_selector 'h2', text: 'Nothing to see here'
       end
 
     end

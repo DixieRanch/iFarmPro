@@ -5,12 +5,17 @@ describe 'Rain' do
   let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
-    visit rains_path
     sign_in(user)
     Company.current_id = user.company.id
   end
 
   describe 'index page' do
+
+    before(:each) do
+      visit rains_path
+      Company.current_id = user.company.id
+      FactoryGirl.create(:rain)
+    end
 
     let(:rain) { FactoryGirl.create(:rain) }
     let(:amount) { rain.amount }
@@ -47,7 +52,7 @@ describe 'Rain' do
 
       it 'populates Amount column' do
         pending 'TODO'
-        expect(page).to have_selector 'table#rain_table tbody tr td', text: amount
+        expect(page).to have_selector 'td', text: amount
       end
 
       it 'populates Date column' do

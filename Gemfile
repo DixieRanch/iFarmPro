@@ -9,6 +9,7 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'jquery-rails',         '2.0.2'
 gem 'american_date',        '1.0.0'
 gem 'mechanize'
+gem 'pg',                 '0.12.2'
 
 group :development, :test do
   gem 'rspec-rails',        '2.11.0'
@@ -17,9 +18,7 @@ group :development, :test do
   gem 'spork',              '0.9.2'
   gem 'annotate',           '2.5.0'
   gem 'puma'
-  #gem 'sqlite3'
   gem 'launchy'
-  gem 'pg',                 '0.12.2'
 end
 
 # Gems used only for assets and not required
@@ -37,8 +36,4 @@ group :test do
   gem 'libnotify',          '0.7.4'
   gem 'factory_girl_rails', '4.1.0'
   gem 'shoulda-matchers',   '1.4.2'
-end
-
-group :production do
-  gem 'pg',                 '0.12.2'
 end

@@ -6,22 +6,24 @@ describe 'Rain' do
 
   before(:each) do
     sign_in(user)
+    Company.current_id = user.company.id
   end
 
   describe 'index page' do
 
+    let!(:rain) { FactoryGirl.create(:rain) }
+    let(:amount) { rain.amount.to_s }
+    let(:date) { rain.date.strftime('%m/%d/%Y') }
+
+    let!(:rain_yesterday) { FactoryGirl.create(:rain, amount: 5.75, date: Date.yesterday) }
+    let(:amount_yesterday) { rain_yesterday.amount.to_s }
+    let(:date_yesterday) { rain_yesterday.date.strftime('%m/%d/%Y') }
+
     before(:each) do
       visit rains_path
-      Company.current_id = user.company.id
-      # FactoryGirl.create(:rain)
-      # @rain = Rain.all
     end
 
-    let(:rain) { FactoryGirl.create(:rain) }
-    let(:amount) { rain.amount.to_s }
-    let(:date) { rain.date }
-
-    # it { expect(current_path).to eq(rains_path) }
+    #it { expect(current_path).to eq(rains_path) }
     describe 'GET rain path' do
       it 'renders the rain index view' do
         expect(current_path).to eq(rains_path)
@@ -30,7 +32,7 @@ describe 'Rain' do
 
     describe 'page detail' do
 
-      it 'displays header' do
+      it 'index header' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
       end
 
@@ -48,37 +50,45 @@ describe 'Rain' do
 
       it 'rain table should have Date column' do
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Date'
-        #save_and_open_page
       end
 
-      it 'populates Amount column via instance variable' do
-        pending 'TODO'
-        # @rain.each do |rain|
-        #   puts "company_id: #{rain.company_id} amount: #{rain.amount} date: #{rain.date}"
-        # end
-        expect(page).to have_selector 'table#rain_table tbody tr td', text: @rain[0].amount.to_s
+      it 'table length' do
+        page.should have_selector 'table#rain_table tbody tr', :count => 2
       end
 
-      it 'populates Amount column' do
-        pending 'TODO'
-        # @rain.each do |rain|
-        #   puts "company_id: #{rain.company_id} amount: #{rain.amount} date: #{rain.date}"
-        # end
-        expect(page).to have_selector 'table#rain_table tbody tr td', text: amount
-      end
-      #
-      it 'populates Date column' do
-        pending 'TODO'
-        expect(page).to have_selector 'table#rain_table tbody tr td', text: date
+      it 'populates 1st row Amount' do
+        expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_yesterday
       end
 
-      # it 'test for content' do
-      #   expect(page).to have_content('0.75')
-      # end
+      it 'populates 2nd row Amount' do
+        expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount
+      end
 
-      # it 'Nothing to see here' do
-      #   expect(page).to have_selector 'h2', text: 'Nothing to see here'
-      # end
+      it 'populates 1st row Date' do
+        expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_yesterday
+      end
+
+      it 'populates 2nd row Date' do
+        expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date
+      end
+
+      it 'edit link/button row 1' do
+        find('#link_0', text: 'Edit').should have_content 'Edit'
+      end
+
+      it 'edit link/button row 2' do
+        find('#link_1', text: 'Edit').should have_content 'Edit'
+      end
+
+      it 'click edit link' do
+        Company.current_id = user.company.id
+        page.find('#link_0').click
+        expect(current_path).to eq(edit_rain_path(rain_yesterday))
+      end
+
+      it 'edit link header' do
+        expect(page).to have_selector 'h1', text: 'Current Rain'
+      end
 
     end
 

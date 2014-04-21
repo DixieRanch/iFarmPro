@@ -6,7 +6,7 @@ Ifarm::Application.routes.draw do
   resources :farms, only: [:index, :show, :new, :create, :edit, :update]
   resources :irrigations, only: [:index, :create, :edit, :update]
   resources :reports, only: [:show]
-  resources :rains, only: [:index, :create, :edit, :update]
+  resources :rains, only: [:index, :edit]
 
   root to: 'static_pages#home'
 

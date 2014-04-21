@@ -17,8 +17,9 @@ group :development, :test do
   gem 'spork',              '0.9.2'
   gem 'annotate',           '2.5.0'
   gem 'puma'
-  gem 'sqlite3'
+  #gem 'sqlite3'
   gem 'launchy'
+  gem 'pg',                 '0.12.2'
 end
 
 # Gems used only for assets and not required

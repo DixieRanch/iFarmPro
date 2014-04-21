@@ -59,26 +59,26 @@ describe 'Rain' do
         expect(page).to have_selector 'table#rain_table tbody tr td', text: @rain[0].amount.to_s
       end
 
-      # it 'populates Amount column' do
-      #   #pending 'TODO'
-      #   @rain.each do |rain|
-      #     puts "company_id: #{rain.company_id} amount: #{rain.amount} date: #{rain.date}"
-      #   end
-      #   expect(page).to have_selector 'table#rain_table tbody tr td', text: amount
-      # end
+      it 'populates Amount column' do
+        #   #pending 'TODO'
+        #   @rain.each do |rain|
+        #     puts "company_id: #{rain.company_id} amount: #{rain.amount} date: #{rain.date}"
+        #   end
+        expect(page).to have_selector 'table#rain_table tbody tr td', text: amount
+      end
       #
-      # it 'populates Date column' do
-      #   pending 'TODO'
-      #   expect(page).to have_selector 'table#rain_table tbody tr td', text: date
-      # end
-      #
-      # it 'test for content' do
-      #   expect(page).to have_content('0.75')
-      # end
-      #
-      # it 'Nothing to see here' do
-      #   expect(page).to have_selector 'h2', text: 'Nothing to see here'
-      # end
+      it 'populates Date column' do
+        pending 'TODO'
+        expect(page).to have_selector 'table#rain_table tbody tr td', text: date
+      end
+
+      it 'test for content' do
+        expect(page).to have_content('0.75')
+      end
+
+      it 'Nothing to see here' do
+        expect(page).to have_selector 'h2', text: 'Nothing to see here'
+      end
 
     end
 

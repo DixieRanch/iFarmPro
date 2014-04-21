@@ -1,23 +1,22 @@
 <h1>Current Rain</h1>
 
-<%# if @rains.blank? %>
+<% if @rains.blank? %>
     <h2>Nothing to see here</h2>
-<%# else %>
-    <%#= @rains[0].amount %>
-<%# end %>
-
-<table id="rain_table">
-  <thead>
-  <tr>
-    <th>Amount</th>
-    <th>Date</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% #@rains.each do |rain| %>
+<% else %>
+    <%= @rains[0].amount %>
+    <table id="rain_table">
+      <thead>
       <tr>
-        <td><%#= rain.amount %></td>
+        <th>Amount</th>
+        <th>Date</th>
       </tr>
-  <%# end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+      <% @rains.each do |rain| %>
+          <tr>
+            <td><%= rain.amount %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>

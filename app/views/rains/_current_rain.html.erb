@@ -4,19 +4,22 @@
     <h2>Nothing to see here</h2>
 <% else %>
     <%= @rains[0].amount %>
-    <table id="rain_table">
-      <thead>
-      <tr>
-        <th>Amount</th>
-        <th>Date</th>
-      </tr>
-      </thead>
-      <tbody>
+<% end %>
+
+<table id="rain_table">
+  <thead>
+  <tr>
+    <th>Amount</th>
+    <th>Date</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @rains.present? %>
       <% @rains.each do |rain| %>
           <tr>
             <td><%= rain.amount %></td>
           </tr>
       <% end %>
-      </tbody>
-    </table>
-<% end %>
+  <% end %>
+  </tbody>
+</table>

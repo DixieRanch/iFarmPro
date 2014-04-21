@@ -27,7 +27,7 @@ db/*.sqlite3
 .redcar/
 .sass-cache
 /config/config.yml
-/config/database.yml
+config/database.yml
 /coverage.data
 /coverage/
 /db/*.javadb/
@@ -79,3 +79,6 @@ config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 config/settings/production.yml
+
+# RVM artifacts
+.rvmrc

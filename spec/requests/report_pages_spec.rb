@@ -28,7 +28,10 @@ describe "ReportPages" do
         let!(:irrigation) { FactoryGirl.create(:irrigation) }
         let(:current_irrigation) { irrigation.time.to_date.to_s(:long) }
         let(:next_irrigation) do
-          irrigation.next_irrigation_date(Et.all, Kc.all, CurrentEt.all).to_s(:long)
+          et = Et.order("doy")
+          kc = Kc.order("doy")
+          current_et = CurrentEt.order("doy")
+          irrigation.next_irrigation_date(et, kc, current_et).to_s(:long)
         end
  
         before { visit report_path(:next_irrigations) }

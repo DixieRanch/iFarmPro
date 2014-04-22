@@ -12,7 +12,7 @@
       <% @rains.each_with_index do |rain, i| %>
           <tr>
             <td id="amount_<%=i%>"><%= rain.amount %></td>
-            <td id="date_<%=i%>"><%= rain.date.strftime('%m/%d/%Y') %></td>
+            <td id="date_<%=i%>"><%= rain.formatted_date %></td>
             <td><%= link_to 'Edit', edit_rain_path(rain), id: "link_#{i}", class: 'btn btn-primary' %></td>
           </tr>
       <% end %>

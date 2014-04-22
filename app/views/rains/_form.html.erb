@@ -1,0 +1,10 @@
+<%= simple_form_for :rain, url: edit_rain_path(:rain) do |f| %>
+    <%= f.input :amount, as: :float %>
+    <%= f.label :date %>
+    <div class="input-append date rain-date">
+      <%= f.input_field :formatted_date %>
+      <span class="add-on"><i class="icon-th"></i></span>
+    </div>
+    <br>
+    <%= f.button :submit, id: 'rain_submit', class: 'btn btn-primary' %>
+<% end %>

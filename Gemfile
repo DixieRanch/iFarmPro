@@ -10,6 +10,8 @@ gem 'jquery-rails',         '2.0.2'
 gem 'american_date',        '1.0.0'
 gem 'mechanize'
 gem 'pg',                 '0.12.2'
+gem 'simple_form'
+gem 'bootstrap-datepicker-rails'
 
 group :development, :test do
   gem 'rspec-rails',        '2.11.0'

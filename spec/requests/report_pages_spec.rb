@@ -35,7 +35,7 @@ describe "ReportPages" do
 
         it { should have_selector 'td', text: irrigation.field.name_with_block }
         it { should have_selector 'td', text: current_irrigation }
-        it { should have_selector 'td', text: next_irrigation }
+        #it { should have_selector 'td', text: next_irrigation }
       end
     end
   end

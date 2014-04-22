@@ -13,11 +13,11 @@ describe 'Rain' do
 
     let!(:rain) { FactoryGirl.create(:rain) }
     let(:amount) { rain.amount.to_s }
-    let(:date) { rain.date.strftime('%m/%d/%Y') }
+    let(:date) { rain.formatted_date }
 
     let!(:rain_yesterday) { FactoryGirl.create(:rain, amount: 5.75, date: Date.yesterday) }
     let(:amount_yesterday) { rain_yesterday.amount.to_s }
-    let(:date_yesterday) { rain_yesterday.date.strftime('%m/%d/%Y') }
+    let(:date_yesterday) { rain_yesterday.formatted_date }
 
     before(:each) do
       visit rains_path
@@ -88,6 +88,41 @@ describe 'Rain' do
 
       it 'edit link header' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
+      end
+
+    end
+
+  end
+
+  describe 'edit page' do
+
+    let!(:rain) { FactoryGirl.create(:rain) }
+    let(:amount) { rain.amount.to_s }
+    let(:date) { rain.formatted_date }
+
+    before(:each) do
+      visit edit_rain_path(rain)
+      Company.current_id = user.company.id
+    end
+
+    describe 'GET edit rain path' do
+      it 'renders the rain edit view' do
+        expect(current_path).to eq(edit_rain_path(rain))
+      end
+    end
+
+    describe 'page detail' do
+
+      it 'amount field' do
+        expect(page).to have_selector 'input#rain_amount', text: rain.amount.to_s
+      end
+
+      it 'date field' do
+        expect(page).to have_selector 'input#rain_formatted_date', text: rain.formatted_date
+      end
+
+      it 'Save Rain' do
+        expect(page).to have_selector 'input#rain_submit', text: 'Save Rain'
       end
 
     end

@@ -118,7 +118,7 @@ describe 'Rain' do
       end
 
       it 'date field' do
-        expect(page).to have_selector 'input#rain_formatted_date', text: rain.formatted_date
+        expect(page).to have_field 'input#rain_formatted_date', with: rain.formatted_date
       end
 
       it 'Save Rain' do

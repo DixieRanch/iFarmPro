@@ -18,7 +18,7 @@ describe 'Irrigation' do
         FactoryGirl.create(:irrigation, time: irrigation.time + 1.day)
       end
       let(:field_name) { irrigation.field.name_with_block }
-      let(:time) { irrigation.time.to_s(:long) }
+      let(:time) { new_irrigation.time.to_s(:long) }
 
       before { visit irrigations_path }
         
@@ -35,13 +35,7 @@ describe 'Irrigation' do
       it 'should have a link to the edit page' do
         Company.current_id = user.company.id
         click_link 'edit'
-      end
-
-      it 'should have time' do
-        pending 'fix this to work with capybara 2'
-        #expect(page).to have_selector 'input', text: time.to_s
-        #find_field('irrigation_time').value.should eq time
-        #find_field('irrigation_time').value.blank?
+        expect(page).to have_field 'irrigation[time]', with: time
       end
     end
 

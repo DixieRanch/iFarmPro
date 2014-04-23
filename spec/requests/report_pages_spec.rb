@@ -37,8 +37,8 @@ describe "ReportPages" do
         before { visit report_path(:next_irrigations) }
 
         it { should have_selector 'td', text: irrigation.field.name_with_block }
-        it { should have_selector 'td', text: current_irrigation }
-        it { should have_selector 'td', text: next_irrigation }
+        it { should have_selector 'td', text: current_irrigation.squish }
+        it { should have_selector 'td', text: next_irrigation.squish }
       end
     end
   end

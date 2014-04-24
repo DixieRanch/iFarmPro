@@ -181,14 +181,20 @@ describe 'Rain' do
 
     context 'with valid data' do
 
-      #let!(:rain_tomorrow) { Rain.new(amount: 2.8, date: Date.tomorrow) }
-      #let(:amount_tomorrow) { rain_tomorrow.amount.to_s }
-      #let(:date_tomorrow) { rain_tomorrow.formatted_date }
+      let!(:rain_update) { Rain.new(amount: 7.777, date: 3.day.from_now) }
+      let(:amount_update) { rain_update.amount.to_s }
+      let(:date_update) { rain_update.formatted_date }
 
       it 'update rain' do
-        #pending
         click_link 'link_0'
-        save_and_open_page
+        fill_in 'rain_amount', with: amount_update
+        fill_in 'rain_date', with: date_update
+        click_button 'Update Rain'
+        expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_update
+        expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_update
+
+        #element = find_by_id('amount_0')
+        #puts "element: #{element.text}"
       end
 
     end

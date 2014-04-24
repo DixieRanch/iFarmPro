@@ -22,6 +22,16 @@ class RainsController < ApplicationController
     end
   end
 
+  def update
+    @rain = Rain.find(params[:id])
+    if @rain.update_attributes(params[:rain])
+      redirect_to rains_path
+    else
+      flash[:error] = 'Failed to update rain entry!'
+      get_rains
+    end
+  end
+
   private
 
   # TODO: write a controller test for this?

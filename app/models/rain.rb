@@ -12,7 +12,7 @@ class Rain < ActiveRecord::Base
   validates :farm_id, presence: true
 
   def formatted_date
-    date.strftime('%m/%d/%Y')
+    date.strftime('%m/%d/%Y') unless date.blank?
   end
 
 end

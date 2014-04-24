@@ -90,6 +90,45 @@ describe 'Rain' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
       end
 
+      it 'amount field' do
+        expect(page).to have_field 'rain_amount'
+      end
+
+      it 'date field' do
+        expect(page).to have_field 'rain_date'
+      end
+
+      it 'submit button' do
+        expect(page).to have_button('rain_submit')
+      end
+
+      context 'create' do
+
+        let!(:rain_tomorrow) { Rain.new(amount: 2.88888, date: Date.tomorrow) }
+        let(:amount_tomorrow) { rain_tomorrow.amount.to_s }
+        let(:date_tomorrow) { rain_tomorrow.formatted_date }
+
+        it 'create rain' do
+          fill_in 'rain_amount', with: amount_tomorrow
+          fill_in 'rain_date', with: date_tomorrow
+          click_button 'Create Rain'
+
+          # alternate ways to test
+          #expect(page).to have_content(amount_tomorrow)
+          #expect(page).to have_content(date_tomorrow)
+          #find_by_id('amount_2')
+          #find_by_id('date_2')
+
+          expect(page).to have_selector 'table#rain_table tbody tr td#amount_2', text: amount_tomorrow
+          expect(page).to have_selector 'table#rain_table tbody tr td#date_2', text: date_tomorrow
+
+          # this fails - why?
+          #expect(page).to have_field 'amount_2', with: amount_tomorrow
+        end
+        #save_and_open_page
+
+      end
+
     end
 
   end
@@ -114,15 +153,33 @@ describe 'Rain' do
     describe 'page detail' do
 
       it 'amount field' do
-        expect(page).to have_selector 'input#rain_amount', text: rain.amount.to_s
+        expect(page).to have_field 'rain_amount'
       end
 
       it 'date field' do
-        expect(page).to have_field 'input#rain_formatted_date', with: rain.formatted_date
+        expect(page).to have_field 'rain_date'
       end
 
-      it 'Save Rain' do
-        expect(page).to have_selector 'input#rain_submit', text: 'Save Rain'
+      it 'submit button' do
+        expect(page).to have_button('rain_submit')
+      end
+
+      #save_and_open_page
+
+    end
+
+    context 'with valid data' do
+
+      #let!(:rain_tomorrow) { Rain.new(amount: 2.8, date: Date.tomorrow) }
+      #let(:amount_tomorrow) { rain_tomorrow.amount.to_s }
+      #let(:date_tomorrow) { rain_tomorrow.formatted_date }
+
+      it 'update rain' do
+        pending
+        #fill_in 'rain_amount', with: amount_tomorrow
+        #fill_in 'rain_date', with: date_tomorrow
+        click_button 'link_0'
+        #save_and_open_page
       end
 
     end

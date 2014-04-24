@@ -1,5 +1,6 @@
 $(document).ready ->
 
   $('.rain-date').datepicker
-    todayBtn: true,
+    todayBtn: true
     autoclose: true
+    format: 'mm/dd/yyyy'

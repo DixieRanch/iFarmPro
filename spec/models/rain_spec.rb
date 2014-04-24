@@ -6,6 +6,7 @@ describe Rain do
   let(:company) { create(:company) }
   let(:farm) { create(:farm) }
   let(:rain) { farm.rains.build(valid_attributes) }
+  let(:rain_new) { Rain.new }
 
   before { Company.current_id = company.id }
 
@@ -39,6 +40,10 @@ describe Rain do
 
     it 'formatted date' do
       expect(rain.formatted_date).to eq rain.date.strftime('%m/%d/%Y')
+    end
+
+    it 'empty date' do
+      expect(rain_new.formatted_date).to eq nil
     end
 
     context 'with mass assignment protection' do

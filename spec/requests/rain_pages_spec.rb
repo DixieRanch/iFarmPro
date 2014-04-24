@@ -102,7 +102,7 @@ describe 'Rain' do
         expect(page).to have_button('rain_submit')
       end
 
-      context 'create' do
+      context 'create with valid data' do
 
         let!(:rain_tomorrow) { Rain.new(amount: 2.88888, date: Date.tomorrow) }
         let(:amount_tomorrow) { rain_tomorrow.amount.to_s }
@@ -116,16 +116,27 @@ describe 'Rain' do
           # alternate ways to test
           #expect(page).to have_content(amount_tomorrow)
           #expect(page).to have_content(date_tomorrow)
-          #find_by_id('amount_2')
-          #find_by_id('date_2')
+          #find_by_id('amount_0')
+          #find_by_id('date_0')
 
           expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_tomorrow
           expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_tomorrow
 
           # this fails - why?
-          #expect(page).to have_field 'amount_2', with: amount_tomorrow
+          #expect(page).to have_field 'amount_0', with: amount_tomorrow
         end
         #save_and_open_page
+
+      end
+
+      context 'create with invalid data' do
+
+        it 'create rain' do
+          fill_in 'rain_amount', with: -23
+          fill_in 'rain_date', with: 'abc'
+          click_button 'Create Rain'
+          expect(page).to have_css '.alert-error'
+        end
 
       end
 
@@ -175,11 +186,9 @@ describe 'Rain' do
       #let(:date_tomorrow) { rain_tomorrow.formatted_date }
 
       it 'update rain' do
-        pending
-        #fill_in 'rain_amount', with: amount_tomorrow
-        #fill_in 'rain_date', with: date_tomorrow
-        click_button 'link_0'
-        #save_and_open_page
+        #pending
+        click_link 'link_0'
+        save_and_open_page
       end
 
     end

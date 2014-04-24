@@ -57,19 +57,19 @@ describe 'Rain' do
       end
 
       it 'populates 1st row Amount' do
-        expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_yesterday
+        expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount_yesterday
       end
 
       it 'populates 2nd row Amount' do
-        expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount
+        expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount
       end
 
       it 'populates 1st row Date' do
-        expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_yesterday
+        expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date_yesterday
       end
 
       it 'populates 2nd row Date' do
-        expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date
+        expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date
       end
 
       it 'edit link/button row 1' do
@@ -82,7 +82,7 @@ describe 'Rain' do
 
       it 'click edit link' do
         Company.current_id = user.company.id
-        page.find('#link_0').click
+        page.find('#link_1').click
         expect(current_path).to eq(edit_rain_path(rain_yesterday))
       end
 
@@ -119,8 +119,8 @@ describe 'Rain' do
           #find_by_id('amount_2')
           #find_by_id('date_2')
 
-          expect(page).to have_selector 'table#rain_table tbody tr td#amount_2', text: amount_tomorrow
-          expect(page).to have_selector 'table#rain_table tbody tr td#date_2', text: date_tomorrow
+          expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_tomorrow
+          expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_tomorrow
 
           # this fails - why?
           #expect(page).to have_field 'amount_2', with: amount_tomorrow

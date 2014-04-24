@@ -8,7 +8,6 @@ class RainsController < ApplicationController
   def edit
     get_rains
     @rain = Rain.find(params[:id])
-    render :index
   end
 
   def create
@@ -23,16 +22,11 @@ class RainsController < ApplicationController
     end
   end
 
-  # def update
-  #   @rains = Rain.order('date')
-  #   @rain = Rain.find(params[:id])
-  # end
-
   private
 
   # TODO: write a controller test for this?
   def get_rains
-    @rains = Rain.order('date')
+    @rains = Rain.order('date desc')
   end
 
 end

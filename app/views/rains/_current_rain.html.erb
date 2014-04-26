@@ -1,12 +1,6 @@
 <h1>Current Rain</h1>
 
-<% if @rains.blank? %>
-    <h2>Nothing to see here</h2>
-<% else %>
-    <%= @rains[0].amount %>
-<% end %>
-
-<table id="rain_table">
+<table id="rain_table" class="table">
   <thead>
   <tr>
     <th>Amount</th>
@@ -15,9 +9,11 @@
   </thead>
   <tbody>
   <% if @rains.present? %>
-      <% @rains.each do |rain| %>
+      <% @rains.each_with_index do |rain, i| %>
           <tr>
-            <td><%= rain.amount %></td>
+            <td id="amount_<%=i%>"><%= rain.amount %></td>
+            <td id="date_<%=i%>"><%= rain.formatted_date %></td>
+            <td><%= link_to 'Edit', edit_rain_path(rain), id: "link_#{i}", class: 'btn btn-primary' %></td>
           </tr>
       <% end %>
   <% end %>

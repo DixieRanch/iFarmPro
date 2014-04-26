@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  
+
   factory :company do
     sequence(:name) { |n| "Company #{n}" }
   end
@@ -23,8 +23,7 @@ FactoryGirl.define do
   end
 
   factory :rain do
-    date Time.now
-    #date Time.now.to_date.strftime("%Y-%m-%d")
+    date Date.today
     amount 0.75
     farm
   end

@@ -95,6 +95,27 @@ describe Irrigation do
         expect(next_irrigation.year).to be 2013
       end
 
+      context 'after rain' do
+        let(:args) { [Et.all, Kc.all, CurrentEt.all] }
+
+        it "has later date" do
+          current_date = next_irrigation
+          FactoryGirl.create(:rain, date: next_irrigation - 1)
+          future_date = irrigation.next_irrigation_date(*args)
+          expect(current_date).to be < future_date
+        end
+
+        it "same date if available water is at maximum" do
+          FactoryGirl.create(:rain, date: irrigation.time.to_date + 2,
+                                    amount: 10.0 )
+          current_date = irrigation.next_irrigation_date(*args)
+          FactoryGirl.create(:rain, date: irrigation.time.to_date + 1,
+                                    amount: 10.0 )
+          future_date = irrigation.next_irrigation_date(*args)
+          expect(current_date).to eq future_date
+        end
+      end
+
     end
   end
 end

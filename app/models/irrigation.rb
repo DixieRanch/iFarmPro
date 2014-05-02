@@ -41,20 +41,22 @@ class Irrigation < ActiveRecord::Base
   end
 
   def next_irrigation_date(et, kc, current_et)
-    max_aw = field.soil_class.aw
+    max_aw = field.soil_class.aw # max available water for soil type
     station = field.block.farm.weather_station
-    mad = 0.45
-    aw = max_aw * mad
-    interval = 0
+    mad = 0.45 # management allowed depletion as % of available water
+    rain_coefficient = 0.8 # % of rain added to available water
+    aw = max_aw * mad # initialize available water -> assumes field capacity
     date = time.to_date
     while aw > 0
       doy = date.yday
       etref = current_et[doy-1].send(station.db_col) || 
               et[doy-1].send(station.db_col)
       kcref = kc[doy-1].pecan
-      aw -= etref * kcref
-      if aw > max_aw * mad
-        aw = max_aw * mad
+      aw -= etref * kcref # remove extracted water
+      rain = Rain.find_by_date(date)
+      aw += rain.amount * rain_coefficient if rain # add rain water
+      if aw > max_aw * mad # if rain added overfills field capacity,
+        aw = max_aw * mad  # then reset to field capacity
       end
       date += 1
     end

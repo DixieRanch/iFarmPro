@@ -191,7 +191,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
-    sass (3.3.7)
+    sass (3.2.13)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -255,6 +255,7 @@ DEPENDENCIES
   rails (= 3.2.17)
   rb-inotify (~> 0.9)
   rspec-rails (= 2.11.0)
+  sass (= 3.2.13)
   sass-rails (= 3.2.5)
   shoulda-matchers (= 1.4.2)
   simple_form

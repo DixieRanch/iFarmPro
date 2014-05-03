@@ -19,6 +19,10 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  # Truncate database on spork startup, except seed data
+  DatabaseCleaner.clean_with :truncation, 
+              { except: %w[ets kcs current_ets weather_stations soil_classes] }
+
   RSpec.configure do |config|
     # Factory Girl shortened syntax; FactoryGirl.create()-> create(), etc.
 
@@ -41,9 +45,7 @@ Spork.prefork do
     config.use_transactional_fixtures = true
 
     config.before :suite do
-      # Truncate database, except seed data
-      DatabaseCleaner.clean_with :truncation, 
-        { except: %w[ets kcs current_ets weather_stations soil_classes] }
+
     end
 
     # If true, the base class of anonymous controllers will be inferred

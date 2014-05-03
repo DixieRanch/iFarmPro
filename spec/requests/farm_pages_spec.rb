@@ -67,6 +67,25 @@ describe "Farm" do
         Company.current_id = user.company.id
       end.to change(Farm, :count).by(1)
     end
+
+    it "has js to add form fields", js: true do
+      init_well_count = IrrigationWell.count
+      init_block_count = Block.count
+      init_field_count = Field.count
+      fill_in "Farm Name", with: new_farm
+      select('Fabian Garcia Research Center', from: 'Weather Station')
+      click_on 'Add Irrigation Well'
+      fill_in 'Well Name', with: 'Pump 1'
+      click_on 'Add Block'
+      fill_in 'Block', with: '1'
+      click_on 'Add Field'
+      fill_in  'Field', with: 'A'
+      click_button 'Save'
+      Company.current_id = user.company.id
+      expect(IrrigationWell.count).to be > init_well_count
+      expect(Block.count).to be > init_block_count
+      expect(Field.count).to be > init_field_count
+    end
   end
 
   describe "edit page" do

@@ -61,7 +61,6 @@ describe 'Irrigation' do
       context 'with valid data' do
 
         before do
-          Company.current_id = user.company.id
           block = FactoryGirl.create(:block, name: '1')
           FactoryGirl.create(:field, name: '1', block: block)
           visit irrigations_path
@@ -75,6 +74,19 @@ describe 'Irrigation' do
           expect(page).to have_selector 'td', text: 'April 01, 2013 14:50'
         end
 
+      end
+
+      it "has js for adding meter readings", js: true do
+        FactoryGirl.create(:irrigation_well)
+        init_meter_count = MeterReading.count
+        visit irrigations_path
+        fill_in 'irrigation_time', with: '4/1/2013 14:50'
+        click_on 'Add Meter Reading'
+        fill_in 'Start', with: '123456'
+        fill_in 'Stop', with: '654321'
+        click_button 'Save'
+        Company.current_id = user.company.id
+        expect(MeterReading.count).to be > init_meter_count
       end
     end
   end

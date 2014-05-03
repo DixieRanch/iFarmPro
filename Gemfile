@@ -38,4 +38,6 @@ group :test do
   gem 'libnotify',          '0.7.4'
   gem 'factory_girl_rails', '4.1.0'
   gem 'shoulda-matchers',   '1.4.2'
+  gem 'poltergeist',        '~> 1.5.0'
+  gem 'database_cleaner',   '~> 1.2.0'
 end

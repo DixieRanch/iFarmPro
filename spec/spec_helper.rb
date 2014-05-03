@@ -13,6 +13,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'capybara/rspec'
+  require 'capybara/poltergeist'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -39,6 +40,12 @@ Spork.prefork do
     # instead of true.
     config.use_transactional_fixtures = true
 
+    config.before :suite do
+      # Truncate database, except seed data
+      DatabaseCleaner.clean_with :truncation, 
+        { except: %w[ets kcs current_ets weather_stations soil_classes] }
+    end
+
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
@@ -48,12 +55,16 @@ Spork.prefork do
 
     # Capybara DSL
     config.include Capybara::DSL
+    Capybara.javascript_driver = :poltergeist
   end
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
 
+  # Forces all threads to share the same connection. This works on
+  # Capybara because it starts the web server in a thread.
+  ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 end
 
 Capybara.configure do |config|

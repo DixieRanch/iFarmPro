@@ -50,10 +50,10 @@ describe GroundFertilizer do
     context 'validation' do
       it { should validate_presence_of :name }
       it { should validate_uniqueness_of :name }
-      it { should validate_numericality_of :n }
-      it { should validate_numericality_of :p }
-      it { should validate_numericality_of :k }
-      it { should validate_numericality_of :s }
+      it { should validate_numericality_of(:n).only_integer }
+      it { should validate_numericality_of(:p).only_integer }
+      it { should validate_numericality_of(:k).only_integer }
+      it { should validate_numericality_of(:s).only_integer }
       it { should validate_presence_of :company_id }
 
     end

@@ -1,0 +1,21 @@
+<h1>Ground Fertilizers</h1>
+
+<table id="fertilizer_table" class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>  
+  </thead>
+  <tbody>
+    <% @fertilizers.each_with_index do |fertilizer, i| %>
+      <tr>
+        <td id="name <%=i%>"><%= fertilizer.name %></td>
+        <td>
+          <%#= link_to 'Edit', edit_ground_fertilizers_path(fertilizer),
+                              id: "link_#{i}",
+                              class: 'btn btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

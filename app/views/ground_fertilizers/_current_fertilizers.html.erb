@@ -4,16 +4,24 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>N</th>
+      <th>P</th>
+      <th>K</th>
+      <th>S</th>
     </tr>  
   </thead>
   <tbody>
     <% @fertilizers.each_with_index do |fertilizer, i| %>
       <tr>
-        <td id="name <%=i%>"><%= fertilizer.name %></td>
+        <td id="name<%=i%>"><%= fertilizer.name %></td>
+        <td id="n<%=i%>"><%= fertilizer.n %></td>
+        <td id="p<%=i%>"><%= fertilizer.p %></td>
+        <td id="k<%=i%>"><%= fertilizer.k %></td>
+        <td id="s<%=i%>"><%= fertilizer.s %></td>
         <td>
-          <%#= link_to 'Edit', edit_ground_fertilizers_path(fertilizer),
+          <%= link_to 'edit', edit_ground_fertilizer_path(fertilizer),
                               id: "link_#{i}",
-                              class: 'btn btn-primary' %>
+                              class: 'btn-small btn-primary' %>
         </td>
       </tr>
     <% end %>

@@ -31,11 +31,14 @@ describe 'ApplicationPages' do
         expect(page).to have_selector 'title', text: full_title('Irrigations')
         click_link 'Rain'
         expect(page).to have_selector 'title', text: full_title('Rain')
+        click_link 'Soil Products'
+        expect(page).to have_title full_title('Soil Products')
         click_link 'Irrigation'
         expect(page).to have_selector 'title', text: full_title('Next Irrigation')
       end
     end
   end
+
   describe "layout links" do
     
     context "when signed out" do
@@ -65,8 +68,6 @@ describe 'ApplicationPages' do
         sign_in(user)
         click_link "Help"
         should have_selector 'title', text: full_title('Help')
-        # click_link "Farms"
-        # should have_selector 'title', text: full_title('Edit farms')
         click_link "Company"
         should have_selector 'title', text: full_title(user.company.name)
         click_link "Edit User"

@@ -75,17 +75,6 @@ ActiveRecord::Schema.define(:version => 20140423200934) do
   add_index "fields", ["farm_id"], :name => "index_fields_on_farm_id"
   add_index "fields", ["soil_class_id"], :name => "index_fields_on_soil_class_id"
 
-  create_table "ground_fertilizers", :force => true do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.integer  "n"
-    t.integer  "p"
-    t.integer  "k"
-    t.integer  "s"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "irrigation_wells", :force => true do |t|
     t.string   "name"
     t.string   "pod_code"
@@ -146,6 +135,17 @@ ActiveRecord::Schema.define(:version => 20140423200934) do
   create_table "soil_classes", :force => true do |t|
     t.string   "name"
     t.decimal  "aw"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "soil_products", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.integer  "n"
+    t.integer  "p"
+    t.integer  "k"
+    t.integer  "s"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

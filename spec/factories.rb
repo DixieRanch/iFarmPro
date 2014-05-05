@@ -58,7 +58,7 @@ FactoryGirl.define do
     irrigation_well
   end
 
-  factory :ground_fertilizer do
+  factory :soil_product do
     name "UAN"
   end
 end

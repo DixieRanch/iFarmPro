@@ -1,0 +1,29 @@
+<h1>Soil Products</h1>
+
+<table id="product_table" class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>N</th>
+      <th>P</th>
+      <th>K</th>
+      <th>S</th>
+    </tr>  
+  </thead>
+  <tbody>
+    <% @products.each_with_index do |product, i| %>
+      <tr>
+        <td id="name<%=i%>"><%= product.name %></td>
+        <td id="n<%=i%>"><%= product.n %></td>
+        <td id="p<%=i%>"><%= product.p %></td>
+        <td id="k<%=i%>"><%= product.k %></td>
+        <td id="s<%=i%>"><%= product.s %></td>
+        <td>
+          <%= link_to 'edit', edit_soil_product_path(product),
+                              id: "link_#{i}",
+                              class: 'btn-small btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

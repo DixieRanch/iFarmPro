@@ -1,19 +1,19 @@
 require 'spec_helper'
 
-describe GroundFertilizer do
+describe SoilProduct do
 
   valid_attributes = { name: "UAN" }
   let(:company) { FactoryGirl.create(:company) }
-  let(:fertilizer) { GroundFertilizer.new(valid_attributes) }
+  let(:product) { SoilProduct.new(valid_attributes) }
 
-  subject { fertilizer }
+  subject { product }
 
   before { Company.current_id = company.id }
 
   it { should be_valid }
 
   it "has a valid factory" do
-    factory = FactoryGirl.build(:ground_fertilizer)
+    factory = FactoryGirl.build(:soil_product)
     expect(factory).to be_valid
   end
 
@@ -22,12 +22,12 @@ describe GroundFertilizer do
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
-      child = GroundFertilizer.create(valid_attributes)
+      child = SoilProduct.create(valid_attributes)
       expect(child).to be_valid
       Company.current_id = company.id
-      fertilizer.save
-      expect(GroundFertilizer.all).not_to include(child)
-      expect(GroundFertilizer.all).to include(fertilizer)
+      product.save
+      expect(SoilProduct.all).not_to include(child)
+      expect(SoilProduct.all).to include(product)
     end
   end
 

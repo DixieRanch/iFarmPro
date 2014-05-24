@@ -59,6 +59,13 @@ FactoryGirl.define do
   end
 
   factory :soil_product do
-    name "UAN"
+    sequence(:name) { |n| "Product #{n}" }
+    # name "UAN"
+  end
+
+  factory :soil_application do
+    quantity 175
+    field
+    soil_product
   end
 end

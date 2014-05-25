@@ -64,6 +64,7 @@ FactoryGirl.define do
   end
 
   factory :soil_application do
+    date Date.today
     quantity 175
     field
     soil_product

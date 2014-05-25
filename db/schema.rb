@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140505235348) do
+ActiveRecord::Schema.define(:version => 20140525021058) do
 
   create_table "blocks", :force => true do |t|
     t.string   "name"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20140505235348) do
     t.integer  "company_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.date     "date"
   end
 
   add_index "soil_applications", ["company_id"], :name => "index_soil_applications_on_company_id"

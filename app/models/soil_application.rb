@@ -1,5 +1,5 @@
 class SoilApplication < ActiveRecord::Base
-  attr_accessible :quantity, :soil_product_id
+  attr_accessible :quantity, :soil_product_id, :date
 
   belongs_to :field
   belongs_to :soil_product
@@ -8,4 +8,5 @@ class SoilApplication < ActiveRecord::Base
 
   validates :soil_product_id, presence: true
   validates :quantity, numericality: true
+  validates :date, presence: true
 end

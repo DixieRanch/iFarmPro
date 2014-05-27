@@ -7,6 +7,8 @@ Ifarm::Application.routes.draw do
   resources :irrigations, only: [:index, :create, :edit, :update]
   resources :reports, only: [:show]
   resources :rains, only: [:index, :edit, :create, :update]
+  resources :soil_products, only: [:index, :create, :edit, :update]
+  resources :soil_applications, only: [:index, :create, :edit, :update]
 
   root to: 'static_pages#home'
 

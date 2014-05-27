@@ -58,5 +58,15 @@ FactoryGirl.define do
     irrigation_well
   end
 
+  factory :soil_product do
+    sequence(:name) { |n| "Product #{n}" }
+    # name "UAN"
+  end
 
+  factory :soil_application do
+    date Date.today
+    quantity 175
+    field
+    soil_product
+  end
 end

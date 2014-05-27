@@ -66,5 +66,13 @@ module Ifarm
     config.assets.version = '1.0'
 
     config.i18n.enforce_available_locales = true
+
+    # Disable generation of helpers, javascripts, css, and view specs
+    config.generators do |generate|
+      generate.helper false
+      generate.assets false
+      generate.view_specs false
+      generate.controller_specs false
+    end
   end
 end

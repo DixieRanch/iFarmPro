@@ -1,0 +1,27 @@
+<h1>Current Applications</h1>
+
+<table id="application_table" class="table">
+ <thead>
+  <tr>
+   <th>Field</th>
+   <th>Date</th>
+   <th>Product</th>
+   <th>Quantity</th>
+  </tr>
+ </thead>
+ <tbody>
+  <% @applications.each_with_index do |application, i| %>
+   <tr>
+    <td id="field<%=i%>"><%= application.field.name_with_block %></td>
+    <td id="date<%=i%>"><%= application.formatted_date %></td>
+    <td id="product<%=i%>"><%= application.soil_product.name %></td>
+    <td id="quantity<%=i%>"><%= application.quantity %></td>
+    <td>
+     <%= link_to 'edit', edit_soil_application_path(application),
+                         id: "link_#{i}",
+                         class: 'btn-small btn-primary' %>
+    </td>
+   </tr>
+  <% end %>
+ </tbody>
+</table>

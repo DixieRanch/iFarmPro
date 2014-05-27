@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(:version => 20140525021058) do
     t.integer  "company_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.date     "date"
+    t.datetime "date"
   end
 
   add_index "soil_applications", ["company_id"], :name => "index_soil_applications_on_company_id"

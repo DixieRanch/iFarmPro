@@ -9,4 +9,8 @@ class SoilApplication < ActiveRecord::Base
   validates :soil_product_id, presence: true
   validates :quantity, numericality: true
   validates :date, presence: true
+
+  def formatted_date
+   date.to_date.to_s if date
+  end
 end

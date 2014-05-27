@@ -22,7 +22,7 @@ describe SoilApplication do
     expect(factory).to be_valid
   end
 
-  context 'security' do
+  describe 'security' do
     
     it "has only the current company's data" do
       application.save
@@ -38,7 +38,7 @@ describe SoilApplication do
     it { should_not allow_mass_assignment_of :field_id }
   end
 
-  context 'attributes' do
+  describe 'attributes' do
     it { should have_db_column :company_id }
     it { should have_db_column :field_id }
     it { should have_db_column :soil_product_id }
@@ -46,9 +46,25 @@ describe SoilApplication do
     it { should have_db_column :date }
   end
 
-  context 'validations' do
+  describe 'validations' do
     it { should validate_presence_of :soil_product_id }
     it { should validate_numericality_of :quantity }
     it { should validate_presence_of :date }
+  end
+
+  describe "method" do
+    
+    describe "formatted_date" do
+      
+      it "reutrns nil when nil" do
+        application.date = ''
+        expect(application.formatted_date).to eq nil
+      end
+
+      it "returns date formatted as date" do
+        application.date = '1/8'
+        expect(application.formatted_date).to eq '2014-01-08'
+      end
+    end
   end
 end

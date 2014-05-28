@@ -99,7 +99,7 @@ describe 'Rain' do
       end
 
       it 'submit button' do
-        expect(page).to have_button('rain_submit')
+        expect(page).to have_button('Save')
       end
 
       context 'create with valid data' do
@@ -111,7 +111,7 @@ describe 'Rain' do
         it 'create rain' do
           fill_in 'rain_amount', with: amount_tomorrow
           fill_in 'rain_date', with: date_tomorrow
-          click_button 'Create Rain'
+          click_button 'Save'
           expect(page).to have_selector 'td', text: amount_tomorrow
           expect(page).to have_selector 'td', text: date_tomorrow
         end
@@ -122,7 +122,7 @@ describe 'Rain' do
         it 'create rain' do
           fill_in 'rain_amount', with: -23
           fill_in 'rain_date', with: 'abc'
-          click_button 'Create Rain'
+          click_button 'Save'
           expect(page).to have_css '.alert-error'
         end
 
@@ -160,7 +160,7 @@ describe 'Rain' do
       end
 
       it 'submit button' do
-        expect(page).to have_button('rain_submit')
+        expect(page).to have_button('Save')
       end
 
       #save_and_open_page
@@ -177,7 +177,7 @@ describe 'Rain' do
         click_link 'link_0'
         fill_in 'rain_amount', with: amount_update
         fill_in 'rain_date', with: date_update
-        click_button 'Update Rain'
+        click_button 'Save'
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_update
         expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_update
 

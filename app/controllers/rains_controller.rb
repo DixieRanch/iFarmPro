@@ -17,7 +17,6 @@ class RainsController < ApplicationController
     if @rain.save
       redirect_to rains_path
     else
-      flash[:error] = 'Failed to create rain entry!'
       get_rains
     end
   end
@@ -27,7 +26,6 @@ class RainsController < ApplicationController
     if @rain.update_attributes(params[:rain])
       redirect_to rains_path
     else
-      flash[:error] = 'Failed to update rain entry!'
       get_rains
     end
   end

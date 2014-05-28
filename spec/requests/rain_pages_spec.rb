@@ -112,21 +112,9 @@ describe 'Rain' do
           fill_in 'rain_amount', with: amount_tomorrow
           fill_in 'rain_date', with: date_tomorrow
           click_button 'Create Rain'
-
-          # alternate ways to test
-          #expect(page).to have_content(amount_tomorrow)
-          #expect(page).to have_content(date_tomorrow)
-          #find_by_id('amount_0')
-          #find_by_id('date_0')
-
-          expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_tomorrow
-          expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_tomorrow
-
-          # this fails - why?
-          #expect(page).to have_field 'amount_0', with: amount_tomorrow
+          expect(page).to have_selector 'td', text: amount_tomorrow
+          expect(page).to have_selector 'td', text: date_tomorrow
         end
-        #save_and_open_page
-
       end
 
       context 'create with invalid data' do

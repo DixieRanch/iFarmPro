@@ -1,17 +1,23 @@
 <h1>Current Irrigations</h1>
 
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Last Irrigation</th>
-    <th></th>
-  </tr>
-
-  <% @irrigations.each do |irrigation| %>
+<table id="irrigation_table" class="table">
+  <thead>
     <tr>
-      <td><%= irrigation.field.name_with_block %></td>
-      <td><%= irrigation.time.to_s(:long) %></td>
-      <td><%= link_to 'edit', edit_irrigation_path(irrigation) %></td>
+      <th>Field</th>
+      <th>Last Irrigation</th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @irrigations.each_with_index do |irrigation, i| %>
+      <tr>
+        <td id="field<%=i%>"><%= irrigation.field.name_with_block %></td>
+        <td id="irrigation<%=i%>"><%= irrigation.time.to_s(:long) %></td>
+        <td>
+          <%= link_to 'edit', edit_irrigation_path(irrigation),
+                              id: "link_#{i}",
+                              class: 'btn-small btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

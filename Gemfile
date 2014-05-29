@@ -3,7 +3,7 @@ ruby '2.0.0'
 
 gem 'rails',                '3.2.17'
 gem 'sass',                 '3.2.13'
-gem 'bootstrap-sass',       '2.3.0.1'
+gem 'bootstrap-sass',       '~> 3.1.1'
 gem 'bcrypt-ruby',          '3.0.1'
 gem 'faker',                '1.0.1'
 gem 'will_paginate',        '3.0.3'

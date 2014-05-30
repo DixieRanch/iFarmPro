@@ -22,7 +22,7 @@ describe 'ApplicationPages' do
         sign_in(user)
       end
       
-      it { should have_css('.sidebar-nav', text: @farm.name) }
+      it { should have_css('#sidebar', text: @farm.name) }
 
       it 'should have the correct links' do
         click_link 'Farms'

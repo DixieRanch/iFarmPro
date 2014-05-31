@@ -5,15 +5,19 @@
       <%= render 'layouts/sidebar' %>
     </div>
     <div class="col-xs-12 col-sm-9">
-      <p class="pull-left visible-xs">
-        <button type="button" class="btn btn-primary btn-xs" 
-                              data-toggle="offcanvas">
-          Menu
-        </button>
-      </p>
-      <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
+      <div class="row">
+        <% flash.each do |key, value| %>
+          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+        <% end %>
+      </div>
+      <div class="row">
+        <p class="pull-left visible-xs">
+          <button type="button" class="btn btn-primary btn-xs" 
+                                data-toggle="offcanvas">
+            Menu
+          </button>
+        </p>
+      </div>
       <%= yield %>
     </div>
   </div>

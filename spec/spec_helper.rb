@@ -14,6 +14,8 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'capybara/rspec'
   require 'capybara/poltergeist'
+  require 'shoulda/matchers'
+  require 'database_cleaner'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -24,6 +26,10 @@ Spork.prefork do
               { except: %w[ets kcs current_ets weather_stations soil_classes] }
 
   RSpec.configure do |config|
+
+    # Infer an example groups spec type from the file location
+    config.infer_spec_type_from_file_location!
+
     # Factory Girl shortened syntax; FactoryGirl.create()-> create(), etc.
 
     config.include FactoryGirl::Syntax::Methods
@@ -45,7 +51,15 @@ Spork.prefork do
     config.use_transactional_fixtures = true
 
     config.before :suite do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with :truncation, 
+            { except: %w[ets kcs current_ets weather_stations soil_classes] }
+    end
 
+    config.around(:each) do |test|
+      DatabaseCleaner.cleaning do
+        test.run
+      end
     end
 
     # If true, the base class of anonymous controllers will be inferred

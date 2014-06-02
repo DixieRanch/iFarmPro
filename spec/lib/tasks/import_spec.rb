@@ -10,11 +10,15 @@ require 'rake'
 
 describe 'app lib tasks import.rake' do
 
+  before(:all) do
+    @agent = Mechanize.new
+    @weather_url = 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1'
+    @weather_page = @agent.get(@weather_url)
+  end
+
   let(:rake) { Rake::Application.new }
   let(:task_path) { 'lib/tasks/import' }
-  let(:agent) { Mechanize.new }
-  let(:weather_url) { 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1' }
-  let(:page) { agent.get(weather_url) }
+
 
   before do
     Rake.application = rake
@@ -25,11 +29,11 @@ describe 'app lib tasks import.rake' do
   context 'get weather url' do
 
     it 'parses URL' do
-      expect(page.uri.to_s).to eq 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1/'
+      expect(@weather_page.uri.to_s).to eq 'http://weather.nmsu.edu/ws/data/etform/nmcc-da-1/'
     end
 
     it 'parses heading' do
-      expect(page.at('h1').content).to eq 'Request Daily Reference ET and GDD Data for Fabian Garcia RC'
+      expect(@weather_page.at('h1').content).to eq 'Request Daily Reference ET and GDD Data for Fabian Garcia RC'
     end
 
   end
@@ -39,9 +43,9 @@ describe 'app lib tasks import.rake' do
     before(:all) do
       end_date = Time.now.to_date.strftime('%F')
       start_date = (Time.now-180.days).strftime('%F')
-      page.forms[0]['start_date'] = start_date
-      page.forms[0]['end_date'] = end_date
-      @page = page.forms[0].submit
+      @weather_page.forms[0]['start_date'] = start_date
+      @weather_page.forms[0]['end_date'] = end_date
+      @page = @weather_page.forms[0].submit
     end
 
     it 'parses URL pre-post' do
@@ -103,10 +107,10 @@ describe 'app lib tasks import.rake' do
 
     WeatherStation.all.each do |station|
       CSV.foreach(file, headers: true) do |row|
-        et = Et.find_by_doy(row['doy'], select: "doy, #{station.db_col}")
+        et = Et.find_by(doy: row['doy'])
         row[0] = row[0].to_i
         row[1] = BigDecimal(row[1]) unless row[1].nil?
-        expect(et.attributes).to eq row.to_hash
+        expect(et.attributes).to include row.to_hash
       end
     end
 
@@ -117,10 +121,10 @@ describe 'app lib tasks import.rake' do
     file = 'db/kcref.csv'
 
     CSV.foreach(file, headers: true) do |row|
-      et = Kc.find_by_doy(row['doy'], select: 'doy, pecan')
+      et = Kc.find_by(doy: row['doy'])
       row[0] = row[0].to_i
       row[1] = BigDecimal(row[1]) unless row[1].nil?
-      expect(et.attributes).to eq row.to_hash
+      expect(et.attributes).to include row.to_hash
     end
 
   end
@@ -131,10 +135,10 @@ describe 'app lib tasks import.rake' do
 
     WeatherStation.all.each do |station|
       CSV.foreach(file, headers: true) do |row|
-        et = CurrentEt.find_by_doy(row['doy'], select: "doy, #{station.db_col}")
+        et = CurrentEt.find_by(doy: row['doy'])
         row[0] = row[0].to_i
         row[1] = BigDecimal(row[1]) unless row[1].nil?
-        expect(et.attributes).to eq row.to_hash
+        expect(et.attributes).to include row.to_hash
       end
     end
 
@@ -145,9 +149,9 @@ describe 'app lib tasks import.rake' do
     file = 'db/soil_class.csv'
 
     CSV.foreach(file, headers: true) do |row|
-      et = SoilClass.find_by_name(row['name'], select: 'name, aw')
+      et = SoilClass.find_by(name: row['name'])
       row[1] = BigDecimal(row[1]) unless row[1].nil?
-      expect(et.attributes).to eq row.to_hash
+      expect(et.attributes).to include row.to_hash
     end
 
   end

@@ -14,7 +14,7 @@
 require 'spec_helper'
 
 describe User do
- 
+
   valid_attributes = { email: "user@example.com",
                        password: "foobar", 
                        password_confirmation: "foobar" }
@@ -62,11 +62,11 @@ describe User do
                              foo@bar_baz.com foo@bar+baz.com]
       
       valid.each do |valid_address|
-        expect(user).to validate_format_of(:email).with(valid_address)
+        expect(user).to allow_value(valid_address).for(:email)
       end      
       
       invalid.each do |invalid_address|
-        expect(user).to validate_format_of(:email).not_with(invalid_address)
+        expect(user).not_to allow_value(invalid_address).for(:email)
       end      
     end
 
@@ -81,7 +81,9 @@ describe User do
   describe "methods" do
     describe "create_remember_token" do
       before { user.save }
-      its(:remember_token) { should_not be_blank }
+        it "creates remember remember" do
+          expect(user.remember_token).not_to be_blank
+        end
     end
   end
 end

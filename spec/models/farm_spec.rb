@@ -79,7 +79,7 @@ describe Farm do
       third = farm.blocks.create(name: "Last")
       first = farm.blocks.create(name: "First")
       correct_order = [first, second, third]
-      expect(farm.blocks.all).to eq correct_order
+      expect(farm.blocks.to_a).to eq correct_order
     end
 
     it "should return irrigation_wells ordered by name" do
@@ -88,7 +88,7 @@ describe Farm do
       third = farm.irrigation_wells.create(name: "Last")
       first = farm.irrigation_wells.create(name: "First")
       correct_order = [first, second, third]
-      expect(farm.irrigation_wells.all).to eq correct_order
+      expect(farm.irrigation_wells.to_a).to eq correct_order
     end
   end
 end

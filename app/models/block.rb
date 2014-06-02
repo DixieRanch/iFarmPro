@@ -16,7 +16,7 @@ class Block < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
   belongs_to :farm
-  has_many :fields, order: "name"
+  has_many :fields, -> { order :name }
   accepts_nested_attributes_for :fields
 
   validates :name, presence: true,

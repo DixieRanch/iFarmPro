@@ -17,7 +17,7 @@ class Field < ActiveRecord::Base
 
   belongs_to :block
   belongs_to :soil_class
-  has_many :irrigations, order: 'time'
+  has_many :irrigations, -> { order :time }
   has_many :soil_applications
 
   default_scope { where(company_id: Company.current_id) }

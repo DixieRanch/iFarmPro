@@ -78,7 +78,7 @@ describe Block do
       third = block.fields.create(name: "Last", soil_class_id: 1)
       first = block.fields.create(name: "First", soil_class_id: 1)
       correct_order = [first, second, third]
-      expect(block.fields.all).to eq correct_order
+      expect(block.fields.to_a).to eq correct_order
     end
   end
 end

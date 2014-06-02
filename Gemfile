@@ -13,14 +13,6 @@ gem 'pg',                      '~> 0.17.1'
 gem 'simple_form',             '~> 3.0.2'
 gem 'sprockets',               '2.11.0'
 
-# Gems for transition to rails 4
-
-gem 'protected_attributes'
-# gem 'rails-observers'
-# gem 'actionpack-page_caching'
-# gem 'actionpack-action_caching'
-# gem 'activerecord-deprecated_finders'
-
 group :production do
   gem 'rails_12factor',     '~> 0.0.2'
 end

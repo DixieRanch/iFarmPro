@@ -1,5 +1,4 @@
 class WeatherStation < ActiveRecord::Base
-  attr_accessible :db_col, :id_code, :name
 
   has_many :farms
 

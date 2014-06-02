@@ -43,11 +43,6 @@ describe MeterReading do
     it { should have_db_column :irrigation_id }
     it { should have_db_column :irrigation_well_id }
     it { should have_db_column :company_id }
-
-    context "with mass assignment protection" do
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should_not allow_mass_assignment_of :irrigation_id }      
-    end
   end
 
   describe "validations" do

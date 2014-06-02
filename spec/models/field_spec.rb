@@ -60,12 +60,6 @@ describe Field do
     it { should have_db_column :company_id }
     it { should have_db_column :farm_id }
     it { should have_db_column :soil_class_id }
-
-    context "protected from mass assignment" do
-      it { should_not allow_mass_assignment_of :block_id }
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should allow_mass_assignment_of :soil_class_id }
-    end
   end
 
   describe "validations" do

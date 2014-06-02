@@ -13,7 +13,6 @@
 #
 
 class Field < ActiveRecord::Base
-  attr_accessible :acreage, :name, :soil_class_id
 
   belongs_to :block
   belongs_to :soil_class

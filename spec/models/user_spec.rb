@@ -38,11 +38,6 @@ describe User do
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
 
-    context "protected from mass assignment" do
-      it { should_not allow_mass_assignment_of :password_digest }
-      it { should_not allow_mass_assignment_of :remember_token }
-      it { should_not allow_mass_assignment_of :company_id }
-    end
   end
 
   describe "associations" do

@@ -1,5 +1,4 @@
 class IrrigationWell < ActiveRecord::Base
-  attr_accessible :name, :pod_code
 
   belongs_to :farm
 

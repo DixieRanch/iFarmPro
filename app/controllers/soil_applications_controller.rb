@@ -7,7 +7,6 @@ class SoilApplicationsController < ApplicationController
 
   def create
     @application = field.soil_applications.build(soil_app_params)
-    parse_date
     if @application.save
       flash[:success] = "Soil Application successfully saved."
       redirect_to soil_applications_path
@@ -25,9 +24,8 @@ class SoilApplicationsController < ApplicationController
 
   def update
     @application = SoilApplication.find(params[:id])
-    parse_date
     @application.field_id = field.id
-    if @application.update_attributes(soil_app_params)
+    if @application.update(soil_app_params)
       flash[:success] = "Soil Application successfully updated."
       redirect_to soil_applications_path
     else
@@ -43,14 +41,14 @@ class SoilApplicationsController < ApplicationController
     end
 
     def soil_app_params
-      params[:soil_application].except(:field_id)
+      params.require(:soil_application).permit(permitted_params)
+    end
+
+    def permitted_params
+      [:quantity, :soil_product_id, :date]
     end
 
     def field
       Field.find(params[:soil_application][:field_id])
-    end
-
-    def parse_date
-     # @application.date = "01/08/2014"
     end
 end

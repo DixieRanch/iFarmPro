@@ -23,10 +23,6 @@ describe Company do
     it { should have_db_column :name }
     it { should respond_to :current_id }
 
-    context "protected from mass assignment" do
-      
-    end
-
     context "from associations" do
       it { should have_many :users }
       it { should accept_nested_attributes_for :users }

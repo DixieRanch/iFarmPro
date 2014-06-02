@@ -11,7 +11,6 @@
 #
 
 class Block < ActiveRecord::Base
-  attr_accessible :name, :fields_attributes
 
   default_scope { where(company_id: Company.current_id) }
 

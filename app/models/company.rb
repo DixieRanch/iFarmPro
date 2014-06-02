@@ -9,7 +9,6 @@
 #
 
 class Company < ActiveRecord::Base
-  attr_accessible :name, :users_attributes
   cattr_accessor :current_id
 
   has_many :users

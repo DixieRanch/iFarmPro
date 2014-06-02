@@ -33,9 +33,6 @@ describe SoilApplication do
       expect(SoilApplication.all).not_to include(application)
       expect(SoilApplication.all).to include(wrong_data)
     end
-
-    it { should_not allow_mass_assignment_of :company_id }
-    it { should_not allow_mass_assignment_of :field_id }
   end
 
   describe 'attributes' do

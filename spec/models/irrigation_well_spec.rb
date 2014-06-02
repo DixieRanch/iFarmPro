@@ -38,11 +38,6 @@ describe IrrigationWell do
     it { should have_db_column :pod_code }
     it { should have_db_column :farm_id }
     it { should have_db_column :company_id }
-
-    context "with mass assignment protection" do
-      it { should_not allow_mass_assignment_of :farm_id }
-      it { should_not allow_mass_assignment_of :company_id }
-    end
   end
 
   describe "validations" do

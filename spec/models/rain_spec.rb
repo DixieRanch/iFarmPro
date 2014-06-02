@@ -45,11 +45,6 @@ describe Rain do
     it 'empty date' do
       expect(rain_new.formatted_date).to eq nil
     end
-
-    context 'with mass assignment protection' do
-      it { should_not allow_mass_assignment_of :farm_id }
-      it { should_not allow_mass_assignment_of :company_id }
-    end
   end
 
   describe 'validation' do

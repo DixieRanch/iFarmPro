@@ -11,7 +11,7 @@ class RainsController < ApplicationController
   end
 
   def create
-    @rain = Rain.new(params[:rain])
+    @rain = Rain.new(rain_params)
     farm = Farm.all().first()
     @rain.farm = farm
     if @rain.save
@@ -23,18 +23,25 @@ class RainsController < ApplicationController
 
   def update
     @rain = Rain.find(params[:id])
-    if @rain.update_attributes(params[:rain])
+    if @rain.update(rain_params)
       redirect_to rains_path
     else
       get_rains
     end
   end
 
-  private
+private
 
-  # TODO: write a controller test for this?
-  def get_rains
-    @rains = Rain.order('date desc')
-  end
+    # TODO: write a controller test for this?
+    def get_rains
+      @rains = Rain.order('date desc')
+    end
 
+    def rain_params
+      params.require(:rain).permit(permitted_params)
+    end
+
+    def permitted_params
+      [:amount, :date]
+    end
 end

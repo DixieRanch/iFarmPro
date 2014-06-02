@@ -8,7 +8,7 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @company = Company.new(params[:company])
+    @company = Company.new(company_params)
     if @company.save
       sign_in @company.users.first
       flash[:success] = "Welcome to iFarmPro!"
@@ -21,4 +21,17 @@ class CompaniesController < ApplicationController
   def show
     @company = current_user.company
   end
+
+private
+    def company_params
+      params.require(:company).permit(permitted_params)
+    end
+
+    def permitted_params
+      [:name, users_attributes]
+    end
+
+    def users_attributes
+      { users_attributes: [:email, :password, :password_confirmation, :id] }
+    end
 end

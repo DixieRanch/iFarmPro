@@ -12,7 +12,6 @@
 #
 
 class Irrigation < ActiveRecord::Base
-  attr_accessible :time, :meter_readings_attributes
   attr_accessor :next_irrigation
 
   belongs_to :field

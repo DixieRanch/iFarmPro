@@ -42,12 +42,6 @@ describe Irrigation do
       expect(Irrigation.all).not_to include(wrong_data)
       expect(Irrigation.all).to include(irrigation)
     end
-
-    context "has mass assignment protection" do
-      it { should_not allow_mass_assignment_of :field_id }
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should allow_mass_assignment_of :meter_readings_attributes }
-    end
   end
 
   describe "attribute" do

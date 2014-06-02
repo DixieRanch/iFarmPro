@@ -1,5 +1,4 @@
 class MeterReading < ActiveRecord::Base
-  attr_accessible :irrigation_well_id, :start, :stop
 
   belongs_to :irrigation
   belongs_to :irrigation_well

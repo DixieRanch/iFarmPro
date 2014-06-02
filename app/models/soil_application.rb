@@ -1,5 +1,4 @@
 class SoilApplication < ActiveRecord::Base
-  attr_accessible :quantity, :soil_product_id, :date
 
   belongs_to :field
   belongs_to :soil_product

@@ -1,17 +1,17 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails'#,                   '4.0.4'
-gem 'bcrypt-ruby'#,             '~> 3.0.1'
-gem 'faker'#,                   '~> 1.0.1'
-gem 'will_paginate'#,           '~> 3.0.3'
-gem 'bootstrap-will_paginate'#, '~> 0.0.6'
-gem 'jquery-rails'#,            '~> 2.0.2'
-gem 'american_date'#,           '~> 1.0.0'
-gem 'mechanize'
-gem 'pg'#,                      '~> 0.12.2'
-gem 'simple_form'#,             '~> 2.1.1'
-gem 'sprockets',                '2.11.0'
+gem 'rails',                   '~> 4.1.1'
+gem 'bcrypt-ruby',             '~> 3.1.5'
+gem 'faker',                   '~> 1.3.0'
+gem 'will_paginate',           '~> 3.0.3'
+gem 'bootstrap-will_paginate', '~> 0.0.6'
+gem 'jquery-rails',            '~> 3.1.0'
+gem 'american_date',           '~> 1.1.0'
+gem 'mechanize',               '~> 2.7.2'
+gem 'pg',                      '~> 0.17.1'
+gem 'simple_form',             '~> 3.0.2'
+gem 'sprockets',               '2.11.0'
 
 # Gems for transition to rails 4
 

@@ -27,9 +27,6 @@ Spork.prefork do
 
   RSpec.configure do |config|
 
-    # Infer an example groups spec type from the file location
-    config.infer_spec_type_from_file_location!
-
     # Factory Girl shortened syntax; FactoryGirl.create()-> create(), etc.
 
     config.include FactoryGirl::Syntax::Methods

@@ -128,7 +128,7 @@ describe "Farm" do
 
       it "renders edit page with error" do
         expect(page).to have_title full_title(new_name)
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
 

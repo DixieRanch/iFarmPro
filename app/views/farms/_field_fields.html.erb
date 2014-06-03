@@ -1,7 +1,4 @@
-<%= f.text_field :name, class: 'input-mini', placeholder: 'Field' %>
-
-<%= f.collection_select :soil_class_id,
-                        SoilClass.order("aw"),
-                        :id, :name, {},
-                        class: 'input-small' %>
-<br>
+<%= f.input :name, placeholder: 'Field' %>
+<%= f.association :soil_class,
+                  collection: SoilClass.order("aw"),
+                  include_blank: false %>

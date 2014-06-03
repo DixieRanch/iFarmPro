@@ -1,17 +1,6 @@
-<div class="row">
-  <div class="span2">
-    <%= f.label :block_name, "Block" %>
-    <%= f.text_field :name, class: 'input-mini', placeholder: 'Block' %>
-  </div>
+<%= f.input :name, label: 'Block' %>
+<%= f.simple_fields_for :fields do |builder| %>
+  <%= render 'field_fields', f: builder %>
+<% end %>
 
-</div>
-
-<fieldset class='offset1'>
-  <p>Field &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Avail Water</p>
-
-  <%= f.fields_for :fields do |builder| %>
-    <%= render 'field_fields', f: builder %>
-  <% end %>
-
-  <%= link_to_add_fields "Add Field", f, :fields %>
-</fieldset>
+<%= link_to_add_fields "Add Field", f, :fields %>

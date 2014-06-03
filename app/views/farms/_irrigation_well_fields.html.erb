@@ -1,11 +1,2 @@
-<div class="row">
-  <div class="span2">
-    <%= f.label :name, "Well Name" %>
-    <%= f.text_field :name, class: 'input-small', placeholder: 'ex: Pump 1' %>
-
-  </div>
-  <div class="span2">  
-    <%= f.label :pod_code, "POD Code" %>
-    <%= f.text_field :pod_code, placeholder: 'ex: LRG-140085-POD1' %>
-  </div>
-</div>
+<%= f.input :name, label: 'Well Name' %>
+<%= f.input :pod_code, label: 'POD Code' %>

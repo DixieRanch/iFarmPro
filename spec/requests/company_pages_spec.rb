@@ -4,17 +4,6 @@ describe "Company" do
   let(:user) { FactoryGirl.create(:user) }
   subject { page }
 
-  describe "authorization" do
-    
-    context "when not signed-in" do
-      
-    end
-
-    context "when wrong user" do
-      
-    end
-  end
-
   describe "signup page" do
     before { visit signup_path }
     let(:submit) { "Create my account" }
@@ -40,7 +29,7 @@ describe "Company" do
 
       it "should show error messages" do
         click_button submit
-        expect(page).to have_css('div#error_explanation')
+        expect(page).to have_css('div.alert-danger')
       end
     end
 

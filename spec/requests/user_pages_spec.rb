@@ -46,7 +46,7 @@ describe "UserPages" do
 
       it "should display error messages" do
         click_button "Add User"
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
 
@@ -89,7 +89,7 @@ describe "UserPages" do
       context "with invalid information" do
         before { click_button "Save changes" }
 
-        it { should have_css('div.alert.alert-error') }
+        it { should have_css('div.alert.alert-danger') }
       end
 
       context "with valid information" do

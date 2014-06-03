@@ -79,7 +79,7 @@ describe 'Rain' do
           fill_in 'rain_amount', with: -23
           fill_in 'rain_date', with: 'abc'
           click_button 'Save'
-          expect(page).to have_css '.alert-error'
+          expect(page).to have_css '.alert-danger'
         end
       end
     end

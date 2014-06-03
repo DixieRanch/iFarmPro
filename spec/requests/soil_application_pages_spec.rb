@@ -58,7 +58,7 @@ describe "SoilApplication" do
 
         it "renders Soil App page with error" do
           expect(page).to have_title full_title 'Soil Applications'
-          expect(page).to have_css '.alert-error'
+          expect(page).to have_css '.alert-danger'
         end
       end
 
@@ -92,7 +92,7 @@ describe "SoilApplication" do
       it "has error message" do
         fill_in 'Quantity', with: ''
         click_button 'Save'
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
 

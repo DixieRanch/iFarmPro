@@ -10,7 +10,7 @@ gem 'jquery-rails',            '~> 3.1.0'
 gem 'american_date',           '~> 1.1.0'
 gem 'mechanize',               '~> 2.7.2'
 gem 'pg',                      '~> 0.17.1'
-gem 'simple_form',             '~> 3.0.2'
+gem 'simple_form',             '~> 3.1.0.rc1'
 gem 'sprockets',               '2.11.0'
 
 group :production do

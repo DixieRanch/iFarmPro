@@ -43,7 +43,7 @@ describe 'SoilProduct' do
 
       it "displays the correct elements" do
         expect(page).to have_title full_title('Soil Products')
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
 
@@ -79,7 +79,7 @@ describe 'SoilProduct' do
       it "displays error message" do
         fill_in 'Name', with: ''
         click_on 'Save'
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
 

@@ -1,21 +1,18 @@
-<%= form_for @irrigation, html: { class: 'form-inline' } do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+<%= simple_form_for @irrigation do |f| %>
+<%= f.error_notification %>
 
 
-  <%= f.collection_select :field_id,
-                          Field.all.sort_by(&:name_with_block),
-                          :id, :name_with_block, {},
-                          class: 'input-small' %>
+  <%= f.association :field,
+                    collection: Field.all.sort_by(&:name_with_block),
+                    label_method: :name_with_block,
+                    include_blank: false %>
 
-
-
-  <%= f.text_field :time, value: @update_time, placeholder: 'Date & Time',
-                          class: 'input-medium' %>
+  <%= f.input :time, as: :string, input_html: {value: @update_time} %>
 
   <%= tag('br') if @irrigation.meter_readings.any? %>
 
 
-  <%= f.fields_for :meter_readings do |builder| %>
+  <%= f.simple_fields_for :meter_readings do |builder| %>
     <%= render 'meter_reading_fields', f: builder %>
   <% end %>
 

@@ -54,7 +54,7 @@ describe 'Irrigation' do
 
         it "renders irrigation page with error" do
           expect(page).to have_title full_title('Irrigations')
-          expect(page).to have_css '.alert-error'
+          expect(page).to have_css '.alert-danger'
         end
       end
 
@@ -117,7 +117,7 @@ describe 'Irrigation' do
       it 'should have error message' do
         fill_in 'irrigation_time', with: ''
         click_button 'Save'
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
   end 

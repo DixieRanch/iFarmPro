@@ -1,9 +1,8 @@
-<%= f.collection_select :irrigation_well_id,
-                        IrrigationWell.order("name"),
-                        :id, :name, {},
-                        class: 'input-small' %>
+<%= f.association :irrigation_well,
+                  collection: IrrigationWell.order("name"),
+                  include_blank: false %>
+<%= f.input :start %>
 
-<%= f.text_field :start, placeholder: 'Start', class: 'input-small' %>
+<%= f.input :stop %>
 
-<%= f.text_field :stop, placeholder: 'Stop', class: 'input-small' %>
 <br>

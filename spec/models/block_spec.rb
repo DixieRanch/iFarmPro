@@ -15,8 +15,8 @@ require 'spec_helper'
 describe Block do
 
   valid_attributes = { name: "1" }
-  let(:company) { FactoryGirl.create(:company) }
-  let(:farm) { FactoryGirl.create(:farm) }
+  let(:company) { build_stubbed(:company) }
+  let(:farm) { build_stubbed(:farm) }
   let(:block) { farm.blocks.build(valid_attributes) }
 
   before do

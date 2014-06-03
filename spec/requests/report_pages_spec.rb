@@ -20,8 +20,10 @@ describe "ReportPages" do
         Company.current_id = user.company.id
       end
 
-      it { should have_selector 'title', text: full_title('Next Irrigations') }
-      it { should have_selector 'h1', text: 'Irrigation Schedule' }
+      it "has correct elements" do
+        expect(page).to have_title full_title('Next Irrigations')
+        expect(page).to have_selector 'h1', text: 'Irrigation Schedule'
+      end
 
       context "with data" do
        
@@ -36,9 +38,13 @@ describe "ReportPages" do
  
         before { visit report_path(:next_irrigations) }
 
-        it { should have_selector 'td', text: irrigation.field.name_with_block }
-        it { should have_selector 'td', text: current_irrigation.squish }
-        it { should have_selector 'td', text: next_irrigation.squish }
+        it "displays irrigation report" do
+          expect(page).to have_selector 'td', 
+                                        text: irrigation.field.name_with_block
+          expect(page).to have_selector 'td', text: current_irrigation.squish
+          expect(page).to have_selector 'td', text: next_irrigation.squish
+        end
+
       end
     end
   end

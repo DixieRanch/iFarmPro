@@ -63,14 +63,10 @@ describe "UserPages" do
         end.to change(User, :count).by(1)
       end
 
-      it "should create a user for the correct company" do
+      it "should create a user for the correct company with success" do
         click_button "Add User"
         new_user = User.find_by_email(attr[:email])
         expect(new_user.company_id).to eq user.company_id
-      end
-
-      it "should have a success message" do
-        click_button "Add User"
         expect(page).to have_css '.alert-success'
       end
     end
@@ -84,8 +80,11 @@ describe "UserPages" do
     end 
 
     describe "page" do
-      it { should have_selector('title', text: "Edit login") }
-      it { should have_selector('h1', text: "Update your login") }
+
+      it "has correct elements" do
+        expect(page).to have_title "Edit login"
+        expect(page).to have_selector('h1', text: "Update your login")
+      end
 
       context "with invalid information" do
         before { click_button "Save changes" }
@@ -102,10 +101,13 @@ describe "UserPages" do
           click_button "Save changes"
         end
 
-        it { should have_selector('title', text: user.company.name) }
-        it { should have_css('div.alert.alert-success') }
-        it { should have_link('Sign out', href: signout_path) }
-        specify { user.reload.email.should eq new_email }
+        it "displays updated user with success" do
+          expect(page).to have_title user.company.name
+          expect(page).to have_css('div.alert.alert-success')
+          expect(page).to have_link('Sign out', href: signout_path)
+          expect(user.reload.email).to eq new_email
+        end
+
       end
     end
   end

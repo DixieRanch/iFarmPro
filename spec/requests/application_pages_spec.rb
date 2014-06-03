@@ -21,10 +21,9 @@ describe 'ApplicationPages' do
         @farm = FactoryGirl.create(:farm)
         sign_in(user)
       end
-      
-      it { should have_css('#sidebar', text: @farm.name) }
 
-      it 'should have the correct links' do
+      it 'should have the correct sidebar elements and links' do
+        expect(page).to have_css('#sidebar', text: @farm.name)
         click_link 'Farms'
         expect(page).to have_selector 'title', text: full_title('Farms')
         click_link 'Irrigations'

@@ -15,8 +15,8 @@ require 'spec_helper'
 
 describe Irrigation do
   valid_attributes = { time: Time.now }
-  let(:company) { FactoryGirl.create(Company) }
-  let(:field) { FactoryGirl.create(:field) }
+  let(:company) { build_stubbed(Company) }
+  let(:field) { create(:field) }
   let(:irrigation) { field.irrigations.build(valid_attributes) }
 
   before { Company.current_id = company.id }

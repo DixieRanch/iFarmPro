@@ -85,14 +85,10 @@ describe 'SoilProduct' do
 
     context 'with valid data' do
       
-      it "updates the product" do
+      it "updates the product with success" do
         fill_in 'Name', with: 'Great New Name'
         click_on 'Save'
         expect(page).to have_selector 'td', text: 'Great New Name'
-      end
-
-      it "displays success message" do
-        click_on 'Save'
         expect(page).to have_css '.alert-success'
       end
     end

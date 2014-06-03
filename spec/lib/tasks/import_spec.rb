@@ -8,7 +8,7 @@ require 'rake'
 # http://pivotallabs.com/how-i-test-rake-tasks/
 # http://www.philsergi.com/2009/02/testing-rake-tasks-with-rspec.html
 
-describe 'app lib tasks import.rake' do
+describe 'app lib tasks import.rake', :slow do
 
   before(:all) do
     @agent = Mechanize.new
@@ -35,7 +35,6 @@ describe 'app lib tasks import.rake' do
     it 'parses heading' do
       expect(@weather_page.at('h1').content).to eq 'Request Daily Reference ET and GDD Data for Fabian Garcia RC'
     end
-
   end
 
   context 'post weather url' do
@@ -82,7 +81,6 @@ describe 'app lib tasks import.rake' do
       expect(row[10].text).to eq 'Daily'
       expect(row[11].text).to eq 'Cumulative'
     end
-
   end
 
   it 'should test for the existence of db/et0.csv' do
@@ -113,7 +111,6 @@ describe 'app lib tasks import.rake' do
         expect(et.attributes).to include row.to_hash
       end
     end
-
   end
 
   it 'should load kcs table with data from db/kcref.csv' do
@@ -126,7 +123,6 @@ describe 'app lib tasks import.rake' do
       row[1] = BigDecimal(row[1]) unless row[1].nil?
       expect(et.attributes).to include row.to_hash
     end
-
   end
 
   it 'should load current_ets table with data from db/current_et.csv' do
@@ -141,7 +137,6 @@ describe 'app lib tasks import.rake' do
         expect(et.attributes).to include row.to_hash
       end
     end
-
   end
 
   it 'should load soils_classes table with data from db/soil_class.csv' do
@@ -153,9 +148,5 @@ describe 'app lib tasks import.rake' do
       row[1] = BigDecimal(row[1]) unless row[1].nil?
       expect(et.attributes).to include row.to_hash
     end
-
   end
-
 end
-
-

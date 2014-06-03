@@ -15,8 +15,11 @@ describe "SoilApplication" do
       visit soil_applications_path
     end
 
-    it { should have_title full_title 'Soil Applications' }
-    it { should have_selector 'h1', text: 'Current Applications' }
+    it "has correct elements" do
+      expect(page).to have_title full_title 'Soil Applications'
+      expect(page).to have_selector 'h1', text: 'Current Applications'
+    end
+
 
     describe "current applications list" do
 
@@ -28,13 +31,16 @@ describe "SoilApplication" do
 
       let(:field_name) { @app.field.name_with_block }
 
-      it { should have_selector 'td', text: @app.formatted_date }
-      it { should_not have_selector 'td', text: @app.date.to_s(:rfc822) }
-      it { should have_selector 'td', text: @app.field.name_with_block }
-      it { should have_selector 'td', text: @app.soil_product.name }
-      it { should have_selector 'td', text: @app.quantity }
-      it { should have_link 'edit', href: edit_soil_application_path(@app) }
-    end
+      it "displays soil app fields" do
+        expect(page).to have_selector 'td', text: @app.formatted_date
+        expect(page).not_to have_selector 'td', text: @app.date.to_s(:rfc822)
+        expect(page).to have_selector 'td', text: @app.field.name_with_block
+        expect(page).to have_selector 'td', text: @app.soil_product.name
+        expect(page).to have_selector 'td', text: @app.quantity
+        expect(page).to have_link 'edit', href: edit_soil_application_path(@app)
+      end
+
+      end
 
     describe "new application form" do
       before do
@@ -50,8 +56,10 @@ describe "SoilApplication" do
           click_button 'Save'
         end
 
-        it { should have_title full_title 'Soil Applications' }
-        it { should have_css '.alert-error' }
+        it "renders Soil App page with error" do
+          expect(page).to have_title full_title 'Soil Applications'
+          expect(page).to have_css '.alert-error'
+        end
       end
 
       context 'with valid data' do
@@ -64,9 +72,10 @@ describe "SoilApplication" do
           click_button 'Save'
         end
 
-        it { should have_selector 'td', text: '1-1' }
-        it { should have_css '.alert-success' }
-
+        it "displays the new record with success" do
+          expect(page).to have_selector 'td', text: '1-1'
+          expect(page).to have_css '.alert-success'
+        end
       end
     end
   end
@@ -89,14 +98,10 @@ describe "SoilApplication" do
 
     context 'with valid data' do
 
-      it "updates soil application" do
+      it "updates soil application with success" do
         fill_in 'Date', with: '1/4'
         click_button 'Save'
         expect(page).to have_selector 'td', text: '2014-01-04'  
-      end
-
-      it 'has success message' do
-        click_button 'Save'
         expect(page).to have_css '.alert-success'
       end
     end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoilProduct do
 
   valid_attributes = { name: "UAN" }
-  let(:company) { FactoryGirl.create(:company) }
+  let(:company) { build_stubbed(:company) }
   let(:product) { SoilProduct.new(valid_attributes) }
 
   subject { product }

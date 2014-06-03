@@ -69,6 +69,18 @@ Spork.prefork do
     # Capybara DSL
     config.include Capybara::DSL
     Capybara.javascript_driver = :poltergeist
+
+    # Rspec config to selectively run tests
+    config.treat_symbols_as_metadata_keys_with_true_values = true
+    config.filter_run focus: true
+    config.run_all_when_everything_filtered = true
+
+    #Rspec config to skip slow specs by default
+    config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
+
+    # Defer garbage collection
+    config.before(:all) { DeferredGarbageCollection.start }
+    config.after(:all) { DeferredGarbageCollection.reconsider }
   end
 end
 

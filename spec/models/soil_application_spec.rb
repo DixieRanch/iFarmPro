@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe SoilApplication do
-  let(:company) { create(:company) }
-  let(:field) { create(:field) }
-  let(:product) { create(:soil_product) }
+  let(:company) { build_stubbed(:company) }
+  let(:field) { build_stubbed(:field) }
+  let(:product) { build_stubbed(:soil_product) }
   let(:application) { field.soil_applications.build(@valid_attributes) }
 
 

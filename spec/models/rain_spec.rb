@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Rain do
 
   valid_attributes = {date: '5/1/2013', amount: 0.35}
-  let(:company) { create(:company) }
-  let(:farm) { create(:farm) }
+  let(:company) { build_stubbed(:company) }
+  let(:farm) { build_stubbed(:farm) }
   let(:rain) { farm.rains.build(valid_attributes) }
   let(:rain_new) { Rain.new }
 

@@ -19,8 +19,8 @@ describe User do
                        password: "foobar", 
                        password_confirmation: "foobar" }
 
-  let(:company) { FactoryGirl.create(:company) }
-  let(:user) { company.users.new(valid_attributes) }
+  let(:company) { build_stubbed(:company) }
+  let(:user) { company.users.build(valid_attributes) }
 
   subject { user }
 

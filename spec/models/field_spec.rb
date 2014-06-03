@@ -19,8 +19,8 @@ describe Field do
   valid_attributes = { name: "1",
                        acreage: 10.5,
                        soil_class_id: 1 }
-  let(:company) { FactoryGirl.create(:company) } 
-  let(:block) { FactoryGirl.create(:block) }                      
+  let(:company) { build_stubbed(:company) } 
+  let(:block) { build_stubbed(:block) }                      
   let(:field) { block.fields.build(valid_attributes) }
 
   before do
@@ -87,6 +87,8 @@ describe Field do
     context ".name_with_block" do
     
       it "should return correct name_with_block" do
+        block = create(:block)
+        field = block.fields.build(valid_attributes)
         block_field_name = block.name + "-" + field.name
         expect(field.name_with_block).to eq block_field_name
       end

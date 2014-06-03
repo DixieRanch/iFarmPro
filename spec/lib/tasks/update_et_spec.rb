@@ -1,7 +1,7 @@
 require_relative '../../../lib/tasks/update_et'
 require 'rake'
 
-describe Tasks::UpdateEt do
+describe Tasks::UpdateEt, :slow do
 
   before(:all) do
     @update_et = Tasks::UpdateEt.new 'http://weather.nmsu.edu/ws/data/etform'
@@ -28,7 +28,6 @@ describe Tasks::UpdateEt do
     it 'stores a URL' do
       expect(@update_et.url).to eq 'http://weather.nmsu.edu/ws/data/etform'
     end
-
   end
 
   describe '#update' do
@@ -59,7 +58,6 @@ describe Tasks::UpdateEt do
         cet = CurrentEt.find_by(doy: @array[12][:doy])
         expect(cet.doy).to eq @array[12][:doy].to_i
       end
-
     end
 
     context 'eth' do
@@ -93,9 +91,7 @@ describe Tasks::UpdateEt do
         cet = CurrentEt.find_by(doy: @array[12][:doy])
         expect(cet[@weather_station.db_col]).to eq nil
       end
-
     end
-
   end
 
   describe '#parse' do
@@ -113,7 +109,6 @@ describe Tasks::UpdateEt do
       it 'extracts doy 6' do
         expect(@array[12][:doy]).to eq 6
       end
-
     end
 
     context 'eth' do
@@ -133,9 +128,7 @@ describe Tasks::UpdateEt do
       it 'extracts eth for doy 6' do
         expect(@array[12][:eth].strip).to eq ''
       end
-
     end
-
   end
 
   describe '#pad' do
@@ -152,7 +145,5 @@ describe Tasks::UpdateEt do
         expect(current_et[@weather_station.db_col]).to eq nil
       end
     end
-
   end
-
 end

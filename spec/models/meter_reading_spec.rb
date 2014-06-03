@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe MeterReading do
-  let(:company) { FactoryGirl.create(:company) }
-  let(:irrigation) { FactoryGirl.create(:irrigation) }
-  let(:well) { FactoryGirl.create(:irrigation_well) }
+  let(:company) { build_stubbed(:company) }
+  let(:irrigation) { build_stubbed(:irrigation) }
+  let(:well) { build_stubbed(:irrigation_well) }
   
   let(:meter_reading) { irrigation.meter_readings.build(@valid_attributes) }
 

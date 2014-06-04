@@ -1,6 +1,21 @@
 @import "bootstrap";
 body { padding-top: 60px; }
 
+@media(max-width: $screen-xs-max){
+  .nopadding {
+    padding: 0 !important;
+    /*margin: 0 !important;*/
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  div[class*='col-'] {
+    .tel {
+      width: 85px !important;
+    }
+  }
+}
+
 /* miscellaneous */ 
 
 .debug_dump { 

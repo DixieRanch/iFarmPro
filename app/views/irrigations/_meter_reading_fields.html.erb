@@ -1,8 +1,11 @@
-<%= f.association :irrigation_well,
-                  collection: IrrigationWell.order("name"),
-                  include_blank: false %>
-<%= f.input :start %>
+<div class="row">
+  <%= f.association :irrigation_well,
+              collection: IrrigationWell.order("name"),
+              include_blank: false,
+              wrapper_html: {class: 'col-xs-4 col-sm-3 col-lg-2 nopadding'} %>
+  <%= f.input :start, as: :tel,
+              wrapper_html: {class: 'col-xs-4 nopadding'} %>
 
-<%= f.input :stop %>
-
-<br>
+  <%= f.input :stop, as: :tel, 
+              wrapper_html: {class: 'col-xs-4 nopadding'} %>
+</div>

@@ -1,6 +1,6 @@
 <div class="container master-container">
-  <% if current_user %> 
-    <div class="row row-offcanvas row-offcanvas-left">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <% if current_user %> 
       <div class="col-xs-5 col-sm-3 sidebar-offcanvas" id="sidebar" 
                                                        role="navigation">
         <%= render 'layouts/sidebar' %>
@@ -21,11 +21,11 @@
         </div>
         <%= yield %>
       </div>
-    </div>
-  <% else %>
-    <% flash.each do |key, value| %>
-      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+    <% else %>
+      <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% end %>
+      <%= yield %>
     <% end %>
-    <%= yield %>
-  <% end %>
+  </div>
 </div>

@@ -7,12 +7,12 @@
                           html: {class: 'form-horizontal'},
                           wrapper: :horizontal_form do |f| %>
         <%= f.error_notification %>
-          <%= f.input :name, label: 'Company Name' %>
-          <%= f.simple_fields_for :users do |u| %>
-            <%= u.input :email %>
-            <%= u.input :password %>
-            <%= u.input :password_confirmation, label: 'Confirmation' %>
-          <% end %>
+        <%= f.input :name, label: 'Company Name' %>
+        <%= f.simple_fields_for :users do |u| %>
+          <%= u.input :email %>
+          <%= u.input :password %>
+          <%= u.input :password_confirmation, label: 'Confirmation' %>
+        <% end %>
         <%= f.submit "Create my account", class: "btn btn-lg btn-primary" %>
       <% end %>
     </div>

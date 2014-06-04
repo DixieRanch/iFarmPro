@@ -17,12 +17,12 @@ describe "Authentication" do
 
       it "redirects to signin" do
         expect(page).to have_title 'Sign in'
-        expect(page).to have_css('div.alert.alert-error', text: 'Invalid')
+        expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')
       end
 
       context "after visiting another page" do
         before { click_link "Home" }
-        it { should_not have_css('div.alert.alert-error') }
+        it { should_not have_css('div.alert.alert-danger') }
       end
     end
 

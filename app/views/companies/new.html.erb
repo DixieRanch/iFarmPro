@@ -1,15 +1,20 @@
 <% provide :title, "Sign up" %>
-<h1>Sign up</h1>
-
-<%= simple_form_for @company do |f| %>
-  <%= f.error_notification %>
-  <fieldset>
-    <%= f.input :name, label: 'Company Name' %>
-    <%= f.simple_fields_for :users do |u| %>
-      <%= u.input :email %>
-      <%= u.input :password %>
-      <%= u.input :password_confirmation, label: 'Confirmation' %>
-    <% end %>
-  </fieldset>
-  <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
-<% end %>
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Sign up</h1></div>
+    <div class="panel-body">
+      <%= simple_form_for @company,
+                          html: {class: 'form-horizontal'},
+                          wrapper: :horizontal_form do |f| %>
+        <%= f.error_notification %>
+          <%= f.input :name, label: 'Company Name' %>
+          <%= f.simple_fields_for :users do |u| %>
+            <%= u.input :email %>
+            <%= u.input :password %>
+            <%= u.input :password_confirmation, label: 'Confirmation' %>
+          <% end %>
+        <%= f.submit "Create my account", class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

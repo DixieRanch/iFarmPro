@@ -1,11 +1,11 @@
-<div class="row">
+<fieldset>
   <%= f.association :irrigation_well,
               collection: IrrigationWell.order("name"),
               include_blank: false,
-              wrapper_html: {class: 'col-xs-4 col-sm-3 col-lg-2 nopadding'} %>
+              wrapper_html: {class: 'col-xs-4 col-sm-3 col-lg-2 nopadxs'} %>
   <%= f.input :start, as: :tel,
-              wrapper_html: {class: 'col-xs-4 nopadding'} %>
+              wrapper_html: {class: 'col-xs-4 col-sm-3 col-md-2'} %>
 
   <%= f.input :stop, as: :tel, 
-              wrapper_html: {class: 'col-xs-4 nopadding'} %>
-</div>
+              wrapper_html: {class: 'col-xs-4'} %>
+</fieldset>

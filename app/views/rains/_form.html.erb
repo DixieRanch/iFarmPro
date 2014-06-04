@@ -1,8 +1,10 @@
 <%= simple_form_for @rain, html: {class: 'form-inline'} do |f| %>
   <%= f.error_notification %>
   <fieldset>
-    <%= f.input :date, as: :tel, input_html: { value: @rain.formatted_date } %>
-    <%= f.input :amount, as: :tel %>
+    <%= f.input :date, as: :tel, input_html: {value: @rain.formatted_date},
+                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+    <%= f.input :amount, as: :tel, 
+                wrapper_html: {class: 'col-xs-4 col-sm-3'} %>
   </fieldset>
   <%= f.button :submit, 'Save', class: 'btn-primary' %>
 <% end %>

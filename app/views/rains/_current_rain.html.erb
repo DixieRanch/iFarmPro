@@ -1,10 +1,10 @@
-<h1>Current Rain</h1>
-
-<table id="rain_table" class="table">
+<table id="rain_table" class="table table-striped">
   <thead>
+    <caption><h1>Current Rain</h1></caption>
   <tr>
     <th>Date</th>
     <th>Amount</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -13,7 +13,10 @@
           <tr>
             <td id="date_<%=i%>"><%= rain.formatted_date %></td>
             <td id="amount_<%=i%>"><%= rain.amount %></td>
-            <td><%= link_to 'Edit', edit_rain_path(rain), id: "link_#{i}", class: 'btn btn-primary' %></td>
+            <td>
+              <%= link_to 'Edit', edit_rain_path(rain), 
+                          id: "link_#{i}", class: 'btn-sm btn-primary' %>
+            </td>
           </tr>
       <% end %>
   <% end %>

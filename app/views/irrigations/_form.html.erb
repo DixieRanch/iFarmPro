@@ -1,24 +1,18 @@
-<div class="panel panel-primary">
-  <div class="panel-heading"><h1>Irrigation</h1></div>
-  <div class="panel-body">
-    <%= simple_form_for @irrigation, html: {class: 'form-inline'} do |f| %>
-    <%= f.error_notification %>
-      <%= f.association :field,
-                        collection: Field.all.sort_by(&:name_with_block),
-                        label_method: :name_with_block,
-                        include_blank: false,
-                        wrapper_html: {class: 'col-xs-4 col-sm-2 nopadding'} %>
-      <%= f.input :time, as: :string,
-                  input_html: {value: @update_time},
-                  wrapper_html: {class: 'col-xs-8 col-sm-10 nopadding'} %>
-
-      <%= tag('br') if @irrigation.meter_readings.any? %>
-      <%= f.simple_fields_for :meter_readings do |builder| %>
-        <%= render 'meter_reading_fields', f: builder %>
-      <% end %>
-      <%= tag('br') if @irrigation.meter_readings.empty? %>
-      <%= link_to_add_fields 'Add Meter Reading', f, :meter_readings %>
-      <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>
-    <% end %>
-  </div>
-</div>
+<%= simple_form_for @irrigation, html: {class: 'form-inline'} do |f| %>
+  <%= f.error_notification %>
+  <fieldset>
+    <%= f.association :field,
+                      collection: Field.all.sort_by(&:name_with_block),
+                      label_method: :name_with_block,
+                      include_blank: false,
+                      wrapper_html: {class: 'col-xs-4 col-sm-2'} %>
+    <%= f.input :time, as: :string,
+                input_html: {value: @update_time},
+                wrapper_html: {class: 'col-xs-6 col-sm-2'} %>
+  </fieldset>
+  <%= f.simple_fields_for :meter_readings do |builder| %>
+    <%= render 'meter_reading_fields', f: builder %>
+  <% end %>
+  <%= link_to_add_fields 'Add Meter Reading', f, :meter_readings %>
+  <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>
+<% end %>

@@ -2,17 +2,15 @@
 body { padding-top: 60px; }
 
 @media(max-width: $screen-xs-max){
-  .nopadding {
+  .nopadxs {
     padding: 0 !important;
-    /*margin: 0 !important;*/
+    // margin: 0 !important;
   }
 }
 
 @media (min-width: $screen-sm-min) {
-  div[class*='col-'] {
-    .tel {
-      width: 85px !important;
-    }
+  .form-inline .form-group input.tel {
+    width: 100px;
   }
 }
 

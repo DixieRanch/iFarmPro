@@ -1,7 +1,12 @@
 <% provide :title, 'Irrigations' %>
 <div class="row">
-  <%= render 'form' %>
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Irrigation</h1></div>
+    <div class="panel-body">
+      <%= render 'form' %>
+    </div>
+  </div>
 </div>
-<div class="row">
+<div class="row col-md-6">
   <%= render 'current_irrigations' %>
 </div>

@@ -1,11 +1,9 @@
 <% provide :title, "Edit login" %>
-<h1>Update your login information</h1>
-<%= simple_form_for(@user) do |f| %>
-  <%= f.error_notification %>
-  <fieldset>
-    <%= f.input :email %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation, label: 'Confirmation' %>
-  </fieldset>
-  <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-<% end %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Update your login information</h1></div>
+    <div class="panel-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

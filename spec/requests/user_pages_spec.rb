@@ -40,12 +40,12 @@ describe "UserPages" do
 
       it "should not create a user" do
         expect  do
-          click_button "Add User"
+          click_button "Save"
         end.not_to change(User, :count)
       end
 
       it "should display error messages" do
-        click_button "Add User"
+        click_button "Save"
         expect(page).to have_css '.alert-danger'
       end
     end
@@ -59,12 +59,12 @@ describe "UserPages" do
 
       it "should create a new user" do
         expect do
-          click_button "Add User"
+          click_button "Save"
         end.to change(User, :count).by(1)
       end
 
       it "should create a user for the correct company with success" do
-        click_button "Add User"
+        click_button "Save"
         new_user = User.find_by_email(attr[:email])
         expect(new_user.company_id).to eq user.company_id
         expect(page).to have_css '.alert-success'
@@ -87,7 +87,7 @@ describe "UserPages" do
       end
 
       context "with invalid information" do
-        before { click_button "Save changes" }
+        before { click_button "Save" }
 
         it { should have_css('div.alert.alert-danger') }
       end
@@ -98,7 +98,7 @@ describe "UserPages" do
           fill_in "Email",        with: new_email
           fill_in "Password",     with: user.password
           fill_in "Confirmation", with: user.password
-          click_button "Save changes"
+          click_button "Save"
         end
 
         it "displays updated user with success" do

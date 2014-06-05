@@ -1,10 +1,10 @@
-<h1>Current Irrigations</h1>
-
-<table id="irrigation_table" class="table">
+<table id="irrigation_table" class="table table-striped">
   <thead>
+    <caption><h1>Current Irrigations</h1></caption>
     <tr>
       <th>Field</th>
       <th>Last Irrigation</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,7 +15,8 @@
         <td>
           <%= link_to 'edit', edit_irrigation_path(irrigation),
                               id: "link_#{i}",
-                              class: 'btn-small btn-primary' %>
+                              class: 'btn-sm btn-primary',
+                              role: 'button' %>
         </td>
       </tr>
     <% end %>

@@ -6,19 +6,23 @@ describe "Authentication" do
   describe "signin page" do
     before { visit signin_path }
 
-    it { should have_selector('h1',    text:'Sign in') }
-    it { should have_selector('title', text: 'Sign in') }
-    it { should have_link('Sign up now!', href: signup_path) }
+    it "has the proper elements" do
+      expect(page).to have_selector('h1',    text:'Sign in')
+      expect(page).to have_title 'Sign in'
+      expect(page).to have_link('Sign up now!', href: signup_path)
+    end
 
     context "with invalid information" do
       before { click_button "Sign in" }
 
-      it { should have_selector('title', text: 'Sign in') }
-      it { should have_css('div.alert.alert-error', text: 'Invalid') }
+      it "redirects to signin" do
+        expect(page).to have_title 'Sign in'
+        expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')
+      end
 
       context "after visiting another page" do
         before { click_link "Home" }
-        it { should_not have_css('div.alert.alert-error') }
+        it { should_not have_css('div.alert.alert-danger') }
       end
     end
 
@@ -50,8 +54,10 @@ describe "Authentication" do
       context "when attempting to visit a protected page" do
         before { visit edit_user_path(user) }
 
-        it { should have_selector('title', text: 'Sign in') }
-        it { should have_css('div.alert.alert-notice') }
+        it "redirects to signin" do
+          expect(page).to have_title 'Sign in'
+          expect(page).to have_css('div.alert.alert-notice')
+        end
 
         it "should render the desired protected page after signing in" do
           sign_in(user)
@@ -75,11 +81,9 @@ describe "Authentication" do
 
     context "for correct company" do
       
-      it "should return nil for Company.current_id external to methods" do
+      it "should return nil for Company.current_id outside of methods" do
         expect(Company.current_id).to be_nil
       end
-    end
-
-    
+    end   
   end
 end

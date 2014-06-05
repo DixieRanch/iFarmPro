@@ -1,29 +1,44 @@
 <% provide :title, @farm.name %>
-
-<h1><%= @farm.name %></h1>
-
-<table>
-  <tr>
-    <th>Block</th>
-    <th>Field</th>
-    <th>Soil Type</th>
-  </tr>
-
-  <% @farm.blocks.each do |block| %>
-    <tr>
-      <td><%= block.name %></td>
-    </tr>
-
-        <% block.fields.each do |field| %>
+<div class="row col-sm-8 col-md-6">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1><%= @farm.name %></h1></div>
+    <div class="panel-body">
+      <table id="farms_table" class="table table-striped">
+        <thead>
           <tr>
-            <td></td>
-            <td><%= field.name %></td>
-            <td><%= field.soil_class.name %></td>
+            <th>Block</th>
+            <th>Field</th>
+            <th>Soil Type</th>
           </tr>
-        <% end %>
-  <% end %>
-</table>
-
-
-<%= link_to 'Edit', edit_farm_path(@farm) %> |
-<%= link_to 'Back to Farms', farms_path %>
+        </thead>
+        <tbody>
+          <% @farm.blocks.each do |block| %>
+            <tr>
+              <td><%= block.name %></td>
+              <td>
+                <table id="fields_table">
+                  <% block.fields.each do |field| %>
+                    <tr>
+                      <td><%= field.name %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
+              <td>
+                <table id="soil_types_table">
+                  <% block.fields.each do |field| %>
+                    <tr>
+                      <td><%= field.soil_class.name %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to 'Edit', edit_farm_path(@farm), class: 'btn btn-primary' %>
+      <%= link_to 'Back to Farms', farms_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+</div>

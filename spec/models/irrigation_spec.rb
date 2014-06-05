@@ -15,8 +15,8 @@ require 'spec_helper'
 
 describe Irrigation do
   valid_attributes = { time: Time.now }
-  let(:company) { FactoryGirl.create(Company) }
-  let(:field) { FactoryGirl.create(:field) }
+  let(:company) { build_stubbed(Company) }
+  let(:field) { create(:field) }
   let(:irrigation) { field.irrigations.build(valid_attributes) }
 
   before { Company.current_id = company.id }
@@ -41,12 +41,6 @@ describe Irrigation do
       Company.current_id = company.id
       expect(Irrigation.all).not_to include(wrong_data)
       expect(Irrigation.all).to include(irrigation)
-    end
-
-    context "has mass assignment protection" do
-      it { should_not allow_mass_assignment_of :field_id }
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should allow_mass_assignment_of :meter_readings_attributes }
     end
   end
 

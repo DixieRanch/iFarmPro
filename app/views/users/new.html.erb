@@ -1,16 +1,9 @@
 <% provide :title, 'Add User' %>
-
-<%= form_for @user do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-
-  <%= f.label :password_confirmation, "Confirmation" %>
-  <%= f.password_field :password_confirmation %>
-
-  <%= f.submit "Add User", class: "btn btn-large btn-primary" %>
-<% end %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Add New User</h1></div>
+    <div class="panel-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

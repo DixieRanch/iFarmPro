@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
-  let(:user) { FactoryGirl.create(:user) }
-
   subject { page }
 
   shared_examples_for "all static pages" do
-    it { should have_selector('h1', text: heading) }
-    it { should have_selector('title', text: full_title(page_title)) }
+    it "has correct headings" do
+      expect(page).to have_selector('h1', text: heading)
+      expect(page).to have_title full_title(page_title)
+    end
   end
   
   describe "Home page" do

@@ -15,7 +15,7 @@ describe Farm do
 
   valid_attributes = FactoryGirl.attributes_for(:farm, weather_station_id: WeatherStation.first.id)
 
-  let(:company) { FactoryGirl.create(Company) }
+  let(:company) { build_stubbed(Company) }
   # let(:weather_station) { create(:weather_station) }
   let(:farm) { Farm.new(valid_attributes) }
   
@@ -52,12 +52,6 @@ describe Farm do
     it { should have_db_column :name }
     it { should have_db_column :company_id }
     it { should have_db_column :weather_station_id }
-
-    context "protected from mass assignment" do
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should     allow_mass_assignment_of :blocks_attributes }
-      it { should allow_mass_assignment_of :irrigation_wells_attributes }
-    end
   end
 
   describe "validations" do
@@ -79,7 +73,7 @@ describe Farm do
       third = farm.blocks.create(name: "Last")
       first = farm.blocks.create(name: "First")
       correct_order = [first, second, third]
-      expect(farm.blocks.all).to eq correct_order
+      expect(farm.blocks.to_a).to eq correct_order
     end
 
     it "should return irrigation_wells ordered by name" do
@@ -88,7 +82,7 @@ describe Farm do
       third = farm.irrigation_wells.create(name: "Last")
       first = farm.irrigation_wells.create(name: "First")
       correct_order = [first, second, third]
-      expect(farm.irrigation_wells.all).to eq correct_order
+      expect(farm.irrigation_wells.to_a).to eq correct_order
     end
   end
 end

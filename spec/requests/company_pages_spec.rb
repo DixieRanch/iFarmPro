@@ -4,23 +4,15 @@ describe "Company" do
   let(:user) { FactoryGirl.create(:user) }
   subject { page }
 
-  describe "authorization" do
-    
-    context "when not signed-in" do
-      
-    end
-
-    context "when wrong user" do
-      
-    end
-  end
-
   describe "signup page" do
     before { visit signup_path }
     let(:submit) { "Create my account" }
 
-    it { should have_selector('title', text: full_title('Sign up')) }
-    it { should have_selector('h1', text: 'Sign up') }
+    it "has correct elements" do
+      expect(page).to have_title full_title('Sign up')
+      expect(page).to have_selector('h1', text: 'Sign up')
+    end
+
 
     context "with invalid information" do
       it "should not create a company when user is invalid" do
@@ -37,7 +29,7 @@ describe "Company" do
 
       it "should show error messages" do
         click_button submit
-        expect(page).to have_css('div#error_explanation')
+        expect(page).to have_css('div.alert-danger')
       end
     end
 
@@ -57,10 +49,13 @@ describe "Company" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
 
-      context "redirects to the Company page" do
+      context "after creating company" do
         before { click_button submit }
-        it { should have_selector('title', text: full_title('Big Old Farm')) }
-        it { should have_css('div.alert.alert-success', text: 'Welcome') }
+
+        it "displays welcome page" do
+          expect(page).to have_title full_title('Big Old Farm')
+          expect(page).to have_css('div.alert.alert-success', text: 'Welcome')
+        end
       end
     end
   end

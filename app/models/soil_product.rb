@@ -1,5 +1,5 @@
 class SoilProduct < ActiveRecord::Base
-  attr_accessible :name, :n, :p, :k, :s
+  # attr_accessible :name, :n, :p, :k, :s
 
   default_scope { where(company_id: Company.current_id) }
 

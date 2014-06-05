@@ -1,7 +1,9 @@
 <% provide :title, "Edit #{@farm.name}" %>
-
-<h1>Edit <%= @farm.name %></h1>
-
-<%= render 'form' %>
-
-<%= link_to "Cancel", @farm %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Edit <%= @farm.name %></h1></div>
+    <div class="panel-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

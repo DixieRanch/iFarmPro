@@ -1,27 +1,18 @@
-<%= form_for @irrigation, html: { class: 'form-inline' } do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-
-
-  <%= f.collection_select :field_id,
-                          Field.all.sort_by(&:name_with_block),
-                          :id, :name_with_block, {},
-                          class: 'input-small' %>
-
-
-
-  <%= f.text_field :time, value: @update_time, placeholder: 'Date & Time',
-                          class: 'input-medium' %>
-
-  <%= tag('br') if @irrigation.meter_readings.any? %>
-
-
-  <%= f.fields_for :meter_readings do |builder| %>
+<%= simple_form_for @irrigation, html: {class: 'form-inline'} do |f| %>
+  <%= f.error_notification %>
+  <fieldset>
+    <%= f.association :field,
+                      collection: Field.all.sort_by(&:name_with_block),
+                      label_method: :name_with_block,
+                      include_blank: false,
+                      wrapper_html: {class: 'col-xs-4 col-sm-2'} %>
+    <%= f.input :time, as: :string,
+                input_html: {value: @update_time},
+                wrapper_html: {class: 'col-xs-6 col-sm-2'} %>
+  </fieldset>
+  <%= f.simple_fields_for :meter_readings do |builder| %>
     <%= render 'meter_reading_fields', f: builder %>
   <% end %>
-
-  <%= tag('br') if @irrigation.meter_readings.empty? %>
-    
   <%= link_to_add_fields 'Add Meter Reading', f, :meter_readings %>
-
-  <%= f.submit 'Save', class: 'btn btn-primary' %>
+  <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>
 <% end %>

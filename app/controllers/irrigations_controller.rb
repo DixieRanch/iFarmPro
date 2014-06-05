@@ -7,7 +7,7 @@ class IrrigationsController < ApplicationController
 
   def create
     field = Field.find(params[:irrigation][:field_id])
-    @irrigation = field.irrigations.build(params[:irrigation].except(:field_id))
+    @irrigation = field.irrigations.new(irrigation_params)
     if @irrigation.save
       redirect_to irrigations_path
     else
@@ -25,9 +25,9 @@ class IrrigationsController < ApplicationController
 
   def update
     field = Field.find(params[:irrigation][:field_id])
-    @irrigation = Irrigation.find(params[:id])
+    @irrigation = field.irrigations.find(params[:id])
     @irrigation.field_id = field.id
-    if @irrigation.update_attributes(params[:irrigation].except(:field_id))
+    if @irrigation.update(irrigation_params)
       flash[:success] = "Irrigation successfully updated."
       redirect_to irrigations_path
     else
@@ -35,4 +35,17 @@ class IrrigationsController < ApplicationController
       render :index
     end
   end
+
+private
+    def irrigation_params
+      params.require(:irrigation).permit(permitted_params)
+    end
+
+    def permitted_params
+      [:time, meter_attributes]
+    end
+
+    def meter_attributes
+      { meter_readings_attributes: [:irrigation_well_id, :start, :stop, :id] }
+    end
 end

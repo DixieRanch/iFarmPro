@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.company_id = Company.current_id
     if @user.save
       flash[:success] = "New user succesfully created"
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:success] = "User login successfully update."
       sign_in @user
       redirect_to company_path(@user.company)
@@ -33,5 +33,13 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
+    end
+
+    def user_params
+      params.require(:user).permit(permitted_params)
+    end
+
+    def permitted_params
+      [:email, :password, :password_confirmation]
     end
 end

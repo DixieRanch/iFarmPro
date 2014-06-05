@@ -21,18 +21,16 @@ describe 'Irrigation' do
       let(:time) { new_irrigation.time.to_s(:long) }
 
       before { visit irrigations_path }
-        
-      it { should have_selector 'title', text: full_title('Irrigations') }
-      it { should have_selector 'h1', text: 'Current Irrigations' }
-      it { should have_selector 'td', text: field_name }
-      it { should have_selector 'td', text: irrigation.time.to_s(:long) }
-      it { should have_link 'edit', href: edit_irrigation_path(irrigation) }
-      it 'should have the correct sort order' do
+
+      it "has the correct elements" do
+        expect(page).to have_selector 'title', text: full_title('Irrigations')
+        expect(page).to have_selector 'h1', text: 'Current Irrigations'
+        expect(page).to have_selector 'td', text: field_name
+        expect(page).to have_selector 'td', text: irrigation.time.to_s(:long)
+        expect(page).to have_link 'edit', href: edit_irrigation_path(irrigation)
         first_irrigation = page.body.index(irrigation.time.to_s(:long))
         second_irrigation = page.body.index(new_irrigation.time.to_s(:long))
         expect(second_irrigation).to be < first_irrigation
-      end
-      it 'should have a link to the edit page' do
         Company.current_id = user.company.id
         click_link 'edit'
         expect(page).to have_field 'irrigation[time]', with: time
@@ -54,8 +52,10 @@ describe 'Irrigation' do
           click_button 'Save'
         end
 
-        it { should have_selector 'title', text: full_title('Irrigations') }
-        it { should have_css '.alert-error' }
+        it "renders irrigation page with error" do
+          expect(page).to have_title full_title('Irrigations')
+          expect(page).to have_css '.alert-danger'
+        end
       end
 
       context 'with valid data' do
@@ -69,24 +69,26 @@ describe 'Irrigation' do
           click_button 'Save'
         end
 
-        it { should have_selector 'td', text: '1-1' }
-        it 'should parse using american_date' do
+        it "displays record using american_date" do
+          expect(page).to have_selector 'td', text: '1-1'
           expect(page).to have_selector 'td', text: 'April 01, 2013 14:50'
         end
-
       end
 
-      it "has js for adding meter readings", js: true do
-        FactoryGirl.create(:irrigation_well)
-        init_meter_count = MeterReading.count
-        visit irrigations_path
-        fill_in 'irrigation_time', with: '4/1/2013 14:50'
-        click_on 'Add Meter Reading'
-        fill_in 'Start', with: '123456'
-        fill_in 'Stop', with: '654321'
-        click_button 'Save'
-        Company.current_id = user.company.id
-        expect(MeterReading.count).to be > init_meter_count
+      context 'js tests', :slow do
+
+        it "has js for adding meter readings", js: true do
+          FactoryGirl.create(:irrigation_well)
+          init_meter_count = MeterReading.count
+          visit irrigations_path
+          fill_in 'irrigation_time', with: '4/1/2013 14:50'
+          click_on 'Add Meter Reading'
+          fill_in 'Start', with: '123456'
+          fill_in 'Stop', with: '654321'
+          click_button 'Save'
+          Company.current_id = user.company.id
+          expect(MeterReading.count).to be > init_meter_count
+        end
       end
     end
   end
@@ -102,14 +104,10 @@ describe 'Irrigation' do
 
     context 'with valid data' do
 
-      it 'should update the irrigation' do
+      it 'updates the irrigation and displays success' do
         fill_in 'irrigation_time', with: time
         click_button 'Save'
         expect(page).to have_selector 'td', text: time.to_time.to_s(:long)
-      end
-
-      it 'should display a success message' do
-        click_button 'Save'
         expect(page).to have_css '.alert-success'
       end
     end
@@ -119,7 +117,7 @@ describe 'Irrigation' do
       it 'should have error message' do
         fill_in 'irrigation_time', with: ''
         click_button 'Save'
-        expect(page).to have_css '.alert-error'
+        expect(page).to have_css '.alert-danger'
       end
     end
   end 

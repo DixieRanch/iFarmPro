@@ -1,7 +1,9 @@
-<%= f.text_field :name, class: 'input-mini', placeholder: 'Field' %>
-
-<%= f.collection_select :soil_class_id,
-                        SoilClass.order("aw"),
-                        :id, :name, {},
-                        class: 'input-small' %>
-<br>
+<fieldset class='field-fieldset'>
+  <%= f.input :name, label: 'Field', label_html: {hidden: true},
+              wrapper_html: {class: "col-xs-3 col-sm-4 col-md-4 nopadxs"} %>
+  <%= f.association :soil_class,
+              collection: SoilClass.order("aw"),
+              include_blank: false,
+              label: false,
+              wrapper_html: {class: "col-xs-6 col-sm-4 col-md-4 nopadxs"} %>
+</fieldset>

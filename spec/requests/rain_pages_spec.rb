@@ -32,52 +32,23 @@ describe 'Rain' do
 
     describe 'page detail' do
 
-      it 'index header' do
+      it "has correct elements" do
         expect(page).to have_selector 'h1', text: 'Current Rain'
-      end
-
-      it 'populates title' do
         expect(page).to have_title full_title('Rain')
-      end
-
-      it 'should have rain table' do
         expect(page).to have_selector 'table#rain_table'
-      end
-
-      it 'rain table should have Amount column' do
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Amount'
-      end
-
-      it 'rain table should have Date column' do
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Date'
-      end
-
-      it 'table length' do
         page.should have_selector 'table#rain_table tbody tr', :count => 2
-      end
-
-      it 'populates 1st row Amount' do
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount_yesterday
-      end
-
-      it 'populates 2nd row Amount' do
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount
-      end
-
-      it 'populates 1st row Date' do
         expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date_yesterday
-      end
-
-      it 'populates 2nd row Date' do
         expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date
-      end
-
-      it 'edit link/button row 1' do
         find('#link_0', text: 'Edit').should have_content 'Edit'
-      end
-
-      it 'edit link/button row 2' do
         find('#link_1', text: 'Edit').should have_content 'Edit'
+        expect(page).to have_selector 'h1', text: 'Current Rain'
+        expect(page).to have_field 'rain_amount'
+        expect(page).to have_field 'rain_date'
+        expect(page).to have_button('Save')        
       end
 
       it 'click edit link' do
@@ -86,21 +57,6 @@ describe 'Rain' do
         expect(current_path).to eq(edit_rain_path(rain_yesterday))
       end
 
-      it 'edit link header' do
-        expect(page).to have_selector 'h1', text: 'Current Rain'
-      end
-
-      it 'amount field' do
-        expect(page).to have_field 'rain_amount'
-      end
-
-      it 'date field' do
-        expect(page).to have_field 'rain_date'
-      end
-
-      it 'submit button' do
-        expect(page).to have_button('Save')
-      end
 
       context 'create with valid data' do
 
@@ -123,13 +79,10 @@ describe 'Rain' do
           fill_in 'rain_amount', with: -23
           fill_in 'rain_date', with: 'abc'
           click_button 'Save'
-          expect(page).to have_css '.alert-error'
+          expect(page).to have_css '.alert-danger'
         end
-
       end
-
     end
-
   end
 
   describe 'edit page' do
@@ -143,28 +96,11 @@ describe 'Rain' do
       Company.current_id = user.company.id
     end
 
-    describe 'GET edit rain path' do
-      it 'renders the rain edit view' do
-        expect(current_path).to eq(edit_rain_path(rain))
-      end
-    end
-
-    describe 'page detail' do
-
-      it 'amount field' do
-        expect(page).to have_field 'rain_amount'
-      end
-
-      it 'date field' do
-        expect(page).to have_field 'rain_date'
-      end
-
-      it 'submit button' do
-        expect(page).to have_button('Save')
-      end
-
-      #save_and_open_page
-
+    it "has correct elements" do
+      expect(current_path).to eq(edit_rain_path(rain))
+      expect(page).to have_field 'rain_amount'
+      expect(page).to have_field 'rain_date'
+      expect(page).to have_button('Save')
     end
 
     context 'with valid data' do
@@ -184,9 +120,6 @@ describe 'Rain' do
         #element = find_by_id('amount_0')
         #puts "element: #{element.text}"
       end
-
     end
-
   end
-
 end

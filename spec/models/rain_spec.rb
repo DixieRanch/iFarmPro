@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Rain do
 
   valid_attributes = {date: '5/1/2013', amount: 0.35}
-  let(:company) { create(:company) }
-  let(:farm) { create(:farm) }
+  let(:company) { build_stubbed(:company) }
+  let(:farm) { build_stubbed(:farm) }
   let(:rain) { farm.rains.build(valid_attributes) }
   let(:rain_new) { Rain.new }
 
@@ -44,11 +44,6 @@ describe Rain do
 
     it 'empty date' do
       expect(rain_new.formatted_date).to eq nil
-    end
-
-    context 'with mass assignment protection' do
-      it { should_not allow_mass_assignment_of :farm_id }
-      it { should_not allow_mass_assignment_of :company_id }
     end
   end
 

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe SoilApplication do
-  let(:company) { create(:company) }
-  let(:field) { create(:field) }
-  let(:product) { create(:soil_product) }
+  let(:company) { build_stubbed(:company) }
+  let(:field) { build_stubbed(:field) }
+  let(:product) { build_stubbed(:soil_product) }
   let(:application) { field.soil_applications.build(@valid_attributes) }
 
 
@@ -33,9 +33,6 @@ describe SoilApplication do
       expect(SoilApplication.all).not_to include(application)
       expect(SoilApplication.all).to include(wrong_data)
     end
-
-    it { should_not allow_mass_assignment_of :company_id }
-    it { should_not allow_mass_assignment_of :field_id }
   end
 
   describe 'attributes' do

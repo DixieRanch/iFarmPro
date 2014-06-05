@@ -1,7 +1,13 @@
-<%#= javascript_include_tag params[:controller] %>
-
 <% provide :title, 'Rain' %>
 
-<%= render 'form' %>
-
-<%= render 'current_rain' %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Rainfall</h1></div>
+    <div class="panel-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
+<div class="row col-md-6">
+  <%= render 'current_rain' %>
+</div>

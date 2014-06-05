@@ -14,13 +14,13 @@
 require 'spec_helper'
 
 describe User do
- 
+
   valid_attributes = { email: "user@example.com",
                        password: "foobar", 
                        password_confirmation: "foobar" }
 
-  let(:company) { FactoryGirl.create(:company) }
-  let(:user) { company.users.new(valid_attributes) }
+  let(:company) { build_stubbed(:company) }
+  let(:user) { company.users.build(valid_attributes) }
 
   subject { user }
 
@@ -38,11 +38,6 @@ describe User do
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
 
-    context "protected from mass assignment" do
-      it { should_not allow_mass_assignment_of :password_digest }
-      it { should_not allow_mass_assignment_of :remember_token }
-      it { should_not allow_mass_assignment_of :company_id }
-    end
   end
 
   describe "associations" do
@@ -62,11 +57,11 @@ describe User do
                              foo@bar_baz.com foo@bar+baz.com]
       
       valid.each do |valid_address|
-        expect(user).to validate_format_of(:email).with(valid_address)
+        expect(user).to allow_value(valid_address).for(:email)
       end      
       
       invalid.each do |invalid_address|
-        expect(user).to validate_format_of(:email).not_with(invalid_address)
+        expect(user).not_to allow_value(invalid_address).for(:email)
       end      
     end
 
@@ -81,7 +76,9 @@ describe User do
   describe "methods" do
     describe "create_remember_token" do
       before { user.save }
-      its(:remember_token) { should_not be_blank }
+        it "creates remember remember" do
+          expect(user.remember_token).not_to be_blank
+        end
     end
   end
 end

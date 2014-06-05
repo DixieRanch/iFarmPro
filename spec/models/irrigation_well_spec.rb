@@ -3,8 +3,8 @@ require 'spec_helper'
 describe IrrigationWell do
 
   valid_attributes = { name: 'Pump 1', pod_code: 'lrg-12345-pod1' }
-  let(:company) { FactoryGirl.create(:company) }
-  let(:farm) { FactoryGirl.create(:farm) }
+  let(:company) { build_stubbed(:company) }
+  let(:farm) { build_stubbed(:farm) }
   let(:well) { farm.irrigation_wells.build(valid_attributes) }
 
   before do
@@ -38,11 +38,6 @@ describe IrrigationWell do
     it { should have_db_column :pod_code }
     it { should have_db_column :farm_id }
     it { should have_db_column :company_id }
-
-    context "with mass assignment protection" do
-      it { should_not allow_mass_assignment_of :farm_id }
-      it { should_not allow_mass_assignment_of :company_id }
-    end
   end
 
   describe "validations" do

@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     def sign_in(user)
       session[:remember_token] = user.remember_token
       Farm.unscoped do
-        if user.company.farms.all.any?
+        if user.company.farms.order('id').to_a.any?
           session[:farm_id] = user.company.farms.order('id').first.id
         end
       end

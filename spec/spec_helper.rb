@@ -14,6 +14,8 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'capybara/rspec'
   require 'capybara/poltergeist'
+  require 'shoulda/matchers'
+  require 'database_cleaner'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -24,6 +26,7 @@ Spork.prefork do
               { except: %w[ets kcs current_ets weather_stations soil_classes] }
 
   RSpec.configure do |config|
+
     # Factory Girl shortened syntax; FactoryGirl.create()-> create(), etc.
 
     config.include FactoryGirl::Syntax::Methods
@@ -45,7 +48,15 @@ Spork.prefork do
     config.use_transactional_fixtures = true
 
     config.before :suite do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with :truncation, 
+            { except: %w[ets kcs current_ets weather_stations soil_classes] }
+    end
 
+    config.around(:each) do |test|
+      DatabaseCleaner.cleaning do
+        test.run
+      end
     end
 
     # If true, the base class of anonymous controllers will be inferred
@@ -58,6 +69,18 @@ Spork.prefork do
     # Capybara DSL
     config.include Capybara::DSL
     Capybara.javascript_driver = :poltergeist
+
+    # Rspec config to selectively run tests
+    config.treat_symbols_as_metadata_keys_with_true_values = true
+    config.filter_run focus: true
+    config.run_all_when_everything_filtered = true
+
+    #Rspec config to skip slow specs by default
+    config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
+
+    # Defer garbage collection
+    config.before(:all) { DeferredGarbageCollection.start }
+    config.after(:all) { DeferredGarbageCollection.reconsider }
   end
 end
 

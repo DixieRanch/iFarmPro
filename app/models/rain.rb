@@ -1,5 +1,4 @@
 class Rain < ActiveRecord::Base
-  attr_accessible :amount, :date
 
   default_scope { where(company_id: Company.current_id) }
 

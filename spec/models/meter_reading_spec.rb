@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe MeterReading do
-  let(:company) { FactoryGirl.create(:company) }
-  let(:irrigation) { FactoryGirl.create(:irrigation) }
-  let(:well) { FactoryGirl.create(:irrigation_well) }
+  let(:company) { build_stubbed(:company) }
+  let(:irrigation) { build_stubbed(:irrigation) }
+  let(:well) { build_stubbed(:irrigation_well) }
   
   let(:meter_reading) { irrigation.meter_readings.build(@valid_attributes) }
 
@@ -43,11 +43,6 @@ describe MeterReading do
     it { should have_db_column :irrigation_id }
     it { should have_db_column :irrigation_well_id }
     it { should have_db_column :company_id }
-
-    context "with mass assignment protection" do
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should_not allow_mass_assignment_of :irrigation_id }      
-    end
   end
 
   describe "validations" do

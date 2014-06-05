@@ -1,28 +1,21 @@
-<%= simple_form_for @application do |f| %>
- <%= f.error_notification %>
- <div class="controls-row">
-  <div class="span2">
-   <%= f.association :field, 
-                     collection: Field.all.sort_by(&:name_with_block), 
-                     label_method: :name_with_block,
-                     include_blank: false,
-                     input_html: { class: 'input-mini' } %>
-  </div>
-  <div class="span2">                     
-   <%= f.input :date,
-                     as: :string,
-                     input_html: { value: @application.formatted_date,
-                                   class: 'input-small' } %>
-  </div>
-  <div class="span2">                     
-   <%= f.association :soil_product, 
-                     collection: SoilProduct.all.sort_by(&:name),
-                     include_blank: false,
-                     input_html: { class: 'input-small' }  %>
-  </div>
-  <div class="span2">                     
-   <%= f.input :quantity, input_html: { class: 'input-mini' }  %>
-  </div>
- </div>
- <%= f.button :submit, 'Save', class: 'btn-primary' %>
+<%= simple_form_for @application, html: {class: 'form-inline'} do |f| %>
+  <%= f.error_notification %>
+  <fieldset>
+    <%= f.association :field, 
+                collection: Field.all.sort_by(&:name_with_block), 
+                label_method: :name_with_block,
+                include_blank: false,
+                wrapper_html: {class: 'col-xs-4 col-sm-2'} %>
+    <%= f.input :date,
+                as: :string,
+                input_html: { value: @application.formatted_date },
+                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+    <%= f.association :soil_product, 
+                collection: SoilProduct.all.sort_by(&:name),
+                include_blank: false,
+                wrapper_html: {class: 'col-xs-6 col-sm-4 col-md-3'} %>
+    <%= f.input :quantity, as: :tel, 
+                wrapper_html: {class: 'col-xs-2 col-sm-2 nopadxs'} %>
+  </fieldset>
+  <%= f.button :submit, 'Save', class: 'btn-primary' %>
 <% end %>

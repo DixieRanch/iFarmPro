@@ -15,12 +15,12 @@ describe SessionsController do
         Company.current_id = @user.company.id
       end
 
-      specify { session[:remember_token].should eq @user.remember_token }
-      specify { session[:farm_id].should eq @farm.id }
-      specify { subject.send(:current_user).should eq @user }
-      specify { subject.send(:current_farm).should eq @farm }
-      
-
+      it "sets attributes for current session" do
+        expect(session[:remember_token]).to eq @user.remember_token
+        expect(session[:farm_id]).to eq @farm.id
+        expect(subject.send(:current_user)).to eq @user
+        expect(subject.send(:current_farm)).to eq @farm
+      end
     end
   end
 end

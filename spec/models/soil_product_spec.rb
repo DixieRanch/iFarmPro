@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SoilProduct do
 
   valid_attributes = { name: "UAN" }
-  let(:company) { FactoryGirl.create(:company) }
+  let(:company) { build_stubbed(:company) }
   let(:product) { SoilProduct.new(valid_attributes) }
 
   subject { product }
@@ -38,14 +38,6 @@ describe SoilProduct do
     it { should have_db_column :p }
     it { should have_db_column :k }
     it { should have_db_column :s }
-
-    context 'mass assigment protection' do
-      it { should_not allow_mass_assignment_of :company_id }
-      it { should allow_mass_assignment_of :n }
-      it { should allow_mass_assignment_of :p }
-      it { should allow_mass_assignment_of :k }
-      it { should allow_mass_assignment_of :s }
-    end
 
     context 'validation' do
       it { should validate_presence_of :name }

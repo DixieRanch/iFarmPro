@@ -1,2 +1,6 @@
-<%= f.input :name, label: 'Well Name' %>
-<%= f.input :pod_code, label: 'POD Code' %>
+<fieldset>
+<%= f.input :name, placeholder: 'Well Name', label: false,
+            wrapper_html: {class: 'col-xs-6 col-sm-5 col-md-4'} %>
+<%= f.input :pod_code, placeholder: 'POD Code', label: false,
+            wrapper_html: {class: 'col-xs-6 col-sm-5 col-md-4'} %>
+</fieldset>

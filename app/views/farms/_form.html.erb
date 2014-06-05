@@ -1,17 +1,44 @@
-<%= simple_form_for @farm do |f| %>
+<%= simple_form_for @farm, html: {class: 'form-inline'} do |f| %>
   <%= f.error_notification %>
-  <%= f.input :name, label: 'Farm Name' %>
-  <%= f.association :weather_station,
-                    label: 'Weather Station',
-                    collection: WeatherStation.order("name"),
-                    include_blank: false %>
+  <fieldset class='well farm-fieldset'>
+    <legend class='farm-legend'>
+      <b>Step 1: Farm Name and Weather Station</b>
+    </legend>
+    <%= f.input :name, label: 'Farm Name',
+                wrapper_html: {class: 'col-xs-5 nopadxs'} %>
+    <%= f.association :weather_station,
+                label: 'Weather Station',
+                collection: WeatherStation.order("name"),
+                include_blank: false,
+                wrapper_html: {class: 'col-xs-7 nopadxs'} %>
+  </fieldset>
+  <fieldset class="well pumps-fieldset">
+    <legend class="pumps-legend"><b>Step 2: Irrigation wells</b></legend>
+    <fieldset>
+      <%= f.label 'Well Name', class: 'col-xs-6 col-sm-5 col-md-4' %>
+      <%= f.label 'POD Code' %>
+    </fieldset>
     <%= f.simple_fields_for :irrigation_wells do |builder| %>
-      <%= render 'irrigation_well_fields', f: builder  %>
+        <%= render 'irrigation_well_fields', f: builder  %>
     <% end %>
     <%= link_to_add_fields "Add Irrigation Well", f, :irrigation_wells %>
+  </fieldset>
+  <fieldset class="well">
+    <legend class="fields-legend">
+      <b>Step 3: Blocks, Fields, & Soil Types</b>
+    </legend>
+    <fieldset>
+      <%= f.label 'Block', class: 'col-xs-2 col-sm-2' %>
+      <%= f.label 'Field', class: 'col-xs-3 col-sm-2 col-md-1' %>
+      <%= f.label 'Soil Type', class: 'col-xs-4' %>
+    </fieldset>
     <%= f.simple_fields_for :blocks do |builder| %>
       <%= render 'block_fields', f: builder %>
     <% end %>
     <%= link_to_add_fields "Add Block", f, :blocks %><br />
   <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+  <% if @farm.persisted? %>
+    <%= link_to("Cancel", @farm, class: 'btn btn-default') %>
+  <% end %>
+  </fieldset>
 <% end %>

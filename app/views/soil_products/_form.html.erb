@@ -1,11 +1,15 @@
 <%= simple_form_for @product, html: {class: 'form-inline'} do |f| %>
   <%= f.error_notification %>
   <fieldset>
-    <%= f.input :name %>
-    <%= f.input :n, as: :tel %>
-    <%= f.input :p, as: :tel %>
-    <%= f.input :k, as: :tel %>
-    <%= f.input :s, as: :tel %>
+    <%= f.input :name, wrapper_html: {class: 'col-xs-4 nopadxs'} %>
+    <%= f.input :n, as: :tel,
+                wrapper_html: {class: 'col-xs-2 col-sm-1 nopadxs'} %>
+    <%= f.input :p, as: :tel,
+                wrapper_html: {class: 'col-xs-2 col-sm-1 nopadxs'} %>
+    <%= f.input :k, as: :tel,
+                wrapper_html: {class: 'col-xs-2 col-sm-1 nopadxs'} %>
+    <%= f.input :s, as: :tel, 
+                wrapper_html: {class: 'col-xs-2 col-sm-1 nopadxs'} %>
   </fieldset>
   <%= f.button :submit, 'Save', class: 'btn-primary' %>
 <% end %>

@@ -1,13 +1,13 @@
-<h1>Current Applications</h1>
-
-<table id="application_table" class="table">
+<table id="application_table" class="table table-striped">
  <thead>
-  <tr>
-   <th>Field</th>
-   <th>Date</th>
-   <th>Product</th>
-   <th>Quantity</th>
-  </tr>
+    <caption><h1>Current Applications</h1></caption>
+    <tr>
+     <th>Field</th>
+     <th>Date</th>
+     <th>Product</th>
+     <th>Quantity</th>
+     <th></th>
+    </tr>
  </thead>
  <tbody>
   <% @applications.each_with_index do |application, i| %>
@@ -19,7 +19,7 @@
     <td>
      <%= link_to 'edit', edit_soil_application_path(application),
                          id: "link_#{i}",
-                         class: 'btn-small btn-primary' %>
+                         class: 'btn-sm btn-primary' %>
     </td>
    </tr>
   <% end %>

@@ -9,8 +9,26 @@ body { padding-top: 60px; }
 }
 
 @media (min-width: $screen-sm-min) {
-  .form-inline .form-group input.tel {
-    width: 100px;
+  .form-inline {
+    input.tel {
+      width: 100px;
+    }
+
+    div[class*='soil_product'] {
+      .tel {
+        width: 45px;
+      }
+    }
+
+    div[class*='soil_application'] {
+      #soil_application_quantity {
+        width: 65px;
+      }
+
+      #soil_application_date {
+        width: 100px;
+      }
+    }
   }
 }
 

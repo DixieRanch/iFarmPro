@@ -1,13 +1,13 @@
-<h1>Soil Products</h1>
-
-<table id="product_table" class="table">
+<table id="product_table" class="table table-striped">
   <thead>
+    <caption><h1>Soil Products</h1></caption>
     <tr>
       <th>Name</th>
       <th>N</th>
       <th>P</th>
       <th>K</th>
       <th>S</th>
+      <th></th>
     </tr>  
   </thead>
   <tbody>
@@ -21,7 +21,7 @@
         <td>
           <%= link_to 'edit', edit_soil_product_path(product),
                               id: "link_#{i}",
-                              class: 'btn-small btn-primary' %>
+                              class: 'btn-sm btn-primary' %>
         </td>
       </tr>
     <% end %>

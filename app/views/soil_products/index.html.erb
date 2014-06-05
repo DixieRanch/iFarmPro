@@ -1,5 +1,12 @@
 <% provide :title, 'Soil Products' %>
-
-<%= render 'form' %>
-
-<%= render 'current_products' %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Soil Products</h1></div>
+    <div class="panel-body">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
+<div class="row col-md-6">
+  <%= render 'current_products' %>
+</div>

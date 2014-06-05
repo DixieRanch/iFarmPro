@@ -50,8 +50,6 @@ describe 'ApplicationPages' do
         should have_selector 'title', text: full_title('Help')
         click_link "Sign in"
         should have_selector 'title', text: full_title('Sign in')
-        click_link "Home"
-        should have_selector 'title', text: full_title('')
         click_link "About"
         should have_selector 'title', text: full_title('About')
         click_link "Contact"
@@ -75,8 +73,6 @@ describe 'ApplicationPages' do
         should have_selector 'title', text: full_title('Edit login')
         click_link "Add User"
         should have_selector 'title', text: full_title('Add User')
-        click_link "Home"
-        should have_selector 'title', text: full_title('')
         click_link "About"
         should have_selector 'title', text: full_title('About')
         click_link "Contact"

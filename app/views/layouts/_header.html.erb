@@ -3,6 +3,11 @@
     <div class="container">
       <div class="navbar-header">
         <%= link_to "iFarmPro", root_path, class: "navbar-brand" %>
+        <% unless signed_in? or current_page?(signin_path) %>
+          <%= link_to "Sign in", signin_path, 
+                                 class: "navbar-brand btn btn-success" %>
+        <% end %>
+
         <button type="button" class="navbar-toggle" data-toggle="collapse" 
                                 data-target=".navbar-collapse">
           <span class="icon-bar"></span>

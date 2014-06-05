@@ -21,7 +21,7 @@ describe "Authentication" do
       end
 
       context "after visiting another page" do
-        before { click_link "Home" }
+        before { click_link "iFarmPro" }
         it { should_not have_css('div.alert.alert-danger') }
       end
     end

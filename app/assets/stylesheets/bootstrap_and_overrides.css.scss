@@ -8,6 +8,34 @@ body { padding-top: 60px; }
   }
 }
 
+// Navbar
+
+// Forest Green
+// #238E23
+// Hunter Green (This looks like Dixie Green)
+// #215E21
+// Rustoleum Hunter (Dixie) Green
+// #004924
+// Rustoleum Dark Hunter (Dixie) Green
+// #024312
+
+
+.navbar-brand.btn{
+  color: #fff;
+  background-color: #215E21;
+  border-color: #4cae4c;
+}
+
+.navbar-brand.btn:hover{
+  color: #fff;
+  background-color: #238E23;
+  border-color: #398439; 
+}
+
+
+
+// Form field widths
+
 @media (min-width: $screen-sm-min) {
   .form-inline {
     input.tel {

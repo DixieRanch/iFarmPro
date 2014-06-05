@@ -60,7 +60,7 @@ describe 'Rain' do
 
       context 'create with valid data' do
 
-        let!(:rain_tomorrow) { Rain.new(amount: 2.88888, date: Date.tomorrow) }
+        let!(:rain_tomorrow) { Rain.new(amount: 2.0, date: Date.tomorrow) }
         let(:amount_tomorrow) { rain_tomorrow.amount.to_s }
         let(:date_tomorrow) { rain_tomorrow.formatted_date }
 

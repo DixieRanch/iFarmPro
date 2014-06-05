@@ -1,18 +1,26 @@
 <% provide :title, "Next Irrigations" %>
-
-<h1>Irrigation Schedule</h1>
-
-<table border = "1">
-  <tr>
-    <th>Field</th>
-    <th>Next irrigation</th>
-    <th>Last irrigation</th>
-  </tr>
-  <% @report.each do |irrigation| %>
-    <tr>
-      <td><%= irrigation.field.name_with_block %></td>
-      <td><%= irrigation.next_irrigation.to_s(:long) %></td>
-      <td><%= irrigation.time.to_date.to_s(:long) %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="row col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Irrigation Schedule</h1></div>
+    <div class="panel-body">
+      <table id="irrigation_schedule" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Next irrigation</th>
+            <th>Last irrigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @report.each do |irrigation| %>
+            <tr>
+              <td><%= irrigation.field.name_with_block %></td>
+              <td><%= irrigation.next_irrigation.to_s(:long) %></td>
+              <td><%= irrigation.time.to_date.to_s(:long) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

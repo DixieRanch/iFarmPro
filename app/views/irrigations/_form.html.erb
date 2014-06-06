@@ -7,7 +7,7 @@
                       include_blank: false,
                       wrapper_html: {class: 'col-xs-4 col-sm-2'} %>
     <%= f.input :time, as: :string,
-                input_html: {value: @update_time},
+                input_html: {value: @irrigation.formatted_time},
                 wrapper_html: {class: 'col-xs-6 col-sm-2'} %>
   </fieldset>
   <%= f.simple_fields_for :meter_readings do |builder| %>

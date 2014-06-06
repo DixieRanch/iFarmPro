@@ -22,6 +22,14 @@ class Irrigation < ActiveRecord::Base
 
   validates :time, presence: true
 
+  def formatted_date
+    time.strftime("%B %-d, %Y") if time
+  end
+
+  def formatted_time
+    time.strftime("%B %-d, %Y %R") if time
+  end
+
   def self.next_irrigations
     current_irrigations = 
       Field.includes(:irrigations).map do |field|

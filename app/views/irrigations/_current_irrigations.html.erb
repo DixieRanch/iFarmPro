@@ -11,7 +11,7 @@
     <% @irrigations.each_with_index do |irrigation, i| %>
       <tr>
         <td id="field<%=i%>"><%= irrigation.field.name_with_block %></td>
-        <td id="irrigation<%=i%>"><%= irrigation.time.to_s(:long) %></td>
+        <td id="irrigation<%=i%>"><%= irrigation.formatted_time %></td>
         <td>
           <%= link_to 'edit', edit_irrigation_path(irrigation),
                               id: "link_#{i}",

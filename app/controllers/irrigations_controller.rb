@@ -19,7 +19,7 @@ class IrrigationsController < ApplicationController
   def edit
     @irrigations = Irrigation.order("time DESC")
     @irrigation = Irrigation.find(params[:id])
-    @update_time = @irrigation.time.to_s(:long)
+    # @update_time = @irrigation.time.to_s(:long)
     render :index
   end
 

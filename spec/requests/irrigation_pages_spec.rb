@@ -18,7 +18,7 @@ describe 'Irrigation' do
         FactoryGirl.create(:irrigation, time: irrigation.time + 1.day)
       end
       let(:field_name) { irrigation.field.name_with_block }
-      let(:time) { new_irrigation.time.to_s(:long) }
+      let(:time) { new_irrigation.formatted_time }
 
       before { visit irrigations_path }
 
@@ -26,10 +26,10 @@ describe 'Irrigation' do
         expect(page).to have_selector 'title', text: full_title('Irrigations')
         expect(page).to have_selector 'h1', text: 'Current Irrigations'
         expect(page).to have_selector 'td', text: field_name
-        expect(page).to have_selector 'td', text: irrigation.time.to_s(:long)
+        expect(page).to have_selector 'td', text: irrigation.formatted_time
         expect(page).to have_link 'edit', href: edit_irrigation_path(irrigation)
-        first_irrigation = page.body.index(irrigation.time.to_s(:long))
-        second_irrigation = page.body.index(new_irrigation.time.to_s(:long))
+        first_irrigation = page.body.index(irrigation.formatted_time)
+        second_irrigation = page.body.index(new_irrigation.formatted_time)
         expect(second_irrigation).to be < first_irrigation
         Company.current_id = user.company.id
         click_link 'edit'
@@ -65,13 +65,14 @@ describe 'Irrigation' do
           FactoryGirl.create(:field, name: '1', block: block)
           visit irrigations_path
           select('1-1', from: 'irrigation_field_id')
-          fill_in 'irrigation_time', with: '4/1/2013 14:50'
+          fill_in 'irrigation_time', with: '4/1 14:50'
           click_button 'Save'
         end
 
         it "displays record using american_date" do
           expect(page).to have_selector 'td', text: '1-1'
-          expect(page).to have_selector 'td', text: 'April 01, 2013 14:50'
+          year = Time.now.year
+          expect(page).to have_selector 'td', text: "April 1, #{year} 14:50"
         end
       end
 
@@ -107,7 +108,7 @@ describe 'Irrigation' do
       it 'updates the irrigation and displays success' do
         fill_in 'irrigation_time', with: time
         click_button 'Save'
-        expect(page).to have_selector 'td', text: time.to_time.to_s(:long)
+        expect(page).to have_selector 'td', text: 'April 1, 2013 14:50'
         expect(page).to have_css '.alert-success'
       end
     end

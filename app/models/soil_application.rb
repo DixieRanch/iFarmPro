@@ -10,6 +10,6 @@ class SoilApplication < ActiveRecord::Base
   validates :date, presence: true
 
   def formatted_date
-   date.to_date.to_s if date
+   date.strftime("%B %-d, %Y") if date
   end
 end

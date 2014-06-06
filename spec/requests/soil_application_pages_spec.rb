@@ -33,7 +33,6 @@ describe "SoilApplication" do
 
       it "displays soil app fields" do
         expect(page).to have_selector 'td', text: @app.formatted_date
-        expect(page).not_to have_selector 'td', text: @app.date.to_s(:rfc822)
         expect(page).to have_selector 'td', text: @app.field.name_with_block
         expect(page).to have_selector 'td', text: @app.soil_product.name
         expect(page).to have_selector 'td', text: @app.quantity
@@ -65,7 +64,7 @@ describe "SoilApplication" do
       context 'with valid data' do
 
         before do
-          select('1-1', from: 'soil_application_field_id')
+          select '1-1', from: 'soil_application_field_id'
           fill_in 'Date', with: '4/1'
           select '32-0-0-0', from: 'soil_application_soil_product_id'
           fill_in 'Quantity', with: 150
@@ -74,6 +73,8 @@ describe "SoilApplication" do
 
         it "displays the new record with success" do
           expect(page).to have_selector 'td', text: '1-1'
+          year = Time.now.year
+          expect(page).to have_selector 'td', text: "April 1, #{year}"
           expect(page).to have_css '.alert-success'
         end
       end
@@ -101,7 +102,8 @@ describe "SoilApplication" do
       it "updates soil application with success" do
         fill_in 'Date', with: '1/4'
         click_button 'Save'
-        expect(page).to have_selector 'td', text: '2014-01-04'  
+        year = Time.now.year
+        expect(page).to have_selector 'td', text: "January 4, #{year}"
         expect(page).to have_css '.alert-success'
       end
     end

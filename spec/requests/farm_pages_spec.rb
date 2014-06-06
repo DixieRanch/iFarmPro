@@ -7,30 +7,25 @@ describe "Farm" do
   let(:user) { FactoryGirl.create(:user) }
 
   before do
-    sign_in(user)
+    sign_in_new(user)
     Company.current_id = user.company.id
   end
 
   describe "index page" do
 
-    context "without an exisiting farm" do
-      before { visit farms_path }
-
-      it "has new farm link" do
-        expect(page).to have_title full_title('Farm')
-        expect(page).to have_link('New Farm', href: new_farm_path)
-      end
-    end
-
     context "with an exisiting farm" do
 
-      let!(:farm) { FactoryGirl.create(:farm) }
+      # let!(:farm) { FactoryGirl.create(:farm) }
 
-      before { visit farms_path }
+      before do
+        create(:field)
+        @farm = Farm.first
+        visit farms_path
+      end
 
       it "displays existing farm without new link" do
         expect(page).to have_selector 'title', text: full_title('Farm')
-        expect(page).to have_link farm.name, href: farm_path(farm)
+        expect(page).to have_link @farm.name, href: farm_path(@farm)
         expect(page).not_to have_link('New Farm', href: new_farm_path)
       end
 

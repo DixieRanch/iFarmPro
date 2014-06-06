@@ -1,16 +1,12 @@
-<% if signed_in? %>
-  <%= render template: "companies/show" %>
-<% else %>
-  <div class="jumbotron text-center">
-    <h1>Welcome to iFarmPro</h1>
+<div class="jumbotron text-center">
+  <h1>Welcome to iFarmPro</h1>
 
-    <h2>
-      This is the homepage for the 
-      <%= link_to 'iFarmPro', root_path %> application.
-    </h2>
+  <h2>
+    This is the homepage for the 
+    <%= link_to 'iFarmPro', root_path %> application.
+  </h2>
 
-    <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
-  </div>
+  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+</div>
 
-  <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
-<% end %>
+<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>

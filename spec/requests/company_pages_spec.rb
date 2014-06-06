@@ -52,8 +52,8 @@ describe "Company" do
       context "after creating company" do
         before { click_button submit }
 
-        it "displays welcome page" do
-          expect(page).to have_title full_title('Big Old Farm')
+        it "displays welcome message on New Farm Page" do
+          expect(page).to have_title full_title 'Add Farm'
           expect(page).to have_css('div.alert.alert-success', text: 'Welcome')
         end
       end
@@ -63,7 +63,10 @@ describe "Company" do
   describe "show page" do
     before { sign_in(user) }
     
-    it { should have_selector('title', text: user.company.name) }
+    it 'has the correct elements' do
+      click_link 'Company'
+      expect(page).to have_title full_title user.company.name
+    end
   end
   
 end

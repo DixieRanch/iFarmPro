@@ -30,13 +30,13 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       before do
         Company.current_id = user.company.id
-        @farm = FactoryGirl.create(:farm)
+        # @farm = FactoryGirl.create(:farm)
         fill_in "Email",    with: user.email.upcase
         fill_in "Password", with: user.password
         click_button "Sign in"
       end
 
-      it { should have_selector('title', text: user.company.name) }
+      it { should have_title full_title 'Add Farm' }
 
       context "followed by signout" do
         before { click_link "Sign out" }
@@ -52,7 +52,7 @@ describe "Authentication" do
     context "for non-signed-in users" do
 
       context "when attempting to visit a protected page" do
-        before { visit edit_user_path(user) }
+        before { visit new_farm_path }
 
         it "redirects to signin" do
           expect(page).to have_title 'Sign in'
@@ -61,14 +61,14 @@ describe "Authentication" do
 
         it "should render the desired protected page after signing in" do
           sign_in(user)
-          expect(page).to have_selector('title', text: 'Edit login')
+          expect(page).to have_title full_title 'Add Farm'
         end
 
-        it "should render the default(profile) page when signing in again" do
-          sign_in(user)
+        it "should render the Add Farm page when signing in again" do
+          sign_in_new(user)
           click_link 'Sign out'
-          sign_in(user)
-          expect(page).to have_selector('title', text: user.company.name)
+          sign_in_new(user)
+          expect(page).to have_title full_title 'Add Farm'
         end
       end
 

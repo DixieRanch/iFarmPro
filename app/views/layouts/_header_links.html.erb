@@ -14,7 +14,7 @@
       Account <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
-      <li><%= link_to "Company", root_path %></li>
+      <li><%= link_to "Company", company_path(Company.current_id) %></li>
       <li class="divider"></li>
       <li>
         <%= link_to "Sign out", signout_path, method: "delete" %>

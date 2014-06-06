@@ -28,9 +28,9 @@
       <b>Step 3: Blocks, Fields, & Soil Types</b>
     </legend>
     <fieldset>
-      <%= f.label 'Block', class: 'col-xs-2 col-sm-2' %>
-      <%= f.label 'Field', class: 'col-xs-3 col-sm-2 col-md-1' %>
-      <%= f.label 'Soil Type', class: 'col-xs-4' %>
+      <%= f.label 'Block', class: 'col-xs-3 col-sm-3 col-md-2' %>
+      <%= f.label 'Field', class: 'col-xs-4 col-sm-2' %>
+      <%= f.label 'Soil Water', class: 'col-xs-4' %>
     </fieldset>
     <%= f.simple_fields_for :blocks do |builder| %>
       <%= render 'block_fields', f: builder %>

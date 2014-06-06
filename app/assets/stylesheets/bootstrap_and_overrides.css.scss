@@ -54,14 +54,20 @@ body { padding-top: 60px; }
       }
 
       #soil_application_date {
-        width: 100px;
+        width: 145px;
       }
     }
   }
 
   .block-fieldset {
-    .string {
-      width: 85px;
+    input.string {
+      width: 110px;
+    }
+  }
+
+  .irrigation-fieldset {
+    input.string {
+      width: 185px;
     }
   }
 }

@@ -1,14 +1,15 @@
 <%= simple_form_for @irrigation, html: {class: 'form-inline'} do |f| %>
   <%= f.error_notification %>
-  <fieldset>
+  <fieldset class='irrigation-fieldset'>
     <%= f.association :field,
-                      collection: Field.all.sort_by(&:name_with_block),
-                      label_method: :name_with_block,
-                      include_blank: false,
-                      wrapper_html: {class: 'col-xs-4 col-sm-2'} %>
+                collection: Field.all.sort_by(&:name_with_block),
+                label_method: :name_with_block,
+                include_blank: false,
+                wrapper_html: 
+                  {class: 'col-xs-6 col-sm-5 col-md-4 col-lg-3 nopadxs'} %>
     <%= f.input :time, as: :string,
                 input_html: {value: @irrigation.formatted_time},
-                wrapper_html: {class: 'col-xs-6 col-sm-2'} %>
+                wrapper_html: {class: 'col-xs-6 nopadxs'} %>
   </fieldset>
   <%= f.simple_fields_for :meter_readings do |builder| %>
     <%= render 'meter_reading_fields', f: builder %>

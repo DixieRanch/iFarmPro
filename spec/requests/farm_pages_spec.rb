@@ -129,8 +129,8 @@ describe "Farm" do
 
     context "with valid information" do
       let(:new_name) { "New Name" }
-      let(:new_block) { "New Block" }
-      let(:new_field) { "New Field" }
+      let(:new_block) { "NewBlock" }
+      let(:new_field) { "NewField" }
       let(:new_well) { "New Well" }
       let(:new_pod_code) { "New Pod Code" }
       let(:submit) { "Save" }

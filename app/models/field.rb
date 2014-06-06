@@ -23,7 +23,7 @@ class Field < ActiveRecord::Base
 
   validates :name, presence: true,
                    uniqueness: { scope: :block_id },
-                   length: { maximum: 10 }
+                   length: { maximum: 8 }
   validates :acreage, numericality: true, allow_nil: true
   validates :company_id, presence: true
   validates :soil_class_id, presence: true

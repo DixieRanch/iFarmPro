@@ -58,7 +58,7 @@ describe Block do
   describe "validations" do
     it { should validate_presence_of :name }
     it { should validate_uniqueness_of(:name).scoped_to :farm_id }
-    it { should ensure_length_of(:name).is_at_most 10 }
+    it { should ensure_length_of(:name).is_at_most 8 }
     it { should_not validate_presence_of :farm_id }
     it { should validate_presence_of :company_id }
   end
@@ -68,7 +68,7 @@ describe Block do
 
     it "should return fields ordered by name" do
       block.save
-      second = block.fields.create(name: "Inbetween", soil_class_id: 1)
+      second = block.fields.create(name: "Inbtween", soil_class_id: 1)
       third = block.fields.create(name: "Last", soil_class_id: 1)
       first = block.fields.create(name: "First", soil_class_id: 1)
       correct_order = [first, second, third]

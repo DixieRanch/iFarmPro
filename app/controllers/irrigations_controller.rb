@@ -1,8 +1,8 @@
 class IrrigationsController < ApplicationController
 
   def index
-    @irrigations = Irrigation.order("time DESC")
     @irrigation = Irrigation.new
+    get_irrigations
   end
 
   def create
@@ -11,32 +11,35 @@ class IrrigationsController < ApplicationController
     if @irrigation.save
       redirect_to irrigations_path
     else
-      @irrigations = Irrigation.order("time DESC")
+      get_irrigations
       render :index
     end
   end
 
   def edit
-    @irrigations = Irrigation.order("time DESC")
     @irrigation = Irrigation.find(params[:id])
-    @update_time = @irrigation.time.to_s(:long)
+    get_irrigations
     render :index
   end
 
   def update
-    field = Field.find(params[:irrigation][:field_id])
-    @irrigation = field.irrigations.find(params[:id])
+    @irrigation = Irrigation.find(params[:id])
     @irrigation.field_id = field.id
     if @irrigation.update(irrigation_params)
       flash[:success] = "Irrigation successfully updated."
       redirect_to irrigations_path
     else
-      @irrigations = Irrigation.order("time DESC")
+      get_irrigations
       render :index
     end
   end
 
 private
+
+    def get_irrigations
+      @irrigations = Irrigation.order("time DESC")
+    end
+
     def irrigation_params
       params.require(:irrigation).permit(permitted_params)
     end
@@ -47,5 +50,9 @@ private
 
     def meter_attributes
       { meter_readings_attributes: [:irrigation_well_id, :start, :stop, :id] }
+    end
+
+    def field
+      Field.find(params[:irrigation][:field_id])
     end
 end

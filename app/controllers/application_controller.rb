@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :signed_in_user
   around_filter :scope_current_company
+  before_filter :farm_setup
 
   private
 
@@ -79,5 +80,17 @@ class ApplicationController < ActionController::Base
       session.delete(:return_to)
     end
 
+    # --------- Farm Setup Methods ----------
 
+    def farm_setup
+      if Farm.all.empty?
+        flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
+                          Please setup your first farm.'
+        redirect_to(root_path)
+      elsif Field.all.empty?
+        flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
+                          Please add a field to get started.'
+        redirect_to(root_path)
+      end
+    end                   
 end

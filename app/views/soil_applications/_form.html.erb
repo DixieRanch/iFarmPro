@@ -1,15 +1,15 @@
 <%= simple_form_for @application, html: {class: 'form-inline'} do |f| %>
   <%= f.error_notification %>
-  <fieldset>
+  <fieldset class='soil-application-fieldset'>
     <%= f.association :field, 
                 collection: Field.all.sort_by(&:name_with_block), 
                 label_method: :name_with_block,
                 include_blank: false,
-                wrapper_html: {class: 'col-xs-4 col-sm-2'} %>
+                wrapper_html: {class: 'col-xs-7 col-sm-5 col-md-4 col-lg-3'} %>
     <%= f.input :date,
                 as: :string,
                 input_html: { value: @application.formatted_date },
-                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+                wrapper_html: {class: 'col-xs-5 col-sm-4 col-md-7 nopadxs'} %>
     <%= f.association :soil_product, 
                 collection: SoilProduct.all.sort_by(&:name),
                 include_blank: false,

@@ -1,5 +1,7 @@
 class FarmsController < ApplicationController
 
+  skip_before_filter :farm_setup, only: [:new, :create, :edit, :update]
+
   def index
     @farms = Farm.all
   end

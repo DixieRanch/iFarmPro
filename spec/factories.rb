@@ -35,12 +35,12 @@ FactoryGirl.define do
   end
 
   factory :block do
-    sequence(:name) { |n| "Block #{n}" }
+    sequence(:name) { |n| "Block #{n % 100}" }
     farm
   end
 
   factory :field do
-    sequence(:name) { |n| "Field #{n}" }
+    sequence(:name) { |n| "Field #{n % 100}" }
     acreage 9.8
     soil_class_id 1
     block

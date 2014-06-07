@@ -2,20 +2,19 @@ require 'spec_helper'
 
 describe 'Rain' do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   before(:each) do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe 'index page' do
 
-    let!(:rain) { FactoryGirl.create(:rain) }
+    let!(:rain) { create(:rain) }
     let(:amount) { rain.amount.to_s }
     let(:date) { rain.formatted_date }
 
-    let!(:rain_yesterday) { FactoryGirl.create(:rain, amount: 5.75, date: Date.yesterday) }
+    let!(:rain_yesterday) { create(:rain, amount: 5.75, date: Date.yesterday) }
     let(:amount_yesterday) { rain_yesterday.amount.to_s }
     let(:date_yesterday) { rain_yesterday.formatted_date }
 
@@ -23,7 +22,6 @@ describe 'Rain' do
       visit rains_path
     end
 
-    #it { expect(current_path).to eq(rains_path) }
     describe 'GET rain path' do
       it 'renders the rain index view' do
         expect(current_path).to eq(rains_path)
@@ -52,7 +50,6 @@ describe 'Rain' do
       end
 
       it 'click edit link' do
-        Company.current_id = user.company.id
         page.find('#link_1').click
         expect(current_path).to eq(edit_rain_path(rain_yesterday))
       end
@@ -60,16 +57,12 @@ describe 'Rain' do
 
       context 'create with valid data' do
 
-        let!(:rain_tomorrow) { Rain.new(amount: 2.0, date: Date.tomorrow) }
-        let(:amount_tomorrow) { rain_tomorrow.amount.to_s }
-        let(:date_tomorrow) { rain_tomorrow.formatted_date }
-
-        xit 'create rain' do
-          fill_in 'Date', with: date_tomorrow
-          fill_in 'Amount', with: amount_tomorrow
+        it 'create rain' do
+          fill_in 'Date', with: '5/31/2014'
+          fill_in 'Amount', with: 1.75
           click_button 'Save'
-          expect(page).to have_selector 'td', text: amount_tomorrow
-          expect(page).to have_selector 'td', text: date_tomorrow
+          expect(page).to have_selector 'td', text: '1.75'
+          expect(page).to have_selector 'td', text: 'May 31, 2014'
         end
       end
 
@@ -87,13 +80,12 @@ describe 'Rain' do
 
   describe 'edit page' do
 
-    let!(:rain) { FactoryGirl.create(:rain) }
+    let!(:rain) { create(:rain) }
     let(:amount) { rain.amount.to_s }
     let(:date) { rain.formatted_date }
 
     before(:each) do
       visit edit_rain_path(rain)
-      Company.current_id = user.company.id
     end
 
     it "has correct elements" do
@@ -116,9 +108,6 @@ describe 'Rain' do
         click_button 'Save'
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_update
         expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_update
-
-        #element = find_by_id('amount_0')
-        #puts "element: #{element.text}"
       end
     end
   end

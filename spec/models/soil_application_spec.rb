@@ -46,7 +46,7 @@ describe SoilApplication do
   describe 'validations' do
     it { should validate_presence_of :soil_product_id }
     it { should validate_numericality_of :quantity }
-    it { should validate_presence_of :date }
+    it { should validate_presence_of(:date).with_message /must be a date/ }
   end
 
   describe "method" do
@@ -60,7 +60,8 @@ describe SoilApplication do
 
       it "returns date formatted as date" do
         application.date = '1/8'
-        expect(application.formatted_date).to eq '2014-01-08'
+        year = Time.now.year
+        expect(application.formatted_date).to eq "January 8, #{year}"
       end
     end
   end

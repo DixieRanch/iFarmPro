@@ -69,7 +69,7 @@ describe Farm do
  
     it "should return blocks ordered by name" do
       farm.save
-      second = farm.blocks.create(name: "Inbetween")
+      second = farm.blocks.create(name: "Inbtween")
       third = farm.blocks.create(name: "Last")
       first = farm.blocks.create(name: "First")
       correct_order = [first, second, third]

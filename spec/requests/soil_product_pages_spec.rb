@@ -2,12 +2,11 @@ require 'spec_helper'
 
 describe 'SoilProduct' do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
   subject { page }
 
   before do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   context 'product list' do
@@ -15,7 +14,6 @@ describe 'SoilProduct' do
 
     before do
       visit soil_products_path
-      Company.current_id = user.company.id
     end
 
     it "displays the correct elements" do
@@ -37,7 +35,6 @@ describe 'SoilProduct' do
 
       before do
         visit soil_products_path
-        # Company.current_id = user.company.id
         click_on 'Save'
       end
 
@@ -71,7 +68,6 @@ describe 'SoilProduct' do
 
     before do
       visit edit_soil_product_path(product)
-      Company.current_id = user.company.id
     end
 
     context 'with invalid data' do

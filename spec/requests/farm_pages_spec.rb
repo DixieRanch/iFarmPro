@@ -4,33 +4,25 @@ describe "Farm" do
 
   subject { page }
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   before do
-    sign_in(user)
-    Company.current_id = user.company.id
+    sign_in_new(user)
   end
 
   describe "index page" do
 
-    context "without an exisiting farm" do
-      before { visit farms_path }
-
-      it "has new farm link" do
-        expect(page).to have_title full_title('Farm')
-        expect(page).to have_link('New Farm', href: new_farm_path)
-      end
-    end
-
     context "with an exisiting farm" do
 
-      let!(:farm) { FactoryGirl.create(:farm) }
-
-      before { visit farms_path }
+      before do
+        create(:field)
+        @farm = Farm.first
+        visit farms_path
+      end
 
       it "displays existing farm without new link" do
         expect(page).to have_selector 'title', text: full_title('Farm')
-        expect(page).to have_link farm.name, href: farm_path(farm)
+        expect(page).to have_link @farm.name, href: farm_path(@farm)
         expect(page).not_to have_link('New Farm', href: new_farm_path)
       end
 
@@ -38,9 +30,9 @@ describe "Farm" do
   end
 
   describe "show page" do
-    let!(:farm) { FactoryGirl.create(:farm) }
-    let!(:block) { FactoryGirl.create(:block, farm: farm) }
-    let!(:field) { FactoryGirl.create(:field, block: block) }
+    let!(:farm) { create(:farm) }
+    let!(:block) { create(:block, farm: farm) }
+    let!(:field) { create(:field, block: block) }
 
     before { visit farm_path(farm) }
 
@@ -77,34 +69,32 @@ describe "Farm" do
       end.to change(Farm, :count).by(1)
     end
 
-    context 'js tests', :slow do
-
-      it "has js to add form fields", js: true do
-        init_well_count = IrrigationWell.count
-        init_block_count = Block.count
-        init_field_count = Field.count
-        fill_in "Farm Name", with: new_farm
-        select('Fabian Garcia Research Center', from: 'Weather Station')
-        click_on 'Add Irrigation Well'
-        fill_in 'Well Name', with: 'Pump 1'
-        click_on 'Add Block'
-        fill_in 'Block', with: '1'
-        click_on 'Add Field'
-        fill_in  'Field', with: 'A'
-        click_button 'Save'
-        Company.current_id = user.company.id
-        expect(IrrigationWell.count).to be > init_well_count
-        expect(Block.count).to be > init_block_count
-        expect(Field.count).to be > init_field_count
-      end
+    it "has js to add form fields", js: true, slow: true do
+      Company.current_id = user.company.id
+      init_well_count = IrrigationWell.count
+      init_block_count = Block.count
+      init_field_count = Field.count
+      fill_in "Farm Name", with: new_farm
+      select('Fabian Garcia Research Center', from: 'Weather Station')
+      click_on 'Add Irrigation Well'
+      fill_in 'Well Name', with: 'Pump 1'
+      click_on 'Add Block'
+      fill_in 'Block', with: '1'
+      click_on 'Add Field'
+      fill_in  'Field', with: 'A'
+      click_button 'Save'
+      Company.current_id = user.company.id
+      expect(IrrigationWell.count).to be > init_well_count
+      expect(Block.count).to be > init_block_count
+      expect(Field.count).to be > init_field_count
     end
   end
 
   describe "edit page" do
-    let!(:farm) { FactoryGirl.create(:farm) }
-    let!(:block) { FactoryGirl.create(:block, farm: farm) }
-    let!(:field) { FactoryGirl.create(:field, block: block) }
-    let!(:well) { FactoryGirl.create(:irrigation_well, farm: farm) }
+    let!(:farm) { create(:farm) }
+    let!(:block) { create(:block, farm: farm) }
+    let!(:field) { create(:field, block: block) }
+    let!(:well) { create(:irrigation_well, farm: farm) }
 
     before { visit edit_farm_path(farm) }
 
@@ -134,8 +124,8 @@ describe "Farm" do
 
     context "with valid information" do
       let(:new_name) { "New Name" }
-      let(:new_block) { "New Block" }
-      let(:new_field) { "New Field" }
+      let(:new_block) { "NewBlock" }
+      let(:new_field) { "NewField" }
       let(:new_well) { "New Well" }
       let(:new_pod_code) { "New Pod Code" }
       let(:submit) { "Save" }
@@ -145,8 +135,7 @@ describe "Farm" do
         fill_in "POD Code", with: new_pod_code
         fill_in "Block", with: new_block
         fill_in "Field", with: new_field
-        # How can I make capybara find the soil_class select
-        # select('6-8cm', from: 'soil_class_id')
+        select('28-30cm', from: 'Soil water')
         click_button submit
       end
 
@@ -156,6 +145,7 @@ describe "Farm" do
         expect(farm.reload.name).to eq new_name
         expect(block.reload.name).to eq new_block
         expect(field.reload.name).to eq new_field
+        expect(field.reload.soil_class.name).to eq '28-30cm'
         expect(well.reload.name).to eq new_well
         expect(well.reload.pod_code).to eq new_pod_code
       end

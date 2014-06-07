@@ -14,7 +14,7 @@
 require 'spec_helper'
 
 describe Irrigation do
-  valid_attributes = { time: Time.now }
+  valid_attributes = { time: '5/7/2013 19:00' }
   let(:company) { build_stubbed(Company) }
   let(:field) { create(:field) }
   let(:irrigation) { field.irrigations.build(valid_attributes) }
@@ -63,6 +63,22 @@ describe Irrigation do
   end
 
   describe "method" do
+
+    describe "self.formatted_date" do
+      
+      it "formats date without time" do
+        date = irrigation.formatted_date
+        expect(date).to eq 'May 7, 2013'
+      end
+    end
+
+    describe "self.formatted_time" do
+      it "formats time" do
+        time = irrigation.formatted_time
+        expect(time).to eq 'May 7, 2013 19:00'
+      end
+      
+    end
 
     describe "self.next_irrigations" do
       let(:next_irrigations) { Irrigation.next_irrigations }

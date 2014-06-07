@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140525021058) do
+ActiveRecord::Schema.define(version: 20140607031016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20140525021058) do
     t.integer  "company_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.datetime "date"
+    t.date     "date"
   end
 
   add_index "soil_applications", ["company_id"], name: "index_soil_applications_on_company_id", using: :btree

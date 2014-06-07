@@ -6,16 +6,15 @@ describe "SoilApplication" do
 
   before do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe "index page" do
 
     before do
-      visit soil_applications_path
     end
 
     it "has correct elements" do
+      visit soil_applications_path
       expect(page).to have_title full_title 'Soil Applications'
       expect(page).to have_selector 'h1', text: 'Current Applications'
     end
@@ -24,7 +23,6 @@ describe "SoilApplication" do
     describe "current applications list" do
 
       before do
-        Company.current_id = user.company.id
         @app = create(:soil_application)
         visit soil_applications_path
       end
@@ -33,7 +31,6 @@ describe "SoilApplication" do
 
       it "displays soil app fields" do
         expect(page).to have_selector 'td', text: @app.formatted_date
-        expect(page).not_to have_selector 'td', text: @app.date.to_s(:rfc822)
         expect(page).to have_selector 'td', text: @app.field.name_with_block
         expect(page).to have_selector 'td', text: @app.soil_product.name
         expect(page).to have_selector 'td', text: @app.quantity
@@ -44,7 +41,6 @@ describe "SoilApplication" do
 
     describe "new application form" do
       before do
-        Company.current_id = user.company.id
         create(:field, name: '1', block: create(:block, name: '1'))
         create(:soil_product, name: '32-0-0-0')
         visit soil_applications_path
@@ -65,7 +61,7 @@ describe "SoilApplication" do
       context 'with valid data' do
 
         before do
-          select('1-1', from: 'soil_application_field_id')
+          select '1-1', from: 'soil_application_field_id'
           fill_in 'Date', with: '4/1'
           select '32-0-0-0', from: 'soil_application_soil_product_id'
           fill_in 'Quantity', with: 150
@@ -74,6 +70,8 @@ describe "SoilApplication" do
 
         it "displays the new record with success" do
           expect(page).to have_selector 'td', text: '1-1'
+          year = Time.now.year
+          expect(page).to have_selector 'td', text: "April 1, #{year}"
           expect(page).to have_css '.alert-success'
         end
       end
@@ -83,6 +81,7 @@ describe "SoilApplication" do
   describe "edit page" do
     before do
       @app = create(:soil_application)
+      create(:field, name: 'One', block: create(:block, name: 'This'))      
       visit soil_applications_path
       click_link 'edit'
     end
@@ -100,8 +99,10 @@ describe "SoilApplication" do
 
       it "updates soil application with success" do
         fill_in 'Date', with: '1/4'
+        select('This-One', from: 'soil_application_field_id')
         click_button 'Save'
-        expect(page).to have_selector 'td', text: '2014-01-04'  
+        year = Time.now.year
+        expect(page).to have_selector 'td', text: "January 4, #{year}"
         expect(page).to have_css '.alert-success'
       end
     end

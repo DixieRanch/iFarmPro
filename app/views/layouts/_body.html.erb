@@ -8,7 +8,7 @@
       <div class="col-xs-12 col-sm-9">
         <div class="row">
           <% flash.each do |key, value| %>
-            <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+            <%= content_tag(:div, value.html_safe, class: "alert alert-#{key}") %>
           <% end %>
         </div>
         <div class="row">
@@ -23,7 +23,7 @@
       </div>
     <% else %>
       <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+        <%= content_tag(:div, value.html_safe, class: "alert alert-#{key}") %>
       <% end %>
       <%= yield %>
     <% end %>

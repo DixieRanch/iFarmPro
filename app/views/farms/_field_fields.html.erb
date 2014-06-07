@@ -1,9 +1,11 @@
 <fieldset class='field-fieldset'>
   <%= f.input :name, label: 'Field', label_html: {hidden: true},
-              wrapper_html: {class: "col-xs-3 col-sm-4 col-md-4 nopadxs"} %>
+              wrapper_html: 
+                      {class: "col-xs-6 col-sm-4 col-md-3 col-lg-2 nopadxs"} %>
   <%= f.association :soil_class,
               collection: SoilClass.order("aw"),
               include_blank: false,
-              label: false,
+              label: 'Soil water',
+              label_html: {hidden: true},
               wrapper_html: {class: "col-xs-6 col-sm-4 col-md-4 nopadxs"} %>
 </fieldset>

@@ -21,6 +21,8 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  ActiveRecord::Migration.maintain_test_schema!
+
   # Truncate database on spork startup, except seed data
   DatabaseCleaner.clean_with :truncation, 
               { except: %w[ets kcs current_ets weather_stations soil_classes] }

@@ -20,6 +20,6 @@ class Block < ActiveRecord::Base
 
   validates :name, presence: true,
                     uniqueness: { scope: :farm_id },
-                    length: { maximum: 10 }
+                    length: { maximum: 8 }
   validates :company_id, presence: true
 end

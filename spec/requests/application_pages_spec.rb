@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'ApplicationPages' do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
   subject { page }
 
   before do
@@ -18,7 +18,6 @@ describe 'ApplicationPages' do
     context 'when signed in' do
       before do
         sign_in(user)
-        Company.current_id = user.company.id
         @farm = Farm.first
       end
 

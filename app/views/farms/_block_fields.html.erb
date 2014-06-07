@@ -1,12 +1,12 @@
 <fieldset class='block-fieldset'>
   <%= f.input :name, label: 'Block', label_html: {hidden: true},
-    wrapper_html: {class: "col-xs-4 col-sm-3 nopadxs"} %>
-  <fieldset class='col-xs-offset-4 col-sm-offset-3 col-md-offset-2'>
+    wrapper_html: {class: "col-xs-4 col-sm-3 col-lg-2 nopadxs"} %>
+  <fieldset>
     <%= f.simple_fields_for :fields do |builder| %>
         <%= render 'field_fields', f: builder %>
     <% end %>
   </fieldset>
-  <div class="col-xs-offset-4 col-sm-offset-3">
+  <div class="col-xs-offset-4 col-sm-offset-3 col-lg-offset-2">
     <%= link_to_add_fields "Add Field", f, :fields %>
   </div>
 </fieldset>

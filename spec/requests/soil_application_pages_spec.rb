@@ -6,16 +6,15 @@ describe "SoilApplication" do
 
   before do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe "index page" do
 
     before do
-      visit soil_applications_path
     end
 
     it "has correct elements" do
+      visit soil_applications_path
       expect(page).to have_title full_title 'Soil Applications'
       expect(page).to have_selector 'h1', text: 'Current Applications'
     end
@@ -24,7 +23,6 @@ describe "SoilApplication" do
     describe "current applications list" do
 
       before do
-        Company.current_id = user.company.id
         @app = create(:soil_application)
         visit soil_applications_path
       end
@@ -43,7 +41,6 @@ describe "SoilApplication" do
 
     describe "new application form" do
       before do
-        Company.current_id = user.company.id
         create(:field, name: '1', block: create(:block, name: '1'))
         create(:soil_product, name: '32-0-0-0')
         visit soil_applications_path
@@ -84,6 +81,7 @@ describe "SoilApplication" do
   describe "edit page" do
     before do
       @app = create(:soil_application)
+      create(:field, name: 'One', block: create(:block, name: 'This'))      
       visit soil_applications_path
       click_link 'edit'
     end
@@ -101,6 +99,7 @@ describe "SoilApplication" do
 
       it "updates soil application with success" do
         fill_in 'Date', with: '1/4'
+        select('This-One', from: 'soil_application_field_id')
         click_button 'Save'
         year = Time.now.year
         expect(page).to have_selector 'td', text: "January 4, #{year}"

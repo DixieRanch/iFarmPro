@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Company" do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) {create(:user) }
   subject { page }
 
   describe "signup page" do

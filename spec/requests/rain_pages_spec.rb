@@ -6,7 +6,6 @@ describe 'Rain' do
 
   before(:each) do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe 'index page' do
@@ -51,7 +50,6 @@ describe 'Rain' do
       end
 
       it 'click edit link' do
-        Company.current_id = user.company.id
         page.find('#link_1').click
         expect(current_path).to eq(edit_rain_path(rain_yesterday))
       end
@@ -88,7 +86,6 @@ describe 'Rain' do
 
     before(:each) do
       visit edit_rain_path(rain)
-      Company.current_id = user.company.id
     end
 
     it "has correct elements" do
@@ -111,9 +108,6 @@ describe 'Rain' do
         click_button 'Save'
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_update
         expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_update
-
-        #element = find_by_id('amount_0')
-        #puts "element: #{element.text}"
       end
     end
   end

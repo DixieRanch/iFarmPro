@@ -27,10 +27,8 @@ describe "Authentication" do
     end
 
     context "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { create(:user) }
       before do
-        Company.current_id = user.company.id
-        # @farm = FactoryGirl.create(:farm)
         fill_in "Email",    with: user.email.upcase
         fill_in "Password", with: user.password
         click_button "Sign in"
@@ -47,7 +45,7 @@ describe "Authentication" do
   end
 
   describe "authorization" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
 
     context "for non-signed-in users" do
 
@@ -81,7 +79,10 @@ describe "Authentication" do
 
     context "for correct company" do
       
-      it "should return nil for Company.current_id outside of methods" do
+      it "resets Company.current_id after every" do
+        sign_in_new(user)
+        expect(Company.current_id).not_to be_nil
+        visit root_path
         expect(Company.current_id).to be_nil
       end
     end   

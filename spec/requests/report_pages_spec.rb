@@ -4,11 +4,10 @@ describe "ReportPages" do
  
   subject { page }
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   before do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe "show page" do
@@ -27,7 +26,7 @@ describe "ReportPages" do
 
       context "with data" do
        
-        let!(:irrigation) { FactoryGirl.create(:irrigation) }
+        let!(:irrigation) { create(:irrigation) }
         let(:current_irrigation) { irrigation.time.to_date.to_s(:long) }
         let(:next_irrigation) do
           et = Et.order("doy")

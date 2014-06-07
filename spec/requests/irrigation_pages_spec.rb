@@ -2,20 +2,19 @@ require 'spec_helper'
 
 describe 'Irrigation' do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
   subject { page }
 
   before do
     sign_in(user)
-    Company.current_id = user.company.id
   end
 
   describe 'index page' do
 
     describe 'previous irrigations list' do
-      let!(:irrigation) { FactoryGirl.create(:irrigation) }
+      let!(:irrigation) { create(:irrigation) }
       let!(:new_irrigation) do
-        FactoryGirl.create(:irrigation, time: irrigation.time + 1.day)
+        create(:irrigation, time: irrigation.time + 1.day)
       end
       let(:field_name) { irrigation.field.name_with_block }
       let(:time) { new_irrigation.formatted_time }
@@ -31,15 +30,14 @@ describe 'Irrigation' do
         first_irrigation = page.body.index(irrigation.formatted_time)
         second_irrigation = page.body.index(new_irrigation.formatted_time)
         expect(second_irrigation).to be < first_irrigation
-        Company.current_id = user.company.id
         click_link 'edit'
         expect(page).to have_field 'irrigation[time]', with: time
       end
     end
 
     describe 'new irrigation form' do
-      let!(:block) { FactoryGirl.create(:block) }
-      let!(:field) { FactoryGirl.create(:field, block: block) }
+      let!(:block) { create(:block) }
+      let!(:field) { create(:field, block: block) }
 
       before do
         
@@ -48,7 +46,6 @@ describe 'Irrigation' do
       context 'with invalid data' do
         before do
           visit irrigations_path
-          Company.current_id = user.company.id
           click_button 'Save'
         end
 
@@ -61,8 +58,7 @@ describe 'Irrigation' do
       context 'with valid data' do
 
         before do
-          block = FactoryGirl.create(:block, name: '1')
-          FactoryGirl.create(:field, name: '1', block: block)
+          create(:field, name: '1', block: create(:block, name: '1'))
           visit irrigations_path
           select('1-1', from: 'irrigation_field_id')
           fill_in 'irrigation_time', with: '4/1 14:50'
@@ -79,7 +75,7 @@ describe 'Irrigation' do
       context 'js tests', :slow do
 
         it "has js for adding meter readings", js: true do
-          FactoryGirl.create(:irrigation_well)
+          create(:irrigation_well)
           init_meter_count = MeterReading.count
           visit irrigations_path
           fill_in 'irrigation_time', with: '4/1/2013 14:50'
@@ -95,18 +91,19 @@ describe 'Irrigation' do
   end
 
   describe 'edit page' do
-    let(:irrigation) { FactoryGirl.create(:irrigation) }
-    let!(:meter_reading) { FactoryGirl.create(:meter_reading) }
+    let(:irrigation) { create(:irrigation) }
+    let!(:meter_reading) { create(:meter_reading) }
     let(:time) { '4/1/2013 14:50' }
-    before do      
+    before do
+      create(:field, name: 'One', block: create(:block, name: 'This'))     
       visit edit_irrigation_path(irrigation)
-      Company.current_id = user.company.id
     end
 
     context 'with valid data' do
 
       it 'updates the irrigation and displays success' do
         fill_in 'irrigation_time', with: time
+        select('This-One', from: 'irrigation_field_id')
         click_button 'Save'
         expect(page).to have_selector 'td', text: 'April 1, 2013 14:50'
         expect(page).to have_css '.alert-success'

@@ -5,8 +5,8 @@ describe "UserPages" do
 
   describe "authorization" do
     context "for wrong user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      let(:user) { create(:user) }
+      let(:wrong_user) { create(:user, email: "wrong@example.com") }
       before { sign_in user }
 
       context "visiting Users#edit page" do
@@ -23,12 +23,11 @@ describe "UserPages" do
   end
 
   describe "new" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:attr) { FactoryGirl.attributes_for(:user) }
+    let(:user) { create(:user) }
+    let(:attr) { attributes_for(:user) }
     before do
       sign_in user
       visit new_user_path
-      Company.current_id = user.company.id
     end
 
     context "with invalid information" do
@@ -73,7 +72,7 @@ describe "UserPages" do
   end
 
   describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
     before do
       sign_in user
       visit edit_user_path(user)

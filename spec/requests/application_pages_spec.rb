@@ -95,7 +95,7 @@ describe 'ApplicationPages' do
       click_button 'Create my account'
     end
     
-    it "goes from initial setup to irrigation schedule", {js:true} do
+    it "goes from initial setup to irrigation schedule", {slow: true, js: true} do
 
       # Initial sign up
 

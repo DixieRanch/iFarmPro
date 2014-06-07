@@ -39,7 +39,8 @@ describe Rain do
     it { should have_db_column :company_id }
 
     it 'formatted date' do
-      expect(rain.formatted_date).to eq 'May 1, 2013'
+      rain.date = '4/1'
+      expect(rain.formatted_date).to eq 'April 1, 2014'
     end
 
     it 'empty date' do
@@ -48,7 +49,7 @@ describe Rain do
   end
 
   describe 'validation' do
-    it { should validate_presence_of :date }
+    it { should validate_presence_of(:date).with_message /must be a date/ }
     it { should validate_uniqueness_of(:date).scoped_to :farm_id }
     it { should validate_presence_of :amount }
     it { should validate_numericality_of :amount }

@@ -4,7 +4,7 @@ class Rain < ActiveRecord::Base
 
   belongs_to :farm
 
-  validates :date, presence: true,
+  validates :date, presence: {message: 'must be a date'},
                     uniqueness: { scope: :farm_id }
   validates :amount, presence: true,
                       numericality: true
@@ -13,5 +13,13 @@ class Rain < ActiveRecord::Base
   def formatted_date
     date.to_s(:long).squeeze(" ") if date
   end
+
+  def date=(value)
+    self[:date] = Date.parse(value)
+  rescue ArgumentError, TypeError
+    self[:date] = value
+  end
+
+private
 
 end

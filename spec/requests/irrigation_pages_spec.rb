@@ -72,22 +72,19 @@ describe 'Irrigation' do
         end
       end
 
-      context 'js tests', :slow do
-
-        it "has js for adding meter readings", js: true do
-          create(:irrigation_well)
-          init_meter_count = MeterReading.count
-          visit irrigations_path
-          fill_in 'irrigation_time', with: '4/1/2013 14:50'
-          click_on 'Add Meter Reading'
-          fill_in 'Start', with: '123456'
-          fill_in 'Stop', with: '654321'
-          click_button 'Save'
-          Company.current_id = user.company.id
-          expect(MeterReading.count).to be > init_meter_count
-        end
+      it "has js for adding meter readings", js: true, slow: true do
+        create(:irrigation_well)
+        init_meter_count = MeterReading.count
+        visit irrigations_path
+        fill_in 'irrigation_time', with: '4/1/2013 14:50'
+        click_on 'Add Meter Reading'
+        fill_in 'Start', with: '123456'
+        fill_in 'Stop', with: '654321'
+        click_button 'Save'
+        Company.current_id = user.company.id
+        expect(MeterReading.count).to be > init_meter_count
       end
-    end
+  end
   end
 
   describe 'edit page' do

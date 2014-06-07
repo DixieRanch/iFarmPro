@@ -37,7 +37,7 @@ gem 'bootstrap-sass',     '~> 3.1.1'
 
 
 group :test do
-  gem 'capybara',           '~> 2.2.1'
+  gem 'capybara',           '~> 2.3.0'
   gem 'rb-inotify',         '~> 0.9.4'
   gem 'libnotify',          '~> 0.8.3'
   gem 'factory_girl_rails', '~> 4.4.1'

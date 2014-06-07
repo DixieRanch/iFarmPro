@@ -49,10 +49,10 @@ describe 'ApplicationPages' do
         should have_selector 'title', text: full_title('Help')
         click_link "Sign in"
         should have_selector 'title', text: full_title('Sign in')
-        click_link "About"
-        should have_selector 'title', text: full_title('About')
-        click_link "Contact"
-        should have_selector 'title', text: full_title('Contact')
+        # click_link "About"
+        # should have_selector 'title', text: full_title('About')
+        # click_link "Contact"
+        # should have_selector 'title', text: full_title('Contact')
         click_link "iFarmPro"
         should have_selector 'title', text: full_title('')
         click_link "Sign up now!"
@@ -72,10 +72,10 @@ describe 'ApplicationPages' do
         should have_selector 'title', text: full_title('Edit login')
         click_link "Add User"
         should have_selector 'title', text: full_title('Add User')
-        click_link "About"
-        should have_selector 'title', text: full_title('About')
-        click_link "Contact"
-        should have_selector 'title', text: full_title('Contact')
+        # click_link "About"
+        # should have_selector 'title', text: full_title('About')
+        # click_link "Contact"
+        # should have_selector 'title', text: full_title('Contact')
         click_link "iFarmPro"
         should have_title full_title 'Next Irrigations'
         click_link "Sign out"

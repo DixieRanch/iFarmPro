@@ -10,10 +10,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 ActiveRecord::Migration.maintain_test_schema!
 
-# Truncate database on spork startup, except seed data
-DatabaseCleaner.clean_with :truncation, 
-            { except: %w[ets kcs current_ets weather_stations soil_classes] }
-
 RSpec.configure do |config|
 
   # Factory Girl shortened syntax; FactoryGirl.create()-> create(), etc.
@@ -72,6 +68,8 @@ RSpec.configure do |config|
   # Defer garbage collection
   config.before(:all) { DeferredGarbageCollection.start }
   config.after(:all) { DeferredGarbageCollection.reconsider }
+
+  config.order = 'random'
 end
 
 Capybara.configure do |config|

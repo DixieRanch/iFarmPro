@@ -20,8 +20,6 @@ end
 group :development, :test do
   gem 'rspec-rails',        '~> 2.14.2'
   gem 'guard-rspec',        '~> 4.2.9'
-  gem 'guard-spork',        '~> 1.5.0'
-  gem 'spork-rails',        '~> 4.0.0'  
   gem 'annotate',           '~> 2.6.3'
   gem 'launchy'
 end

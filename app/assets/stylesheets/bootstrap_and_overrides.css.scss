@@ -1,4 +1,11 @@
+// Variables
+
+$brand-primary: #0A8E42;
+$link-color: $brand-primary;
+$link-hover-color: darken($link-color, 4%);
+
 @import "bootstrap";
+
 body { padding-top: 60px; }
 
 @media(max-width: $screen-xs-max){
@@ -8,7 +15,7 @@ body { padding-top: 60px; }
   }
 }
 
-// Navbar
+// Color ideas
 
 // Forest Green
 // #238E23
@@ -19,18 +26,54 @@ body { padding-top: 60px; }
 // Rustoleum Dark Hunter (Dixie) Green
 // #024312
 
+//  Majoo green theme
+// #0A8E42
+// hover #087135
 
-.navbar-brand.btn{
-  color: #fff;
-  background-color: #215E21;
-  border-color: #4cae4c;
+// Brand
+
+body > .navbar .navbar-brand{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  padding-right: 25px;
+  padding-left: 0;
+  margin-left: 20px;
+  // float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: $brand-primary;
+  text-shadow: 0 1px 0 rgba(0,0,0,.1), 0 0 30px rgba(0,0,0,.125);
+  -webkit-transition: all .2s linear;
+     -moz-transition: all .2s linear;
+          transition: all .2s linear;
 }
 
-.navbar-brand.btn:hover{
-  color: #fff;
-  background-color: #238E23;
-  border-color: #398439; 
+body > .navbar .navbar-brand:hover{
+  color: darken($brand-primary, 5%);
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(0,0,0,.4), 0 0 30px rgba(139,197,62,1);
 }
+
+// Buttons
+
+.btn-primary:hover{
+  background-color: darken($brand-primary, 4%)
+}
+
+// Navbar
+
+
+
+// .navbar-brand.btn{
+//   color: #fff;
+//   background-color: $brand-primary;
+//   border-color: #4cae4c;
+// }
+
+// .navbar-brand.btn:hover{
+//   color: #fff;
+//   background-color: darken($brand-primary, 4%);
+//   border-color: #398439; 
+// }
 
 
 

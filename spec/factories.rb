@@ -60,7 +60,10 @@ FactoryGirl.define do
 
   factory :soil_product do
     sequence(:name) { |n| "Product #{n}" }
-    # name "UAN"
+    n 16
+    p 8
+    k 3
+    s 4
   end
 
   factory :soil_application do
@@ -68,5 +71,6 @@ FactoryGirl.define do
     quantity 175
     field
     soil_product
+    soil_application_unit_id 1
   end
 end

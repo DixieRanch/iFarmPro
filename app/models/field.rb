@@ -38,7 +38,7 @@ class Field < ActiveRecord::Base
     total_nutrient = 0
     current_apps = soil_applications.where("extract(year from date) = ?", year)
     current_apps.each do |soil_app|
-      units = soil_app.soil_product.send(nutrient) * soil_app.quantity / 100
+      units = soil_app.soil_product.send(nutrient).to_f * soil_app.quantity / 100
       density = soil_app.soil_application_unit.density
       total_nutrient +=  units * density / acreage
     end

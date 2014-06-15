@@ -42,6 +42,7 @@ describe "Farm" do
       expect(page).to have_selector 'td', text: block.name
       expect(page).to have_selector 'td', text: field.name
       expect(page).to have_selector 'td', text: field.soil_class.name
+      expect(page).to have_selector 'td', text: field.acreage
       expect(page).to have_link 'Back to Farms', href: farms_path
       expect(page).to have_link 'Edit', href: edit_farm_path(farm)      
     end
@@ -82,6 +83,7 @@ describe "Farm" do
       fill_in 'Block', with: '1'
       click_on 'Add Field'
       fill_in  'Field', with: 'A'
+      fill_in 'Acres', with: 7.5
       click_button 'Save'
       Company.current_id = user.company.id
       expect(IrrigationWell.count).to be > init_well_count

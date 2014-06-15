@@ -36,7 +36,6 @@ class Field < ActiveRecord::Base
 
   def get_yearly_amount_of(nutrient, year)
     total_nutrient = 0
-    # boy = Date.new(year)
     current_apps = soil_applications.where("extract(year from date) = ?", year)
     current_apps.each do |soil_app|
       units = soil_app.soil_product.send(nutrient) * soil_app.quantity / 100

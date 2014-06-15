@@ -9,6 +9,7 @@
             <th>Block</th>
             <th>Field</th>
             <th>Soil Type</th>
+            <th>Acres</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,15 @@
                   <% block.fields.each do |field| %>
                     <tr>
                       <td><%= field.soil_class.name %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
+              <td>
+                <table id="field_acreage_table">
+                  <% block.fields.each do |field| %>
+                    <tr>
+                      <td><%= field.acreage %></td>
                     </tr>
                   <% end %>
                 </table>

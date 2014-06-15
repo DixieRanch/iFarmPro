@@ -45,7 +45,7 @@ class SoilApplicationsController < ApplicationController
     end
 
     def permitted_params
-      [:quantity, :soil_product_id, :date]
+      [:quantity, :soil_product_id, :date, :soil_application_unit_id]
     end
 
     def field

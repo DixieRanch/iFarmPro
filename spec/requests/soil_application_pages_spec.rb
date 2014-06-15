@@ -65,6 +65,7 @@ describe "SoilApplication" do
           fill_in 'Date', with: '4/1'
           select '32-0-0-0', from: 'soil_application_soil_product_id'
           fill_in 'Quantity', with: 150
+          select 'lbs', from: 'soil_application_soil_application_unit_id'
           click_button 'Save'
         end
 

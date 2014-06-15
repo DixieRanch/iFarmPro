@@ -33,8 +33,10 @@ describe 'ApplicationPages' do
         expect(page).to have_title full_title('Soil Products')
         click_link 'Soil Applications'
         expect(page).to have_title full_title 'Soil Applications'
-        click_link 'Irrigation'
-        expect(page).to have_selector 'title', text: full_title('Next Irrigation')
+        click_link 'Schedule'
+        expect(page).to have_selector 'title', text: full_title('Schedule')
+        click_link 'Nutrition'
+        expect(page).to have_title full_title 'Nutrition'
       end
     end
   end
@@ -77,7 +79,7 @@ describe 'ApplicationPages' do
         # click_link "Contact"
         # should have_selector 'title', text: full_title('Contact')
         click_link "iFarmPro"
-        should have_title full_title 'Next Irrigations'
+        should have_title full_title 'Schedule'
         click_link "Sign out"
         should have_selector 'title', text: full_title('')
       end
@@ -133,7 +135,7 @@ describe 'ApplicationPages' do
       click_button 'Save'
       expect(page).to have_title full_title 'First Farm'
       click_link 'iFarmPro'
-      expect(page).to have_title full_title 'Next Irrigations'
+      expect(page).to have_title full_title 'Schedule'
 
       # Sign in after completing setup
 
@@ -143,7 +145,7 @@ describe 'ApplicationPages' do
       fill_in 'Email', with: 'user@example.com'
       fill_in 'Password', with: 'password'
       click_button 'Sign in'
-      expect(page).to have_title full_title 'Next Irrigations'      
+      expect(page).to have_title full_title 'Schedule'      
     end
 
     it "redirects to farm setup until complete" do

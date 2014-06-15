@@ -8,4 +8,8 @@ class Report < ActiveRecord::Base
   def self.next_irrigations
     Irrigation.next_irrigations.sort_by(&:next_irrigation)
   end
+
+  def self.fertilizer
+    Field.all.sort_by(&:name_with_block)
+  end
 end

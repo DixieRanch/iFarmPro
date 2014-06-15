@@ -14,6 +14,8 @@
 
 class Field < ActiveRecord::Base
 
+  # attr_accessor :current_n
+
   belongs_to :block
   belongs_to :soil_class
   has_many :irrigations, -> { order :time }
@@ -30,5 +32,16 @@ class Field < ActiveRecord::Base
 
   def name_with_block
     block.name + "-" + name
+  end
+
+  def get_yearly_amount_of(nutrient, year)
+    total_nutrient = 0
+    current_apps = soil_applications.where("extract(year from date) = ?", year)
+    current_apps.each do |soil_app|
+      units = soil_app.soil_product.send(nutrient) * soil_app.quantity / 100
+      density = soil_app.soil_application_unit.density
+      total_nutrient +=  units * density / acreage
+    end
+    total_nutrient.to_f
   end
 end

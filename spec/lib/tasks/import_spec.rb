@@ -8,7 +8,7 @@ require 'rake'
 # http://pivotallabs.com/how-i-test-rake-tasks/
 # http://www.philsergi.com/2009/02/testing-rake-tasks-with-rspec.html
 
-describe 'app lib tasks import.rake', :slow do
+describe 'app lib tasks import.rake', :slow  do
 
   before(:all) do
     @agent = Mechanize.new
@@ -99,6 +99,10 @@ describe 'app lib tasks import.rake', :slow do
     File.exist?('db/soil_class.csv').should == true
   end
 
+  it "has file db/soil_application_unit.csv" do
+    File.exist?('db/soil_application_unit.csv').should == true
+  end
+
   it 'should load ets table with data from db/et0.csv' do
     Rake::Task['import:et'].invoke
     file = 'db/et0.csv'
@@ -147,6 +151,17 @@ describe 'app lib tasks import.rake', :slow do
       et = SoilClass.find_by(name: row['name'])
       row[1] = BigDecimal(row[1]) unless row[1].nil?
       expect(et.attributes).to include row.to_hash
+    end
+  end
+
+  it "loads soil_applicaiton_units table with data from db/soil_application_unit.csv" do
+    Rake::Task['import:soil_application_unit'].invoke
+    file = 'db/soil_application_unit.csv'
+
+    CSV.foreach(file, headers: true) do |row|
+      unit = SoilApplicationUnit.find_by(name: row['name'])
+      row[1] = BigDecimal(row[1]) unless row[1].nil?
+      expect(unit.attributes).to include row.to_hash
     end
   end
 end

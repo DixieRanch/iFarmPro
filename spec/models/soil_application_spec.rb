@@ -12,7 +12,7 @@ describe SoilApplication do
   before do
     Company.current_id = company.id
     @valid_attributes = { quantity: 150, soil_product_id: product.id, 
-                          date: '01/01/2014' }
+                          date: '01/01/2014', soil_application_unit_id: 1 }
   end
 
   it { should be_valid }
@@ -41,12 +41,14 @@ describe SoilApplication do
     it { should have_db_column :soil_product_id }
     it { should have_db_column :quantity }
     it { should have_db_column :date }
+    it { should have_db_column :soil_application_unit_id }
   end
 
   describe 'validations' do
     it { should validate_presence_of :soil_product_id }
     it { should validate_numericality_of :quantity }
     it { should validate_presence_of(:date).with_message /must be a date/ }
+    it { should validate_presence_of :soil_application_unit_id }
   end
 
   describe "method" do

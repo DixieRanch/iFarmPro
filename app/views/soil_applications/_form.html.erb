@@ -15,7 +15,12 @@
                 include_blank: false,
                 wrapper_html: {class: 'col-xs-6 col-sm-4 col-md-3'} %>
     <%= f.input :quantity, as: :tel, 
-                wrapper_html: {class: 'col-xs-2 col-sm-2 nopadxs'} %>
+                wrapper_html: {class: 'col-xs-2 col-sm-2 col-lg-1 nopadxs'} %>
+    <%= f.association :soil_application_unit,
+                collection: SoilApplicationUnit.all.sort_by(&:name),
+                include_blank: false,
+                label: 'Units',
+                wrapper_html: {class: 'col-xs-3 nopadxs'} %>
   </fieldset>
   <%= f.button :submit, 'Save', class: 'btn-primary' %>
 <% end %>

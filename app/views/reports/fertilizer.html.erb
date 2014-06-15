@@ -1,0 +1,35 @@
+<% provide :title, "Nutrition" %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Nutrition Report</h1></div>
+    <table id="fertilizer_report" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>N</th>
+          <th>P</th>
+          <th>K</th>
+          <th>S</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @report.each do |field| %>
+          <% if [nil, 0].include? field.acreage %>
+            <tr>
+              <td><%= field.name_with_block %></td>
+              <td colspan='4'>Update field acreage from Farms menu.</td>
+            </tr>
+          <% else %>
+            <tr>
+              <td><%= field.name_with_block %></td>
+              <td><%= field.get_yearly_amount_of(:n, @year).round.to_s %></td>
+              <td><%= field.get_yearly_amount_of(:p, @year).round.to_s %></td>
+              <td><%= field.get_yearly_amount_of(:k, @year).round.to_s %></td>
+              <td><%= field.get_yearly_amount_of(:s, @year).round.to_s %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

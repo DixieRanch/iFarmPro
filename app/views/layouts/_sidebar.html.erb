@@ -10,7 +10,10 @@
                 soil_applications_path, 
                 class: "list-group-item" %>
     <li class="nav-header list-group-item">Reports</li>
-    <%= link_to 'Irrigation', 
+    <%= link_to 'Schedule', 
                 report_path(:next_irrigations), 
                 class: "list-group-item" %>
+    <%= link_to 'Nutrition',
+                report_path(:fertilizer),
+                class: 'list-group-item' %>
 </ul>

@@ -71,6 +71,6 @@ FactoryGirl.define do
     quantity 175
     field
     soil_product
-    soil_application_unit_id 1
+    soil_application_unit_id 2
   end
 end

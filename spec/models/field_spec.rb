@@ -93,5 +93,26 @@ describe Field do
         expect(field.name_with_block).to eq block_field_name
       end
     end
+
+    context ".get_yearly_amount_of(nutrient, year)"  do
+      
+      it "calculates given years applied nutrients" do
+        field = create(:field, acreage: 5)
+        soil_product = create(:soil_product, n: 16, p: 8, k: 3, s: 4)
+        2.times {create(:soil_application, 
+                       soil_product: soil_product, quantity: 100, field: field)}
+        # Previous years application - should not be included
+        create(:soil_application, date: Date.today - 1.year, field: field)
+        year = Date.today.year
+        # n = 200 gal * 11 lb/gal * 16% N / 5 acres -> 70.4
+        expect(field.get_yearly_amount_of(:n, year)).to eq 70.4
+        # p = 200 gal * 11 lb/gal * 8% P / 5 acres -> 35.2
+        expect(field.get_yearly_amount_of(:p, year)).to eq 35.2
+        # k = 200 gal * 11 lb/gal * 3% P / 5 acres -> 13.2
+        expect(field.get_yearly_amount_of(:k, year)).to eq 13.2
+        # s = 200 gal * 11 lb/gal * 4% S / 5 acres -> 17.6
+        expect(field.get_yearly_amount_of(:s, year)).to eq 17.6
+      end
+    end
   end
 end

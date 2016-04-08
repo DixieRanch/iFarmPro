@@ -64,7 +64,7 @@ namespace :import do
 
   desc 'Import Current Et data from csv file'
   task update_et: :environment do
-    update_et = Tasks::UpdateEt.new('http://weather.nmsu.edu/ws/data/etform')
+    update_et = Tasks::UpdateEt.new('http://http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station')
     update_et.fetch_parse_update_pad_table
   end
 

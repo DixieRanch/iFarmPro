@@ -40,7 +40,7 @@ describe Rain do
 
     it 'formatted date' do
       rain.date = '4/1'
-      expect(rain.formatted_date).to eq 'April 1, 2014'
+      expect(rain.formatted_date).to eq 'April 1, 2016'
     end
 
     it 'empty date' do

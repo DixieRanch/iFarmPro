@@ -16,14 +16,14 @@ gem 'coffee-rails',            '~> 4.0.1'
 gem 'uglifier',                 '~> 2.5.0'
 gem 'sass',                    '~> 3.2.19'
 gem 'bootstrap-sass',          '~> 3.1.1'
+gem 'pg',                      '~> 0.17.1'
 
 group :production do
-  gem 'pg',                      '~> 0.17.1'
   gem 'rails_12factor',     '~> 0.0.2'
 end
 
 group :development, :test do
-  gem 'sqlite3',            '1.3.9'
+  # gem 'sqlite3',            '1.3.9'
   gem 'spring-commands-rspec'
   gem 'spring',             '1.1.3'
   gem 'rspec-rails',        '~> 2.14.2'

@@ -2,7 +2,7 @@
 # More info at https://github.com/guard/guard#readme
 require 'active_support/core_ext'
 
-notification :libnotify
+notification :off
 
 guard :rspec, cmd: 'spring rspec', all_after_pass: true, failed_mode: :keep do
   watch(%r{^spec/.+_spec\.rb$})

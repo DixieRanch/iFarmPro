@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.1'
 
-gem 'rails',                   '~> 4.1.1'
+gem 'rails',                   '4.1.1'
 gem 'bcrypt',                  '~> 3.1.5'
 gem 'faker',                   '~> 1.3.0'
 gem 'will_paginate',           '~> 3.0.3'
@@ -9,7 +9,6 @@ gem 'bootstrap-will_paginate', '~> 0.0.6'
 gem 'jquery-rails',            '~> 3.1.0'
 gem 'american_date',           '~> 1.1.0'
 gem 'mechanize',               '~> 2.7.2'
-gem 'pg',                      '~> 0.17.1'
 gem 'simple_form',             '~> 3.1.0.rc1'
 gem 'sprockets',               '2.11.0'
 gem 'sass-rails',              '~> 4.0.3'
@@ -19,10 +18,12 @@ gem 'sass',                    '~> 3.2.19'
 gem 'bootstrap-sass',          '~> 3.1.1'
 
 group :production do
+  gem 'pg',                      '~> 0.17.1'
   gem 'rails_12factor',     '~> 0.0.2'
 end
 
 group :development, :test do
+  gem 'sqlite3',            '1.3.9'
   gem 'spring-commands-rspec'
   gem 'rspec-rails',        '~> 2.14.2'
   gem 'guard-rspec',        '~> 4.2.9'
@@ -37,8 +38,8 @@ end
 
 group :test do
   gem 'capybara',           '~> 2.3.0'
-  gem 'rb-inotify',         '~> 0.9.4'
-  gem 'libnotify',          '~> 0.8.3'
+  # gem 'rb-inotify',         '~> 0.9.4'
+  # gem 'libnotify',          '~> 0.8.3'
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'shoulda-matchers',   '~> 2.6.0', require: false
   gem 'poltergeist',        '~> 1.5.1'

@@ -25,6 +25,7 @@ end
 group :development, :test do
   gem 'sqlite3',            '1.3.9'
   gem 'spring-commands-rspec'
+  gem 'spring',             '1.1.3'
   gem 'rspec-rails',        '~> 2.14.2'
   gem 'guard-rspec',        '~> 4.2.9'
   gem 'annotate',           '~> 2.6.3'

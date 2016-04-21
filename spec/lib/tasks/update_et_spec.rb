@@ -4,12 +4,14 @@ require 'rake'
 describe Tasks::UpdateEt, :slow do
 
   before(:all) do
-    @update_et = Tasks::UpdateEt.new 'http://weather.nmsu.edu/ws/data/etform'
-    @html = "file://#{Rails.root.join('spec', 'fixtures')}/nmcc-da-1.html"
-    @agent = Mechanize.new
-    @page = @agent.get(@html)
-    @array = @update_et.parse(@page)
+    @update_et = Tasks::UpdateEt.new 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
     @weather_station = WeatherStation.find_by_name('Fabian Garcia Research Center')
+    @start_date = "2013-12-25"
+    @end_date = "2014-01-06"
+    @page = @update_et.fetch(@weather_station.id_code, @start_date, @end_date)
+    # @agent = Mechanize.new
+    # @page = @agent.get(@html)
+    @array = @update_et.parse(@page)
   end
 
   let(:rake) { Rake::Application.new }
@@ -26,7 +28,7 @@ describe Tasks::UpdateEt, :slow do
   describe '#initialize' do
 
     it 'stores a URL' do
-      expect(@update_et.url).to eq 'http://weather.nmsu.edu/ws/data/etform'
+      expect(@update_et.url).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
     end
   end
 
@@ -62,34 +64,24 @@ describe Tasks::UpdateEt, :slow do
 
     context 'eth' do
 
-      it 'verify eth for day 361' do
-        cet = CurrentEt.find_by(doy: @array[2][:doy])
-        expect(cet[@weather_station.db_col]).to eq nil
-      end
-
-      it 'verify eth for day 362' do
-        cet = CurrentEt.find_by(doy: @array[3][:doy])
-        expect(cet[@weather_station.db_col]).to eq BigDecimal(@array[3][:eth])
+      it 'verify eth for day 329' do
+        cet = CurrentEt.find_by(doy: 359)
+        expect(cet[@weather_station.db_col].to_f).to eq 0.06
       end
 
       it 'verify eth for day 365' do
-        cet = CurrentEt.find_by(doy: @array[6][:doy])
-        expect(cet[@weather_station.db_col]).to eq BigDecimal(@array[6][:eth])
+        cet = CurrentEt.find_by(doy: 365)
+        expect(cet[@weather_station.db_col].to_f).to eq 0.07
       end
 
       it 'verify eth for day 1' do
-        cet = CurrentEt.find_by(doy: @array[7][:doy])
-        expect(cet[@weather_station.db_col]).to eq BigDecimal(@array[7][:eth])
-      end
-
-      it 'verify eth for day 5' do
-        cet = CurrentEt.find_by(doy: @array[11][:doy])
-        expect(cet[@weather_station.db_col]).to eq BigDecimal(@array[11][:eth])
+        cet = CurrentEt.find_by(doy: 1)
+        expect(cet[@weather_station.db_col].to_f).to eq 0.08
       end
 
       it 'verify eth for day 6' do
-        cet = CurrentEt.find_by(doy: @array[12][:doy])
-        expect(cet[@weather_station.db_col]).to eq nil
+        cet = CurrentEt.find_by(doy: 6)
+        expect(cet[@weather_station.db_col].to_f).to eq 0.05
       end
     end
   end
@@ -114,11 +106,11 @@ describe Tasks::UpdateEt, :slow do
     context 'eth' do
 
       it 'extracts eth for doy 361' do
-        expect(@array[2][:eth].strip).to eq ''
+        expect(@array[2][:eth].to_f).to eq 0.06
       end
 
       it 'extracts eth for doy 362' do
-        expect(@array[3][:eth].to_f).to eq 0.0
+        expect(@array[3][:eth].to_f).to eq 0.07
       end
 
       it 'extracts eth for doy 5' do
@@ -126,7 +118,7 @@ describe Tasks::UpdateEt, :slow do
       end
 
       it 'extracts eth for doy 6' do
-        expect(@array[12][:eth].strip).to eq ''
+        expect(@array[12][:eth].to_f).to eq 0.05
       end
     end
   end

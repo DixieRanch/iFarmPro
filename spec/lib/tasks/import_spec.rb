@@ -164,4 +164,20 @@ describe 'app lib tasks import.rake', :slow  do
       expect(unit.attributes).to include row.to_hash
     end
   end
+  
+  it "updates CurrentEt with Rake task" do
+    et_last_week = CurrentEt.find_by_doy(5.days.ago.yday)
+    et_today = CurrentEt.find_by_doy(Date.today.yday)
+    et_next_week = CurrentEt.find_by_doy(Date.today.yday)
+    et_last_week.update_attribute(:fabian_garcia, nil)
+    et_today.update_attribute(:fabian_garcia, 0.15)
+    et_next_week.update_attribute(:fabian_garcia, 0.20)
+    Rake::Task['import:update_et'].invoke
+    et_last_week.reload
+    et_today.reload
+    et_next_week.reload
+    expect(et_last_week.fabian_garcia).not_to be_nil
+    expect(et_today.fabian_garcia).to be_nil
+    expect(et_next_week.fabian_garcia).to be_nil
+  end
 end

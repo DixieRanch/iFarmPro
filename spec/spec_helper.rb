@@ -70,6 +70,12 @@ RSpec.configure do |config|
   config.after(:all) { DeferredGarbageCollection.reconsider }
 
   config.order = 'random'
+  
+  # Include named routes in specs
+  config.include Rails.application.routes.url_helpers
+  
+  # Needed for #post and #get to work in request specs
+  config.infer_spec_type_from_file_location!
 end
 
 Capybara.configure do |config|

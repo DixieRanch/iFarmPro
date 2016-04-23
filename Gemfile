@@ -1,35 +1,32 @@
 source 'https://rubygems.org'
-ruby '2.1.10'
+ruby '2.3.0'
 
-gem 'rails',                   '4.1.1'
-gem 'bcrypt',                  '~> 3.1.5'
-gem 'faker',                   '~> 1.3.0'
-gem 'will_paginate',           '~> 3.0.3'
-gem 'bootstrap-will_paginate', '~> 0.0.6'
-gem 'jquery-rails',            '~> 3.1.0'
-gem 'american_date',           '~> 1.1.0'
-gem 'mechanize',               '~> 2.7.2'
-gem 'simple_form',             '~> 3.1.0.rc1'
-gem 'sprockets',               '2.11.0'
-gem 'sass-rails',              '~> 4.0.3'
-gem 'coffee-rails',            '~> 4.0.1'
-gem 'uglifier',                 '~> 2.5.0'
-gem 'sass',                    '~> 3.2.19'
-gem 'bootstrap-sass',          '~> 3.1.1'
-gem 'pg',                      '~> 0.17.1'
+gem 'rails',                  '4.2.6'
+gem 'american_date',          '1.1.1'
+gem 'bcrypt',                 '3.1.11'
+gem 'bootstrap-sass',         '3.3.6'
+gem 'coffee-rails',           '4.1.1'
+gem 'jquery-rails',           '4.1.1'
+gem 'mechanize',              '2.7.4'
+gem 'pg',                     '0.18.4'
+gem 'sass',                   '3.4.22'
+gem 'sass-rails',             '5.0.4'
+gem 'simple_form',            '3.2.1'
+gem 'sprockets',              '3.6.0'
+gem 'uglifier',               '3.0.0'
 
 group :production do
-  gem 'rails_12factor',     '~> 0.0.2'
+  gem 'rails_12factor',       '0.0.2'
 end
 
 group :development, :test do
   # gem 'sqlite3',            '1.3.9'
-  gem 'spring-commands-rspec'
-  gem 'spring',             '1.1.3'
-  gem 'rspec-rails',        '~> 2.14.2'
-  gem 'guard-rspec',        '~> 4.2.9'
-  gem 'annotate',           '~> 2.6.3'
-  gem 'launchy'
+  gem 'annotate',             '2.7.0'
+  gem 'guard-rspec',          '4.6.5'
+  gem 'launchy',              '2.4.3'
+  gem 'rspec-rails',          '3.4.2'
+  gem 'spring',               '1.7.1'
+  gem 'spring-commands-rspec','1.0.4'
 end
 
 # Gems used only for assets and not required
@@ -38,11 +35,9 @@ end
 
 
 group :test do
-  gem 'capybara',           '~> 2.3.0'
-  # gem 'rb-inotify',         '~> 0.9.4'
-  # gem 'libnotify',          '~> 0.8.3'
-  gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'shoulda-matchers',   '~> 2.6.0', require: false
-  gem 'poltergeist',        '~> 1.5.1'
-  gem 'database_cleaner',   '~> 1.3.0'
+  gem 'capybara',           '2.7.0'
+  gem 'database_cleaner',   '1.5.3'
+  gem 'factory_girl_rails', '4.7.0'
+  gem 'poltergeist',        '1.9.0'
+  gem 'shoulda-matchers',   '2.8.0'
 end

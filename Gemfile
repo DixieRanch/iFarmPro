@@ -39,5 +39,5 @@ group :test do
   gem 'database_cleaner',   '1.5.3'
   gem 'factory_girl_rails', '4.7.0'
   gem 'poltergeist',        '1.9.0'
-  gem 'shoulda-matchers',   '2.8.0'
+  gem 'shoulda-matchers',   '3.1.1'
 end

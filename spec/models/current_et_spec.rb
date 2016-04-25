@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CurrentEt do
   let(:current_et) { CurrentEt.new }

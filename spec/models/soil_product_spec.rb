@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SoilProduct do
 
@@ -41,7 +41,7 @@ describe SoilProduct do
 
     context 'validation' do
       it { should validate_presence_of :name }
-      it { should validate_uniqueness_of :name }
+      it { should validate_uniqueness_of(:name).scoped_to(:company_id) }
       it { should validate_numericality_of(:n).only_integer }
       it { should validate_numericality_of(:p).only_integer }
       it { should validate_numericality_of(:k).only_integer }

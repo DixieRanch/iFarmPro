@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SoilClass do
   let(:soil_class) { SoilClass.new }

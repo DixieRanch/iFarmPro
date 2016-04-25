@@ -11,7 +11,7 @@
 #  farm_id    :integer
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Irrigation do
   valid_attributes = { time: '5/7/2013 19:00' }

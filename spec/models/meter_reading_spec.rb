@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe MeterReading do
   let(:company) { build_stubbed(:company) }

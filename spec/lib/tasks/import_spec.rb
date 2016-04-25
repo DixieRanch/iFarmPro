@@ -84,23 +84,23 @@ describe 'app lib tasks import.rake', :slow  do
   end
 
   it 'should test for the existence of db/et0.csv' do
-    File.exist?('db/et0.csv').should == true
+    expect(File.exist?('db/et0.csv')).to be true
   end
 
   it 'should test for the existence of db/kcref.csv' do
-    File.exist?('db/kcref.csv').should == true
+    expect(File.exist?('db/kcref.csv')).to be true
   end
 
   it 'should test for the existence of db/current_et.csv' do
-    File.exist?('db/current_et.csv').should == true
+    expect(File.exist?('db/current_et.csv')).to be true
   end
 
   it 'should test for the existence of db/soil_class.csv' do
-    File.exist?('db/soil_class.csv').should == true
+    expect(File.exist?('db/soil_class.csv')).to be true
   end
 
   it "has file db/soil_application_unit.csv" do
-    File.exist?('db/soil_application_unit.csv').should == true
+    expect(File.exist?('db/soil_application_unit.csv')).to be true
   end
 
   it 'should load ets table with data from db/et0.csv' do

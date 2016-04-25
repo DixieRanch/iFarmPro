@@ -73,7 +73,7 @@ describe "Authentication" do
       context "when attempting to access protected action" do
         before { put user_path(user) }
 
-        specify { response.should redirect_to(signin_path) }
+        specify { expect(response).to redirect_to(signin_path) }
       end
     end
 

@@ -16,7 +16,7 @@ describe "UserPages" do
 
       context "submitting a PUT request to the Users#update action" do
         before { put user_path(wrong_user) }
-        specify { response.should redirect_to(root_path) }
+        specify { expect(response).to redirect_to(root_path) }
       end
     end
     

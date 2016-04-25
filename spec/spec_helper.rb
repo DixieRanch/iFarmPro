@@ -58,9 +58,11 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
 
   # Rspec config to selectively run tests
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
+  
+  # Deprecated rspec configuration
+  # config.treat_symbols_as_metadata_keys_with_true_values = true
 
   #Rspec config to skip slow specs by default
   config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]

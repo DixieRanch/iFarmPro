@@ -84,8 +84,8 @@ describe Irrigation do
       let(:next_irrigations) { Irrigation.next_irrigations }
       before { irrigation.save }
       
-      specify { next_irrigations.should be_kind_of(Array) }
-      specify { next_irrigations.first.should be_kind_of(Irrigation) }
+      specify { expect(next_irrigations).to be_kind_of(Array) }
+      specify { expect(next_irrigations.first).to be_kind_of(Irrigation) }
     end
     
     describe ".next_irrigation_date" do

@@ -30,7 +30,7 @@ describe Field do
   subject { field }
 
   it { should be_valid }
-  specify { block.should be_valid }
+  specify { expect(block).to be_valid }
 
   it "should have a valid factory" do
     factory = FactoryGirl.build(:field)

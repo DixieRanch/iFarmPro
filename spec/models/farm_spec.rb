@@ -15,7 +15,7 @@ describe Farm do
 
   valid_attributes = FactoryGirl.attributes_for(:farm, weather_station_id: WeatherStation.first.id)
 
-  let(:company) { build_stubbed(Company) }
+  let(:company) { build_stubbed(:company) }
   # let(:weather_station) { create(:weather_station) }
   let(:farm) { Farm.new(valid_attributes) }
   

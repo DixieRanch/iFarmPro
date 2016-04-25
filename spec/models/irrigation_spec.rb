@@ -15,7 +15,7 @@ require 'spec_helper'
 
 describe Irrigation do
   valid_attributes = { time: '5/7/2013 19:00' }
-  let(:company) { build_stubbed(Company) }
+  let(:company) { build_stubbed(:company) }
   let(:field) { create(:field) }
   let(:irrigation) { field.irrigations.build(valid_attributes) }
 

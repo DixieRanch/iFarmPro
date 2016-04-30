@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427181420) do
+ActiveRecord::Schema.define(version: 20160429233916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,17 @@ ActiveRecord::Schema.define(version: 20160427181420) do
   add_index "fields", ["company_id"], name: "index_fields_on_company_id", using: :btree
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
   add_index "fields", ["soil_class_id"], name: "index_fields_on_soil_class_id", using: :btree
+
+  create_table "historic_ets", force: :cascade do |t|
+    t.integer  "doy"
+    t.float    "eth"
+    t.integer  "weather_station_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "historic_ets", ["doy"], name: "index_historic_ets_on_doy", using: :btree
+  add_index "historic_ets", ["weather_station_id"], name: "index_historic_ets_on_weather_station_id", using: :btree
 
   create_table "irrigation_wells", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -207,4 +218,5 @@ ActiveRecord::Schema.define(version: 20160427181420) do
   end
 
   add_foreign_key "daily_ets", "weather_stations"
+  add_foreign_key "historic_ets", "weather_stations"
 end

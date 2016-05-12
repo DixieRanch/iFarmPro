@@ -78,6 +78,9 @@ RSpec.configure do |config|
   
   # Needed for #post and #get to work in request specs
   config.infer_spec_type_from_file_location!
+  
+  # Filter bakctrace
+  config.backtrace_exclusion_patterns = [/rvm/, /rails_helper/]
 end
 
 Capybara.configure do |config|

@@ -13,6 +13,7 @@
 class WeatherStation < ActiveRecord::Base
 
   has_many :farms
+  has_many :daily_ets
 
   validates :name, presence: true
   validates :db_col, presence: true

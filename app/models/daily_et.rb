@@ -12,4 +12,10 @@
 
 class DailyEt < ActiveRecord::Base
   belongs_to :weather_station
+  
+  validates :date,               presence: true
+  validates :eth,                presence: true, 
+                                 numericality: { greater_than: 0.01,
+                                                 less_than:    0.5 }
+  validates :weather_station_id, presence: true
 end

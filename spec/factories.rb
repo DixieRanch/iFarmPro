@@ -73,4 +73,10 @@ FactoryGirl.define do
     soil_product
     soil_application_unit_id 2
   end
+  
+  factory :daily_et do
+    date Date.today
+    eth  0.27
+    weather_station
+  end
 end

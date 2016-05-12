@@ -2,14 +2,15 @@
 #
 # Table name: fields
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  acreage    :decimal(, )
-#  block_id   :integer
-#  company_id :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  farm_id    :integer
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  acreage       :decimal(, )
+#  block_id      :integer
+#  company_id    :integer
+#  created_at    :datetime
+#  updated_at    :datetime
+#  farm_id       :integer
+#  soil_class_id :integer
 #
 
 class Field < ActiveRecord::Base

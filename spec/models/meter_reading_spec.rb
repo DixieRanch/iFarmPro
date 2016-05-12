@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: meter_readings
+#
+#  id                 :integer          not null, primary key
+#  irrigation_id      :integer
+#  irrigation_well_id :integer
+#  company_id         :integer
+#  start              :integer
+#  stop               :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 require 'rails_helper'
 
 describe MeterReading do

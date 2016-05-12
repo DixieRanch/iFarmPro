@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: historic_ets
+#
+#  id                 :integer          not null, primary key
+#  doy                :integer
+#  eth                :float
+#  weather_station_id :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe HistoricEt, type: :model do

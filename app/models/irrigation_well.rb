@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: irrigation_wells
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  pod_code   :string(255)
+#  farm_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  company_id :integer
+#
+
 class IrrigationWell < ActiveRecord::Base
 
   belongs_to :farm

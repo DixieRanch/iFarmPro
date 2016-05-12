@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: rains
+#
+#  id         :integer          not null, primary key
+#  date       :date
+#  amount     :decimal(, )
+#  farm_id    :integer
+#  company_id :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class RainsController < ApplicationController
 
   def index

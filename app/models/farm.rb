@@ -2,11 +2,12 @@
 #
 # Table name: farms
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  company_id :integer
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  company_id         :integer
+#  weather_station_id :integer
 #
 
 class Farm < ActiveRecord::Base

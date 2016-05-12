@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: soil_application_units
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  density    :float
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'rails_helper'
 
 describe SoilApplicationUnit do

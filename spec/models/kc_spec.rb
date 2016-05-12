@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: kcs
+#
+#  id         :integer          not null, primary key
+#  doy        :integer
+#  pecan      :decimal(, )
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'rails_helper'
 
 describe Kc do

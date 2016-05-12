@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: soil_applications
+#
+#  id                       :integer          not null, primary key
+#  field_id                 :integer
+#  soil_product_id          :integer
+#  quantity                 :float
+#  company_id               :integer
+#  created_at               :datetime
+#  updated_at               :datetime
+#  date                     :date
+#  soil_application_unit_id :integer
+#
+
 require 'rails_helper'
 
 describe SoilApplication do

@@ -17,7 +17,9 @@ describe WeatherStation do
   valid_attributes = { name: "Fabian Garcia",
                        db_col: "fabian_garcia",
                        id_code: "nmcc-da-1" }
-  let(:station) { WeatherStation.new(valid_attributes) }
+                       
+  let(:website) { create(:website) }                        
+  let(:station) { website.weather_stations.build(valid_attributes) }
 
   subject { station }
 
@@ -28,19 +30,28 @@ describe WeatherStation do
     expect(station).to be_valid
   end
 
-  describe "attribute" do
-    it { should have_db_column :name }
-    it { should have_db_column :db_col }
-    it { should have_db_column :id_code }
+  describe "unvalidated attributes" do
+
   end
 
-  describe "validation" do
+  describe "validations" do
     it { should validate_presence_of :name }
     it { should validate_presence_of :db_col }
     it { should validate_presence_of :id_code }
+    it { should validate_presence_of :website_id }
   end
 
-  describe "association" do
+  describe "associations" do
     it { should have_many :farms }
+  end
+  
+  context "with UdateEt method" do
+    xit "should add recent eth" do
+      station.save
+      expect(station.daily_ets.find_by date: Date.yesterday).to be_nil
+      station.update_et
+      expect(station.daily_ets.find_by date: Date.yesterday).not_to be_nil
+    end
+    
   end
 end

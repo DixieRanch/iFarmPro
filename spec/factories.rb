@@ -4,10 +4,15 @@ FactoryGirl.define do
     sequence(:name) { |n| "Company #{n}" }
   end
 
+  factory :website do
+    
+  end
+  
   factory :weather_station do
     sequence(:name) { |n| "Station #{n}" }
     sequence(:db_col) { |n| "station_#{n}" }
     sequence(:id_code) { |n| "nmcc-da-#{n}" }
+    website
   end
 
   factory :user do
@@ -79,4 +84,5 @@ FactoryGirl.define do
     eth  0.27
     weather_station
   end
+  
 end

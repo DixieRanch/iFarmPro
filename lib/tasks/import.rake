@@ -72,7 +72,8 @@ namespace :import do
   task initial_weather_station: :environment do
     attr = {name: 'Fabian Garcia Research Center',
             id_code: 'nmcc-da-1',
-            db_col: 'fabian_garcia'}
+            db_col: 'fabian_garcia',
+            website_id: 1 }
     WeatherStation.create(attr) if WeatherStation.all.empty?
   end
 

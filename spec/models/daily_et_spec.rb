@@ -13,6 +13,7 @@
 require 'rails_helper'
 
 RSpec.describe DailyEt, type: :model do
+  
   valid_attributes = { date: '5/7/2013',
                        eth:   0.27 }
   

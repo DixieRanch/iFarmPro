@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429233916) do
+ActiveRecord::Schema.define(version: 20160513043837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,17 @@ ActiveRecord::Schema.define(version: 20160429233916) do
     t.string   "db_col",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "website_id"
+  end
+
+  add_index "weather_stations", ["website_id"], name: "index_weather_stations_on_website_id", using: :btree
+
+  create_table "websites", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "url_suffix"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "daily_ets", "weather_stations"

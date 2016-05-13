@@ -12,10 +12,16 @@
 
 class WeatherStation < ActiveRecord::Base
 
+  belongs_to :website
   has_many :farms
   has_many :daily_ets
 
-  validates :name, presence: true
-  validates :db_col, presence: true
-  validates :id_code, presence: true
+  validates :name,       presence: true
+  validates :db_col,     presence: true
+  validates :id_code,    presence: true
+  validates :website_id, presence: true
+  
+  def update_et
+    
+  end
 end

@@ -5,7 +5,7 @@ FactoryGirl.define do
   end
 
   factory :website do
-    
+    name "NMSU"
   end
   
   factory :weather_station do

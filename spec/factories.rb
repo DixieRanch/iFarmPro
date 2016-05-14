@@ -5,7 +5,9 @@ FactoryGirl.define do
   end
 
   factory :website do
-    name "NMSU"
+    name       "NMSU"
+    url        "http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/"
+    url_suffix "/request/gdd/et/data/"
   end
   
   factory :weather_station do

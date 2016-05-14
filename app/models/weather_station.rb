@@ -22,6 +22,46 @@ class WeatherStation < ActiveRecord::Base
   validates :website_id, presence: true
   
   def update_et
-    
+    store(parse(fetch(Date.today - 30, Date.yesterday)))
+  end
+  
+  def url
+    if website.url_suffix
+      website.url + id_code + website.url_suffix
+    else
+      website.url + id_code
+    end
+  end
+  
+  def fetch(start_date, end_date)
+    # get et request form
+    agent = Mechanize.new
+    agent.get url
+
+    # edit start and end date
+    agent.page.forms[0]['start_date'] = start_date
+    agent.page.forms[0]['end_date'] = end_date
+
+    # submit
+    agent.page.forms[0].submit
+  end
+  
+  def parse(page)
+    # create an array containing data from webpage
+    array = []
+    page.search('table')[0].search('tbody').search('tr').each do |row|
+        array << {date: row.search('td')[0].text.to_date, 
+                  eth:  row.search('td')[10].text.to_f}
+    end
+    array
+  end
+  
+  def store(array)
+    # store array data to DailyEts
+    array.each do |row|
+      et = daily_ets.find_or_initialize_by(date: row[:date])
+      et.eth = row[:eth]
+      et.save
+    end
   end
 end

@@ -109,4 +109,20 @@ describe WeatherStation do
       expect(station.doy_average_et_hash).to eq correct_hash
     end
   end
+  
+  describe "load_history", slow: true do
+    it "should load a weather_staion past et history into DailyEts" do
+      # 20 years of history, if available, should be loaded into DailyEts
+      station.save
+      expect(station.daily_ets.find_by(date: Date.yesterday)).to be_nil
+      expect(station.daily_ets.find_by(date: "2015-07-01")).to   be_nil
+      expect(station.daily_ets.find_by(date: "2005-07-01")).to   be_nil
+      station.load_history
+      expect(station.daily_ets.find_by(date: Date.yesterday)).to_not be_nil
+      expect(station.daily_ets.find_by(date: "2015-07-01").eth).to eq 0.29
+      expect(station.daily_ets.find_by(date: "2005-07-01").eth).to eq 0.33
+      too_old = 21.years.ago.to_date
+      expect(station.daily_ets.find_by(date: too_old)).to be_nil
+    end
+  end
 end

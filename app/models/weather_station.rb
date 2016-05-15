@@ -23,6 +23,8 @@ class WeatherStation < ActiveRecord::Base
   validates :website_id, presence: true
   
   def update_daily_et
+    # Add WeatherStation's DailyEts for the previous 30 days
+    
     store(parse(fetch(30.days.ago.to_date, 1.day.ago.to_date)))
   end
   
@@ -38,6 +40,8 @@ class WeatherStation < ActiveRecord::Base
   end
   
   def fetch(start_date, end_date)
+    # Get webpage with data for DailyEts
+    
     # get et request form
     agent = Mechanize.new
     agent.get url
@@ -51,7 +55,8 @@ class WeatherStation < ActiveRecord::Base
   end
   
   def parse(page)
-    # create an array containing data from webpage
+    # create an array of hashes containing et data from webpage
+    
     array = []
     page.search('table')[0].search('tbody').search('tr').each do |row|
         array << {date: row.search('td')[0].text.to_date, 
@@ -61,7 +66,8 @@ class WeatherStation < ActiveRecord::Base
   end
   
   def store(array)
-    # store array data to DailyEts
+    # store data from array of et hashes to DailyEts
+    
     array.each do |row|
       et = daily_ets.find_or_initialize_by(date: row[:date])
       et.eth = row[:eth]
@@ -70,17 +76,32 @@ class WeatherStation < ActiveRecord::Base
   end
   
   def update_average_et
+    # Update the AverageEts for a weather station
+    
     doy_average_et_hash.each do |doy, eth|
       average_ets.find_or_create_by(doy: doy).update_attributes(eth: eth)
     end
   end
   
   def doy_average_et_hash
+    # Create a hash of average ETH for each day of the year
+    
     query = DailyEt.group("EXTRACT(DOY FROM date)").average(:eth)
     et_hash = Hash.new
     query.each_pair{ |doy, eth| et_hash.store(doy.to_i, eth.to_f) }
     et_hash
   end
   
-  
+  def load_history
+    # Add 20 years of past et data for weatherstation
+    
+    n=0
+    begin
+      start_date = (n+1).years.ago.to_date
+      end_date   = n.years.ago.to_date.-1
+      et_array = parse(fetch(start_date, end_date))
+      store(et_array)
+      n+=1
+    end while !et_array.empty? and n<20
+  end
 end

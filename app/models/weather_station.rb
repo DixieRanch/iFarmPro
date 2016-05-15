@@ -15,17 +15,21 @@ class WeatherStation < ActiveRecord::Base
   belongs_to :website
   has_many :farms
   has_many :daily_ets
+  has_many :average_ets
 
   validates :name,       presence: true
   validates :db_col,     presence: true
   validates :id_code,    presence: true
   validates :website_id, presence: true
   
-  def update_et
-    store(parse(fetch(Date.today - 30, Date.yesterday)))
+  def update_daily_et
+    store(parse(fetch(30.days.ago.to_date, 1.day.ago.to_date)))
   end
   
+  
   def url
+    # build url for weather station data request page
+    
     if website.url_suffix
       website.url + id_code + website.url_suffix
     else
@@ -64,4 +68,19 @@ class WeatherStation < ActiveRecord::Base
       et.save
     end
   end
+  
+  def update_average_et
+    doy_average_et_hash.each do |doy, eth|
+      average_ets.find_or_create_by(doy: doy).update_attributes(eth: eth)
+    end
+  end
+  
+  def doy_average_et_hash
+    query = DailyEt.group("EXTRACT(DOY FROM date)").average(:eth)
+    et_hash = Hash.new
+    query.each_pair{ |doy, eth| et_hash.store(doy.to_i, eth.to_f) }
+    et_hash
+  end
+  
+  
 end

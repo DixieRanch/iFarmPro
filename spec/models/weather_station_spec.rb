@@ -50,7 +50,7 @@ describe WeatherStation do
     it { should have_many :farms }
   end
   
-  context "with methods to UpdateEt" do
+  describe "methods to update_daily_et" do
     # NMSU Fabian Garcia data for 2015: 07-01: 0.29; 07-02: 0.31
     let(:start_date) {"2015-07-01"}
     let(:end_date)   {"2015-07-02"}
@@ -82,8 +82,31 @@ describe WeatherStation do
     
     it "should update the last 30 days of Et data", slow: true do
       station.save
-      expect{station.update_et}.to change{DailyEt.count}.by(30)
+      expect{station.update_daily_et}.to change{DailyEt.count}.by(30)
       expect(station.daily_ets.last.date).to eq Date.yesterday
+    end
+  end
+  
+  describe "methods to update_avg_et" do
+    
+    before :each do
+      # create daily_ets with doy: 2 avg of 0.23, & doy: 3 avg of 0.27
+      station.save
+      station.daily_ets.create(date: "2014-01-02", eth: 0.21)
+      station.daily_ets.create(date: "2015-01-02", eth: 0.25)
+      station.daily_ets.create(date: "2013-01-03", eth: 0.25)
+      station.daily_ets.create(date: "2015-01-03", eth: 0.29)
+    end
+    
+    it "should store average et by day of year in AverageEts" do
+      station.update_average_et
+      expect(station.average_ets.find_by(doy: 2).eth).to eq 0.23
+      expect(station.average_ets.find_by(doy: 3).eth).to eq 0.27
+    end
+    
+    it "should create an hash of average Et by day of year" do
+      correct_hash = { 2 => 0.23, 3 => 0.27 }
+      expect(station.doy_average_et_hash).to eq correct_hash
     end
   end
 end

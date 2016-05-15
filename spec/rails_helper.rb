@@ -65,7 +65,7 @@ RSpec.configure do |config|
   # config.treat_symbols_as_metadata_keys_with_true_values = true
 
   #Rspec config to skip slow specs by default
-  config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
+  # config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
 
   # Defer garbage collection
   config.before(:all) { DeferredGarbageCollection.start }

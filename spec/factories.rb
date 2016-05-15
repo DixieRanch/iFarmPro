@@ -87,4 +87,9 @@ FactoryGirl.define do
     weather_station
   end
   
+  factory :average_et do
+    doy 175
+    eth 0.37
+    weather_station
+  end
 end

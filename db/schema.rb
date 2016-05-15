@@ -11,13 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513043837) do
+ActiveRecord::Schema.define(version: 20160515022837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "average_ets", force: :cascade do |t|
+    t.integer  "doy"
+    t.float    "eth"
+    t.integer  "weather_station_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "average_ets", ["doy"], name: "index_average_ets_on_doy", using: :btree
+  add_index "average_ets", ["weather_station_id"], name: "index_average_ets_on_weather_station_id", using: :btree
+
   create_table "blocks", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.integer  "farm_id"
     t.integer  "company_id"
     t.datetime "created_at"
@@ -28,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   add_index "blocks", ["farm_id"], name: "index_blocks_on_farm_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,7 +74,7 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   add_index "ets", ["doy"], name: "index_ets_on_doy", using: :btree
 
   create_table "farms", force: :cascade do |t|
-    t.string   "name",               limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
@@ -74,7 +85,7 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   add_index "farms", ["weather_station_id"], name: "index_farms_on_weather_station_id", using: :btree
 
   create_table "fields", force: :cascade do |t|
-    t.string   "name",          limit: 255
+    t.string   "name"
     t.decimal  "acreage"
     t.integer  "block_id"
     t.integer  "company_id"
@@ -89,20 +100,9 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
   add_index "fields", ["soil_class_id"], name: "index_fields_on_soil_class_id", using: :btree
 
-  create_table "historic_ets", force: :cascade do |t|
-    t.integer  "doy"
-    t.float    "eth"
-    t.integer  "weather_station_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "historic_ets", ["doy"], name: "index_historic_ets_on_doy", using: :btree
-  add_index "historic_ets", ["weather_station_id"], name: "index_historic_ets_on_weather_station_id", using: :btree
-
   create_table "irrigation_wells", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "pod_code",   limit: 255
+    t.string   "name"
+    t.string   "pod_code"
     t.integer  "farm_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   end
 
   create_table "soil_application_units", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.float    "density"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -180,7 +180,7 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   add_index "soil_applications", ["soil_product_id"], name: "index_soil_applications_on_soil_product_id", using: :btree
 
   create_table "soil_classes", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.decimal  "aw"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20160513043837) do
 
   create_table "soil_products", force: :cascade do |t|
     t.integer  "company_id"
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.integer  "n"
     t.integer  "p"
     t.integer  "k"
@@ -198,11 +198,11 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",           limit: 255
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest", limit: 255
-    t.string   "remember_token",  limit: 255
+    t.string   "password_digest"
+    t.string   "remember_token"
     t.integer  "company_id"
   end
 
@@ -210,9 +210,9 @@ ActiveRecord::Schema.define(version: 20160513043837) do
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
   create_table "weather_stations", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "id_code",    limit: 255
-    t.string   "db_col",     limit: 255
+    t.string   "name"
+    t.string   "id_code"
+    t.string   "db_col"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "website_id"
@@ -228,6 +228,6 @@ ActiveRecord::Schema.define(version: 20160513043837) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "average_ets", "weather_stations"
   add_foreign_key "daily_ets", "weather_stations"
-  add_foreign_key "historic_ets", "weather_stations"
 end

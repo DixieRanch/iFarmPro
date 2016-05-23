@@ -10,17 +10,15 @@ require 'rake'
 
 describe 'app lib tasks import.rake', :slow  do
 
-  before(:all) do
-    @agent = Mechanize.new
-    @weather_url = 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
-    @weather_page = @agent.get(@weather_url)
-  end
-
+  let(:agent) { Mechanize.new }
+  let(:weather_url) { 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/' }
+  let(:weather_page) { agent.get(weather_url) }
   let(:rake) { Rake::Application.new }
   let(:task_path) { 'lib/tasks/import' }
 
 
   before do
+    create(:weather_station)
     Rake.application = rake
     Rake.application.rake_require(task_path, [Rails.root.to_s], '')
     Rake::Task.define_task(:environment)
@@ -29,34 +27,34 @@ describe 'app lib tasks import.rake', :slow  do
   context 'get weather url' do
 
     it 'parses URL' do
-      expect(@weather_page.uri.to_s).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+      expect(weather_page.uri.to_s).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
     end
 
     it 'parses heading' do
-      expect(@weather_page.at('h1').content).to eq 'Request GDD and ET Data for Fabian Garcia SC'
+      expect(weather_page.at('h1').content).to eq 'Request GDD and ET Data for Fabian Garcia SC'
     end
   end
 
   context 'post weather url' do
 
-    before(:all) do
+    let(:data_page) do
       end_date = Time.now.to_date.strftime('%F')
       start_date = (Time.now-180.days).strftime('%F')
-      @weather_page.forms[0]['start_date'] = start_date
-      @weather_page.forms[0]['end_date'] = end_date
-      @page = @weather_page.forms[0].submit
+      weather_page.forms[0]['start_date'] = start_date
+      weather_page.forms[0]['end_date'] = end_date
+      weather_page.forms[0].submit
     end
 
     it 'parses URL pre-post' do
-      expect(@page.uri.to_s).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+      expect(data_page.uri.to_s).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
     end
 
     it 'parses heading pre post' do
-      expect(@page.at('h1').content).to eq 'Fabian Garcia SC GDD and ET Data'
+      expect(data_page.at('h1').content).to eq 'Fabian Garcia SC GDD and ET Data'
     end
 
     it 'parses first header row' do
-      row = @page.search('table')[0].search('thead').search('tr')[0].search('th')
+      row = data_page.search('table')[0].search('thead').search('tr')[0].search('th')
       expect(row[0].text).to eq ''
       expect(row[1].text).to eq 'Temperature'
       expect(row[2].text).to eq 'RH'
@@ -67,7 +65,7 @@ describe 'app lib tasks import.rake', :slow  do
     end
 
     it 'parses second header row' do
-      row = @page.search('table')[0].search('thead').search('tr')[1].search('th')
+      row = data_page.search('table')[0].search('thead').search('tr')[1].search('th')
       expect(row[0].text).to eq 'Date'
       expect(row[1].text).to eq 'Max'
       expect(row[2].text).to eq 'Min'

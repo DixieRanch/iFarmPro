@@ -70,11 +70,19 @@ namespace :import do
 
   desc 'Add initial weather station'
   task initial_weather_station: :environment do
-    attr = {name: 'Fabian Garcia Research Center',
-            id_code: 'nmcc-da-1',
-            db_col: 'fabian_garcia',
-            website_id: 1 }
-    WeatherStation.create(attr) if WeatherStation.all.empty?
+    attr = {name:       'NMSU',
+            url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/',
+            url_suffix: '/request/gdd/et/data/' }
+               
+    wx_attr = {name:    'Fabian Garcia Research Center',
+               id_code: 'nmcc-da-1',
+               db_col:  'fabian_garcia' }
+    if Website.all.empty?
+      website = Website.create(attr)
+    else
+      website = Website.find_by(name: attr[:name])
+    end
+    website.weather_stations.create(wx_attr) if WeatherStation.all.empty?
   end
 
 end
@@ -82,7 +90,9 @@ end
 namespace :db do
   namespace :test do
     task prepare: :environment do
-      Rake::Task['db:seed'].invoke
+      Rake::Task["import:et"].invoke
+      Rake::Task["import:kc"].invoke
+      Rake::Task["import:current_et"].invoke
     end
   end
 end

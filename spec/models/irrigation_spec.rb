@@ -12,12 +12,14 @@
 #
 
 require 'rails_helper'
+require 'rake'
+# require 'csv'
 
 describe Irrigation do
   valid_attributes = { time: '5/7/2013 19:00' }
-  let(:company) { build_stubbed(:company) }
-  let(:field) { create(:field) }
-  let(:irrigation) { field.irrigations.build(valid_attributes) }
+  let(:company)    { build_stubbed(:company) }
+  let(:field)      { create(:field) }
+  let(:irrigation) { field.irrigations.new(valid_attributes) }
 
   before { Company.current_id = company.id }
 
@@ -34,10 +36,12 @@ describe Irrigation do
     
     it "should have only the current company's data" do
       irrigation.save
-      wrong_company = FactoryGirl.create(:company)
+      wrong_company = FactoryGirl.build_stubbed(:company)
       Company.current_id = wrong_company.id
       wrong_data = FactoryGirl.create(:irrigation)
       expect(wrong_data).to be_valid
+      expect(Irrigation.all).to include(wrong_data)
+      expect(Irrigation.all).not_to include(irrigation)
       Company.current_id = company.id
       expect(Irrigation.all).not_to include(wrong_data)
       expect(Irrigation.all).to include(irrigation)
@@ -62,70 +66,68 @@ describe Irrigation do
     it { should accept_nested_attributes_for :meter_readings }
   end
 
-  describe "method" do
 
-    describe "self.formatted_date" do
-      
-      it "formats date without time" do
-        date = irrigation.formatted_date
-        expect(date).to eq 'May 7, 2013'
-      end
+  describe "self.formatted_date" do
+    
+    it "formats date without time" do
+      date = irrigation.formatted_date
+      expect(date).to eq 'May 7, 2013'
     end
+  end
 
-    describe "self.formatted_time" do
-      it "formats time" do
-        time = irrigation.formatted_time
-        expect(time).to eq 'May 7, 2013 19:00'
-      end
-      
+  describe "self.formatted_time" do
+    it "formats time" do
+      time = irrigation.formatted_time
+      expect(time).to eq 'May 7, 2013 19:00'
     end
+  end
 
-    describe "self.next_irrigations" do
-      let(:next_irrigations) { Irrigation.next_irrigations }
-      before { irrigation.save }
-      
-      specify { expect(next_irrigations).to be_kind_of(Array) }
-      specify { expect(next_irrigations.first).to be_kind_of(Irrigation) }
+  describe "self.next_irrigations" do
+    let(:next_irrigations) { Irrigation.next_irrigations }
+    before { irrigation.save }
+    
+    specify { expect(next_irrigations).to be_kind_of(Array) }
+    specify { expect(next_irrigations.first).to be_kind_of(Irrigation) }
+  end
+  
+  describe ".next_irrigation_date" do
+    let(:next_irrigation) do
+      irrigation.next_irrigation_date(Et.all, Kc.all, CurrentEt.all)
     end
     
-    describe ".next_irrigation_date" do
+    it "should return a the next irrigation date" do
+      expect(next_irrigation).to be_kind_of(Date)
+      expect(next_irrigation).to be > irrigation.time.to_date
+    end
 
-      let(:next_irrigation) do
-        irrigation.next_irrigation_date(Et.all, Kc.all, CurrentEt.all)
-      end
-      
-      it "should return a the next irrigation date" do
-        expect(next_irrigation).to be_kind_of(Date)
-        expect(next_irrigation).to be > irrigation.time.to_date
-      end
+    it "should properly handle irrigation interval that crosses new year" do
+      irrigation.time = "Dec 30, 2012 12:00"
+      irrigation.save
+      expect(next_irrigation.year).to be 2013
+    end
 
-      it "should properly handle irrigation interval that crosses new year" do
-        irrigation.time = "Dec 30, 2012 12:00"
-        irrigation.save
-        expect(next_irrigation.year).to be 2013
-      end
+    context 'after rain' do
+      let(:args) { [Et.all, Kc.all, CurrentEt.all] }
+      let(:farm) { irrigation.field.block.farm }
 
-      context 'after rain' do
-        let(:args) { [Et.all, Kc.all, CurrentEt.all] }
-
-        it "has later date" do
-          current_date = next_irrigation
-          FactoryGirl.create(:rain, date: next_irrigation - 1)
-          future_date = irrigation.next_irrigation_date(*args)
-          expect(current_date).to be < future_date
-        end
-
-        it "same date if available water is at maximum" do
-          FactoryGirl.create(:rain, date: irrigation.time.to_date + 2,
-                                    amount: 10.0 )
-          current_date = irrigation.next_irrigation_date(*args)
-          FactoryGirl.create(:rain, date: irrigation.time.to_date + 1,
-                                    amount: 10.0 )
-          future_date = irrigation.next_irrigation_date(*args)
-          expect(current_date).to eq future_date
-        end
+      it "has later date" do
+        current_date = next_irrigation
+        FactoryGirl.create(:rain, date: next_irrigation - 1, farm: farm)
+        future_date = irrigation.next_irrigation_date(*args)
+        expect(current_date).to be < future_date
       end
 
+      it "same date if available water is at maximum" do
+        FactoryGirl.create(:rain, date:   irrigation.time.to_date + 2,
+                                  amount: 10.0,
+                                  farm:   farm)
+        current_date = irrigation.next_irrigation_date(*args)
+        FactoryGirl.create(:rain, date:   irrigation.time.to_date + 1,
+                                  amount: 10.0,
+                                  farm:   farm)
+        future_date = irrigation.next_irrigation_date(*args)
+        expect(current_date).to eq future_date
+      end
     end
   end
 end

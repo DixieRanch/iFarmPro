@@ -17,9 +17,9 @@ class WeatherStation < ActiveRecord::Base
   has_many :daily_ets
   has_many :average_ets
 
-  validates :name,       presence: true
+  validates :name,       presence: true, uniqueness: { case_sensitive: false }
   validates :db_col,     presence: true
-  validates :id_code,    presence: true
+  validates :id_code,    presence: true, uniqueness: { scope: :website_id }
   validates :website_id, presence: true
   
   def update_daily_et

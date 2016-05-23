@@ -89,6 +89,8 @@ describe 'ApplicationPages' do
   describe 'New User signup' do
 
     before do
+      create(:weather_station)
+      create(:soil_class)
       click_link 'Sign up now!'
       fill_in 'Company Name', with: 'New Company'
       fill_in 'Email', with: 'user@example.com'

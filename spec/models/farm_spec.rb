@@ -14,11 +14,11 @@ require 'rails_helper'
 
 describe Farm do
 
-  valid_attributes = FactoryGirl.attributes_for(:farm, weather_station_id: WeatherStation.first.id)
+  valid_attributes = {name: 'Example Farm'}
 
-  let(:company) { build_stubbed(:company) }
-  # let(:weather_station) { create(:weather_station) }
-  let(:farm) { Farm.new(valid_attributes) }
+  let(:company)         { build_stubbed(:company) }
+  let(:weather_station) { create(:weather_station) }
+  let(:farm)            { weather_station.farms.new(valid_attributes) }
   
 
 
@@ -40,7 +40,7 @@ describe Farm do
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
-      child = Farm.create(valid_attributes)
+      child = weather_station.farms.create(valid_attributes)
       expect(child).to be_valid
       Company.current_id = company.id
       farm.save

@@ -8,13 +8,15 @@ FactoryGirl.define do
     name       "NMSU"
     url        "http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/"
     url_suffix "/request/gdd/et/data/"
+    initialize_with { Website.find_or_create_by name: name }
   end
   
   factory :weather_station do
-    sequence(:name) { |n| "Station #{n}" }
-    sequence(:db_col) { |n| "station_#{n}" }
-    sequence(:id_code) { |n| "nmcc-da-#{n}" }
+    name    'Fabian Garcia'
+    db_col  'fabian_garcia'
+    id_code 'nmcc-da-1'
     website
+    initialize_with { WeatherStation.find_or_create_by name: name }
   end
 
   factory :user do
@@ -26,7 +28,7 @@ FactoryGirl.define do
 
   factory :farm do
     sequence(:name) { |n| "Farm #{n}" }
-    weather_station_id 1
+    weather_station
   end
 
   factory :rain do
@@ -49,7 +51,7 @@ FactoryGirl.define do
   factory :field do
     sequence(:name) { |n| "Field #{n % 100}" }
     acreage 9.8
-    soil_class_id 1
+    soil_class
     block
   end
 
@@ -78,7 +80,7 @@ FactoryGirl.define do
     quantity 175
     field
     soil_product
-    soil_application_unit_id 2
+    soil_application_unit
   end
   
   factory :daily_et do
@@ -91,5 +93,17 @@ FactoryGirl.define do
     doy 175
     eth 0.37
     weather_station
+  end
+  
+  factory :soil_class do
+    name 'Sandy Loam'
+    aw    8.4
+    initialize_with { SoilClass.find_or_create_by name: name }
+  end
+  
+  factory :soil_application_unit do
+    name   'Gal'
+    density 11
+    initialize_with { SoilApplicationUnit.find_or_create_by name: name }
   end
 end

@@ -43,6 +43,7 @@ describe "SoilApplication" do
       before do
         create(:field, name: '1', block: create(:block, name: '1'))
         create(:soil_product, name: '32-0-0-0')
+        create(:soil_application_unit)
         visit soil_applications_path
       end
       
@@ -64,8 +65,8 @@ describe "SoilApplication" do
           select '1-1', from: 'soil_application_field_id'
           fill_in 'Date', with: '4/1'
           select '32-0-0-0', from: 'soil_application_soil_product_id'
-          fill_in 'Quantity', with: 150
-          select 'lbs', from: 'soil_application_soil_application_unit_id'
+          fill_in 'Quantity', with: 15
+          select 'Gal', from: 'soil_application_soil_application_unit_id'
           click_button 'Save'
         end
 

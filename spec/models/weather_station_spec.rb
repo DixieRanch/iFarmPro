@@ -44,6 +44,8 @@ describe WeatherStation do
     it { should validate_presence_of :db_col }
     it { should validate_presence_of :id_code }
     it { should validate_presence_of :website_id }
+    it { should validate_uniqueness_of(:name).case_insensitive }
+    it { should validate_uniqueness_of(:id_code).scoped_to(:website_id) }
   end
 
   describe "associations" do

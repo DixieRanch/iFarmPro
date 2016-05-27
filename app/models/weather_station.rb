@@ -3,11 +3,12 @@
 # Table name: weather_stations
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  id_code    :string(255)
-#  db_col     :string(255)
+#  name       :string
+#  id_code    :string
+#  db_col     :string
 #  created_at :datetime
 #  updated_at :datetime
+#  website_id :integer
 #
 
 class WeatherStation < ActiveRecord::Base

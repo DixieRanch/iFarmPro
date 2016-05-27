@@ -3,7 +3,7 @@
 # Table name: farms
 #
 #  id                 :integer          not null, primary key
-#  name               :string(255)
+#  name               :string
 #  created_at         :datetime
 #  updated_at         :datetime
 #  company_id         :integer
@@ -14,7 +14,7 @@ class Farm < ActiveRecord::Base
 
   default_scope { where(company_id: Company.current_id) }
 
-  has_many :blocks, -> { order :name }
+  has_many :blocks,  -> { order :name }, { inverse_of: :farm }
   has_many :irrigation_wells, -> { order :name }
   has_many :rains
   belongs_to :weather_station
@@ -25,5 +25,5 @@ class Farm < ActiveRecord::Base
                     uniqueness: { scope: :company_id },
                     length: { maximum: 50 }
   validates :company_id, presence: true
-  validates :weather_station_id, presence: true
+  validates :weather_station, presence: true
 end

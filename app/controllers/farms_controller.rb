@@ -3,7 +3,7 @@
 # Table name: farms
 #
 #  id                 :integer          not null, primary key
-#  name               :string(255)
+#  name               :string
 #  created_at         :datetime
 #  updated_at         :datetime
 #  company_id         :integer
@@ -28,7 +28,7 @@ class FarmsController < ApplicationController
 
   def create
     @farm = Farm.new(farm_params)
-    if @farm.save
+    if @farm.save!
       flash[:success] = "New farm successfully added."
       redirect_to farms_path
     else

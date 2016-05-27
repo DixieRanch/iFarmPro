@@ -3,7 +3,7 @@
 # Table name: farms
 #
 #  id                 :integer          not null, primary key
-#  name               :string(255)
+#  name               :string
 #  created_at         :datetime
 #  updated_at         :datetime
 #  company_id         :integer
@@ -60,7 +60,7 @@ describe Farm do
     it { should validate_uniqueness_of(:name).scoped_to(:company_id) }
     it { should validate_length_of(:name).is_at_most(50) }
     it { should validate_presence_of(:company_id) }
-    it { should validate_presence_of(:weather_station_id) }
+    it { should validate_presence_of(:weather_station) }
   end
 
   describe "associations" do

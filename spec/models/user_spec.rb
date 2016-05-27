@@ -3,11 +3,11 @@
 # Table name: users
 #
 #  id              :integer          not null, primary key
-#  email           :string(255)
+#  email           :string
 #  created_at      :datetime
 #  updated_at      :datetime
-#  password_digest :string(255)
-#  remember_token  :string(255)
+#  password_digest :string
+#  remember_token  :string
 #  company_id      :integer
 #
 

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: websites
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  url        :string
+#  url_suffix :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Website < ActiveRecord::Base
   has_many :weather_stations
   

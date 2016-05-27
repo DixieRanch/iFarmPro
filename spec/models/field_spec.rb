@@ -3,7 +3,7 @@
 # Table name: fields
 #
 #  id            :integer          not null, primary key
-#  name          :string(255)
+#  name          :string
 #  acreage       :decimal(, )
 #  block_id      :integer
 #  company_id    :integer

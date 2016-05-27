@@ -3,7 +3,7 @@
 # Table name: blocks
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
+#  name       :string
 #  farm_id    :integer
 #  company_id :integer
 #  created_at :datetime
@@ -17,7 +17,7 @@ describe Block do
   valid_attributes = { name: "1" }
   let(:company) { build_stubbed(:company) }
   let(:farm) { build_stubbed(:farm) }
-  let(:block) { farm.blocks.build(valid_attributes) }
+  let(:block) { farm.blocks.new(valid_attributes) }
 
   before do
     Company.current_id = company.id
@@ -36,9 +36,9 @@ describe Block do
   describe "tenant security" do
     
     it "should have only the current company's data" do
-      wrong_company = FactoryGirl.create(:company)
+      wrong_company = FactoryGirl.build_stubbed(:company)
       Company.current_id = wrong_company.id
-      parent = FactoryGirl.create(:farm)
+      parent = FactoryGirl.build_stubbed(:farm)
       expect(parent).to be_valid
       child = parent.blocks.create(valid_attributes)
       expect(child).to be_valid
@@ -49,18 +49,16 @@ describe Block do
     end
   end
 
-  describe "attributes" do
-    it { should have_db_column :name }
-    it { should have_db_column :farm_id }
-    it { should have_db_column :company_id }
+  describe "unvalidated attributes" do
   end
 
   describe "validations" do
     it { should validate_presence_of :name }
-    it { should validate_uniqueness_of(:name).case_insensitive.scoped_to :farm_id }
-    it { should validate_length_of(:name).is_at_most 8 }
-    it { should_not validate_presence_of :farm_id }
+    it { should validate_presence_of :farm }
     it { should validate_presence_of :company_id }
+    it { should validate_uniqueness_of(:name).case_insensitive.
+                                              scoped_to :farm_id }
+    it { should validate_length_of(:name).is_at_most 8 }
   end
 
   describe "association" do

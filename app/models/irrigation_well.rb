@@ -3,8 +3,8 @@
 # Table name: irrigation_wells
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  pod_code   :string(255)
+#  name       :string
+#  pod_code   :string
 #  farm_id    :integer
 #  created_at :datetime
 #  updated_at :datetime

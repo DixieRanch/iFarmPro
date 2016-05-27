@@ -3,7 +3,7 @@
 # Table name: soil_classes
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
+#  name       :string
 #  aw         :decimal(, )
 #  created_at :datetime
 #  updated_at :datetime

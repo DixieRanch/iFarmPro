@@ -53,7 +53,8 @@ describe Rain do
 
     it 'formatted date' do
       rain.date = '4/1'
-      expect(rain.formatted_date).to eq 'April 1, 2016'
+      current_year = Time.new.year
+      expect(rain.formatted_date).to eq "April 1, #{current_year}"
     end
 
     it 'empty date' do

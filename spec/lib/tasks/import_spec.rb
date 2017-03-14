@@ -27,7 +27,7 @@ describe 'app lib tasks import.rake', :slow  do
   context 'get weather url' do
 
     it 'parses URL' do
-      expect(weather_page.uri.to_s).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+      expect(weather_page.uri.to_s).to eq 'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
     end
 
     it 'parses heading' do
@@ -46,7 +46,7 @@ describe 'app lib tasks import.rake', :slow  do
     end
 
     it 'parses URL pre-post' do
-      expect(data_page.uri.to_s).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+      expect(data_page.uri.to_s).to eq 'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
     end
 
     it 'parses heading pre post' do

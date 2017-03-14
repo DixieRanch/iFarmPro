@@ -2,12 +2,12 @@ require_relative '../../../lib/tasks/update_et'
 require 'rake'
 require 'rails_helper'
 
-describe Tasks::UpdateEt, :slow do
+describe Tasks::UpdateEt do
 
   let(:update_et) { Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station') }
   let(:weather_station) { build_stubbed(:weather_station) }
-  let(:start_date) { "2013-12-25" }
-  let(:end_date)  { "2014-01-06" }
+  let(:start_date) { "2015-12-25" }
+  let(:end_date)  { "2016-01-06" }
   let(:page) { update_et.fetch(weather_station.id_code, start_date, end_date) }
   let(:array) { update_et.parse(page) }
   let(:rake) { Rake::Application.new }
@@ -54,22 +54,22 @@ describe Tasks::UpdateEt, :slow do
 
       it 'verify eth for day 329' do
         cet = CurrentEt.find_by(doy: 359)
-        expect(cet[weather_station.db_col].to_f).to eq 0.06
+        expect(cet[weather_station.db_col].to_f).to eq 0.08
       end
 
       it 'verify eth for day 365' do
         cet = CurrentEt.find_by(doy: 365)
-        expect(cet[weather_station.db_col].to_f).to eq 0.07
+        expect(cet[weather_station.db_col].to_f).to eq 0.05
       end
 
       it 'verify eth for day 1' do
         cet = CurrentEt.find_by(doy: 1)
-        expect(cet[weather_station.db_col].to_f).to eq 0.08
+        expect(cet[weather_station.db_col].to_f).to eq 0.03
       end
 
       it 'verify eth for day 6' do
         cet = CurrentEt.find_by(doy: 6)
-        expect(cet[weather_station.db_col].to_f).to eq 0.05
+        expect(cet[weather_station.db_col].to_f).to eq 0.06
       end
     end
   end
@@ -94,19 +94,19 @@ describe Tasks::UpdateEt, :slow do
     context 'eth' do
 
       it 'extracts eth for doy 361' do
-        expect(array[2][:eth].to_f).to eq 0.06
+        expect(array[2][:eth].to_f).to eq 0.03
       end
 
       it 'extracts eth for doy 362' do
-        expect(array[3][:eth].to_f).to eq 0.07
+        expect(array[3][:eth].to_f).to eq 0.04
       end
 
       it 'extracts eth for doy 5' do
-        expect(array[11][:eth].to_f).to eq 0.06
+        expect(array[11][:eth].to_f).to eq 0.04
       end
 
       it 'extracts eth for doy 6' do
-        expect(array[12][:eth].to_f).to eq 0.05
+        expect(array[12][:eth].to_f).to eq 0.06
       end
     end
   end

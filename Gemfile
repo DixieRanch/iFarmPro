@@ -14,6 +14,7 @@ gem 'sass-rails',             '5.0.4'
 gem 'simple_form',            '3.2.1'
 gem 'sprockets',              '3.6.0'
 gem 'uglifier',               '3.0.0'
+gem 'will_paginate',          '3.1.5'
 
 group :production do
   gem 'rails_12factor',       '0.0.2'

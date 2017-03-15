@@ -19,7 +19,10 @@ describe 'Irrigation' do
       let(:field_name) { irrigation.field.name_with_block }
       let(:time) { new_irrigation.formatted_time }
 
-      before { visit irrigations_path }
+      before do
+        28.times{create(:irrigation)} #Total of 30 Irrigation Records
+        visit irrigations_path
+      end
 
       it "has the correct elements" do
         expect(page).to have_selector 'title', text: full_title('Irrigations')
@@ -32,6 +35,21 @@ describe 'Irrigation' do
         expect(second_irrigation).to be < first_irrigation
         click_link 'edit'
         expect(page).to have_field 'irrigation[time]', with: time
+        expect(page).to have_no_xpath("//*[@class='pagination']//a[text()='2']")
+      end
+      
+      context "with 31 irrigations" do
+        
+        before do
+          Company.current_id = user.company.id
+          create(:irrigation)
+          visit irrigations_path
+        end
+        
+        it "has pagination links" do
+          find("//*[@class='pagination']//a[text()='2']").click
+          expect(page.status_code).to eq(200)
+        end
       end
     end
 

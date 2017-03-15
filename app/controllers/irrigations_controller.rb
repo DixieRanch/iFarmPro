@@ -50,7 +50,7 @@ class IrrigationsController < ApplicationController
 private
 
     def get_irrigations
-      @irrigations = Irrigation.order("time DESC")
+      @irrigations = Irrigation.page(params[:page]).order("time DESC")
     end
 
     def irrigation_params

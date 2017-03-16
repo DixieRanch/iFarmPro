@@ -47,7 +47,7 @@ private
 
     # TODO: write a controller test for this?
     def get_rains
-      @rains = Rain.order('date desc')
+      @rains = Rain.page(params[:page]).per_page(30).order('date desc')
     end
 
     def rain_params

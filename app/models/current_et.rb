@@ -10,5 +10,7 @@
 #
 
 class CurrentEt < ActiveRecord::Base
-  # attr_accessible :doy, :fabian_garcia
+
+  validates :fabian_garcia, numericality: { greater_than: 0.0,
+                                            allow_nil: true }
 end

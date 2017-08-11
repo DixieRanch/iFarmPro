@@ -17,7 +17,9 @@ describe User do
 
   valid_attributes = { email: "user@example.com",
                        password: "foobar", 
-                       password_confirmation: "foobar" }
+                       password_confirmation: "foobar",
+                       activated: true, 
+                       activated_at: Time.zone.now }
 
   let(:company) { build_stubbed(:company) }
   let(:user) { company.users.build(valid_attributes) }
@@ -35,6 +37,8 @@ describe User do
     it { should have_db_column(:password_digest) }
     it { should have_db_column(:remember_token) }
     it { should have_db_column(:company_id) }
+    it { should have_db_column(:activated) }
+    it { should have_db_column(:activated_at) }
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
 
@@ -78,6 +82,16 @@ describe User do
       before { user.save }
         it "creates remember remember" do
           expect(user.remember_token).not_to be_blank
+        end
+    end
+    
+    describe "create_activation_digest" do
+      before { user.save }
+        it "creates activation token" do
+          expect(user.activation_token).not_to be_blank
+        end
+        it "creates activation digest" do
+          expect(user.activation_digest).not_to be_blank
         end
     end
   end

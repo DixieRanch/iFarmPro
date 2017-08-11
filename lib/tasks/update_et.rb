@@ -42,7 +42,11 @@ module Tasks
 
     def pad(weather_station)
       185.times do
-        @doy += 1
+        if @doy < 366
+          @doy += 1
+        else
+          @doy = 1
+        end
         current_et = CurrentEt.find_by_doy(@doy)
         current_et[weather_station.db_col] = nil
         current_et.save!

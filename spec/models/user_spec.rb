@@ -20,9 +20,7 @@ describe User do
 
   valid_attributes = { email: "user@example.com",
                        password: "foobar", 
-                       password_confirmation: "foobar",
-                       activated: true, 
-                       activated_at: Time.zone.now }
+                       password_confirmation: "foobar" }
 
   let(:company) { build_stubbed(:company) }
   let(:user) { company.users.build(valid_attributes) }

@@ -121,5 +121,16 @@ describe User do
         expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
       end
     end
+    
+    describe "authenticated?" do
+      it "returns true if given token matches digest" do
+        user.save
+        token = user.activation_token
+        expect(user.authenticated?("activation", token)).to be true
+        expect(user.authenticated?("activation", "wrong token")).to be false
+        user.activation_digest = nil
+        expect(user.authenticated?("activation", token)).to be false
+      end
+    end
   end
 end

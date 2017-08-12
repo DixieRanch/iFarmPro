@@ -90,5 +90,15 @@ describe User do
           expect(digest.is_password?(user.activation_token)).to be true
         end
     end
+    
+    describe "self.new_token" do
+      it "returns a random token" do
+        token = User.new_token
+        expect(token.class).to eq String
+        expect(token.length).to eq 22
+        another_token = User.new_token
+        expect(another_token).not_to eq token
+      end
+    end
   end
 end

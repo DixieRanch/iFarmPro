@@ -69,13 +69,6 @@ describe User do
         expect(user).not_to allow_value(invalid_address).for(:email)
       end      
     end
-
-    # it "should be save email as all lower-case" do
-    #   mixed_case_email = "Foo@ExAMPle.CoM"
-    #   user.email = mixed_case_email
-    #   user.save
-    #   user.reload.email.should == mixed_case_email.downcase
-    # end
   end
 
   describe "methods" do

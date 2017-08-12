@@ -100,5 +100,15 @@ describe User do
         expect(another_token).not_to eq token
       end
     end
+    
+    describe "self.digest" do
+      it "returns hash digest of a given string" do
+        digest = User.digest('random string')
+        expect(digest.length).to eq 60
+        expect(digest.to_s[0..3]).to eq "$2a$"
+        another_digest = User.digest('random string')
+        expect(another_digest).not_to eq digest
+      end
+    end
   end
 end

@@ -110,5 +110,16 @@ describe User do
         expect(another_digest).not_to eq digest
       end
     end
+    
+    describe "activate" do
+      it "activates a user account" do
+        user.save
+        expect(user.activated).to be false
+        expect(user.activated_at).to be nil
+        user.activate
+        expect(user.activated).to be true
+        expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
+      end
+    end
   end
 end

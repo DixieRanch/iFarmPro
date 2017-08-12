@@ -80,12 +80,14 @@ describe User do
     end
     
     describe "create_activation_digest" do
-      before { user.save }
-        it "creates activation token" do
+        it "creates activation token and digest" do
+          expect(user.activation_token).to be_blank
+          expect(user.activation_digest).to be_blank
+          user.save
           expect(user.activation_token).not_to be_blank
-        end
-        it "creates activation digest" do
           expect(user.activation_digest).not_to be_blank
+          digest = BCrypt::Password.new(user.activation_digest)
+          expect(digest.is_password?(user.activation_token)).to be true
         end
     end
   end

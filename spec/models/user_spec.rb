@@ -72,24 +72,6 @@ describe User do
   end
 
   describe "methods" do
-    describe "create_remember_token" do
-      before { user.save }
-        it "creates remember remember" do
-          expect(user.remember_token).not_to be_blank
-        end
-    end
-    
-    describe "create_activation_digest" do
-        it "creates activation token and digest" do
-          expect(user.activation_token).to be_blank
-          expect(user.activation_digest).to be_blank
-          user.save
-          expect(user.activation_token).not_to be_blank
-          expect(user.activation_digest).not_to be_blank
-          digest = BCrypt::Password.new(user.activation_digest)
-          expect(digest.is_password?(user.activation_token)).to be true
-        end
-    end
     
     describe "self.new_token" do
       it "returns a random token" do
@@ -111,6 +93,17 @@ describe User do
       end
     end
     
+    describe "authenticated?" do
+      it "returns true if given token matches digest" do
+        user.save
+        token = user.activation_token
+        expect(user.authenticated?("activation", token)).to be true
+        expect(user.authenticated?("activation", "wrong token")).to be false
+        user.activation_digest = nil
+        expect(user.authenticated?("activation", token)).to be false
+      end
+    end
+
     describe "activate" do
       it "activates a user account" do
         user.save
@@ -122,15 +115,23 @@ describe User do
       end
     end
     
-    describe "authenticated?" do
-      it "returns true if given token matches digest" do
-        user.save
-        token = user.activation_token
-        expect(user.authenticated?("activation", token)).to be true
-        expect(user.authenticated?("activation", "wrong token")).to be false
-        user.activation_digest = nil
-        expect(user.authenticated?("activation", token)).to be false
-      end
+    describe "create_remember_token" do
+      before { user.save }
+        it "creates remember remember" do
+          expect(user.remember_token).not_to be_blank
+        end
+    end
+    
+    describe "create_activation_digest" do
+        it "creates activation token and digest" do
+          expect(user.activation_token).to be_blank
+          expect(user.activation_digest).to be_blank
+          user.save
+          expect(user.activation_token).not_to be_blank
+          expect(user.activation_digest).not_to be_blank
+          digest = BCrypt::Password.new(user.activation_digest)
+          expect(digest.is_password?(user.activation_token)).to be true
+        end
     end
   end
 end

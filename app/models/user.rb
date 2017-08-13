@@ -19,9 +19,10 @@ class User < ActiveRecord::Base
 
   belongs_to :company
 
+  attr_accessor :activation_token
+  
   before_save :create_remember_token
     
-  attr_accessor :activation_token
   before_create :create_activation_digest
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -31,11 +32,14 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
-  # validates :activation_digest, presence: true
-  # validates :activation_token, presence: true
   
+  # Returns random token
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
   # Returns hash digest of a given string
-  def User.digest(string)
+  def self.digest(string)
     # establish cost
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine::cost
@@ -50,11 +54,6 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(digest).is_password?(token)
   end
   
-  # Returns random token
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
-  
   # Activates a user account
   def activate
     update_attributes(activated: true, activated_at: Time.zone.now)
@@ -65,15 +64,16 @@ class User < ActiveRecord::Base
   #   UserMailer.account_activation(self).deliver_now
   # end
   
-  # Creates and assigns a activation token and digest
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
 
   private
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64                     
-    end                     
+    end       
+    
+    # Creates and assigns a activation token and digest
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end

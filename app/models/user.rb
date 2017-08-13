@@ -61,9 +61,9 @@ class User < ActiveRecord::Base
   end
   
   # Sends account activation email
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
-  end
+  # def send_activation_email
+  #   UserMailer.account_activation(self).deliver_now
+  # end
   
   # Creates and assigns a activation token and digest
   def create_activation_digest

@@ -118,6 +118,15 @@ describe User do
       end
     end
     
+    describe ".send_activation_email" do
+      it "sends account activation email" do
+        user.save
+        expect {
+          user.send_activation_email
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
+    
     describe "create_remember_token" do
       before { user.save }
         it "creates remember remember" do

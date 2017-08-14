@@ -60,9 +60,9 @@ class User < ActiveRecord::Base
   end
   
   # Sends account activation email
-  # def send_activation_email
-  #   UserMailer.account_activation(self).deliver_now
-  # end
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
   
 
   private

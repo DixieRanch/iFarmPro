@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
     user = User.where('lower(email) = ?', email).first
     if user && user.authenticate(params[:session][:password])
       sign_in user
+      UserMailer.account_activation(user).deliver_now # Email test, delete me.
       redirect_back_or root_path
     else
       flash.now[:danger] = 'Invalid email/password combination'

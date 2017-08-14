@@ -81,6 +81,9 @@ RSpec.configure do |config|
   
   # Filter bakctrace
   config.backtrace_exclusion_patterns = [/rvm/, /rails_helper/]
+  
+  # Reset delivered email before each spec
+  config.before(:each) { reset_email }
 end
 
 Capybara.configure do |config|

@@ -23,3 +23,11 @@ def sign_in_new(user)
   click_button "Sign in"
   Company.current_id = user.company.id
 end
+
+def last_email
+  ActionMailer::Base.deliveries.last
+end
+
+def reset_email
+  ActionMailer::Base.deliveries = []
+end

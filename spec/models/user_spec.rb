@@ -70,6 +70,17 @@ describe User do
       end      
     end
   end
+  
+  describe "callbacks" do
+    context "before create" do
+      it "sends account activation email" do
+        user.save
+        expect {
+          user.send_activation_email
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
+  end
 
   describe "methods" do
     
@@ -120,10 +131,15 @@ describe User do
     
     describe ".send_activation_email" do
       it "sends account activation email" do
-        user.save
+        expect(user.activation_token).to be nil
+        expect(user.activation_digest).to be nil
         expect {
-          user.send_activation_email
+          user.save
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect(user.activation_token).not_to be_blank
+        expect(user.activation_digest).not_to be_blank
+        digest = BCrypt::Password.new(user.activation_digest)
+        expect(digest.is_password?(user.activation_token)).to be true
       end
     end
     
@@ -131,18 +147,6 @@ describe User do
       before { user.save }
         it "creates remember remember" do
           expect(user.remember_token).not_to be_blank
-        end
-    end
-    
-    describe "create_activation_digest" do
-        it "creates activation token and digest" do
-          expect(user.activation_token).to be_blank
-          expect(user.activation_digest).to be_blank
-          user.save
-          expect(user.activation_token).not_to be_blank
-          expect(user.activation_digest).not_to be_blank
-          digest = BCrypt::Password.new(user.activation_digest)
-          expect(digest.is_password?(user.activation_token)).to be true
         end
     end
   end

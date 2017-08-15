@@ -93,10 +93,11 @@ describe User do
       end
     end
     
-    describe "authenticated?" do
+    describe ".authenticated?" do
       it "returns true if given token matches digest" do
         user.save
         token = user.activation_token
+        #.authenticated? takes 2 arguments: digest root name, matching token
         expect(user.authenticated?("activation", token)).to be true
         expect(user.authenticated?("activation", "wrong token")).to be false
         user.activation_digest = nil

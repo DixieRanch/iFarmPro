@@ -6,8 +6,10 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.account_activation.subject
   #
   def account_activation(user)
-    @greeting = "Hi"
-
+    @message = "Thanks for signing up #{user.email} for iFarmPro!  " + 
+               "Please click the following link to activate your account " +
+               "and finish the signup process."
+    @user = user
     mail to: user.email, 
     subject: "iFarmPro account activation"
   end

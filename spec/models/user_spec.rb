@@ -105,12 +105,14 @@ describe User do
       end
     end
 
-    describe "activate" do
+    describe ".activate" do
       it "activates a user account" do
         user.save
+        user = User.last #Dumps non-persistent attributes
         expect(user.activated).to be false
         expect(user.activated_at).to be nil
         user.activate
+        user.reload #Ensure database is updated
         expect(user.activated).to be true
         expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
       end

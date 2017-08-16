@@ -83,14 +83,16 @@ class ApplicationController < ActionController::Base
     # --------- Farm Setup Methods ----------
 
     def farm_setup
-      if Farm.all.empty?
-        flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
-                          Please setup your first farm.'
-        redirect_to(root_path)
-      elsif Field.all.empty?
-        flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
-                          Please add a field to get started.'
-        redirect_to(root_path)
+      if signed_in?
+        if Farm.all.empty?
+          flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
+                            Please setup your first farm.'
+          redirect_to new_farm_path
+        elsif Field.all.empty?
+          flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
+                            Please add a field to get started.'
+          redirect_to edit_farm_path(Farm.first)
+        end
       end
     end                   
 end

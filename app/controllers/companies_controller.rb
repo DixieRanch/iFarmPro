@@ -11,7 +11,6 @@
 class CompaniesController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
-  skip_before_filter :farm_setup, only: [:new, :create]
 
   def new
     @company = Company.new
@@ -23,7 +22,7 @@ class CompaniesController < ApplicationController
     if @company.save
       sign_in @company.users.first
       flash[:success] = "Welcome to iFarmPro!"
-      redirect_to root_path
+      redirect_to new_farm_path
     else
       render 'new'
     end

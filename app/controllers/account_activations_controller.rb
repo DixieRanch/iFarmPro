@@ -7,7 +7,11 @@ class AccountActivationsController < ApplicationController
     if user && user.authenticated?(:activation, params[:id])
       user.activate
       sign_in(user)
+      flash[:success] = "Account Activated!"
+      redirect_to root_path unless farm_setup
+    else
+      flash.now[:danger] = "Invalid Activation Link"
+      render 'new'
     end
-    redirect_to root_path
   end
 end

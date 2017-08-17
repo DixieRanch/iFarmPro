@@ -38,6 +38,7 @@ describe "AccountActivations" do
         visit edit_account_activation_path(token, email: email)
         expect(page).to have_link('Sign out')
         expect(page).not_to have_selector('h1', text: 'Sign in')
+        expect(page).to have_css('div.alert.alert-success', text:'Activated')
       end
     end
     
@@ -49,6 +50,7 @@ describe "AccountActivations" do
           visit edit_account_activation_path(token, email: email)
           user.reload
         }.not_to change{user.activated}.from(false)
+        expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
       end
     end
     
@@ -60,6 +62,7 @@ describe "AccountActivations" do
           visit edit_account_activation_path(token, email: email)
           user.reload
         }.not_to change{user.activated}.from(false)
+        expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
       end
     end
   end

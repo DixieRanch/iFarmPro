@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
   def send_activation_email
     create_activation_digest
     UserMailer.account_activation(self).deliver_now
+    update_columns(activation_digest: activation_digest) unless new_record?
   end
   
 

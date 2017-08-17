@@ -130,7 +130,7 @@ describe User do
     end
     
     describe ".send_activation_email" do
-      it "sends account activation email" do
+      it "sends account activation email when user is created" do
         expect(user.activation_token).to be nil
         expect(user.activation_digest).to be nil
         expect {
@@ -140,6 +140,20 @@ describe User do
         expect(user.activation_digest).not_to be_blank
         digest = BCrypt::Password.new(user.activation_digest)
         expect(digest.is_password?(user.activation_token)).to be true
+      end
+      
+      it "updates activation_digest when resending activation email" do
+        user.save
+        old_digest = user.activation_digest
+        user.send_activation_email
+        user.reload
+        new_digest = user.activation_digest
+        expect(new_digest).not_to eq old_digest
+      end
+      
+      it "doesn't save the user if it hasn't been created yet" do
+        user.send_activation_email
+        expect(user.new_record?).to be true
       end
     end
     

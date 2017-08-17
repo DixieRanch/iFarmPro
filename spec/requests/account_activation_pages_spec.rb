@@ -1,0 +1,60 @@
+require 'rails_helper'
+
+describe "AccountActivations" do
+  
+  let(:user) { create(:user, activated: false) }
+  
+  before :each do
+    user.send_activation_email #Creates activation token and digest
+    # user.reload                #Loads new digest from database
+  end
+  
+  context "after clicking link in email" do
+    
+    it "activates user" do
+      open_email(user.email)
+      expect { 
+        current_email.click_link "Activate"
+        user.reload
+      }.to change{user.activated}.to(true)
+    end
+  end
+  
+  describe ".edit" do
+    
+    let(:token) { user.activation_token }
+    let(:email) { user.email }
+    
+    context "with correct token and email" do
+      
+      it "activates user" do
+        expect {
+          visit edit_account_activation_path(token, email: email)
+          user.reload
+        }.to change{user.activated}.to(true)
+      end
+    end
+    
+    context "with incorrect email" do
+      
+      it "doesn't activate user" do
+        email = "wrong@example.com"
+        expect {
+          visit edit_account_activation_path(token, email: email)
+          user.reload
+        }.not_to change{user.activated}.from(false)
+      end
+    end
+    
+    context "with incorrect token" do
+      
+      it "doesn't activate user" do
+        token = "wrongtoken"
+        expect {
+          visit edit_account_activation_path(token, email: email)
+          user.reload
+        }.not_to change{user.activated}.from(false)
+      end
+    end
+  end
+end

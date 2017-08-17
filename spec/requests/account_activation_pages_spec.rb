@@ -33,6 +33,12 @@ describe "AccountActivations" do
           user.reload
         }.to change{user.activated}.to(true)
       end
+      
+      it "signs in user" do
+        visit edit_account_activation_path(token, email: email)
+        expect(page).to have_link('Sign out')
+        expect(page).not_to have_selector('h1', text: 'Sign in')
+      end
     end
     
     context "with incorrect email" do

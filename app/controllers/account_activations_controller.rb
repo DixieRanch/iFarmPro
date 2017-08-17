@@ -6,7 +6,8 @@ class AccountActivationsController < ApplicationController
     user = User.where('lower(email) = ?', params[:email].downcase).first
     if user && user.authenticated?(:activation, params[:id])
       user.activate
+      sign_in(user)
     end
-    redirect_to signin_path
+    redirect_to root_path
   end
 end

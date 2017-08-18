@@ -44,13 +44,19 @@ describe "AccountActivations" do
     
     context "with incorrect email" do
       
+      let(:email) { 'wrong@example.com' }
+      
       it "doesn't activate user" do
-        email = "wrong@example.com"
         expect {
           visit edit_account_activation_path(token, email: email)
           user.reload
         }.not_to change{user.activated}.from(false)
+      end
+      
+      it "renders account activation request page" do
+        visit edit_account_activation_path(token, email: email)
         expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
+        expect(page).to have_title full_title 'Request Account Activation'
       end
     end
     
@@ -62,8 +68,15 @@ describe "AccountActivations" do
           visit edit_account_activation_path(token, email: email)
           user.reload
         }.not_to change{user.activated}.from(false)
-        expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
       end
     end
+  end
+  
+  context 'when requesting new activation email' do
+    
+  end
+  
+  describe '.new' do
+    
   end
 end

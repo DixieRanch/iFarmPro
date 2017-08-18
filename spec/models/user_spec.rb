@@ -133,7 +133,7 @@ describe User do
         expect(user.activation_token).to be nil
         expect(user.activation_digest).to be nil
         expect {
-          user.save
+          user.send_activation_email
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(user.activation_token).not_to be_blank
         expect(user.activation_digest).not_to be_blank

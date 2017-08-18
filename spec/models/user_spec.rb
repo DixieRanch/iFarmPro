@@ -74,9 +74,8 @@ describe User do
   describe "callbacks" do
     context "before create" do
       it "sends account activation email" do
-        user.save
         expect {
-          user.send_activation_email
+          user.save
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end

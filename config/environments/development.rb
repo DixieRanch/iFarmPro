@@ -14,18 +14,9 @@ Ifarm::Application.configure do
 
   # Display error if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
-  host = 'ifarmpro-gregdaviet.c9users.io'
+  config.action_mailer.delivery_method = :test
+  host = ENV['C9_HOSTNAME']
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
-  ActionMailer::Base.smtp_settings = {
-    :address               => 'smtp.gmail.com',
-    :port                  => '587',
-    :user_name             => ENV['iFARM_ADDRESS'],
-    :password              => ENV['iFARM_PASSWORD'],
-    :authentication        => 'login',
-    :enable_starttls_auto  => true
-  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

@@ -1,15 +1,23 @@
 <% provide :title, "Request Account Activation" %>
-<h1>Activate your account</h1>
 
-<p>
-  Please check your email account for an activation email from 
-  &#60noreply@ifarmpro.com&#62.  If no email is found, you can request a new
-  account activation message.  Please fill in your account email to request a
-  new message.
-</p>
-
-<%= simple_form_for :account_activation, url: account_activations_path do |f| %>
-  
-  <%= f.input :email %>
-  <%= f.button :submit, 'Request Email' %>
-<% end %>
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Activate your account</h1></div>
+    <div class="panel-body">
+      <p>
+        Please check your email account for an activation email from 
+        &#60noreply@ifarmpro.com&#62.  If no email is found, you can request a 
+        new account activation message.  Please fill in your account email to 
+        request a new message.
+      </p>
+      
+      <%= simple_form_for :account_activation, 
+                          url: account_activations_path,
+                          html: {class: 'form-horizontal'},
+                          wrapper: :horizontal_form do |f| %>
+        <%= f.input :email %>
+        <%= f.submit 'Request Email', class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

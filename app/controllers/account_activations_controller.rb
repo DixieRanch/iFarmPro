@@ -2,13 +2,17 @@ class AccountActivationsController < ApplicationController
 
   skip_before_filter :signed_in_user
   
+  def show
+    @email = params[:id]
+  end
+  
   def create
     email = params[:account_activation][:email]
     user = User.find_by(email: email)
     user.send_activation_email if user
     flash[:success] = "Activation email sucessfully sent.  Please check your
                        email for the link to activate your account."
-    redirect_to root_path
+    redirect_to account_activation_path(email)
   end
 
   def edit

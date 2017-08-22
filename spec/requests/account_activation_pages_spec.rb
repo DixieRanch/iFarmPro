@@ -108,9 +108,11 @@ describe "AccountActivations" do
           }.to change{user.activated}.to(true)
         end
         
-        it "redirects to home page with flash success message" do
+        it "redirects to confirmation email page with flash success message" do
           click_button 'Request Email'
-          expect(page).to have_link 'Sign up now!'
+          expect(page).to have_title full_title "Activation Email Sent"
+          expect(page).to have_selector 'h1', text: 'confirmation'
+          expect(page).to have_selector 'strong', text: user.email
           expect(page).to have_css('div.alert.alert-success', text:'Activation')
         end
       end
@@ -122,7 +124,7 @@ describe "AccountActivations" do
           expect {
             click_button 'Request Email'
           }.not_to change { ActionMailer::Base.deliveries.count }
-          expect(page).to have_link 'Sign up now!'
+          expect(page).to have_selector 'h1', text: 'confirmation'
           expect(page).to have_css('div.alert.alert-success', text:'Activation')
         end
       end

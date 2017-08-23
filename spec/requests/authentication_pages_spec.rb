@@ -42,6 +42,39 @@ describe "Authentication" do
         it { should have_link('Sign in') }
       end
     end
+    
+    context "when account not activated" do
+      let(:user) { create(:user, activated: false) }
+      before do
+        fill_in "Email",    with: user.email.upcase
+        fill_in "Password", with: user.password
+      end
+      
+      it "redirects to Activation Email Sent page" do
+        click_button "Sign in"
+        expect(page).to have_title full_title 'Activation Email Sent'
+        expect(page).to have_link 'Sign in'
+      end
+      
+      context "when activation email not sent" do
+        
+        it "sends email" do
+          user.update_attribute(:activation_digest, nil)
+          expect {
+            click_button "Sign in"
+          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end
+      end
+      
+      context "when activation email previously sent" do
+        
+        it "doesn't send email" do
+          expect {
+            click_button "Sign in"
+          }.not_to change { ActionMailer::Base.deliveries.count }
+        end
+      end
+    end
   end
 
   describe "authorization" do

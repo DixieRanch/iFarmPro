@@ -30,13 +30,18 @@ class ApplicationController < ActionController::Base
     end
 
     def sign_in(user)
-      session[:remember_token] = user.remember_token
-      Farm.unscoped do
-        if user.company.farms.order('id').to_a.any?
-          session[:farm_id] = user.company.farms.order('id').first.id
+      if user.activated?
+        session[:remember_token] = user.remember_token
+        Farm.unscoped do
+          if user.company.farms.order('id').to_a.any?
+            session[:farm_id] = user.company.farms.order('id').first.id
+          end
         end
+        self.current_user = user
+      else
+        user.send_activation_email unless user.activation_digest?
+        redirect_to account_activation_path(user.email)
       end
-      self.current_user = user
     end
 
     def signed_in?

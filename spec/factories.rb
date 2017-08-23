@@ -23,6 +23,7 @@ FactoryGirl.define do
     sequence(:email) { |n| "User_#{n}@Example.com" }
     password "foobar"
     password_confirmation "foobar"
+    activated true
     company
   end
 

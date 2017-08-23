@@ -87,6 +87,7 @@ class ApplicationController < ActionController::Base
         if Farm.all.empty?
           flash[:info] = '<strong>Welcome to iFarmPro.</strong> 
                             Please setup your first farm.'
+          flash.keep
           redirect_to new_farm_path
         elsif Field.all.empty?
           flash[:info] = '<strong>Welcome to iFarmPro.</strong> 

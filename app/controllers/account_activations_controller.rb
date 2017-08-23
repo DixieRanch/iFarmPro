@@ -21,7 +21,7 @@ class AccountActivationsController < ApplicationController
       user.activate
       sign_in(user)
       flash[:success] = "Account Activated!"
-      redirect_to root_path unless farm_setup
+      redirect_to root_path
     else
       flash.now[:danger] = "Invalid Activation Link"
       render 'new'

@@ -41,6 +41,20 @@ describe "AccountActivations" do
       end
     end
     
+    context "when user already has farm setup" do
+      
+      it "redirects to irrigation schedule" do
+        #Company scope must be set to create :field
+        Company.current_id = user.company.id
+        create(:field)
+        #Company scope reset to initial state
+        Company.current_id = nil
+        visit edit_account_activation_path(token, email: email)
+        # puts page.body
+        expect(page).to have_title full_title 'Schedule'
+      end
+    end
+    
     context "with incorrect email" do
       
       let(:email) { 'wrong@example.com' }

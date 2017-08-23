@@ -50,11 +50,30 @@ describe "Company" do
       end
 
       context "after creating company" do
-        before { click_button submit }
-
-        it "displays welcome message on New Farm Page" do
-          expect(page).to have_title full_title 'Add Farm'
+        
+        it "sends activation email" do
+          expect {
+            click_button submit
+          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end
+        
+        it "redirects to Activation Email Sent page" do
+          click_button submit
+          expect(page).to have_title full_title "Activation Email Sent"
           expect(page).to have_css('div.alert.alert-success', text: 'Welcome')
+          expect(page).to have_text 'user@example.com'
+        end
+        
+        context "after activating account" do
+
+          it "displays welcome message on New Farm Page" do
+            click_button submit
+            open_email('user@example.com')
+            current_email.click_link 'Activate'
+            expect(page).to have_title full_title 'Add Farm'
+            expect(page).to have_css('div.alert.alert-success', 
+                                      text: 'Activated!')
+          end
         end
       end
     end

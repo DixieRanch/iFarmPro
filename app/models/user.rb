@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   
   before_save :create_remember_token
     
-  before_create :create_activation_digest
+  before_create :send_activation_email
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -60,9 +60,11 @@ class User < ActiveRecord::Base
   end
   
   # Sends account activation email
-  # def send_activation_email
-  #   UserMailer.account_activation(self).deliver_now
-  # end
+  def send_activation_email
+    create_activation_digest
+    UserMailer.account_activation(self).deliver_now
+    update_columns(activation_digest: activation_digest) unless new_record?
+  end
   
 
   private

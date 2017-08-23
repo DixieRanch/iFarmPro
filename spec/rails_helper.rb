@@ -3,6 +3,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/poltergeist'
 require 'shoulda/matchers'
+require 'capybara/email/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -81,6 +82,9 @@ RSpec.configure do |config|
   
   # Filter bakctrace
   config.backtrace_exclusion_patterns = [/rvm/, /rails_helper/]
+  
+  # Reset delivered email before each spec
+  config.before(:each) { reset_email }
 end
 
 Capybara.configure do |config|

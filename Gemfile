@@ -37,6 +37,7 @@ end
 
 group :test do
   gem 'capybara',           '2.7.0'
+  gem 'capybara-email',     '2.5.0'
   gem 'database_cleaner',   '1.5.3'
   gem 'factory_girl_rails', '4.7.0'
   gem 'poltergeist',        '1.9.0'

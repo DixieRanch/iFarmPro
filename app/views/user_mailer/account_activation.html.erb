@@ -1,0 +1,8 @@
+<h1>Welcome to iFarmPro!</h1>
+
+<p>
+  <%= @message %>
+</p>
+
+<%= link_to "Activate", edit_account_activation_url( @user.activation_token,
+                                                     email: @user.email) %>

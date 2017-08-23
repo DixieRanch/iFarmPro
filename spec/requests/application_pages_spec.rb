@@ -97,12 +97,17 @@ describe 'ApplicationPages' do
       fill_in 'Password', with: 'password'
       fill_in 'Confirmation', with: 'password'
       click_button 'Create my account'
+      open_email('user@example.com')
+      # Can't click_link a url with js:true, extract email link and visit
+      # current_email.click_link 'Activate' <-- won't work with js: true
+      url = current_email.find_link('Activate')[:href]
+      visit "#{URI(url).path}?email=user%40example.com"
     end
     
-    it "goes from initial setup to irrigation schedule", {slow: true, js: true} do
+    it "goes from initial setup to irrigation schedule", { js:true, slow: true} do
 
       # Initial sign up
-
+      # puts page.body
       expect(page).to have_title 'Add Farm'
       click_link 'iFarmPro'
       expect(page).to have_title full_title 'Add Farm'

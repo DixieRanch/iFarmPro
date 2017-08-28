@@ -44,6 +44,8 @@ RSpec.describe "PasswordReset", type: :request do
       expect {
       click_button "Request password reset"
       }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      open_email(user.email)
+      expect(current_email.to).to include user.email
     end
   end
 end

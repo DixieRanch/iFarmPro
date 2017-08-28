@@ -179,6 +179,17 @@ describe User do
         expect(user.password_reset_token).not_to be_blank
         expect(user.password_reset_digest).not_to be_blank
         expect(user.password_reset_sent_at).not_to be_blank
+        
+        digest = BCrypt::Password.new(user.password_reset_digest)
+        expect(digest.is_password?(user.password_reset_token)).to be true
+      end
+      
+      it "updates password_reset_digest when requesting new password reset" do
+        user.send_password_reset_email
+        old_digest = user.password_reset_digest
+        user.send_password_reset_email
+        new_digest = user.password_reset_digest
+        expect(new_digest).not_to eq old_digest
       end
     end
   end

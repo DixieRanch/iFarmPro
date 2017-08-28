@@ -70,6 +70,7 @@ class User < ActiveRecord::Base
   def send_password_reset_email
     create_password_reset_digest
     UserMailer.password_reset(self).deliver_now
+    update_columns(password_digest: password_digest) unless new_record?
   end
 
   private

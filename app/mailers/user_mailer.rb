@@ -13,4 +13,8 @@ class UserMailer < ApplicationMailer
     mail to: user.email, 
     subject: "iFarmPro account activation"
   end
+  
+  def password_reset
+    mail
+  end
 end

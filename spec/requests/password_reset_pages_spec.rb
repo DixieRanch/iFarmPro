@@ -26,17 +26,24 @@ RSpec.describe "PasswordReset", type: :request do
     before :each do
       visit new_password_reset_path
       fill_in 'Email', with: user.email
-      click_button "Request password reset"
     end
     
     it "redirects to email sent page" do
+      click_button "Request password reset"
       expect(page).to have_title full_title 'Password Reset Email Sent'
       expect(page).to have_selector 'strong', text: user.email
     end
     
     it "has link to request new password reset" do
+      click_button "Request password reset"
       click_link 'HERE!'
       expect(page).to have_title full_title 'Request Password Reset'
+    end
+    
+    it "sends password reset email" do
+      expect {
+      click_button "Request password reset"
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 end

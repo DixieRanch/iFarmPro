@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   belongs_to :company
 
-  attr_accessor :activation_token
+  attr_accessor :activation_token, :password_reset_token
   
   before_save :create_remember_token
     
@@ -66,6 +66,11 @@ class User < ActiveRecord::Base
     update_columns(activation_digest: activation_digest) unless new_record?
   end
   
+  # Sends password reset email
+  def send_password_reset_email
+    create_password_reset_digest
+    UserMailer.password_reset(self).deliver_now
+  end
 
   private
 
@@ -77,5 +82,12 @@ class User < ActiveRecord::Base
     def create_activation_digest
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
+    end
+    
+    # Creates and assigns a password reset token and digest
+    def create_password_reset_digest
+      self.password_reset_token  = User.new_token
+      self.password_reset_digest = User.digest(password_reset_token)
+      self.password_reset_sent_at = Time.zone.now
     end
 end

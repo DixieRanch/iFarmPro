@@ -162,5 +162,24 @@ describe User do
           expect(user.remember_token).not_to be_blank
         end
     end
+    
+    describe "#send_password_reset_email" do
+      it "sends password reset email" do
+        expect {
+          user.send_password_reset_email
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        
+      end
+      
+      it "creates password reset token and digest" do
+        expect(user.password_reset_token).to be nil
+        expect(user.password_reset_digest).to be nil
+        expect(user.password_reset_sent_at).to be nil
+        user.send_password_reset_email
+        expect(user.password_reset_token).not_to be_blank
+        expect(user.password_reset_digest).not_to be_blank
+        expect(user.password_reset_sent_at).not_to be_blank
+      end
+    end
   end
 end

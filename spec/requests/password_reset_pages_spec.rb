@@ -48,4 +48,16 @@ RSpec.describe "PasswordReset", type: :request do
       expect(current_email.to).to include user.email
     end
   end
+  
+  context "when clicking reset link in email" do
+    
+    it "redirects to password reset page" do
+      visit new_password_reset_path
+      fill_in 'Email', with: user.email
+      click_button "Request password reset"
+      open_email(user.email)
+      current_email.click_link 'Reset Password'
+      expect(page).to have_title full_title 'Reset Password'
+    end
+  end
 end

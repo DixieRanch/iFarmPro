@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
+  let(:user) { create(:user) }
+  
   describe "account_activation" do
-    let(:user) { create(:user) }
     let(:mail) { UserMailer.account_activation(user) }
 
     it "renders the headers" do
@@ -17,6 +18,16 @@ RSpec.describe UserMailer, type: :mailer do
                                                   user.activation_token, 
                                                   email: user.email)
       expect(mail.body.encoded).to have_selector 'p', text: user.email
+    end
+  end
+  
+  describe "password_reset" do
+    let(:mail) { UserMailer.password_reset(user) }
+    
+    it "renders the headers" do
+      expect(mail.subject).to eq("iFarmPro password reset")
+      expect(mail.to).to eq([user.email])
+      expect(mail.from).to eq(["noreply@ifarmpro.com"])
     end
   end
 end

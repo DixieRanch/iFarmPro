@@ -164,6 +164,7 @@ describe User do
     end
     
     describe "#send_password_reset_email" do
+      before { user.save }
       it "sends password reset email" do
         expect {
           user.send_password_reset_email
@@ -176,10 +177,11 @@ describe User do
         expect(user.password_reset_digest).to be nil
         expect(user.password_reset_sent_at).to be nil
         user.send_password_reset_email
+        user.reload
         expect(user.password_reset_token).not_to be_blank
         expect(user.password_reset_digest).not_to be_blank
         expect(user.password_reset_sent_at).not_to be_blank
-        
+        #verify token encrypts to digest
         digest = BCrypt::Password.new(user.password_reset_digest)
         expect(digest.is_password?(user.password_reset_token)).to be true
       end

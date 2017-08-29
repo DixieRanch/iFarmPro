@@ -11,8 +11,9 @@ class PasswordResetsController < ApplicationController
   end
   
   def create
-    UserMailer.password_reset(params[:password_reset][:email]).deliver_now
-    redirect_to password_reset_path(params[:password_reset][:email])
+    user = User.find_by_email(params[:password_reset][:email])
+    UserMailer.password_reset(user).deliver_now
+    redirect_to password_reset_path(user.email)
   end
   
   def edit

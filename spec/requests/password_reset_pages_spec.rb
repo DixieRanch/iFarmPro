@@ -49,6 +49,26 @@ RSpec.describe "PasswordReset", type: :request do
     end
   end
   
+  context "when requesting password reset for non-user" do
+    
+    before do
+      visit new_password_reset_path
+      fill_in 'Email', with: 'no_one@example.com'
+    end
+    
+    it "does not send email" do
+      expect {
+      click_button "Request password reset"
+      }.not_to change { ActionMailer::Base.deliveries.count }
+    end
+    
+    it "redirects to email sent page" do
+      click_button "Request password reset"
+      expect(page).to have_title full_title 'Password Reset Email Sent'
+      expect(page).to have_selector 'strong', text: 'no_one@example.com'
+    end
+  end
+  
   context "when clicking reset link in email" do
     
     it "redirects to password reset page" do

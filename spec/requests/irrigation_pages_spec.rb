@@ -11,7 +11,7 @@ describe 'Irrigation' do
 
   describe 'index page' do
 
-    describe 'previous irrigations list' do
+    describe 'previous irrigations list', slow: true do
       let!(:irrigation) { create(:irrigation) }
       let!(:new_irrigation) do
         create(:irrigation, time: irrigation.time + 1.day)
@@ -114,7 +114,7 @@ describe 'Irrigation' do
       visit edit_irrigation_path(irrigation)
     end
 
-    context 'with valid data' do
+    context 'with valid data', slow: true do
 
       it 'updates the irrigation and displays success' do
         fill_in 'irrigation_time', with: time

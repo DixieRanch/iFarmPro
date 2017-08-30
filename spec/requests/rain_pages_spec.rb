@@ -49,7 +49,7 @@ describe 'Rain' do
         expect(page).to have_button('Save')        
       end
       
-      context "with 31 rains" do
+      context "with 31 rains", slow: true do
         
         before do
           Company.current_id = user.company.id

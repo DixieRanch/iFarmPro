@@ -11,12 +11,15 @@ class PasswordResetsController < ApplicationController
   end
   
   def create
-    user = User.find_by_email(params[:password_reset][:email])
+    email = params[:password_reset][:email]
+    user = User.find_by(email: email)
     user.send_password_reset_email if user
-    redirect_to password_reset_path(params[:password_reset][:email])
+    # UserMailer.password_reset(params[:password_reset][:email]).deliver_now
+    # redirect_to password_reset_path(params[:password_reset][:email])
+    redirect_to password_reset_path(email)
   end
   
   def edit
-    
+    @user = params[:id]
   end
 end

@@ -36,6 +36,26 @@ describe "SoilApplication" do
         expect(page).to have_selector 'td', text: @app.quantity
         expect(page).to have_link 'edit', href: edit_soil_application_path(@app)
       end
+      
+      context "with 31 applications" do
+        
+        let(:app_table) { "table#application_table tbody tr" }
+        let(:pagination_link) { "//*[@class='pagination']//a[text()='2']" }
+        
+        before do
+          Company.current_id = user.company.id
+          31.times do |i|
+            create(:soil_application)
+          end
+          visit soil_applications_path
+        end
+        
+        it "has pagination links" do
+          expect(page).to have_selector app_table, count: 30
+          find(pagination_link).click
+          expect(page).to have_selector 'em.current', text: 2
+        end
+      end
 
       end
 

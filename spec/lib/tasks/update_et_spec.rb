@@ -26,7 +26,7 @@ describe Tasks::UpdateEt do
     end
   end
 
-  describe '#update' do
+  describe '#update', slow: true do
 
     before do
       update_et.update(array, weather_station)
@@ -74,7 +74,7 @@ describe Tasks::UpdateEt do
     end
   end
 
-  describe '#parse' do
+  describe '#parse', slow: true do
 
     context 'doy' do
 
@@ -111,7 +111,7 @@ describe Tasks::UpdateEt do
     end
   end
 
-  describe '#pad' do
+  describe '#pad', slow:true do
 
     before do
       update_et.doy = 6

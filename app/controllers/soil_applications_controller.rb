@@ -52,7 +52,9 @@ class SoilApplicationsController < ApplicationController
   private
 
     def get_soil_applications
-      @applications = SoilApplication.order("date DESC")
+      @applications = SoilApplication.page(params[:page])
+                                     .per_page(30)
+                                     .order("date DESC")
     end
 
     def soil_app_params

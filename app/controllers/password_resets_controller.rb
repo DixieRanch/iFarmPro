@@ -20,6 +20,10 @@ class PasswordResetsController < ApplicationController
   end
   
   def edit
-    @user = params[:id]
+    @user = User.find_by(email: params[:email])
+  end
+  
+  def update
+    redirect_to signin_path # Placeholder landing page
   end
 end

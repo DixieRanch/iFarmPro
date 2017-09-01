@@ -80,4 +80,17 @@ RSpec.describe "PasswordReset", type: :request do
       expect(page).to have_title full_title 'Reset Password'
     end
   end
+  
+  context "when reseting password" do
+    
+    it "redirects to signin page" do
+      visit new_password_reset_path
+      fill_in 'Email', with: user.email
+      click_button "Request password reset"
+      open_email(user.email)
+      current_email.click_link 'Reset Password'
+      click_button "Reset Your Password"
+      expect(page).to have_title full_title 'Sign in' # Placeholder landing page
+    end
+  end
 end

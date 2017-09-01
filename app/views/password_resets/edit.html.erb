@@ -10,7 +10,9 @@
                           url: password_reset_path(params[:id]),
                           html: {class: 'form-horizontal'},
                           wrapper: :horizontal_form do |f| %>
-        
+                          
+        <%= f.input :password %>
+        <%= f.input :password_confirmation, label: 'Confirmation' %>
         <%= f.submit 'Reset Your Password', class: "btn btn-lg btn-primary" %>
       <% end %>
     </div>

@@ -89,6 +89,9 @@ RSpec.describe "PasswordReset", type: :request do
       click_button "Request password reset"
       open_email(user.email)
       current_email.click_link 'Reset Password'
+      fresh_pass = "foobarbaz"
+      fill_in 'Password',     with: fresh_pass
+      fill_in 'Confirmation', with: fresh_pass
       click_button "Reset Your Password"
       expect(page).to have_title full_title 'Sign in' # Placeholder landing page
     end

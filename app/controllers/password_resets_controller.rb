@@ -24,6 +24,28 @@ class PasswordResetsController < ApplicationController
   end
   
   def update
-    redirect_to signin_path # Placeholder landing page
+    @user = User.find_by(email: params[:user][:email])
+    if @user.password_reset_sent_at > 2.hours.ago
+     # Authenticate user against reset token
+     # Save the user(update the password)
+     # Sign in user
+     # Redirect to root_path
+    else
+      flash[:danger] = "Expired Password Reset!  Request a new one."
+      redirect_to new_password_reset_path
+    end
   end
+  
+  private
+    
+    def get_user
+      @user = User.find_by(email: params[:email])
+    end
+    
+    def check_expiration
+      if @user.password_reset_expired?
+        flash[:danger] = "Expired password reset!"
+        redirect_to new_password_reset_path
+      end
+    end
 end

@@ -10,6 +10,8 @@
                           url: password_reset_path(params[:id]),
                           html: {class: 'form-horizontal'},
                           wrapper: :horizontal_form do |f| %>
+        
+        <%= f.input :email, as: :hidden, input_html: { value: @user.email } %>
                           
         <%= f.input :password %>
         <%= f.input :password_confirmation, label: 'Confirmation' %>

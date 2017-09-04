@@ -83,13 +83,36 @@ RSpec.describe "PasswordReset", type: :request do
   
   context "when reseting password" do
     
-    it "redirects to signin page" do
+    let(:fresh_pass) { "foobarbaz" }
+    
+    before do
       visit new_password_reset_path
       fill_in 'Email', with: user.email
       click_button "Request password reset"
       open_email(user.email)
       current_email.click_link 'Reset Password'
-      fresh_pass = "foobarbaz"
+    end
+    
+    context "with expired time stamp" do
+      
+      before { user.update_attribute(:password_reset_sent_at, 3.hours.ago) }
+      
+      it "redirects to request page" do
+        click_button "Reset Your Password"
+        expect(page).to have_title full_title 'Request Password Reset'
+        expect(page).to have_css('div.alert.alert-danger', text:'Expired')
+      end
+      
+      it "does not reset the password" do
+        fill_in 'Password',     with: fresh_pass
+        fill_in 'Confirmation', with: fresh_pass
+        expect {
+          click_button "Reset Your Password"
+        }.not_to change { user.password_digest }
+      end
+    end
+    
+    xit "redirects to placeholder page with valid password" do
       fill_in 'Password',     with: fresh_pass
       fill_in 'Confirmation', with: fresh_pass
       click_button "Reset Your Password"

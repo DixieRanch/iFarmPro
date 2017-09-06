@@ -126,11 +126,43 @@ RSpec.describe "PasswordReset", type: :request do
       end
     end
     
-    xit "redirects to placeholder page with valid password" do
+    
+    context "with correct information and good password" do
+      
+      xit "redirects to placeholder page with valid password" do
+        fill_in 'Password',     with: fresh_pass
+        fill_in 'Confirmation', with: fresh_pass
+        click_button "Reset Your Password"
+        expect(page).to have_title full_title 'Sign in' # Placeholder landing page
+      end
+    end
+  end
+  context "with good email, but bad token" do
+    
+    let(:fresh_pass) { "foobarbaz" }
+    
+    before do
+      token = 'wrongtoken'
+      email = user.email
+      visit new_password_reset_path
+      fill_in 'Email', with: user.email
+      click_button "Request password reset"
+      visit edit_password_reset_path(token, email: email)
+    end
+    it "redirects to password reset show page" do
+      user.reload
       fill_in 'Password',     with: fresh_pass
       fill_in 'Confirmation', with: fresh_pass
       click_button "Reset Your Password"
-      expect(page).to have_title full_title 'Sign in' # Placeholder landing page
+      expect(page).to have_title full_title "Password Reset Email Sent"
+    end
+    
+    xit "does not reset the password" do
+      fill_in 'Password',     with: fresh_pass
+      fill_in 'Confirmation', with: fresh_pass
+      expect {
+        click_button "Reset Your Password"
+      }.not_to change { user.password_digest }
     end
   end
 end

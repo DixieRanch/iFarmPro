@@ -31,14 +31,23 @@ class PasswordResetsController < ApplicationController
   
   def update
     @user = User.find_by(email: params[:user][:email])
-    if @user.password_reset_sent_at > 2.hours.ago
-     # Authenticate user against reset token
-     # Save the user(update the password)
-     # Sign in user
-     # Redirect to root_path
+    
+    if @user && @user.authenticated?(:password_reset, params[:id])
+      
+      if @user.password_reset_sent_at > 2.hours.ago
+       # Authenticate user against reset token
+       # Save the user(update the password)
+       # Sign in user
+       # Redirect to root_path
+        redirect_to root_path
+      
+      else
+        flash[:danger] = "Expired Password Reset!  Request a new one."
+        redirect_to new_password_reset_path
+      end
+      
     else
-      flash[:danger] = "Expired Password Reset!  Request a new one."
-      redirect_to new_password_reset_path
+      redirect_to password_reset_path(email: params[:user][:email])
     end
   end
   

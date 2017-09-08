@@ -117,11 +117,12 @@ RSpec.describe "PasswordReset", type: :request do
         expect(page).to have_css('div.alert.alert-danger', text:'Expired')
       end
       
-      xit "does not reset the password" do
+      it "does not reset the password" do
         fill_in 'Password',     with: fresh_pass
         fill_in 'Confirmation', with: fresh_pass
         expect {
           click_button "Reset Your Password"
+          user.reload
         }.not_to change { user.password_digest }
       end
     end

@@ -152,11 +152,11 @@ RSpec.describe "PasswordReset", type: :request do
         }.to change { user.password_digest }
       end
       
-      xit "redirects to placeholder page with valid password" do
+      it "signs in user after reset" do
         fill_in 'Password',     with: fresh_pass
         fill_in 'Confirmation', with: fresh_pass
         click_button "Reset Your Password"
-        expect(page).to have_title full_title 'Sign in' # Placeholder landing page
+        expect(page).to have_link('Sign out')
       end
     end
   end

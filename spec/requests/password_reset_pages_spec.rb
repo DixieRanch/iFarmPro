@@ -117,7 +117,7 @@ RSpec.describe "PasswordReset", type: :request do
         expect(page).to have_css('div.alert.alert-danger', text:'Expired')
       end
       
-      it "does not reset the password" do
+      xit "does not reset the password" do
         fill_in 'Password',     with: fresh_pass
         fill_in 'Confirmation', with: fresh_pass
         expect {
@@ -126,6 +126,20 @@ RSpec.describe "PasswordReset", type: :request do
       end
     end
     
+    context "with correct information and invalid password" do
+      
+      it "does not reset the password" do
+        expect {
+          click_button "Reset Your Password"
+        }.not_to change { user.password_digest }
+      end
+      
+      it "redirects to password reset form" do
+        click_button "Reset Your Password"
+        expect(page).to have_title full_title 'Reset Password'
+        expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
+      end
+    end
     
     context "with correct information and good password" do
       
@@ -137,6 +151,8 @@ RSpec.describe "PasswordReset", type: :request do
       end
     end
   end
+  
+  
   context "with good email, but bad token" do
     
     let(:fresh_pass) { "foobarbaz" }

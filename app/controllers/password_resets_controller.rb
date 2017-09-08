@@ -35,11 +35,16 @@ class PasswordResetsController < ApplicationController
     if @user && @user.authenticated?(:password_reset, params[:id])
       
       if @user.password_reset_sent_at > 2.hours.ago
-       # Authenticate user against reset token
-       # Save the user(update the password)
-       # Sign in user
-       # Redirect to root_path
-        redirect_to root_path
+        if @user.update(user_params)
+          # Sign in user
+          # Redirect to root_path
+          redirect_to root_path
+        else
+          flash.now[:danger] = "Invalid Password/Confirmation.  Please ensure" +
+                               " that your confirmation matches the password," +
+                               " and they are at least 6 characters long."
+          render 'edit'
+        end
       
       else
         flash[:danger] = "Expired Password Reset!  Request a new one."
@@ -62,5 +67,13 @@ class PasswordResetsController < ApplicationController
         flash[:danger] = "Expired password reset!"
         redirect_to new_password_reset_path
       end
+    end
+    
+    def user_params
+      params.require(:user).permit(permitted_params)
+    end
+    
+    def permitted_params
+      [:password, :password_confirmation]
     end
 end

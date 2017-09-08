@@ -159,10 +159,10 @@ RSpec.describe "PasswordReset", type: :request do
         fill_in 'Confirmation', with: fresh_pass
         click_button "Reset Your Password"
         expect(page).to have_link('Sign out')
+        expect(page).to have_title full_title 'Add Farm'
       end
     end
   end
-  
   
   context "with good email, but bad token" do
     

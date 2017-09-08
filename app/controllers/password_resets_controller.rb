@@ -37,7 +37,6 @@ class PasswordResetsController < ApplicationController
       if @user.password_reset_sent_at > 2.hours.ago
         if @user.update(user_params)
           sign_in(@user)
-          # Redirect to root_path
           redirect_to root_path
         else
           flash.now[:danger] = "Invalid Password/Confirmation.  Please ensure" +

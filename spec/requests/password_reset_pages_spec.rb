@@ -131,6 +131,7 @@ RSpec.describe "PasswordReset", type: :request do
       it "does not reset the password" do
         expect {
           click_button "Reset Your Password"
+          user.reload
         }.not_to change { user.password_digest }
       end
       
@@ -174,6 +175,7 @@ RSpec.describe "PasswordReset", type: :request do
       click_button "Request password reset"
       visit edit_password_reset_path(token, email: email)
     end
+    
     it "redirects to password reset show page" do
       user.reload
       fill_in 'Password',     with: fresh_pass
@@ -182,11 +184,12 @@ RSpec.describe "PasswordReset", type: :request do
       expect(page).to have_title full_title "Password Reset Email Sent"
     end
     
-    xit "does not reset the password" do
+    it "does not reset the password" do
       fill_in 'Password',     with: fresh_pass
       fill_in 'Confirmation', with: fresh_pass
       expect {
         click_button "Reset Your Password"
+        user.reload
       }.not_to change { user.password_digest }
     end
   end

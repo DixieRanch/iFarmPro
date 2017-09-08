@@ -142,6 +142,15 @@ RSpec.describe "PasswordReset", type: :request do
     end
     
     context "with correct information and good password" do
+            
+      it "persists new password" do
+        fill_in 'Password',     with: fresh_pass
+        fill_in 'Confirmation', with: fresh_pass
+        expect {
+          click_button "Reset Your Password"
+          user.reload
+        }.to change { user.password_digest }
+      end
       
       xit "redirects to placeholder page with valid password" do
         fill_in 'Password',     with: fresh_pass

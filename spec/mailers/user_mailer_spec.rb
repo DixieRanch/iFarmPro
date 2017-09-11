@@ -33,6 +33,8 @@ RSpec.describe UserMailer, type: :mailer do
     end
     
     it "renders body" do
+      expect(mail).to have_selector 'p', text: 'reset your password'
+      expect(mail.body.encoded).to have_selector 'p', text: user.email
       expect(mail).to have_link 'Reset Password', href: edit_password_reset_url(
                                                         user.password_reset_token,
                                                         email: user.email)

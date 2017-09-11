@@ -139,7 +139,6 @@ RSpec.describe "PasswordReset", type: :request do
       it "redirects to password reset form" do
         click_button "Reset Your Password"
         expect(page).to have_title full_title 'Reset Password'
-        expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
       end
     end
     

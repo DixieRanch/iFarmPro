@@ -39,9 +39,6 @@ class PasswordResetsController < ApplicationController
           sign_in(@user)
           redirect_to root_path
         else
-          flash.now[:danger] = "Invalid Password/Confirmation.  Please ensure" +
-                               " that your confirmation matches the password," +
-                               " and they are at least 6 characters long."
           render 'edit'
         end
       

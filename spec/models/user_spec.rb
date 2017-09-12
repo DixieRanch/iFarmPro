@@ -165,11 +165,16 @@ describe User do
     
     describe "#send_password_reset_email" do
       before { user.save }
-      it "sends password reset email" do
-        expect {
-          user.send_password_reset_email
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      it "sends password_reset message to UserMailer" do
+        # Create a double for email, then verify the the correct messages are
+        # sent to the UserMailer.
         
+        email = double("UserMailer.password_reset")
+        
+        expect(UserMailer).to receive(:password_reset).with(user) { email }
+        expect(email).to receive(:deliver_now)
+        
+        user.send_password_reset_email
       end
       
       it "creates password reset token and digest" do

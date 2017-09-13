@@ -145,11 +145,11 @@ describe User do
     end
     
     describe "#send_password_reset_email" do
-      before { user.save }
+      
       it "sends password_reset message to UserMailer" do
         # Create a double for email, then verify the the correct messages are
         # sent to the UserMailer.
-        
+        user.save
         email = double("UserMailer.password_reset")
         
         expect(UserMailer).to receive(:password_reset).with(user) { email }
@@ -159,6 +159,8 @@ describe User do
       end
       
       it "persists password reset data" do
+        user.save
+        
         expect {
           user.send_password_reset_email
           user.reload
@@ -174,6 +176,7 @@ describe User do
       context "when requesting new password reset" do
       
         it "updates password_reset data" do
+          user.save
           user.send_password_reset_email
   
           expect {

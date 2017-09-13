@@ -22,17 +22,22 @@ RSpec.describe UserMailer, type: :mailer do
   end
   
   describe "password_reset" do
-    let(:mail) { UserMailer.password_reset(user) }
-    
-    before { user.send_password_reset_email }
     
     it "renders the headers" do
+      mail = UserMailer.password_reset(user)
+      
+      user.send_password_reset_email
+      
       expect(mail.subject).to eq("iFarmPro password reset")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq(["noreply@ifarmpro.com"])
     end
     
     it "renders body" do
+      mail = UserMailer.password_reset(user)
+      
+      user.send_password_reset_email
+      
       expect(mail).to have_selector 'p', text: 'reset your password'
       expect(mail.body.encoded).to have_selector 'p', text: user.email
       expect(mail).to have_link 'Reset Password', href: edit_password_reset_url(

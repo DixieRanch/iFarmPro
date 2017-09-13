@@ -56,8 +56,6 @@ class User < ActiveRecord::Base
   def send_password_reset_email
     create_password_reset_digest
     UserMailer.password_reset(self).deliver_now
-    update_columns(password_reset_digest: password_reset_digest,
-                  password_reset_sent_at: password_reset_sent_at)
   end
 
   private
@@ -91,5 +89,7 @@ class User < ActiveRecord::Base
       self.password_reset_token  = User.new_token
       self.password_reset_digest = User.digest(password_reset_token)
       self.password_reset_sent_at = Time.zone.now
+      update_columns(password_reset_digest: password_reset_digest,
+                    password_reset_sent_at: password_reset_sent_at)
     end
 end

@@ -158,15 +158,13 @@ describe User do
         user.send_password_reset_email
       end
       
-      it "creates password reset token and digest" do
-        expect(user.password_reset_token).to be nil
-        expect(user.password_reset_digest).to be nil
-        expect(user.password_reset_sent_at).to be nil
-        user.send_password_reset_email
-        user.reload
-        expect(user.password_reset_token).not_to be_blank
-        expect(user.password_reset_digest).not_to be_blank
-        expect(user.password_reset_sent_at).not_to be_blank
+      it "creates password reset data" do
+        expect {
+          user.send_password_reset_email
+        }.to  change { user.password_reset_token }
+         .and change { user.password_reset_digest }
+         .and change { user.password_reset_sent_at }
+
         #verify token encrypts to digest
         digest = BCrypt::Password.new(user.password_reset_digest)
         expect(digest.is_password?(user.password_reset_token)).to be true

@@ -167,8 +167,13 @@ describe User do
         }.to  change { user.password_reset_token }
          .and change { user.password_reset_digest }
          .and change { user.password_reset_sent_at }
-
-        #verify token encrypts to digest
+      end
+      
+      it "creates a token that encrypts to digest" do
+        user.save
+        
+        user.send_password_reset_email
+        
         digest = BCrypt::Password.new(user.password_reset_digest)
         expect(digest.is_password?(user.password_reset_token)).to be true
       end

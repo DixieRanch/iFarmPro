@@ -158,9 +158,10 @@ describe User do
         user.send_password_reset_email
       end
       
-      it "creates password reset data" do
+      it "persists password reset data" do
         expect {
           user.send_password_reset_email
+          user.reload
         }.to  change { user.password_reset_token }
          .and change { user.password_reset_digest }
          .and change { user.password_reset_sent_at }

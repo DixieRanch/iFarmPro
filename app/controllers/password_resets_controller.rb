@@ -11,12 +11,9 @@ class PasswordResetsController < ApplicationController
   end
   
   def create
-    email = params[:password_reset][:email]
-    user = User.find_by(email: email)
-    @email = email
-    @user = user
+    user = User.find_by(email: params[:password_reset][:email])
     
-    check_existance
+    check_existance(user)
   end
   
   def edit
@@ -26,7 +23,7 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by(email: params[:user][:email])
     
-    check_authentication
+    check_authentication(@user)
   end
   
   
@@ -36,39 +33,39 @@ class PasswordResetsController < ApplicationController
       @user = User.find_by(email: params[:email])
     end
     
-    def check_existance
-      if @user
-        check_activation
+    def check_existance(user)
+      if user
+        check_activation(user)
       else
-        redirect_to password_reset_path(@email)
+        redirect_to password_reset_path(params[:password_reset][:email])
       end
     end
     
-    def check_activation
-      if @user.activated?
-        send_email
+    def check_activation(user)
+      if user.activated?
+        send_email(user)
       else
-        redirect_to account_activation_path(@email)
+        redirect_to account_activation_path(user.email)
       end
     end
     
-    def send_email
-      @user.send_password_reset_email
-      redirect_to password_reset_path(@email)
+    def send_email(user)
+      user.send_password_reset_email
+      redirect_to password_reset_path(user.email)
     end
     
-    def check_authentication
-      if @user && @user.authenticated?(:password_reset, params[:id])
-        check_expiration
+    def check_authentication(user)
+      if user && user.authenticated?(:password_reset, params[:id])
+        check_expiration(user)
         
       else
-        redirect_to password_reset_path(email: params[:user][:email])
+        redirect_to password_reset_path(user.email)
       end
     end
     
-    def check_expiration
-      if @user.password_reset_sent_at > 2.hours.ago
-        check_validation
+    def check_expiration(user)
+      if user.password_reset_sent_at > 2.hours.ago
+        check_validation(user)
       
       else
         is_expired
@@ -80,16 +77,16 @@ class PasswordResetsController < ApplicationController
       redirect_to new_password_reset_path
     end
     
-    def check_validation
-      if @user.update(user_params)
-        login
+    def check_validation(user)
+      if user.update(user_params)
+        login(user)
       else
         render 'edit'
       end
     end
     
-    def login
-      sign_in(@user)
+    def login(user)
+      sign_in(user)
       redirect_to root_path
     end
     

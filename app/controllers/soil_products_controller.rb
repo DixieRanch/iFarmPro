@@ -48,7 +48,7 @@ class SoilProductsController < ApplicationController
     end
   end
 
-private
+  private
 
     def soil_product_params
       params.require(:soil_product).permit(permitted_params)

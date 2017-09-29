@@ -33,6 +33,6 @@ class Rain < ActiveRecord::Base
     self[:date] = value
   end
 
-private
+  private
 
 end

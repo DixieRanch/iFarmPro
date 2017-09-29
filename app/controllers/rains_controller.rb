@@ -43,7 +43,7 @@ class RainsController < ApplicationController
     end
   end
 
-private
+  private
 
     # TODO: write a controller test for this?
     def get_rains

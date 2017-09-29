@@ -24,8 +24,10 @@ group :development, :test do
   # gem 'sqlite3',            '1.3.9'
   gem 'annotate',             '2.7.0'
   gem 'guard-rspec',          '4.6.5'
+  gem 'guard-rubocop',        '1.3.0'
   gem 'launchy',              '2.4.3'
   gem 'rspec-rails',          '3.4.2'
+  gem 'rubocop',              '0.50.0', require: false
   gem 'spring',               '1.7.1'
   gem 'spring-commands-rspec','1.0.4'
 end

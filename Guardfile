@@ -5,9 +5,10 @@ require 'active_support/core_ext'
 
 notification :off
 
-scope group: :fast
+scope group: :red_green_refactor
 
-group :fast do
+# This group allows to skip running RuboCop when RSpec failed.
+group :red_green_refactor, halt_on_fail: true do
   guard :rspec, cmd: 'spring rspec --tag ~slow', all_after_pass: false, failed_mode: :keep do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
@@ -44,6 +45,10 @@ group :fast do
     watch(%r{^app/views/(.+)/.*\.(erb|haml)$}) do |m|
       ["spec/requests/#{m[1]}_spec.rb" ]
     end
+  end
+  
+  guard :rubocop, all_on_start: false, cli: ['--rails', '--display-cop-names'] do
+    
   end
 end
 

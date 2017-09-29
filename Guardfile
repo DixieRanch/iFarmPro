@@ -47,8 +47,8 @@ group :red_green_refactor, halt_on_fail: true do
     end
   end
   
-  guard :rubocop, all_on_start: false, cli: ['--rails', '--display-cop-names'] do
-    
+  guard :rubocop, all_on_start: false, cli: ['--rails', '--display-cop-names', '--auto-correct'] do
+    watch('.rubocop_todo.yml') { '.' }
   end
 end
 

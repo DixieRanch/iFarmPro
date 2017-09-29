@@ -26,6 +26,7 @@ group :development, :test do
   gem 'guard-rspec',          '4.6.5'
   gem 'launchy',              '2.4.3'
   gem 'rspec-rails',          '3.4.2'
+  gem 'rubocop',              '0.50.0', require: false
   gem 'spring',               '1.7.1'
   gem 'spring-commands-rspec','1.0.4'
 end

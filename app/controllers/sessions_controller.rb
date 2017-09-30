@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   skip_before_filter :farm_setup, only: [:destroy]
 
   def new
-    
   end
 
   def create

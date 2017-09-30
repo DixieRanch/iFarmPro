@@ -49,27 +49,26 @@ describe "Company" do
       end
 
       context "after creating company" do
-        
         it "sends activation email" do
           expect {
             click_button submit
           }.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
-        
+
         it "redirects to Activation Email Sent page" do
           click_button submit
           expect(page).to have_title full_title "Activation Email Sent"
           expect(page).to have_css('div.alert.alert-success', text: 'Welcome')
           expect(page).to have_text 'user@example.com'
         end
-        
+
         context "after activating account" do
           it "displays welcome message on New Farm Page" do
             click_button submit
             open_email('user@example.com')
             current_email.click_link 'Activate'
             expect(page).to have_title full_title 'Add Farm'
-            expect(page).to have_css('div.alert.alert-success', 
+            expect(page).to have_css('div.alert.alert-success',
                                      text: 'Activated!')
           end
         end
@@ -79,11 +78,10 @@ describe "Company" do
 
   describe "show page" do
     before { sign_in(user) }
-    
+
     it 'has the correct elements' do
       click_link 'Company'
       expect(page).to have_title full_title user.company.name
     end
   end
-  
 end

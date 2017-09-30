@@ -35,15 +35,14 @@ describe 'Irrigation' do
         expect(page).to have_field 'irrigation[time]', with: time
         expect(page).to have_no_xpath("//*[@class='pagination']//a[text()='2']")
       end
-      
+
       context "with 31 irrigations" do
-        
         before do
           Company.current_id = user.company.id
           create(:irrigation)
           visit irrigations_path
         end
-        
+
         it "has pagination links" do
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
@@ -56,7 +55,6 @@ describe 'Irrigation' do
     let!(:field) { create(:field, block: block) }
 
     before do
-      
     end
 
     context 'with invalid data' do
@@ -107,7 +105,7 @@ describe 'Irrigation' do
     let!(:meter_reading) { create(:meter_reading) }
     let(:time) { '4/1/2013 14:50' }
     before do
-      create(:field, name: 'One', block: create(:block, name: 'This'))     
+      create(:field, name: 'One', block: create(:block, name: 'This'))
       visit edit_irrigation_path(irrigation)
     end
 
@@ -128,5 +126,5 @@ describe 'Irrigation' do
         expect(page).to have_css '.alert-danger'
       end
     end
-  end 
+  end
 end

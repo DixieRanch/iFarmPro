@@ -9,7 +9,6 @@ describe 'ApplicationPages' do
   end
 
   describe 'sidebar' do
-    
     context 'when not signed in' do
       it { should_not have_css '.sidebar-nav' }
     end
@@ -41,7 +40,6 @@ describe 'ApplicationPages' do
   end
 
   describe "layout links" do
-    
     context "when signed out" do
       it "should have the correct links" do
         visit root_path
@@ -99,7 +97,7 @@ describe 'ApplicationPages' do
       url = current_email.find_link('Activate')[:href]
       visit "#{URI(url).path}?email=user%40example.com"
     end
-    
+
     it "goes from initial setup to irrigation schedule", { js: true, slow: true } do
       # Initial sign up
       # puts page.body
@@ -129,7 +127,7 @@ describe 'ApplicationPages' do
       fill_in 'Email', with: 'user@example.com'
       fill_in 'Password', with: 'password'
       click_button 'Sign in'
-      expect(page).to have_title full_title 'Edit First Farm'      
+      expect(page).to have_title full_title 'Edit First Farm'
       click_link 'Add Block'
       click_link 'Add Field'
       fill_in 'Block', with: 1
@@ -147,7 +145,7 @@ describe 'ApplicationPages' do
       fill_in 'Email', with: 'user@example.com'
       fill_in 'Password', with: 'password'
       click_button 'Sign in'
-      expect(page).to have_title full_title 'Schedule'      
+      expect(page).to have_title full_title 'Schedule'
     end
 
     it "redirects to farm setup until complete" do

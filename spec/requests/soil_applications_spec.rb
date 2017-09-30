@@ -8,14 +8,13 @@ describe "SoilApplication" do
   end
 
   describe "page" do
-    
     it "has correct elements" do
       visit soil_applications_path
       expect(page).to have_title full_title 'Soil Applications'
       expect(page).to have_selector 'h1', text: 'Current Applications'
     end
   end
-  
+
   describe "current applications list" do
     it "displays soil app fields" do
       soil_app = create(:soil_application)
@@ -24,15 +23,14 @@ describe "SoilApplication" do
       expect(page).to have_selector 'td', text: soil_app.field.name_with_block
       expect(page).to have_selector 'td', text: soil_app.soil_product.name
       expect(page).to have_selector 'td', text: soil_app.quantity
-      expect(page).to have_link     'edit', 
+      expect(page).to have_link     'edit',
                                     href: edit_soil_application_path(soil_app)
     end
-    
+
     context "with 31 applications", slow: true do
-      
       let(:app_table) { "table#application_table tbody tr" }
       let(:pagination_link) { "//*[@class='pagination']//a[text()='2']" }
-      
+
       before do
         Company.current_id = user.company.id
         31.times do |i|
@@ -40,7 +38,7 @@ describe "SoilApplication" do
         end
         visit soil_applications_path
       end
-      
+
       it "has pagination links" do
         expect(page).to have_selector app_table, count: 30
         find(pagination_link).click
@@ -56,9 +54,8 @@ describe "SoilApplication" do
       create(:soil_application_unit)
       visit soil_applications_path
     end
-    
+
     context 'with invalid data' do
-      
       before do
         click_button 'Save'
       end
@@ -89,16 +86,14 @@ describe "SoilApplication" do
   end
 
   describe "edit page" do
-    
     before do
       create(:soil_application)
-      create(:field, name: 'One', block: create(:block, name: 'This'))      
+      create(:field, name: 'One', block: create(:block, name: 'This'))
       visit soil_applications_path
       click_link 'edit'
     end
 
     context 'with invalid data' do
-      
       it "has error message" do
         fill_in 'Quantity', with: ''
         click_button 'Save'

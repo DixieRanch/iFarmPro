@@ -33,7 +33,6 @@ describe Irrigation do
   end
 
   describe "security" do
-    
     it "should have only the current company's data" do
       irrigation.save
       wrong_company = FactoryGirl.build_stubbed(:company)
@@ -67,7 +66,6 @@ describe Irrigation do
   end
 
   describe "self.formatted_date" do
-    
     it "formats date without time" do
       date = irrigation.formatted_date
       expect(date).to eq 'May 7, 2013'
@@ -84,16 +82,16 @@ describe Irrigation do
   describe "self.next_irrigations" do
     let(:next_irrigations) { Irrigation.next_irrigations }
     before { irrigation.save }
-    
+
     specify { expect(next_irrigations).to be_kind_of(Array) }
     specify { expect(next_irrigations.first).to be_kind_of(Irrigation) }
   end
-  
+
   describe ".next_irrigation_date" do
     let(:next_irrigation) do
       irrigation.next_irrigation_date(Et.all, Kc.all, CurrentEt.all)
     end
-    
+
     it "should return a the next irrigation date" do
       expect(next_irrigation).to be_kind_of(Date)
       expect(next_irrigation).to be > irrigation.time.to_date

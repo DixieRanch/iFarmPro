@@ -158,7 +158,7 @@ describe 'app lib tasks import.rake', :slow do
       expect(unit.attributes).to include row.to_hash
     end
   end
-  
+
   it "updates CurrentEt with Rake task" do
     et_last_week = CurrentEt.find_by_doy(5.days.ago.yday)
     et_today = CurrentEt.find_by_doy(Date.today.yday)

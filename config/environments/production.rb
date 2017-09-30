@@ -65,7 +65,7 @@ Ifarm::Application.configure do
     :domain         => 'ifarmpro.com',
     :enable_starttls_auto => true
   }
-  
+
   # Enable threaded mode
   # config.threadsafe!
 

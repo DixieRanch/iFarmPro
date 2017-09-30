@@ -43,11 +43,10 @@ describe 'Rain' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_field 'rain_amount'
         expect(page).to have_field 'rain_date'
-        expect(page).to have_button('Save')        
+        expect(page).to have_button('Save')
       end
-      
+
       context "with 31 rains", slow: true do
-        
         before do
           Company.current_id = user.company.id
           farm = rain_yesterday.farm
@@ -56,14 +55,14 @@ describe 'Rain' do
           end
           visit rains_path
         end
-        
+
         it "has pagination links" do
           expect(page).to have_selector 'table#rain_table tbody tr', :count => 30
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
         end
       end
-      
+
       it 'click edit link' do
         page.find('#link_1').click
         expect(current_path).to eq(edit_rain_path(rain_yesterday))

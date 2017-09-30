@@ -18,12 +18,12 @@ describe MeterReading do
   let(:company) { build_stubbed(:company) }
   let(:irrigation) { build_stubbed(:irrigation) }
   let(:well) { build_stubbed(:irrigation_well) }
-  
+
   let(:meter_reading) { irrigation.meter_readings.build(@valid_attributes) }
 
   before do
     Company.current_id = company.id
-    @valid_attributes = { start: 112233, 
+    @valid_attributes = { start: 112233,
                           stop: 223344,
                           irrigation_well_id: well.id }
   end
@@ -38,7 +38,6 @@ describe MeterReading do
   end
 
   describe "security" do
-    
     it "should have only the current company's data" do
       meter_reading.save
       wrong_company = FactoryGirl.create(:company)
@@ -63,9 +62,9 @@ describe MeterReading do
     it { should validate_presence_of :irrigation_well_id }
     it { should validate_numericality_of(:start).only_integer }
     it { should validate_numericality_of(:stop).only_integer }
-    it { 
+    it {
       should validate_uniqueness_of(:irrigation_well_id)
-        .scoped_to(:irrigation_id) 
+        .scoped_to(:irrigation_id)
     }
   end
 end

@@ -40,7 +40,7 @@ describe "Farm" do
       expect(page).to have_selector 'td', text: field.soil_class.name
       expect(page).to have_selector 'td', text: field.acreage
       expect(page).to have_link 'Back to Farms', href: farms_path
-      expect(page).to have_link 'Edit', href: edit_farm_path(farm)      
+      expect(page).to have_link 'Edit', href: edit_farm_path(farm)
     end
   end
 
@@ -109,7 +109,6 @@ describe "Farm" do
     end
 
     context "with invalid information" do
-      
       let(:new_name) { "" }
       let(:submit) { "Save" }
 

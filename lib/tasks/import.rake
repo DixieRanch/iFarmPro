@@ -48,7 +48,6 @@ namespace :import do
 
   desc 'Import Soil Application Unit data from csv file'
   task soil_application_unit: :environment do
-    
     file = 'db/soil_application_unit.csv'
 
     CSV.foreach(file, headers: true) do |row|
@@ -69,7 +68,7 @@ namespace :import do
     attr = { name:       'NMSU',
              url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/',
              url_suffix: '/request/gdd/et/data/' }
-               
+
     wx_attr = { name:    'Fabian Garcia Research Center',
                 id_code: 'nmcc-da-1',
                 db_col:  'fabian_garcia' }

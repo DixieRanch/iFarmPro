@@ -18,7 +18,7 @@ require 'rails_helper'
 
 describe User do
   valid_attributes = { email: "user@example.com",
-                       password: "foobar", 
+                       password: "foobar",
                        password_confirmation: "foobar" }
 
   let(:company) { build_stubbed(:company) }
@@ -58,17 +58,17 @@ describe User do
       valid = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       invalid = %w[user@foo,com user_at_foo.org example.user@foo.
                    foo@bar_baz.com foo@bar+baz.com]
-      
+
       valid.each do |valid_address|
         expect(user).to allow_value(valid_address).for(:email)
-      end      
-      
+      end
+
       invalid.each do |invalid_address|
         expect(user).not_to allow_value(invalid_address).for(:email)
-      end      
+      end
     end
   end
-  
+
   describe "callbacks" do
     context "before create" do
       it "sends account activation email" do
@@ -80,8 +80,6 @@ describe User do
   end
 
   describe "methods" do
-    
-    
     describe ".authenticated?" do
       it "returns true if given token matches digest" do
         user.save
@@ -106,7 +104,7 @@ describe User do
         expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
       end
     end
-    
+
     describe ".send_activation_email" do
       it "sends account activation email when user is created" do
         expect(user.activation_token).to be nil
@@ -119,7 +117,7 @@ describe User do
         digest = BCrypt::Password.new(user.activation_digest)
         expect(digest.is_password?(user.activation_token)).to be true
       end
-      
+
       it "updates activation_digest when resending activation email" do
         user.save
         old_digest = user.activation_digest
@@ -128,37 +126,36 @@ describe User do
         new_digest = user.activation_digest
         expect(new_digest).not_to eq old_digest
       end
-      
+
       it "doesn't save the user if it hasn't been created yet" do
         user.send_activation_email
         expect(user.new_record?).to be true
       end
     end
-    
+
     describe "create_remember_token" do
       before { user.save }
       it "creates remember remember" do
         expect(user.remember_token).not_to be_blank
       end
     end
-    
+
     describe "#send_password_reset_email" do
-      
       it "sends password_reset message to UserMailer" do
         # Create a double for email, then verify the the correct messages are
         # sent to the UserMailer.
         user.save
         email = double("UserMailer.password_reset")
-        
+
         expect(UserMailer).to receive(:password_reset).with(user) { email }
         expect(email).to receive(:deliver_now)
-        
+
         user.send_password_reset_email
       end
-      
+
       it "persists password reset data" do
         user.save
-        
+
         expect {
           user.send_password_reset_email
           user.reload
@@ -166,29 +163,28 @@ describe User do
           .and change { user.password_reset_digest }
           .and change { user.password_reset_sent_at }
       end
-      
+
       it "creates a token that encrypts to digest" do
         user.save
-        
+
         user.send_password_reset_email
-        
+
         digest = BCrypt::Password.new(user.password_reset_digest)
         expect(digest.is_password?(user.password_reset_token)).to be true
       end
-      
+
       context "when requesting new password reset" do
-      
         it "updates password_reset data" do
           user.save
           user.send_password_reset_email
-  
+
           expect {
             user.send_password_reset_email
           }.to change { user.password_reset_digest }
         end
       end
     end
-    
+
     describe "::new_token" do
       # This private method gets tested for security assurance
       it "returns a random token" do
@@ -199,7 +195,7 @@ describe User do
         expect(another_token).not_to eq token
       end
     end
-    
+
     describe "::digest" do
       # This private method gets tested for security assurance
       it "returns hash digest of a given string" do

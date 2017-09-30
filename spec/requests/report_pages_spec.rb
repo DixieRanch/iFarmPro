@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "ReportPages" do
- 
   subject { page }
 
   let(:user) { create(:user) }
@@ -9,9 +8,8 @@ describe "ReportPages" do
   before do
     sign_in(user)
   end
-   
+
   context "for Next Irrigations" do
-   
     before do
       visit report_path(:next_irrigations)
       Company.current_id = user.company.id
@@ -23,7 +21,6 @@ describe "ReportPages" do
     end
 
     context "with data" do
-     
       let!(:irrigation) { create(:irrigation) }
       let(:current_irrigation) { irrigation.time.to_date.to_s(:long) }
       let(:next_irrigation) do
@@ -36,7 +33,7 @@ describe "ReportPages" do
       before { visit report_path(:next_irrigations) }
 
       it "displays irrigation report" do
-        expect(page).to have_selector 'td', 
+        expect(page).to have_selector 'td',
                                       text: irrigation.field.name_with_block
         expect(page).to have_selector 'td', text: current_irrigation.squish
         expect(page).to have_selector 'td', text: next_irrigation.squish
@@ -45,7 +42,6 @@ describe "ReportPages" do
   end
 
   context "for Fertilizer" do
-    
     before do
       visit report_path(:fertilizer)
     end
@@ -56,7 +52,6 @@ describe "ReportPages" do
     end
 
     context "with data" do
-      
       before do
         Company.current_id = user.company.id
         @app = create(:soil_application, quantity: 150,

@@ -18,7 +18,6 @@ describe Farm do
   let(:company)         { build_stubbed(:company) }
   let(:weather_station) { create(:weather_station) }
   let(:farm)            { weather_station.farms.new(valid_attributes) }
-  
 
   subject { farm }
 
@@ -62,7 +61,7 @@ describe Farm do
     it { should accept_nested_attributes_for :blocks }
     it { should accept_nested_attributes_for :irrigation_wells }
     it { should belong_to :weather_station }
- 
+
     it "should return blocks ordered by name" do
       farm.save
       second = farm.blocks.create(name: "Inbtween")

@@ -31,7 +31,7 @@ class Irrigation < ActiveRecord::Base
   end
 
   def self.next_irrigations
-    current_irrigations = 
+    current_irrigations =
       Field.includes(:irrigations).map do |field|
         if field.irrigations.last
           field.irrigations.order("time").last
@@ -56,7 +56,7 @@ class Irrigation < ActiveRecord::Base
     date = time.to_date
     while aw > 0
       doy = date.yday
-      etref = current_et[doy - 1].send(station.db_col) || 
+      etref = current_et[doy - 1].send(station.db_col) ||
               et[doy - 1].send(station.db_col)
       kcref = kc[doy - 1].pecan
       aw -= etref * kcref # remove extracted water

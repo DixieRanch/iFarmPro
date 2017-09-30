@@ -11,7 +11,7 @@
 
 class SoilClass < ActiveRecord::Base
   has_many :fields
-  
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :aw,   presence: true, numericality: true
 end

@@ -23,13 +23,12 @@ describe 'SoilProduct' do
       expect(page).to have_selector 'td', text: product.p
       expect(page).to have_selector 'td', text: product.k
       expect(page).to have_selector 'td', text: product.s
-      expect(page).to have_link 'edit', 
+      expect(page).to have_link 'edit',
                                 href: edit_soil_product_path(product)
     end
   end
 
   context 'new form' do
-    
     context 'with invalid data' do
       before do
         visit soil_products_path
@@ -52,7 +51,7 @@ describe 'SoilProduct' do
         fill_in 'soil_product_s', with: '4'
         click_on 'Save'
       end
-      
+
       it "displays the correct elements" do
         expect(page).to have_selector 'td', text: 'New product'
         expect(page).to have_css '.alert-success'
@@ -68,7 +67,6 @@ describe 'SoilProduct' do
     end
 
     context 'with invalid data' do
-      
       it "displays error message" do
         fill_in 'Name', with: ''
         click_on 'Save'
@@ -77,7 +75,6 @@ describe 'SoilProduct' do
     end
 
     context 'with valid data' do
-      
       it "updates the product with success" do
         fill_in 'Name', with: 'Great New Name'
         click_on 'Save'

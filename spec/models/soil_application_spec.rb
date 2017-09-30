@@ -25,7 +25,7 @@ describe SoilApplication do
 
   before do
     Company.current_id = company.id
-    @valid_attributes = { quantity: 150, soil_product_id: product.id, 
+    @valid_attributes = { quantity: 150, soil_product_id: product.id,
                           date: '01/01/2014', soil_application_unit_id: 1 }
   end
 
@@ -37,7 +37,6 @@ describe SoilApplication do
   end
 
   describe 'security' do
-    
     it "has only the current company's data" do
       application.save
       wrong_company = create(:company)
@@ -66,9 +65,7 @@ describe SoilApplication do
   end
 
   describe "method" do
-    
     describe "formatted_date" do
-      
       it "reutrns nil when nil" do
         application.date = ''
         expect(application.formatted_date).to eq nil

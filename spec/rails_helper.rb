@@ -35,7 +35,7 @@ RSpec.configure do |config|
 
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with :truncation, 
+    DatabaseCleaner.clean_with :truncation,
                                { except: %w[ets kcs current_ets] }
     ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
   end
@@ -60,7 +60,7 @@ RSpec.configure do |config|
   # Rspec config to selectively run tests
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
-  
+
   # Deprecated rspec configuration
   # config.treat_symbols_as_metadata_keys_with_true_values = true
 
@@ -72,16 +72,16 @@ RSpec.configure do |config|
   config.after(:all) { DeferredGarbageCollection.reconsider }
 
   config.order = 'random'
-  
+
   # Include named routes in specs
   config.include Rails.application.routes.url_helpers
-  
+
   # Needed for #post and #get to work in request specs
   config.infer_spec_type_from_file_location!
-  
+
   # Filter bakctrace
   config.backtrace_exclusion_patterns = [/rvm/, /rails_helper/]
-  
+
   # Reset delivered email before each spec
   config.before(:each) { reset_email }
 end

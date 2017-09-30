@@ -38,26 +38,25 @@ describe "Authentication" do
 
       context "followed by signout" do
         before { click_link "Sign out" }
-        
+
         it { should have_link('Sign in') }
       end
     end
-    
+
     context "when account not activated" do
       let(:user) { create(:user, activated: false) }
       before do
         fill_in "Email",    with: user.email.upcase
         fill_in "Password", with: user.password
       end
-      
+
       it "redirects to Activation Email Sent page" do
         click_button "Sign in"
         expect(page).to have_title full_title 'Activation Email Sent'
         expect(page).to have_link 'Sign in'
       end
-      
+
       context "when activation email not sent" do
-        
         it "sends email" do
           user.update_attribute(:activation_digest, nil)
           expect {
@@ -65,9 +64,8 @@ describe "Authentication" do
           }.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
       end
-      
+
       context "when activation email previously sent" do
-        
         it "doesn't send email" do
           expect {
             click_button "Sign in"
@@ -110,13 +108,12 @@ describe "Authentication" do
     end
 
     context "for correct company" do
-      
       it "resets Company.current_id after every" do
         sign_in_new(user)
         expect(Company.current_id).not_to be_nil
         visit root_path
         expect(Company.current_id).to be_nil
       end
-    end   
+    end
   end
 end

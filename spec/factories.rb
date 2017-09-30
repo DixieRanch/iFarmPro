@@ -9,7 +9,7 @@ FactoryGirl.define do
     url_suffix "/request/gdd/et/data/"
     initialize_with { Website.find_or_create_by name: name }
   end
-  
+
   factory :weather_station do
     name    'Fabian Garcia'
     db_col  'fabian_garcia'
@@ -82,25 +82,25 @@ FactoryGirl.define do
     soil_product
     soil_application_unit
   end
-  
+
   factory :daily_et do
     date Date.today
     eth  0.27
     weather_station
   end
-  
+
   factory :average_et do
     doy 175
     eth 0.37
     weather_station
   end
-  
+
   factory :soil_class do
     name 'Sandy Loam'
     aw 8.4
     initialize_with { SoilClass.find_or_create_by name: name }
   end
-  
+
   factory :soil_application_unit do
     name 'Gal'
     density 11

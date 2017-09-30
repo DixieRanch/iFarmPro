@@ -19,7 +19,6 @@ describe "UserPages" do
         specify { expect(response).to redirect_to(root_path) }
       end
     end
-    
   end
 
   describe "new" do
@@ -34,7 +33,7 @@ describe "UserPages" do
       before do
         fill_in "Email", with: ""
         fill_in "Password", with: ""
-        fill_in "Confirmation", with: ""        
+        fill_in "Confirmation", with: ""
       end
 
       it "should not create a user" do
@@ -76,7 +75,7 @@ describe "UserPages" do
     before do
       sign_in user
       visit edit_user_path(user)
-    end 
+    end
 
     describe "page" do
       it "has correct elements" do

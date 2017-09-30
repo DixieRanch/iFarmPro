@@ -19,8 +19,8 @@ describe Field do
   valid_attributes = { name: "1",
                        acreage: 10.5,
                        soil_class_id: 1 }
-  let(:company) { build_stubbed(:company) } 
-  let(:block) { build_stubbed(:block) }                      
+  let(:company) { build_stubbed(:company) }
+  let(:block) { build_stubbed(:block) }
   let(:field) { block.fields.build(valid_attributes) }
 
   before do
@@ -83,7 +83,6 @@ describe Field do
 
   describe "method" do
     context ".name_with_block" do
-    
       it "should return correct name_with_block" do
         block = create(:block)
         field = block.fields.build(valid_attributes)
@@ -93,12 +92,11 @@ describe Field do
     end
 
     context ".get_yearly_amount_of(nutrient, year)" do
-      
       it "calculates given years applied nutrients" do
         field = create(:field, acreage: 5)
         soil_product = create(:soil_product, n: 16, p: 8, k: 3, s: 4)
         2.times {
-          create(:soil_application, 
+          create(:soil_application,
                  soil_product: soil_product, quantity: 100, field: field)
         }
         # Previous years application - should not be included

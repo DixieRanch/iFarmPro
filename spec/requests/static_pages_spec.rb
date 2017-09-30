@@ -9,7 +9,7 @@ describe "StaticPages" do
       expect(page).to have_title full_title(page_title)
     end
   end
-  
+
   describe "Home page" do
     before { visit root_path }
     let(:heading) { 'iFarmPro' }
@@ -20,7 +20,6 @@ describe "StaticPages" do
   end
 
   describe "Help page" do
-    
     before { visit help_path }
     let(:heading) { 'Help' }
     let(:page_title) { 'Help' }
@@ -29,7 +28,6 @@ describe "StaticPages" do
   end
 
   describe "About page" do
-    
     before { visit about_path }
     let(:heading) { 'About iFarmPro' }
     let(:page_title) { 'About' }

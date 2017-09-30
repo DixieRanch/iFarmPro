@@ -5,7 +5,7 @@ class CreateSoilApplications < ActiveRecord::Migration
       t.integer :soil_product_id
       t.float :quantity
       t.integer :company_id
-      
+
       t.timestamps
     end
     add_index :soil_applications, :field_id

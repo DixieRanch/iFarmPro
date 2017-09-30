@@ -15,7 +15,7 @@ describe "AccountActivations" do
       expect { 
         current_email.click_link "Activate"
         user.reload
-      }.to change{user.activated}.to(true)
+      }.to change {user.activated}.to(true)
     end
   end
   
@@ -30,7 +30,7 @@ describe "AccountActivations" do
         expect {
           visit edit_account_activation_path(token, email: email)
           user.reload
-        }.to change{user.activated}.to(true)
+        }.to change {user.activated}.to(true)
       end
       
       it "signs in user" do
@@ -63,7 +63,7 @@ describe "AccountActivations" do
         expect {
           visit edit_account_activation_path(token, email: email)
           user.reload
-        }.not_to change{user.activated}.from(false)
+        }.not_to change {user.activated}.from(false)
       end
       
       it "renders account activation request page" do
@@ -80,7 +80,7 @@ describe "AccountActivations" do
         expect {
           visit edit_account_activation_path(token, email: email)
           user.reload
-        }.not_to change{user.activated}.from(false)
+        }.not_to change {user.activated}.from(false)
       end
     end
   end
@@ -119,7 +119,7 @@ describe "AccountActivations" do
           expect { 
             current_email.click_link "Activate"
             user.reload
-          }.to change{user.activated}.to(true)
+          }.to change {user.activated}.to(true)
         end
         
         it "redirects to confirmation email page with flash success message" do

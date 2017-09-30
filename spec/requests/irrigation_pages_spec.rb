@@ -18,7 +18,7 @@ describe 'Irrigation' do
       let(:time) { new_irrigation.formatted_time }
 
       before do
-        28.times{create(:irrigation)} # Total of 30 Irrigation Records
+        28.times {create(:irrigation)} # Total of 30 Irrigation Records
         visit irrigations_path
       end
 

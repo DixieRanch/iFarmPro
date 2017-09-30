@@ -6,18 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, SupportedStylesForEmptyBraces.
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceBeforeBlockBraces:
-  Exclude:
-    - 'app/models/weather_station.rb'
-    - 'spec/models/weather_station_spec.rb'
-    - 'spec/requests/account_activation_pages_spec.rb'
-    - 'spec/requests/irrigation_pages_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/SpaceBeforeComment:

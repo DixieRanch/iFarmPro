@@ -77,14 +77,14 @@ describe WeatherStation, :slow do
     
     it "should update DailyEts from website data" do
       station.save
-      expect{station.store(array)}.to change{DailyEt.count}.by(2)
+      expect {station.store(array)}.to change {DailyEt.count}.by(2)
       expect(station.daily_ets.find_by(date: "2015-07-01").eth).to eq 0.29
       expect(station.daily_ets.find_by(date: "2015-07-02").eth).to eq 0.31
     end
     
     it "should update the last 30 days of Et data" do
       station.save
-      expect{station.update_daily_et}.to change{DailyEt.count}.by(30)
+      expect {station.update_daily_et}.to change {DailyEt.count}.by(30)
       expect(station.daily_ets.last.date).to eq Date.yesterday
     end
   end

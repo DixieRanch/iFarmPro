@@ -27,8 +27,7 @@ class WeatherStation < ActiveRecord::Base
     # Add WeatherStation's DailyEts for the previous 30 days
     
     store(parse(fetch(30.days.ago.to_date, 1.day.ago.to_date)))
-  end
-  
+  end  
   
   def url
     # build url for weather station data request page

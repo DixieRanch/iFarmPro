@@ -33,7 +33,7 @@ module Tasks
     def update(array, weather_station)
       array.each do |row|
         @doy = row[:doy]
-        current_et = CurrentEt.find_by_doy(@doy)
+        current_et = CurrentEt.find_by(doy: @doy)
         current_et[weather_station.db_col] = row[:eth]
         current_et.save!
       end
@@ -46,7 +46,7 @@ module Tasks
         else
           @doy = 1
         end
-        current_et = CurrentEt.find_by_doy(@doy)
+        current_et = CurrentEt.find_by(doy: @doy)
         current_et[weather_station.db_col] = nil
         current_et.save!
       end

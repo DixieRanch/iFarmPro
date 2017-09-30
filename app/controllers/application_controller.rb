@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by_remember_token(session[:remember_token])
+    @current_user ||= User.find_by(remember_token: session[:remember_token])
   end
   helper_method :current_user
 
@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   # -------- current_farm methods ----------
 
   def current_farm
-    Farm.find_by_id(session[:farm_id])
+    Farm.find_by(id: session[:farm_id])
   end
   helper_method :current_farm
 

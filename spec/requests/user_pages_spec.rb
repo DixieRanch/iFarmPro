@@ -63,7 +63,7 @@ describe "UserPages" do
 
       it "should create a user for the correct company with success" do
         click_button "Save"
-        new_user = User.find_by_email(attr[:email])
+        new_user = User.find_by(email: attr[:email])
         expect(new_user.company_id).to eq user.company_id
         expect(page).to have_css '.alert-success'
       end

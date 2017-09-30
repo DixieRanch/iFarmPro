@@ -60,7 +60,7 @@ class Irrigation < ActiveRecord::Base
               et[doy - 1].send(station.db_col)
       kcref = kc[doy - 1].pecan
       aw -= etref * kcref # remove extracted water
-      rain = Rain.find_by_date(date)
+      rain = Rain.find_by(date: date)
       aw += rain.amount * rain_coefficient if rain # add rain water
       if aw > max_aw * mad # if rain added overfills field capacity,
         aw = max_aw * mad  # then reset to field capacity

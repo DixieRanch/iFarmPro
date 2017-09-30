@@ -112,7 +112,7 @@ describe Tasks::UpdateEt do
     it 'nilify eth' do
       185.times do |i|
         doy = 7 + i
-        current_et = CurrentEt.find_by_doy(doy)
+        current_et = CurrentEt.find_by(doy: doy)
         expect(current_et[weather_station.db_col]).to eq nil
       end
     end

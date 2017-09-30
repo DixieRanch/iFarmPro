@@ -71,20 +71,6 @@ Rails/Date:
     - 'spec/lib/tasks/import_spec.rb'
     - 'spec/models/field_spec.rb'
 
-# Offense count: 14
-# Cop supports --auto-correct.
-# Configuration parameters: Whitelist.
-# Whitelist: find_by_sql
-Rails/DynamicFindBy:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/irrigation.rb'
-    - 'lib/tasks/import.rake'
-    - 'lib/tasks/update_et.rb'
-    - 'spec/lib/tasks/import_spec.rb'
-    - 'spec/lib/tasks/update_et_spec.rb'
-    - 'spec/requests/user_pages_spec.rb'
-
 # Offense count: 1
 Rails/FilePath:
   Exclude:

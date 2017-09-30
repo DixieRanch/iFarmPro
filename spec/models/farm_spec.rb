@@ -21,8 +21,6 @@ describe Farm do
   let(:farm)            { weather_station.farms.new(valid_attributes) }
   
 
-
-
   subject { farm }
 
   before { Company.current_id = company.id }
@@ -33,7 +31,6 @@ describe Farm do
     farm = FactoryGirl.build(:farm)
     expect(farm).to be_valid
   end
-
 
   describe "tenant security" do
 

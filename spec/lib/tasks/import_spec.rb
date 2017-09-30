@@ -16,7 +16,6 @@ describe 'app lib tasks import.rake', :slow  do
   let(:rake) { Rake::Application.new }
   let(:task_path) { 'lib/tasks/import' }
 
-
   before do
     create(:weather_station)
     Rake.application = rake

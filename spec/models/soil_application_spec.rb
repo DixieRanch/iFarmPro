@@ -21,7 +21,6 @@ describe SoilApplication do
   let(:product) { build_stubbed(:soil_product) }
   let(:application) { field.soil_applications.build(@valid_attributes) }
 
-
   subject { application }
 
   before do

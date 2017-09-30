@@ -36,7 +36,6 @@ Ifarm::Application.configure do
   host = 'www.ifarmpro.com'
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
 
-
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end

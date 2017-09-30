@@ -66,7 +66,6 @@ describe Irrigation do
     it { should accept_nested_attributes_for :meter_readings }
   end
 
-
   describe "self.formatted_date" do
     
     it "formats date without time" do

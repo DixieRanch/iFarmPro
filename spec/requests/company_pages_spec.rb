@@ -13,7 +13,6 @@ describe "Company" do
       expect(page).to have_selector('h1', text: 'Sign up')
     end
 
-
     context "with invalid information" do
       it "should not create a company when user is invalid" do
         fill_in "Company Name", with: "Big Old Farm"

@@ -72,7 +72,6 @@ describe 'Rain' do
         expect(current_path).to eq(edit_rain_path(rain_yesterday))
       end
 
-
       context 'create with valid data' do
 
         it 'create rain' do

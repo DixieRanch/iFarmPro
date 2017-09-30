@@ -32,7 +32,6 @@ describe Block do
     expect(factory).to be_valid
   end
 
-
   describe "tenant security" do
     
     it "should have only the current company's data" do

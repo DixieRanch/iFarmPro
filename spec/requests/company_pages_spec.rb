@@ -72,7 +72,7 @@ describe "Company" do
             current_email.click_link 'Activate'
             expect(page).to have_title full_title 'Add Farm'
             expect(page).to have_css('div.alert.alert-success', 
-                                      text: 'Activated!')
+                                     text: 'Activated!')
           end
         end
       end

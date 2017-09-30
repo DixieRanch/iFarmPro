@@ -26,7 +26,7 @@ describe "SoilApplication" do
       expect(page).to have_selector 'td', text: soil_app.soil_product.name
       expect(page).to have_selector 'td', text: soil_app.quantity
       expect(page).to have_link     'edit', 
-                                     href: edit_soil_application_path(soil_app)
+                                    href: edit_soil_application_path(soil_app)
     end
     
     context "with 31 applications", slow: true do

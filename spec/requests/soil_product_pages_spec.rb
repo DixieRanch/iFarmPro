@@ -25,7 +25,7 @@ describe 'SoilProduct' do
       expect(page).to have_selector 'td', text: product.k
       expect(page).to have_selector 'td', text: product.s
       expect(page).to have_link 'edit', 
-                                  href: edit_soil_product_path(product)
+                                href: edit_soil_product_path(product)
     end
   end
 

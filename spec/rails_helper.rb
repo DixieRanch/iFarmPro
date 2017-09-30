@@ -37,7 +37,7 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation, 
-          { except: %w[ets kcs current_ets] }
+                               { except: %w[ets kcs current_ets] }
     ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
   end
 

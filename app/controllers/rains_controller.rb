@@ -12,7 +12,6 @@
 #
 
 class RainsController < ApplicationController
-
   def index
     get_rains
     @rain = Rain.new

@@ -12,7 +12,6 @@
 #
 
 class WeatherStation < ActiveRecord::Base
-
   belongs_to :website
   has_many :farms
   has_many :daily_ets

@@ -14,7 +14,6 @@
 #
 
 class SoilApplication < ActiveRecord::Base
-
   belongs_to :field
   belongs_to :soil_product
   belongs_to :soil_application_unit

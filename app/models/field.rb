@@ -14,7 +14,6 @@
 #
 
 class Field < ActiveRecord::Base
-
   # attr_accessor :current_n
 
   belongs_to :block

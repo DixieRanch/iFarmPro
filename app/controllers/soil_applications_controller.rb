@@ -14,7 +14,6 @@
 #
 
 class SoilApplicationsController < ApplicationController
-
   def index
     get_soil_applications
     @application  = SoilApplication.new

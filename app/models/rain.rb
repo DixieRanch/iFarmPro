@@ -12,7 +12,6 @@
 #
 
 class Rain < ActiveRecord::Base
-
   default_scope { where(company_id: Company.current_id) }
 
   belongs_to :farm
@@ -34,5 +33,4 @@ class Rain < ActiveRecord::Base
   end
 
   private
-
 end

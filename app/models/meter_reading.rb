@@ -13,7 +13,6 @@
 #
 
 class MeterReading < ActiveRecord::Base
-
   belongs_to :irrigation
   belongs_to :irrigation_well
 

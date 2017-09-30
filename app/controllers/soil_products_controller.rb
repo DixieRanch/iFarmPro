@@ -14,7 +14,6 @@
 #
 
 class SoilProductsController < ApplicationController
-
   def index
     @product  = SoilProduct.new
     @products = SoilProduct.order('name')

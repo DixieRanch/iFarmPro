@@ -12,7 +12,6 @@
 #
 
 class IrrigationsController < ApplicationController
-
   def index
     @irrigation = Irrigation.new
     get_irrigations

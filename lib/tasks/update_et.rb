@@ -2,7 +2,6 @@ require 'open-uri'
 
 module Tasks
   class UpdateEt
-
     attr_reader :url
     attr_writer :doy
 
@@ -63,6 +62,5 @@ module Tasks
         pad(weather_station)
       end
     end
-
   end
 end

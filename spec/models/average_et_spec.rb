@@ -33,9 +33,11 @@ RSpec.describe AverageEt, type: :model do
     it { should validate_presence_of     :eth }
     it { should validate_presence_of     :weather_station_id}
     it { should validate_numericality_of(:eth).is_greater_than(0.01).
-                                               is_less_than(   0.50) }
+                                               is_less_than(   0.50) 
+    }
     it { should validate_numericality_of(:doy).only_integer.
                                                is_greater_than(  0).
-                                               is_less_than(   367) }
+                                               is_less_than(   367) 
+    }
   end
 end

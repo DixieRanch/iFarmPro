@@ -62,11 +62,6 @@ Naming/AccessorMethodName:
     - 'app/controllers/rains_controller.rb'
     - 'app/controllers/soil_applications_controller.rb'
 
-# Offense count: 21
-# Cop supports --auto-correct.
-Rails/ApplicationRecord:
-  Enabled: false
-
 # Offense count: 7
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: strict, flexible

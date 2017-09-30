@@ -24,14 +24,6 @@ Lint/Loop:
   Exclude:
     - 'app/models/weather_station.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'spec/lib/tasks/import_spec.rb'
-    - 'spec/requests/soil_applications_spec.rb'
-
 # Offense count: 1
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
 Lint/UselessAccessModifier:

@@ -101,7 +101,7 @@ describe 'app lib tasks import.rake', :slow do
     Rake::Task['import:et'].invoke
     file = 'db/et0.csv'
 
-    WeatherStation.all.each do |station|
+    WeatherStation.all.each do |_station|
       CSV.foreach(file, headers: true) do |row|
         et = Et.find_by(doy: row['doy'])
         row[0] = row[0].to_i
@@ -127,7 +127,7 @@ describe 'app lib tasks import.rake', :slow do
     Rake::Task['import:current_et'].invoke
     file = 'db/current_et.csv'
 
-    WeatherStation.all.each do |station|
+    WeatherStation.all.each do |_station|
       CSV.foreach(file, headers: true) do |row|
         et = CurrentEt.find_by(doy: row['doy'])
         row[0] = row[0].to_i

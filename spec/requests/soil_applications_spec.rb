@@ -33,7 +33,7 @@ describe "SoilApplication" do
 
       before do
         Company.current_id = user.company.id
-        31.times do |i|
+        31.times do |_i|
           create(:soil_application)
         end
         visit soil_applications_path

@@ -22,7 +22,7 @@ class SoilApplication < ActiveRecord::Base
 
   validates :soil_product_id, presence: true
   validates :quantity, numericality: true
-  validates :date, presence: {message: 'must be a date'}
+  validates :date, presence: { message: 'must be a date' }
   validates :soil_application_unit_id, presence: true
 
   def formatted_date

@@ -16,7 +16,7 @@ class Rain < ActiveRecord::Base
 
   belongs_to :farm
 
-  validates :date, presence: {message: 'must be a date'},
+  validates :date, presence: { message: 'must be a date' },
                    uniqueness: { scope: :farm_id }
   validates :amount, presence: true,
                      numericality: true

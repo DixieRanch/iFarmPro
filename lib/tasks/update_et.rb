@@ -25,7 +25,7 @@ module Tasks
     def parse(page)
       array = []
       page.search('table')[0].search('tbody').search('tr').each do |row|
-        array << {doy: row.search('td')[0].text.to_date.yday, eth: row.search('td')[10].text}
+        array << { doy: row.search('td')[0].text.to_date.yday, eth: row.search('td')[10].text }
       end
       array
     end

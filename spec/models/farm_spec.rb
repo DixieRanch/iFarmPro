@@ -13,7 +13,7 @@
 require 'rails_helper'
 
 describe Farm do
-  valid_attributes = {name: 'Example Farm'}
+  valid_attributes = { name: 'Example Farm' }
 
   let(:company)         { build_stubbed(:company) }
   let(:weather_station) { create(:weather_station) }

@@ -71,8 +71,8 @@ describe WeatherStation, :slow do
     end
     
     it "should create an array from page data" do
-      expect(array).to eq [{date: "2015-07-01".to_date, eth: 0.29},
-                           {date: "2015-07-02".to_date, eth: 0.31}]
+      expect(array).to eq [{ date: "2015-07-01".to_date, eth: 0.29 },
+                           { date: "2015-07-02".to_date, eth: 0.31 }]
     end
     
     it "should update DailyEts from website data" do

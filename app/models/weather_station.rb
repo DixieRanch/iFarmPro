@@ -58,8 +58,8 @@ class WeatherStation < ActiveRecord::Base
     
     array = []
     page.search('table')[0].search('tbody').search('tr').each do |row|
-      array << {date: row.search('td')[0].text.to_date, 
-                eth:  row.search('td')[10].text.to_f}
+      array << { date: row.search('td')[0].text.to_date, 
+                 eth:  row.search('td')[10].text.to_f }
     end
     array
   end

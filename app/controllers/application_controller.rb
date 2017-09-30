@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :signed_in_user
-  around_filter :scope_current_company
-  before_filter :farm_setup
+  before_action :signed_in_user
+  around_action :scope_current_company
+  before_action :farm_setup
 
   private
 

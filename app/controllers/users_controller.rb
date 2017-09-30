@@ -15,7 +15,7 @@
 #
 
 class UsersController < ApplicationController
-  before_filter :correct_user,   only: [:edit, :update]
+  before_action :correct_user,   only: [:edit, :update]
 
   def new
     @user = User.new

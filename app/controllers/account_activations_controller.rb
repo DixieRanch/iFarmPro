@@ -1,5 +1,5 @@
 class AccountActivationsController < ApplicationController
-  skip_before_filter :signed_in_user
+  skip_before_action :signed_in_user
 
   def show
     @email = params[:id]

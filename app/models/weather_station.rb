@@ -101,6 +101,6 @@ class WeatherStation < ActiveRecord::Base
       et_array = parse(fetch(start_date, end_date))
       store(et_array)
       n += 1
-    end while !et_array.empty? and n < 20
+    end while !et_array.empty? && (n < 20)
   end
 end

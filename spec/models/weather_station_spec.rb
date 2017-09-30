@@ -14,7 +14,6 @@
 require 'rails_helper'
 
 describe WeatherStation, :slow do
-
   valid_attributes = { name: "Fabian Garcia",
                        db_col: "fabian_garcia",
                        id_code: "nmcc-da-1" }
@@ -37,7 +36,6 @@ describe WeatherStation, :slow do
   end
 
   describe "unvalidated attributes" do
-
   end
 
   describe "validations" do

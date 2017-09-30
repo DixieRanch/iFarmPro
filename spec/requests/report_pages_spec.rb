@@ -41,7 +41,6 @@ describe "ReportPages" do
         expect(page).to have_selector 'td', text: current_irrigation.squish
         expect(page).to have_selector 'td', text: next_irrigation.squish
       end
-
     end
   end
 

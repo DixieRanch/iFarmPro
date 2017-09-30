@@ -16,7 +16,6 @@
 require 'rails_helper'
 
 describe Field do
-
   valid_attributes = { name: "1",
                        acreage: 10.5,
                        soil_class_id: 1 }
@@ -39,7 +38,6 @@ describe Field do
   end
 
   describe "tenant security" do
-
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
@@ -84,7 +82,6 @@ describe Field do
   end
 
   describe "method" do
-
     context ".name_with_block" do
     
       it "should return correct name_with_block" do

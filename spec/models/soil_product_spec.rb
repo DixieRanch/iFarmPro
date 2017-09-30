@@ -16,7 +16,6 @@
 require 'rails_helper'
 
 describe SoilProduct do
-
   valid_attributes = { name: "UAN" }
   let(:company) { build_stubbed(:company) }
   let(:product) { SoilProduct.new(valid_attributes) }
@@ -33,7 +32,6 @@ describe SoilProduct do
   end
 
   describe "tenant security" do
-
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
@@ -62,7 +60,6 @@ describe SoilProduct do
       it { should validate_numericality_of(:k).only_integer }
       it { should validate_numericality_of(:s).only_integer }
       it { should validate_presence_of :company_id }
-
     end
   end
 end

@@ -13,7 +13,6 @@
 require 'rails_helper'
 
 describe Farm do
-
   valid_attributes = {name: 'Example Farm'}
 
   let(:company)         { build_stubbed(:company) }
@@ -33,7 +32,6 @@ describe Farm do
   end
 
   describe "tenant security" do
-
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id

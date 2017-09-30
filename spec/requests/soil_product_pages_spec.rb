@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'SoilProduct' do
-
   let(:user) { create(:user) }
   subject { page }
 
@@ -32,7 +31,6 @@ describe 'SoilProduct' do
   context 'new form' do
     
     context 'with invalid data' do
-
       before do
         visit soil_products_path
         click_on 'Save'
@@ -45,7 +43,6 @@ describe 'SoilProduct' do
     end
 
     context 'with valid data' do
-
       before do
         visit soil_products_path
         fill_in 'Name', with: 'New product'

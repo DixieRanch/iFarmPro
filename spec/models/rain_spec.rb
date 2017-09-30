@@ -14,7 +14,6 @@
 require 'rails_helper'
 
 describe Rain do
-
   valid_attributes = {date: '5/1/2013', amount: 0.35}
   let(:company) { build_stubbed(:company) }
   let(:farm) { build_stubbed(:farm) }

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "Farm" do
-
   subject { page }
 
   let(:user) { create(:user) }
@@ -11,9 +10,7 @@ describe "Farm" do
   end
 
   describe "index page" do
-
     context "with an exisiting farm" do
-
       before do
         create(:field)
         @farm = Farm.first
@@ -25,7 +22,6 @@ describe "Farm" do
         expect(page).to have_link @farm.name, href: farm_path(@farm)
         expect(page).not_to have_link('New Farm', href: new_farm_path)
       end
-
     end
   end
 

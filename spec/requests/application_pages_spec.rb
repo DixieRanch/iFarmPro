@@ -11,7 +11,6 @@ describe 'ApplicationPages' do
   describe 'sidebar' do
     
     context 'when not signed in' do
-
       it { should_not have_css '.sidebar-nav' }
     end
 
@@ -44,7 +43,6 @@ describe 'ApplicationPages' do
   describe "layout links" do
     
     context "when signed out" do
-
       it "should have the correct links" do
         visit root_path
         click_link "Help"
@@ -63,7 +61,6 @@ describe 'ApplicationPages' do
     end
 
     context "when signed in" do
-
       it "should have the correct links" do
         sign_in(user)
         click_link "Help"
@@ -87,7 +84,6 @@ describe 'ApplicationPages' do
   end
 
   describe 'New User signup' do
-
     before do
       create(:weather_station)
       create(:soil_class)
@@ -105,7 +101,6 @@ describe 'ApplicationPages' do
     end
     
     it "goes from initial setup to irrigation schedule", { js:true, slow: true} do
-
       # Initial sign up
       # puts page.body
       expect(page).to have_title 'Add Farm'

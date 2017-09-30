@@ -4,7 +4,6 @@ require 'tasks/update_et'
 namespace :import do
   desc 'Import ETo data from csv file'
   task et: :environment do
-
     file = 'db/et0.csv'
 
     CSV.foreach(file, headers: true) do |row|
@@ -16,7 +15,6 @@ namespace :import do
 
   desc 'Import KCref data from csv file'
   task kc: :environment do
-
     file = 'db/kcref.csv'
 
     CSV.foreach(file, headers: true) do |row|
@@ -28,7 +26,6 @@ namespace :import do
 
   desc 'Import Current Et data from csv file'
   task current_et: :environment do
-
     file = 'db/current_et.csv'
 
     CSV.foreach(file, headers: true) do |row|
@@ -40,7 +37,6 @@ namespace :import do
 
   desc 'Import Current Et data from csv file'
   task soil_class: :environment do
-
     file = 'db/soil_class.csv'
 
     CSV.foreach(file, headers: true) do |row|
@@ -84,7 +80,6 @@ namespace :import do
     end
     website.weather_stations.create(wx_attr) if WeatherStation.all.empty?
   end
-
 end
 
 namespace :db do

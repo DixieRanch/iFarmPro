@@ -13,7 +13,6 @@
 require 'rails_helper'
 
 describe Block do
-
   valid_attributes = { name: "1" }
   let(:company) { build_stubbed(:company) }
   let(:farm) { build_stubbed(:farm) }

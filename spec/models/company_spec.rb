@@ -11,7 +11,6 @@
 require 'rails_helper'
 
 describe Company do
-
   valid_attributes = { name: "Big Old Farm" }
   let(:company) { Company.new(valid_attributes) }
 

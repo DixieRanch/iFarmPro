@@ -51,6 +51,7 @@ class FarmsController < ApplicationController
   end
 
   private
+
     def farm_params
       params.require(:farm).permit(permitted_params)
     end

@@ -79,7 +79,6 @@ describe "UserPages" do
     end 
 
     describe "page" do
-
       it "has correct elements" do
         expect(page).to have_title "Edit login"
         expect(page).to have_selector('h1', text: "Update your login")
@@ -106,7 +105,6 @@ describe "UserPages" do
           expect(page).to have_link('Sign out', href: signout_path)
           expect(user.reload.email).to eq new_email
         end
-
       end
     end
   end

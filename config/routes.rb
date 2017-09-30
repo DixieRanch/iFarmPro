@@ -49,7 +49,6 @@
 #
 
 Ifarm::Application.routes.draw do
-
   resources :sessions, only: [:new, :create, :destroy]
   resources :companies, only: [:create, :show]
   resources :users, only: [:new, :create, :edit, :update]

@@ -81,7 +81,6 @@ describe "Authentication" do
     let(:user) { create(:user) }
 
     context "for non-signed-in users" do
-
       context "when attempting to visit a protected page" do
         before { visit new_farm_path }
 

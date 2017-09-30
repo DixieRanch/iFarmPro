@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 describe SessionsController do
-
   describe "POST create" do
     
     context "with valid attributes" do
-
       before do
         @user = FactoryGirl.create(:user)
         Company.current_id = @user.company.id

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Rain' do
-
   let(:user) { create(:user) }
 
   before(:each) do
@@ -9,7 +8,6 @@ describe 'Rain' do
   end
 
   describe 'index page' do
-
     let!(:rain) { create(:rain) }
     let(:amount) { rain.amount.to_s }
     let(:date) { rain.formatted_date }
@@ -29,7 +27,6 @@ describe 'Rain' do
     end
 
     describe 'page detail' do
-
       it "has correct elements" do
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_title full_title('Rain')
@@ -73,7 +70,6 @@ describe 'Rain' do
       end
 
       context 'create with valid data' do
-
         it 'create rain' do
           fill_in 'Date', with: '5/31/2014'
           fill_in 'Amount', with: 1.75
@@ -84,7 +80,6 @@ describe 'Rain' do
       end
 
       context 'create with invalid data' do
-
         it 'create rain' do
           fill_in 'rain_amount', with: -23
           fill_in 'rain_date', with: 'abc'
@@ -96,7 +91,6 @@ describe 'Rain' do
   end
 
   describe 'edit page' do
-
     let!(:rain) { create(:rain) }
     let(:amount) { rain.amount.to_s }
     let(:date) { rain.formatted_date }
@@ -113,7 +107,6 @@ describe 'Rain' do
     end
 
     context 'with valid data' do
-
       let!(:rain_update) { Rain.new(amount: 7.777, date: 3.day.from_now) }
       let(:amount_update) { rain_update.amount.to_s }
       let(:date_update) { rain_update.formatted_date }

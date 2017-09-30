@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "StaticPages" do
-
   subject { page }
 
   shared_examples_for "all static pages" do
@@ -12,7 +11,6 @@ describe "StaticPages" do
   end
   
   describe "Home page" do
-
     before { visit root_path }
     let(:heading) { 'iFarmPro' }
     let(:page_title) { '' }
@@ -40,7 +38,6 @@ describe "StaticPages" do
   end
 
   describe "Contact page" do
-
     before { visit contact_path }
     let(:heading) { 'Contact iFarmPro' }
     let(:page_title) { 'Contact' }

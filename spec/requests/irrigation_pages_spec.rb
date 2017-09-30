@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Irrigation' do
-
   let(:user) { create(:user) }
   subject { page }
 
@@ -10,7 +9,6 @@ describe 'Irrigation' do
   end
 
   describe 'index page' do
-
     describe 'previous irrigations list', slow: true do
       let!(:irrigation) { create(:irrigation) }
       let!(:new_irrigation) do
@@ -74,7 +72,6 @@ describe 'Irrigation' do
       end
 
       context 'with valid data' do
-
         before do
           create(:field, name: '1', block: create(:block, name: '1'))
           visit irrigations_path
@@ -115,7 +112,6 @@ describe 'Irrigation' do
     end
 
     context 'with valid data', slow: true do
-
       it 'updates the irrigation and displays success' do
         fill_in 'irrigation_time', with: time
         select('This-One', from: 'irrigation_field_id')
@@ -126,7 +122,6 @@ describe 'Irrigation' do
     end
 
     context 'with invalid data' do
-
       it 'should have error message' do
         fill_in 'irrigation_time', with: ''
         click_button 'Save'

@@ -17,7 +17,6 @@ describe "SoilApplication" do
   end
   
   describe "current applications list" do
-
     it "displays soil app fields" do
       soil_app = create(:soil_application)
       visit soil_applications_path
@@ -71,7 +70,6 @@ describe "SoilApplication" do
     end
 
     context 'with valid data' do
-
       before do
         select '1-1', from: 'soil_application_field_id'
         fill_in 'Date', with: '4/1'
@@ -109,7 +107,6 @@ describe "SoilApplication" do
     end
 
     context 'with valid data' do
-
       it "updates soil application with success" do
         fill_in 'Date', with: '1/4'
         select('This-One', from: 'soil_application_field_id')

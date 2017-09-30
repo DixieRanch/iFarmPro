@@ -14,7 +14,6 @@
 require 'rails_helper'
 
 describe IrrigationWell do
-
   valid_attributes = { name: 'Pump 1', pod_code: 'lrg-12345-pod1' }
   let(:company) { build_stubbed(:company) }
   let(:farm) { build_stubbed(:farm) }

@@ -9,7 +9,6 @@ require 'rake'
 # http://www.philsergi.com/2009/02/testing-rake-tasks-with-rspec.html
 
 describe 'app lib tasks import.rake', :slow  do
-
   let(:agent) { Mechanize.new }
   let(:weather_url) { 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/' }
   let(:weather_page) { agent.get(weather_url) }
@@ -24,7 +23,6 @@ describe 'app lib tasks import.rake', :slow  do
   end
 
   context 'get weather url' do
-
     it 'parses URL' do
       expect(weather_page.uri.to_s).to eq 'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
     end
@@ -35,7 +33,6 @@ describe 'app lib tasks import.rake', :slow  do
   end
 
   context 'post weather url' do
-
     let(:data_page) do
       end_date = Time.now.to_date.strftime('%F')
       start_date = (Time.now-180.days).strftime('%F')

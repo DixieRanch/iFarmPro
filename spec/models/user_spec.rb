@@ -17,7 +17,6 @@
 require 'rails_helper'
 
 describe User do
-
   valid_attributes = { email: "user@example.com",
                        password: "foobar", 
                        password_confirmation: "foobar" }
@@ -42,7 +41,6 @@ describe User do
     it { should have_db_column(:activated_at) }
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
-
   end
 
   describe "associations" do

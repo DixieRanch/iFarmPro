@@ -64,7 +64,6 @@ describe "Company" do
         end
         
         context "after activating account" do
-
           it "displays welcome message on New Farm Page" do
             click_button submit
             open_email('user@example.com')

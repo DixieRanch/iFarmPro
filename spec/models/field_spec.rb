@@ -97,8 +97,9 @@ describe Field do
       it "calculates given years applied nutrients" do
         field = create(:field, acreage: 5)
         soil_product = create(:soil_product, n: 16, p: 8, k: 3, s: 4)
-        2.times {create(:soil_application, 
-                        soil_product: soil_product, quantity: 100, field: field)
+        2.times {
+          create(:soil_application, 
+                 soil_product: soil_product, quantity: 100, field: field)
         }
         # Previous years application - should not be included
         create(:soil_application, date: Date.today - 1.year, field: field)

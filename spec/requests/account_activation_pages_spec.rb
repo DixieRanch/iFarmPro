@@ -37,7 +37,7 @@ describe "AccountActivations" do
         visit edit_account_activation_path(token, email: email)
         expect(page).to have_link('Sign out')
         expect(page).not_to have_selector('h1', text: 'Sign in')
-        expect(page).to have_css('div.alert.alert-success', text:'Activated')
+        expect(page).to have_css('div.alert.alert-success', text: 'Activated')
       end
     end
     
@@ -68,7 +68,7 @@ describe "AccountActivations" do
       
       it "renders account activation request page" do
         visit edit_account_activation_path(token, email: email)
-        expect(page).to have_css('div.alert.alert-danger', text:'Invalid')
+        expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')
         expect(page).to have_title full_title 'Request Account Activation'
       end
     end
@@ -127,7 +127,7 @@ describe "AccountActivations" do
           expect(page).to have_title full_title "Activation Email Sent"
           expect(page).to have_selector 'h1', text: 'confirmation'
           expect(page).to have_selector 'strong', text: user.email
-          expect(page).to have_css('div.alert.alert-success', text:'Activation')
+          expect(page).to have_css('div.alert.alert-success', text: 'Activation')
         end
       end
       
@@ -139,7 +139,7 @@ describe "AccountActivations" do
             click_button 'Request Email'
           }.not_to change { ActionMailer::Base.deliveries.count }
           expect(page).to have_selector 'h1', text: 'confirmation'
-          expect(page).to have_css('div.alert.alert-success', text:'Activation')
+          expect(page).to have_css('div.alert.alert-success', text: 'Activation')
         end
       end
     end

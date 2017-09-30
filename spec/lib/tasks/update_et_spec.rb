@@ -103,7 +103,7 @@ describe Tasks::UpdateEt do
     end
   end
 
-  describe '#pad', slow:true do
+  describe '#pad', slow: true do
     before do
       update_et.doy = 6
       update_et.pad(weather_station)

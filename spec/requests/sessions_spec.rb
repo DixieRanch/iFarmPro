@@ -7,7 +7,7 @@ describe "Authentication" do
     before { visit signin_path }
 
     it "has the proper elements" do
-      expect(page).to have_selector('h1', text:'Sign in')
+      expect(page).to have_selector('h1', text: 'Sign in')
       expect(page).to have_title 'Sign in'
       expect(page).to have_link('Sign up now!', href: signup_path)
     end

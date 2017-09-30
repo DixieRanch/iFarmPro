@@ -24,8 +24,8 @@ describe MeterReading do
   before do
     Company.current_id = company.id
     @valid_attributes = { start: 112233, 
-                       stop: 223344,
-                       irrigation_well_id: well.id }
+                          stop: 223344,
+                          irrigation_well_id: well.id }
   end
 
   subject { meter_reading }

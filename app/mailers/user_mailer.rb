@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
                "and finish the signup process."
     @user = user
     mail to: user.email, 
-    subject: "iFarmPro account activation"
+         subject: "iFarmPro account activation"
   end
   
   def password_reset(user)
@@ -21,6 +21,6 @@ class UserMailer < ApplicationMailer
                "password, then you may be at risk."
     @user = user
     mail to: user.email,
-    subject: "iFarmPro password reset"
+         subject: "iFarmPro password reset"
   end
 end

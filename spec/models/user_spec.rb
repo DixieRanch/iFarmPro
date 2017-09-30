@@ -72,9 +72,9 @@ describe User do
   describe "callbacks" do
     context "before create" do
       it "sends account activation email" do
-        expect {
+        expect do
           user.save
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
   end
@@ -109,9 +109,9 @@ describe User do
       it "sends account activation email when user is created" do
         expect(user.activation_token).to be nil
         expect(user.activation_digest).to be nil
-        expect {
+        expect do
           user.send_activation_email
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(user.activation_token).not_to be_blank
         expect(user.activation_digest).not_to be_blank
         digest = BCrypt::Password.new(user.activation_digest)
@@ -156,10 +156,10 @@ describe User do
       it "persists password reset data" do
         user.save
 
-        expect {
+        expect do
           user.send_password_reset_email
           user.reload
-        }.to change { user.password_reset_token }
+        end.to change { user.password_reset_token }
           .and change { user.password_reset_digest }
           .and change { user.password_reset_sent_at }
       end
@@ -178,9 +178,9 @@ describe User do
           user.save
           user.send_password_reset_email
 
-          expect {
+          expect do
             user.send_password_reset_email
-          }.to change { user.password_reset_digest }
+          end.to change { user.password_reset_digest }
         end
       end
     end

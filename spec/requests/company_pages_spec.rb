@@ -50,9 +50,9 @@ describe "Company" do
 
       context "after creating company" do
         it "sends activation email" do
-          expect {
+          expect do
             click_button submit
-          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          end.to change { ActionMailer::Base.deliveries.count }.by(1)
         end
 
         it "redirects to Activation Email Sent page" do

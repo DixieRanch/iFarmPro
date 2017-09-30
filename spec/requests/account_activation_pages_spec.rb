@@ -10,10 +10,10 @@ describe "AccountActivations" do
   context "after clicking link in email" do
     it "activates user" do
       open_email(user.email)
-      expect {
+      expect do
         current_email.click_link "Activate"
         user.reload
-      }.to change { user.activated }.to(true)
+      end.to change { user.activated }.to(true)
     end
   end
 
@@ -23,10 +23,10 @@ describe "AccountActivations" do
 
     context "with correct token and email" do
       it "activates user" do
-        expect {
+        expect do
           visit edit_account_activation_path(token, email: email)
           user.reload
-        }.to change { user.activated }.to(true)
+        end.to change { user.activated }.to(true)
       end
 
       it "signs in user" do
@@ -54,10 +54,10 @@ describe "AccountActivations" do
       let(:email) { 'wrong@example.com' }
 
       it "doesn't activate user" do
-        expect {
+        expect do
           visit edit_account_activation_path(token, email: email)
           user.reload
-        }.not_to change { user.activated }.from(false)
+        end.not_to change { user.activated }.from(false)
       end
 
       it "renders account activation request page" do
@@ -70,10 +70,10 @@ describe "AccountActivations" do
     context "with incorrect token" do
       it "doesn't activate user" do
         token = "wrongtoken"
-        expect {
+        expect do
           visit edit_account_activation_path(token, email: email)
           user.reload
-        }.not_to change { user.activated }.from(false)
+        end.not_to change { user.activated }.from(false)
       end
     end
   end
@@ -100,15 +100,15 @@ describe "AccountActivations" do
         end
 
         it "sends correct email" do
-          expect {
+          expect do
             click_button 'Request Email'
-          }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          end.to change { ActionMailer::Base.deliveries.count }.by(1)
           open_email(user.email)
           expect(current_email.to).to include user.email
-          expect {
+          expect do
             current_email.click_link "Activate"
             user.reload
-          }.to change { user.activated }.to(true)
+          end.to change { user.activated }.to(true)
         end
 
         it "redirects to confirmation email page with flash success message" do
@@ -123,9 +123,9 @@ describe "AccountActivations" do
       context "with invalid user email" do
         it "doesn't send email, but looks like it did" do
           fill_in 'Email', with: "not_a_user@hackers.com"
-          expect {
+          expect do
             click_button 'Request Email'
-          }.not_to change { ActionMailer::Base.deliveries.count }
+          end.not_to change { ActionMailer::Base.deliveries.count }
           expect(page).to have_selector 'h1', text: 'confirmation'
           expect(page).to have_css('div.alert.alert-success', text: 'Activation')
         end

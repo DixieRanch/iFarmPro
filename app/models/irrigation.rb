@@ -36,7 +36,7 @@ class Irrigation < ActiveRecord::Base
         if field.irrigations.last
           field.irrigations.order("time").last
         else
-          field.irrigations.new(time: Time.new(Time.zone.now.year)-184.days)
+          field.irrigations.new(time: Time.new(Time.zone.now.year) - 184.days)
         end
       end
     et ||= Et.order("doy")
@@ -56,9 +56,9 @@ class Irrigation < ActiveRecord::Base
     date = time.to_date
     while aw > 0
       doy = date.yday
-      etref = current_et[doy-1].send(station.db_col) || 
-              et[doy-1].send(station.db_col)
-      kcref = kc[doy-1].pecan
+      etref = current_et[doy - 1].send(station.db_col) || 
+              et[doy - 1].send(station.db_col)
+      kcref = kc[doy - 1].pecan
       aw -= etref * kcref # remove extracted water
       rain = Rain.find_by_date(date)
       aw += rain.amount * rain_coefficient if rain # add rain water

@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'app/controllers/soil_applications_controller.rb'
-    - 'app/controllers/soil_products_controller.rb'
-    - 'app/models/field.rb'
-    - 'app/models/irrigation.rb'
-    - 'app/models/weather_station.rb'
-    - 'config/environments/test.rb'
-    - 'lib/tasks/update_et.rb'
-    - 'spec/factories.rb'
-    - 'spec/lib/tasks/import_spec.rb'
-
 # Offense count: 11
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, SupportedStylesForEmptyBraces.

@@ -43,7 +43,7 @@ group :red_green_refactor, halt_on_fail: true do
     end
     # Capybara request specs
     watch(%r{^app/views/(.+)/.*\.(erb|haml)$}) do |m|
-      ["spec/requests/#{m[1]}_spec.rb" ]
+      ["spec/requests/#{m[1]}_spec.rb"]
     end
   end
   
@@ -85,7 +85,7 @@ group :slow do
     end
     # Capybara request specs
     watch(%r{^app/views/(.+)/.*\.(erb|haml)$}) do |m|
-      ["spec/requests/#{m[1]}_spec.rb" ]
+      ["spec/requests/#{m[1]}_spec.rb"]
     end
   end
 end

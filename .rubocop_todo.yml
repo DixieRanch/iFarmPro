@@ -89,14 +89,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/weather_station.rb'
     - 'app/models/website.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: spec/**/*, test/**/*
-Rails/HttpPositionalArguments:
-  Exclude:
-    - 'spec/support/utilities.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Rails/PluralizationGrammar:

@@ -37,7 +37,7 @@ RSpec.describe Website, type: :model do
     it {should validate_uniqueness_of(:name).case_insensitive}
     it {
       should validate_uniqueness_of(:url).scoped_to(:url_suffix)
-                                            .case_insensitive
+                                         .case_insensitive
     }
   end
 end

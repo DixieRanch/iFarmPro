@@ -112,7 +112,7 @@ describe WeatherStation, :slow do
   end
   
   describe "load_history", :slow do
-    #This test is so slow, that it is commented out until needed.
+    # This test is so slow, that it is commented out until needed.
     
     # it "should load a weather_staion past et history into DailyEts" do
     #   # 20 years of history, if available, should be loaded into DailyEts

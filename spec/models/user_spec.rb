@@ -86,7 +86,7 @@ describe User do
       it "returns true if given token matches digest" do
         user.save
         token = user.activation_token
-        #.authenticated? takes 2 arguments: digest root name, matching token
+        # .authenticated? takes 2 arguments: digest root name, matching token
         expect(user.authenticated?("activation", token)).to be true
         expect(user.authenticated?("activation", "wrong token")).to be false
         user.activation_digest = nil
@@ -97,11 +97,11 @@ describe User do
     describe ".activate" do
       it "activates a user account" do
         user.save
-        user = User.last #Dumps non-persistent attributes
+        user = User.last # Dumps non-persistent attributes
         expect(user.activated).to be false
         expect(user.activated_at).to be nil
         user.activate
-        user.reload #Ensure database is updated
+        user.reload # Ensure database is updated
         expect(user.activated).to be true
         expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
       end
@@ -190,7 +190,7 @@ describe User do
     end
     
     describe "::new_token" do
-      #This private method gets tested for security assurance
+      # This private method gets tested for security assurance
       it "returns a random token" do
         token = User.new_token
         expect(token.class).to eq String
@@ -201,7 +201,7 @@ describe User do
     end
     
     describe "::digest" do
-      #This private method gets tested for security assurance
+      # This private method gets tested for security assurance
       it "returns hash digest of a given string" do
         digest = User.digest('random string')
         expect(digest.length).to eq 60

@@ -5,7 +5,7 @@ describe "AccountActivations" do
   let(:user) { create(:user, activated: false) }
   
   before :each do
-    user.send_activation_email #Creates activation token and digest
+    user.send_activation_email # Creates activation token and digest
   end
   
   context "after clicking link in email" do
@@ -44,10 +44,10 @@ describe "AccountActivations" do
     context "when user already has farm setup" do
       
       it "redirects to irrigation schedule" do
-        #Company scope must be set to create :field
+        # Company scope must be set to create :field
         Company.current_id = user.company.id
         create(:field)
-        #Company scope reset to initial state
+        # Company scope reset to initial state
         Company.current_id = nil
         visit edit_account_activation_path(token, email: email)
         # puts page.body

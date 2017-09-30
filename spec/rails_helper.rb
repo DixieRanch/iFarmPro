@@ -64,7 +64,7 @@ RSpec.configure do |config|
   # Deprecated rspec configuration
   # config.treat_symbols_as_metadata_keys_with_true_values = true
 
-  #Rspec config to skip slow specs by default
+  # Rspec config to skip slow specs by default
   # config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
 
   # Defer garbage collection
@@ -87,8 +87,8 @@ RSpec.configure do |config|
 end
 
 Capybara.configure do |config|
-  #config.exact_options = true
-  #config.visible_text_only = true
+  # config.exact_options = true
+  # config.visible_text_only = true
   config.match = :prefer_exact
   config.ignore_hidden_elements = false
 end

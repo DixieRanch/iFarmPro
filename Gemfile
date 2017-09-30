@@ -29,7 +29,7 @@ group :development, :test do
   gem 'rspec-rails',          '3.4.2'
   gem 'rubocop',              '0.50.0', require: false
   gem 'spring',               '1.7.1'
-  gem 'spring-commands-rspec','1.0.4'
+  gem 'spring-commands-rspec', '1.0.4'
 end
 
 # Gems used only for assets and not required

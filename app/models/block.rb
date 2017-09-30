@@ -13,7 +13,7 @@
 class Block < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
-  belongs_to :farm# , inverse_of: :blocks
+  belongs_to :farm # , inverse_of: :blocks
   has_many :fields, -> { order :name }
   accepts_nested_attributes_for :fields
 

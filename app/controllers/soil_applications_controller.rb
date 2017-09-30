@@ -25,8 +25,8 @@ class SoilApplicationsController < ApplicationController
       flash[:success] = "Soil Application successfully saved."
       redirect_to soil_applications_path
     else
-     get_soil_applications
-     render :index
+      get_soil_applications
+      render :index
     end
   end
 

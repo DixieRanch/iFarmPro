@@ -51,53 +51,53 @@ describe 'Irrigation' do
     end
 
     describe 'new irrigation form' do
-    let!(:block) { create(:block) }
-    let!(:field) { create(:field, block: block) }
+      let!(:block) { create(:block) }
+      let!(:field) { create(:field, block: block) }
 
-    before do
-    end
-
-    context 'with invalid data' do
       before do
+      end
+
+      context 'with invalid data' do
+        before do
+          visit irrigations_path
+          click_button 'Save'
+        end
+
+        it "renders irrigation page with error" do
+          expect(page).to have_title full_title('Irrigations')
+          expect(page).to have_css '.alert-danger'
+        end
+      end
+
+      context 'with valid data' do
+        before do
+          create(:field, name: '1', block: create(:block, name: '1'))
+          visit irrigations_path
+          select('1-1', from: 'irrigation_field_id')
+          fill_in 'irrigation_time', with: '4/1 14:50'
+          click_button 'Save'
+        end
+
+        it "displays record using american_date" do
+          expect(page).to have_selector 'td', text: '1-1'
+          year = Time.now.year
+          expect(page).to have_selector 'td', text: "April 1, #{year} 14:50"
+        end
+      end
+
+      it "has js for adding meter readings", js: true, slow: true do
+        create(:irrigation_well)
+        init_meter_count = MeterReading.count
         visit irrigations_path
+        fill_in 'irrigation_time', with: '4/1/2013 14:50'
+        click_on 'Add Meter Reading'
+        fill_in 'Start', with: '123456'
+        fill_in 'Stop', with: '654321'
         click_button 'Save'
-      end
-
-      it "renders irrigation page with error" do
-        expect(page).to have_title full_title('Irrigations')
-        expect(page).to have_css '.alert-danger'
+        Company.current_id = user.company.id
+        expect(MeterReading.count).to be > init_meter_count
       end
     end
-
-    context 'with valid data' do
-      before do
-        create(:field, name: '1', block: create(:block, name: '1'))
-        visit irrigations_path
-        select('1-1', from: 'irrigation_field_id')
-        fill_in 'irrigation_time', with: '4/1 14:50'
-        click_button 'Save'
-      end
-
-      it "displays record using american_date" do
-        expect(page).to have_selector 'td', text: '1-1'
-        year = Time.now.year
-        expect(page).to have_selector 'td', text: "April 1, #{year} 14:50"
-      end
-    end
-
-    it "has js for adding meter readings", js: true, slow: true do
-      create(:irrigation_well)
-      init_meter_count = MeterReading.count
-      visit irrigations_path
-      fill_in 'irrigation_time', with: '4/1/2013 14:50'
-      click_on 'Add Meter Reading'
-      fill_in 'Start', with: '123456'
-      fill_in 'Stop', with: '654321'
-      click_button 'Save'
-      Company.current_id = user.company.id
-      expect(MeterReading.count).to be > init_meter_count
-    end
-  end
   end
 
   describe 'edit page' do

@@ -21,14 +21,6 @@ Lint/AmbiguousRegexpLiteral:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith, SupportedStylesAlignWith.
-# SupportedStylesAlignWith: either, start_of_block, start_of_line
-Lint/BlockAlignment:
-  Exclude:
-    - 'spec/requests/irrigation_pages_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Lint/DeprecatedClassMethods:
   Exclude:
     - 'config/boot.rb'

@@ -115,16 +115,6 @@ Rails/TimeZone:
     - 'spec/requests/soil_applications_spec.rb'
     - 'spec/support/deferred_garbage_collection.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'app/models/farm.rb'
-    - 'spec/rails_helper.rb'
-    - 'spec/requests/application_pages_spec.rb'
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact
@@ -137,12 +127,6 @@ Style/ClassVars:
   Exclude:
     - 'spec/support/deferred_garbage_collection.rb'
     - 'spec/support/share_db_connection.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'app/models/user.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

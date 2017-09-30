@@ -98,7 +98,7 @@ describe 'ApplicationPages' do
       visit "#{URI(url).path}?email=user%40example.com"
     end
 
-    it "goes from initial setup to irrigation schedule", { js: true, slow: true } do
+    it "goes from initial setup to irrigation schedule", js: true, slow: true do
       # Initial sign up
       # puts page.body
       expect(page).to have_title 'Add Farm'

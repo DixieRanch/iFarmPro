@@ -1,4 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  TargetRailsVersion: 4.2
+  
 Style/SymbolArray:
   EnforcedStyle: brackets

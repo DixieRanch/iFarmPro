@@ -106,7 +106,7 @@ describe 'Rain' do
     end
 
     context 'with valid data' do
-      let!(:rain_update) { Rain.new(amount: 7.777, date: 3.day.from_now) }
+      let!(:rain_update) { Rain.new(amount: 7.777, date: 3.days.from_now) }
       let(:amount_update) { rain_update.amount.to_s }
       let(:date_update) { rain_update.formatted_date }
 

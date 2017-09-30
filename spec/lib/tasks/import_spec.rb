@@ -8,7 +8,7 @@ require 'rake'
 # http://pivotallabs.com/how-i-test-rake-tasks/
 # http://www.philsergi.com/2009/02/testing-rake-tasks-with-rspec.html
 
-describe 'app lib tasks import.rake', :slow  do
+describe 'app lib tasks import.rake', :slow do
   let(:agent) { Mechanize.new }
   let(:weather_url) { 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/' }
   let(:weather_page) { agent.get(weather_url) }

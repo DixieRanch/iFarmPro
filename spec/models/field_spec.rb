@@ -92,7 +92,7 @@ describe Field do
       end
     end
 
-    context ".get_yearly_amount_of(nutrient, year)"  do
+    context ".get_yearly_amount_of(nutrient, year)" do
       
       it "calculates given years applied nutrients" do
         field = create(:field, acreage: 5)

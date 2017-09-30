@@ -97,12 +97,12 @@ FactoryGirl.define do
   
   factory :soil_class do
     name 'Sandy Loam'
-    aw    8.4
+    aw 8.4
     initialize_with { SoilClass.find_or_create_by name: name }
   end
   
   factory :soil_application_unit do
-    name   'Gal'
+    name 'Gal'
     density 11
     initialize_with { SoilApplicationUnit.find_or_create_by name: name }
   end

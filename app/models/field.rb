@@ -40,7 +40,7 @@ class Field < ActiveRecord::Base
     current_apps.each do |soil_app|
       units = soil_app.soil_product.send(nutrient).to_f * soil_app.quantity / 100
       density = soil_app.soil_application_unit.density
-      total_nutrient +=  units * density / acreage
+      total_nutrient += units * density / acreage
     end
     total_nutrient.to_f
   end

@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(version: 20170828173700) do
     t.string   "remember_token"
     t.integer  "company_id"
     t.string   "activation_digest"
-    t.boolean  "activated",              default: false
+    t.boolean  "activated", default: false
     t.datetime "activated_at"
     t.string   "password_reset_digest"
     t.datetime "password_reset_sent_at"

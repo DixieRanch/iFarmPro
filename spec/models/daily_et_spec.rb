@@ -29,7 +29,7 @@ RSpec.describe DailyEt, type: :model do
     expect(factory).to be_valid
   end
 
-  describe  'attributes' do
+  describe 'attributes' do
     it { is_expected.to have_db_column :date }
     it { is_expected.to have_db_column :eth }
     it { is_expected.to have_db_column :weather_station_id }
@@ -42,7 +42,7 @@ RSpec.describe DailyEt, type: :model do
     it { should validate_presence_of :weather_station_id }
     it { should validate_presence_of :eth }
     it { should validate_numericality_of(:eth).is_greater_than(0.01)
-                                               .is_less_than(   0.5)
+                                               .is_less_than( 0.5)
     }
   end
 end

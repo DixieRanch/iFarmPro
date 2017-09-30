@@ -162,7 +162,7 @@ describe User do
         expect {
           user.send_password_reset_email
           user.reload
-        }.to  change { user.password_reset_token }
+        }.to change { user.password_reset_token }
           .and change { user.password_reset_digest }
           .and change { user.password_reset_sent_at }
       end

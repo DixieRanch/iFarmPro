@@ -59,7 +59,7 @@ describe User do
     it "should validate format of e-mail" do
       valid = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       invalid = %w[user@foo,com user_at_foo.org example.user@foo.
-                             foo@bar_baz.com foo@bar+baz.com]
+                   foo@bar_baz.com foo@bar+baz.com]
       
       valid.each do |valid_address|
         expect(user).to allow_value(valid_address).for(:email)

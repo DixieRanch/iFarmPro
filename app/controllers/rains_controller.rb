@@ -44,16 +44,16 @@ class RainsController < ApplicationController
 
   private
 
-    # TODO: write a controller test for this?
-    def get_rains
-      @rains = Rain.page(params[:page]).per_page(30).order('date desc')
-    end
+  # TODO: write a controller test for this?
+  def get_rains
+    @rains = Rain.page(params[:page]).per_page(30).order('date desc')
+  end
 
-    def rain_params
-      params.require(:rain).permit(permitted_params)
-    end
+  def rain_params
+    params.require(:rain).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:amount, :date]
-    end
+  def permitted_params
+    [:amount, :date]
+  end
 end

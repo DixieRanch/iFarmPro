@@ -49,11 +49,11 @@ class SoilProductsController < ApplicationController
 
   private
 
-    def soil_product_params
-      params.require(:soil_product).permit(permitted_params)
-    end
+  def soil_product_params
+    params.require(:soil_product).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:name, :n, :p, :k, :s]
-    end
+  def permitted_params
+    [:name, :n, :p, :k, :s]
+  end
 end

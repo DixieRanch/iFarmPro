@@ -48,23 +48,23 @@ class IrrigationsController < ApplicationController
 
   private
 
-    def get_irrigations
-      @irrigations = Irrigation.page(params[:page]).order("time DESC")
-    end
+  def get_irrigations
+    @irrigations = Irrigation.page(params[:page]).order("time DESC")
+  end
 
-    def irrigation_params
-      params.require(:irrigation).permit(permitted_params)
-    end
+  def irrigation_params
+    params.require(:irrigation).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:time, meter_attributes]
-    end
+  def permitted_params
+    [:time, meter_attributes]
+  end
 
-    def meter_attributes
-      { meter_readings_attributes: [:irrigation_well_id, :start, :stop, :id] }
-    end
+  def meter_attributes
+    { meter_readings_attributes: [:irrigation_well_id, :start, :stop, :id] }
+  end
 
-    def field
-      Field.find(params[:irrigation][:field_id])
-    end
+  def field
+    Field.find(params[:irrigation][:field_id])
+  end
 end

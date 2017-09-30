@@ -50,21 +50,21 @@ class SoilApplicationsController < ApplicationController
 
   private
 
-    def get_soil_applications
-      @applications = SoilApplication.page(params[:page])
-                                     .per_page(30)
-                                     .order("date DESC")
-    end
+  def get_soil_applications
+    @applications = SoilApplication.page(params[:page])
+                                   .per_page(30)
+                                   .order("date DESC")
+  end
 
-    def soil_app_params
-      params.require(:soil_application).permit(permitted_params)
-    end
+  def soil_app_params
+    params.require(:soil_application).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:quantity, :soil_product_id, :date, :soil_application_unit_id]
-    end
+  def permitted_params
+    [:quantity, :soil_product_id, :date, :soil_application_unit_id]
+  end
 
-    def field
-      Field.find(params[:soil_application][:field_id])
-    end
+  def field
+    Field.find(params[:soil_application][:field_id])
+  end
 end

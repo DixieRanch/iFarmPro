@@ -51,23 +51,23 @@ class FarmsController < ApplicationController
 
   private
 
-    def farm_params
-      params.require(:farm).permit(permitted_params)
-    end
+  def farm_params
+    params.require(:farm).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:name, :weather_station_id, wells_attributes, blocks_attributes]
-    end
+  def permitted_params
+    [:name, :weather_station_id, wells_attributes, blocks_attributes]
+  end
 
-    def wells_attributes
-      { irrigation_wells_attributes: [:name, :pod_code, :id] }
-    end
+  def wells_attributes
+    { irrigation_wells_attributes: [:name, :pod_code, :id] }
+  end
 
-    def blocks_attributes
-      { blocks_attributes: [:name, :id, fields_attributes] }
-    end
+  def blocks_attributes
+    { blocks_attributes: [:name, :id, fields_attributes] }
+  end
 
-    def fields_attributes
-      { fields_attributes: [:acreage, :name, :soil_class_id, :id] }
-    end
+  def fields_attributes
+    { fields_attributes: [:acreage, :name, :soil_class_id, :id] }
+  end
 end

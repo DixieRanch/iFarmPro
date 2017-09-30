@@ -15,8 +15,8 @@ require 'rails_helper'
 RSpec.describe Website, type: :model do
   
   valid_attributes = { 
-             name: "NMSU",
-             url:  "http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/"}
+    name: "NMSU",
+    url:  "http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/"}
   
   let(:site) { Website.new(valid_attributes) }
   

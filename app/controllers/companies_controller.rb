@@ -32,15 +32,15 @@ class CompaniesController < ApplicationController
 
   private
 
-    def company_params
-      params.require(:company).permit(permitted_params)
-    end
+  def company_params
+    params.require(:company).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:name, users_attributes]
-    end
+  def permitted_params
+    [:name, users_attributes]
+  end
 
-    def users_attributes
-      { users_attributes: [:email, :password, :password_confirmation, :id] }
-    end
+  def users_attributes
+    { users_attributes: [:email, :password, :password_confirmation, :id] }
+  end
 end

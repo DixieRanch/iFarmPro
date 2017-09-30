@@ -137,9 +137,9 @@ describe User do
     
     describe "create_remember_token" do
       before { user.save }
-        it "creates remember remember" do
-          expect(user.remember_token).not_to be_blank
-        end
+      it "creates remember remember" do
+        expect(user.remember_token).not_to be_blank
+      end
     end
     
     describe "#send_password_reset_email" do

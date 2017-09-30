@@ -21,7 +21,8 @@ describe WeatherStation, :slow do
   website_attributes = { 
     name:       "NMSU",
     url:        "http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/",
-    url_suffix: "/request/gdd/et/data/" }
+    url_suffix: "/request/gdd/et/data/" 
+  }
                        
   let(:website) { Website.create(website_attributes) }                        
   let(:station) { website.weather_stations.build(valid_attributes) }

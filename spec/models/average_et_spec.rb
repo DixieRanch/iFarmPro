@@ -21,7 +21,7 @@ RSpec.describe AverageEt, type: :model do
   
   subject { avg_et }
   
-  it {should be_valid}
+  it { should be_valid }
   
   it "should have a valid factory" do
     factory = build(:average_et)
@@ -31,7 +31,7 @@ RSpec.describe AverageEt, type: :model do
   describe "validations" do
     it { should validate_presence_of     :doy }
     it { should validate_presence_of     :eth }
-    it { should validate_presence_of     :weather_station_id}
+    it { should validate_presence_of     :weather_station_id }
     it { 
       should validate_numericality_of(:eth).is_greater_than(0.01)
                                            .is_less_than( 0.50) 

@@ -15,9 +15,9 @@ describe SoilApplicationUnit do
   valid_attributes = { name:   'Gal',
                        density: 11 }
   
-  let(:unit) {SoilApplicationUnit.new(valid_attributes)}
+  let(:unit) { SoilApplicationUnit.new(valid_attributes) }
 
-  subject {unit}
+  subject { unit }
   
   it { should be_valid }
   

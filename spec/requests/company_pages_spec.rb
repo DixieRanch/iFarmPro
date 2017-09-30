@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Company" do
-  let(:user) {create(:user) }
+  let(:user) { create(:user) }
   subject { page }
 
   describe "signup page" do

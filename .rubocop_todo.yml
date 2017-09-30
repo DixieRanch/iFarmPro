@@ -24,13 +24,6 @@ Lint/Loop:
   Exclude:
     - 'app/models/weather_station.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Lint/ScriptPermission:
-  Exclude:
-    - 'Rakefile'
-    - 'script/rails'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.

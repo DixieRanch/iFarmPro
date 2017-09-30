@@ -20,12 +20,6 @@ Lint/AmbiguousRegexpLiteral:
     - 'spec/models/soil_application_spec.rb'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-Lint/DeprecatedClassMethods:
-  Exclude:
-    - 'config/boot.rb'
-
-# Offense count: 1
 Lint/Loop:
   Exclude:
     - 'app/models/weather_station.rb'

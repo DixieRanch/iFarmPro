@@ -115,12 +115,6 @@ Rails/TimeZone:
     - 'spec/requests/soil_applications_spec.rb'
     - 'spec/support/deferred_garbage_collection.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/BlockComments:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
 # Offense count: 13
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.

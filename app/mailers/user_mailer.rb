@@ -13,4 +13,14 @@ class UserMailer < ApplicationMailer
     mail to: user.email, 
     subject: "iFarmPro account activation"
   end
+  
+  def password_reset(user)
+    @message = "Hello, #{user.email}.  Click the link below to reset your " + 
+               "password at iFarmPro.  This link will stop working after " +
+               "two(2) hours. If you did not request to reset your iFarmPro " +
+               "password, then you may be at risk."
+    @user = user
+    mail to: user.email,
+    subject: "iFarmPro password reset"
+  end
 end

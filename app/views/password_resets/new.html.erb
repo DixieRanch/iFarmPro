@@ -1,0 +1,21 @@
+<% provide :title, "Request Password Reset" %>
+
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Request password reset</h1></div>
+    <div class="panel-body">
+      <p>
+        An email will be sent to you with a password reset link.  Click the link
+        in the email to reset your password.
+      </p>
+      
+      <%= simple_form_for :password_reset, 
+                          url: password_resets_path,
+                          html: {class: 'form-horizontal'},
+                          wrapper: :horizontal_form do |f| %>
+        <%= f.input :email %>
+        <%= f.submit 'Request password reset', class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

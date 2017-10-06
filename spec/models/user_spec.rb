@@ -83,25 +83,6 @@ describe User do
 
   describe "methods" do
     
-    describe "self.new_token" do
-      it "returns a random token" do
-        token = User.new_token
-        expect(token.class).to eq String
-        expect(token.length).to eq 22
-        another_token = User.new_token
-        expect(another_token).not_to eq token
-      end
-    end
-    
-    describe "self.digest" do
-      it "returns hash digest of a given string" do
-        digest = User.digest('random string')
-        expect(digest.length).to eq 60
-        expect(digest.to_s[0..3]).to eq "$2a$"
-        another_digest = User.digest('random string')
-        expect(another_digest).not_to eq digest
-      end
-    end
     
     describe ".authenticated?" do
       it "returns true if given token matches digest" do
@@ -161,6 +142,75 @@ describe User do
         it "creates remember remember" do
           expect(user.remember_token).not_to be_blank
         end
+    end
+    
+    describe "#send_password_reset_email" do
+      
+      it "sends password_reset message to UserMailer" do
+        # Create a double for email, then verify the the correct messages are
+        # sent to the UserMailer.
+        user.save
+        email = double("UserMailer.password_reset")
+        
+        expect(UserMailer).to receive(:password_reset).with(user) { email }
+        expect(email).to receive(:deliver_now)
+        
+        user.send_password_reset_email
+      end
+      
+      it "persists password reset data" do
+        user.save
+        
+        expect {
+          user.send_password_reset_email
+          user.reload
+        }.to  change { user.password_reset_token }
+         .and change { user.password_reset_digest }
+         .and change { user.password_reset_sent_at }
+      end
+      
+      it "creates a token that encrypts to digest" do
+        user.save
+        
+        user.send_password_reset_email
+        
+        digest = BCrypt::Password.new(user.password_reset_digest)
+        expect(digest.is_password?(user.password_reset_token)).to be true
+      end
+      
+      context "when requesting new password reset" do
+      
+        it "updates password_reset data" do
+          user.save
+          user.send_password_reset_email
+  
+          expect {
+            user.send_password_reset_email
+          }.to change { user.password_reset_digest }
+        end
+      end
+    end
+    
+    describe "::new_token" do
+      #This private method gets tested for security assurance
+      it "returns a random token" do
+        token = User.new_token
+        expect(token.class).to eq String
+        expect(token.length).to eq 22
+        another_token = User.new_token
+        expect(another_token).not_to eq token
+      end
+    end
+    
+    describe "::digest" do
+      #This private method gets tested for security assurance
+      it "returns hash digest of a given string" do
+        digest = User.digest('random string')
+        expect(digest.length).to eq 60
+        expect(digest.to_s[0..3]).to eq "$2a$"
+        another_digest = User.digest('random string')
+        expect(another_digest).not_to eq digest
+      end
     end
   end
 end

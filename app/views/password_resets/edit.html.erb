@@ -1,0 +1,22 @@
+<% provide :title, "Reset Password" %>
+
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Reset password</h1></div>
+    <div class="panel-body">
+      
+      
+      <%= simple_form_for @user, 
+                          url: password_reset_path(params[:id]),
+                          html: {class: 'form-horizontal'},
+                          wrapper: :horizontal_form do |f| %>
+        
+        <%= f.input :email, as: :hidden, input_html: { value: @user.email } %>
+                          
+        <%= f.input :password %>
+        <%= f.input :password_confirmation, label: 'Confirmation' %>
+        <%= f.submit 'Reset Your Password', class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

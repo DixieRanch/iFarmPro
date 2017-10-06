@@ -61,6 +61,8 @@ Ifarm::Application.routes.draw do
   resources :soil_applications, only: [:index, :create, :edit, :update]
   resources :account_activations, only: [:show, :new, :create, :edit], 
                                   constraints: { id: /[^\/]+/ }
+  resources :password_resets, only: [:show, :new, :create, :edit, :update],
+                              constraints: { id: /[^\/]+/ }
 
   root to: 'static_pages#home'
 

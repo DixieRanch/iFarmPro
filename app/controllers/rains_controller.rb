@@ -24,7 +24,7 @@ class RainsController < ApplicationController
 
   def create
     @rain = Rain.new(rain_params)
-    farm = Farm.all().first()
+    farm = Farm.all.first
     @rain.farm = farm
     if @rain.save
       redirect_to rains_path

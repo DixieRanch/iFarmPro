@@ -139,12 +139,6 @@ Style/GuardClause:
     - 'app/controllers/application_controller.rb'
     - 'spec/support/deferred_garbage_collection.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/MethodCallWithoutArgsParentheses:
-  Exclude:
-    - 'app/controllers/rains_controller.rb'
-
 # Offense count: 3
 Style/MultilineTernaryOperator:
   Exclude:

@@ -5,3 +5,6 @@ AllCops:
   
 Style/SymbolArray:
   EnforcedStyle: brackets
+  
+Style/EmptyMethod:
+  EnforcedStyle: expanded

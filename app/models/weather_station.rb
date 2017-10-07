@@ -86,7 +86,7 @@ class WeatherStation < ActiveRecord::Base
     # Create a hash of average ETH for each day of the year
 
     query = DailyEt.group("EXTRACT(DOY FROM date)").average(:eth)
-    et_hash = Hash.new
+    et_hash = {}
     query.each_pair { |doy, eth| et_hash.store(doy.to_i, eth.to_f) }
     et_hash
   end

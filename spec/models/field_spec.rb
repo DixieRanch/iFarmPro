@@ -16,7 +16,7 @@
 require 'rails_helper'
 
 describe Field do
-  valid_attributes = { name: "1",
+  valid_attributes = { name: '1',
                        acreage: 10.5,
                        soil_class_id: 1 }
   let(:company) { build_stubbed(:company) }
@@ -32,12 +32,12 @@ describe Field do
   it { should be_valid }
   specify { expect(block).to be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:field)
     expect(factory).to be_valid
   end
 
-  describe "tenant security" do
+  describe 'tenant security' do
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
@@ -52,7 +52,7 @@ describe Field do
     end
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :acreage }
     it { should have_db_column :block_id }
@@ -61,7 +61,7 @@ describe Field do
     it { should have_db_column :soil_class_id }
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_uniqueness_of(:name).case_insensitive.scoped_to :block_id }
     it { should validate_length_of(:name).is_at_most 8 }
@@ -69,30 +69,30 @@ describe Field do
     it { should_not validate_presence_of :block_id }
     it { should validate_presence_of :company_id }
     it { should validate_presence_of :soil_class_id }
-    it "should allow blank :acreage" do
-      field.acreage = ""
+    it 'should allow blank :acreage' do
+      field.acreage = ''
       expect(field).to be_valid
     end
   end
 
-  describe "relationships" do
+  describe 'relationships' do
     it { should belong_to :block }
     it { should have_many :irrigations }
     it { should belong_to :soil_class }
   end
 
-  describe "method" do
-    context ".name_with_block" do
-      it "should return correct name_with_block" do
+  describe 'method' do
+    context '.name_with_block' do
+      it 'should return correct name_with_block' do
         block = create(:block)
         field = block.fields.build(valid_attributes)
-        block_field_name = block.name + "-" + field.name
+        block_field_name = block.name + '-' + field.name
         expect(field.name_with_block).to eq block_field_name
       end
     end
 
-    context ".get_yearly_amount_of(nutrient, year)" do
-      it "calculates given years applied nutrients" do
+    context '.get_yearly_amount_of(nutrient, year)' do
+      it 'calculates given years applied nutrients' do
         field = create(:field, acreage: 5)
         soil_product = create(:soil_product, n: 16, p: 8, k: 3, s: 4)
         2.times do
@@ -112,7 +112,7 @@ describe Field do
         expect(field.get_yearly_amount_of(:s, year)).to eq 17.6
       end
 
-      it "handles nil values for nutrients" do
+      it 'handles nil values for nutrients' do
         app = create(:soil_application, soil_product: create(:soil_product, n: nil))
         expect(app.field.get_yearly_amount_of(:n, Time.now.year)).to eq 0
       end

@@ -27,12 +27,12 @@ describe Irrigation do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:irrigation)
     expect(factory).to be_valid
   end
 
-  describe "security" do
+  describe 'security' do
     it "should have only the current company's data" do
       irrigation.save
       wrong_company = FactoryGirl.build_stubbed(:company)
@@ -47,7 +47,7 @@ describe Irrigation do
     end
   end
 
-  describe "attribute" do
+  describe 'attribute' do
     it { should have_db_column :time }
     it { should have_db_column :field_id }
     it { should have_db_column :company_id }
@@ -57,29 +57,29 @@ describe Irrigation do
     it { should have_db_index :farm_id }
   end
 
-  describe "validation" do
+  describe 'validation' do
     it { should validate_presence_of :time }
   end
 
-  describe "association" do
+  describe 'association' do
     it { should accept_nested_attributes_for :meter_readings }
   end
 
-  describe "self.formatted_date" do
-    it "formats date without time" do
+  describe 'self.formatted_date' do
+    it 'formats date without time' do
       date = irrigation.formatted_date
       expect(date).to eq 'May 7, 2013'
     end
   end
 
-  describe "self.formatted_time" do
-    it "formats time" do
+  describe 'self.formatted_time' do
+    it 'formats time' do
       time = irrigation.formatted_time
       expect(time).to eq 'May 7, 2013 19:00'
     end
   end
 
-  describe "self.next_irrigations" do
+  describe 'self.next_irrigations' do
     let(:next_irrigations) { Irrigation.next_irrigations }
     before { irrigation.save }
 
@@ -87,18 +87,18 @@ describe Irrigation do
     specify { expect(next_irrigations.first).to be_kind_of(Irrigation) }
   end
 
-  describe ".next_irrigation_date" do
+  describe '.next_irrigation_date' do
     let(:next_irrigation) do
       irrigation.next_irrigation_date(Et.all, Kc.all, CurrentEt.all)
     end
 
-    it "should return a the next irrigation date" do
+    it 'should return a the next irrigation date' do
       expect(next_irrigation).to be_kind_of(Date)
       expect(next_irrigation).to be > irrigation.time.to_date
     end
 
-    it "should properly handle irrigation interval that crosses new year" do
-      irrigation.time = "Dec 30, 2012 12:00"
+    it 'should properly handle irrigation interval that crosses new year' do
+      irrigation.time = 'Dec 30, 2012 12:00'
       irrigation.save
       expect(next_irrigation.year).to be 2013
     end
@@ -107,14 +107,14 @@ describe Irrigation do
       let(:args) { [Et.all, Kc.all, CurrentEt.all] }
       let(:farm) { irrigation.field.block.farm }
 
-      it "has later date" do
+      it 'has later date' do
         current_date = next_irrigation
         FactoryGirl.create(:rain, date: next_irrigation - 1, farm: farm)
         future_date = irrigation.next_irrigation_date(*args)
         expect(current_date).to be < future_date
       end
 
-      it "same date if available water is at maximum" do
+      it 'same date if available water is at maximum' do
         FactoryGirl.create(:rain, date:   irrigation.time.to_date + 2,
                                   amount: 10.0,
                                   farm:   farm)

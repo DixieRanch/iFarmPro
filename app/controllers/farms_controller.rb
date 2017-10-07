@@ -28,7 +28,7 @@ class FarmsController < ApplicationController
   def create
     @farm = Farm.new(farm_params)
     if @farm.save!
-      flash[:success] = "New farm successfully added."
+      flash[:success] = 'New farm successfully added.'
       redirect_to farms_path
     else
       render 'new'
@@ -42,7 +42,7 @@ class FarmsController < ApplicationController
   def update
     @farm = Farm.find(params[:id])
     if @farm.update(farm_params)
-      flash[:success] = "Updated"
+      flash[:success] = 'Updated'
       redirect_to @farm
     else
       render 'edit'

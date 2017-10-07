@@ -25,12 +25,12 @@ describe Farm do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     farm = FactoryGirl.build(:farm)
     expect(farm).to be_valid
   end
 
-  describe "tenant security" do
+  describe 'tenant security' do
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
@@ -43,13 +43,13 @@ describe Farm do
     end
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :company_id }
     it { should have_db_column :weather_station_id }
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name).scoped_to(:company_id) }
     it { should validate_length_of(:name).is_at_most(50) }
@@ -57,25 +57,25 @@ describe Farm do
     it { should validate_presence_of(:weather_station) }
   end
 
-  describe "associations" do
+  describe 'associations' do
     it { should accept_nested_attributes_for :blocks }
     it { should accept_nested_attributes_for :irrigation_wells }
     it { should belong_to :weather_station }
 
-    it "should return blocks ordered by name" do
+    it 'should return blocks ordered by name' do
       farm.save
-      second = farm.blocks.create(name: "Inbtween")
-      third = farm.blocks.create(name: "Last")
-      first = farm.blocks.create(name: "First")
+      second = farm.blocks.create(name: 'Inbtween')
+      third = farm.blocks.create(name: 'Last')
+      first = farm.blocks.create(name: 'First')
       correct_order = [first, second, third]
       expect(farm.blocks.to_a).to eq correct_order
     end
 
-    it "should return irrigation_wells ordered by name" do
+    it 'should return irrigation_wells ordered by name' do
       farm.save
-      second = farm.irrigation_wells.create(name: "Inbetween")
-      third = farm.irrigation_wells.create(name: "Last")
-      first = farm.irrigation_wells.create(name: "First")
+      second = farm.irrigation_wells.create(name: 'Inbetween')
+      third = farm.irrigation_wells.create(name: 'Last')
+      first = farm.irrigation_wells.create(name: 'First')
       correct_order = [first, second, third]
       expect(farm.irrigation_wells.to_a).to eq correct_order
     end

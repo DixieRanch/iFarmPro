@@ -22,12 +22,12 @@ RSpec.describe AverageEt, type: :model do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = build(:average_et)
     expect(factory).to be_valid
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of     :doy }
     it { should validate_presence_of     :eth }
     it { should validate_presence_of     :weather_station_id }

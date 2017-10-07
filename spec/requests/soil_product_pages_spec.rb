@@ -15,7 +15,7 @@ describe 'SoilProduct' do
       visit soil_products_path
     end
 
-    it "displays the correct elements" do
+    it 'displays the correct elements' do
       expect(page).to have_title full_title('Soil Products')
       expect(page).to have_selector 'h1', text: 'Soil Products'
       expect(page).to have_selector 'td', text: product.name
@@ -35,7 +35,7 @@ describe 'SoilProduct' do
         click_on 'Save'
       end
 
-      it "displays the correct elements" do
+      it 'displays the correct elements' do
         expect(page).to have_title full_title('Soil Products')
         expect(page).to have_css '.alert-danger'
       end
@@ -52,7 +52,7 @@ describe 'SoilProduct' do
         click_on 'Save'
       end
 
-      it "displays the correct elements" do
+      it 'displays the correct elements' do
         expect(page).to have_selector 'td', text: 'New product'
         expect(page).to have_css '.alert-success'
       end
@@ -67,7 +67,7 @@ describe 'SoilProduct' do
     end
 
     context 'with invalid data' do
-      it "displays error message" do
+      it 'displays error message' do
         fill_in 'Name', with: ''
         click_on 'Save'
         expect(page).to have_css '.alert-danger'
@@ -75,7 +75,7 @@ describe 'SoilProduct' do
     end
 
     context 'with valid data' do
-      it "updates the product with success" do
+      it 'updates the product with success' do
         fill_in 'Name', with: 'Great New Name'
         click_on 'Save'
         expect(page).to have_selector 'td', text: 'Great New Name'

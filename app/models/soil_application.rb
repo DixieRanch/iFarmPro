@@ -26,7 +26,7 @@ class SoilApplication < ActiveRecord::Base
   validates :soil_application_unit_id, presence: true
 
   def formatted_date
-    date.strftime("%B %-d, %Y") if date
+    date.strftime('%B %-d, %Y') if date
   end
 
   def date=(value)

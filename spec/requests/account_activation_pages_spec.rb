@@ -1,35 +1,35 @@
 require 'rails_helper'
 
-describe "AccountActivations" do
+describe 'AccountActivations' do
   let(:user) { create(:user, activated: false) }
 
   before :each do
     user.send_activation_email # Creates activation token and digest
   end
 
-  context "after clicking link in email" do
-    it "activates user" do
+  context 'after clicking link in email' do
+    it 'activates user' do
       open_email(user.email)
       expect do
-        current_email.click_link "Activate"
+        current_email.click_link 'Activate'
         user.reload
       end.to change { user.activated }.to(true)
     end
   end
 
-  describe ".edit" do
+  describe '.edit' do
     let(:token) { user.activation_token }
     let(:email) { user.email }
 
-    context "with correct token and email" do
-      it "activates user" do
+    context 'with correct token and email' do
+      it 'activates user' do
         expect do
           visit edit_account_activation_path(token, email: email)
           user.reload
         end.to change { user.activated }.to(true)
       end
 
-      it "signs in user" do
+      it 'signs in user' do
         visit edit_account_activation_path(token, email: email)
         expect(page).to have_link('Sign out')
         expect(page).not_to have_selector('h1', text: 'Sign in')
@@ -37,8 +37,8 @@ describe "AccountActivations" do
       end
     end
 
-    context "when user already has farm setup" do
-      it "redirects to irrigation schedule" do
+    context 'when user already has farm setup' do
+      it 'redirects to irrigation schedule' do
         # Company scope must be set to create :field
         Company.current_id = user.company.id
         create(:field)
@@ -50,7 +50,7 @@ describe "AccountActivations" do
       end
     end
 
-    context "with incorrect email" do
+    context 'with incorrect email' do
       let(:email) { 'wrong@example.com' }
 
       it "doesn't activate user" do
@@ -60,16 +60,16 @@ describe "AccountActivations" do
         end.not_to change { user.activated }.from(false)
       end
 
-      it "renders account activation request page" do
+      it 'renders account activation request page' do
         visit edit_account_activation_path(token, email: email)
         expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')
         expect(page).to have_title full_title 'Request Account Activation'
       end
     end
 
-    context "with incorrect token" do
+    context 'with incorrect token' do
       it "doesn't activate user" do
-        token = "wrongtoken"
+        token = 'wrongtoken'
         expect do
           visit edit_account_activation_path(token, email: email)
           user.reload
@@ -79,9 +79,9 @@ describe "AccountActivations" do
   end
 
   describe '.new' do
-    it "renders request account activation page" do
+    it 'renders request account activation page' do
       visit new_account_activation_path
-      expect(page).to have_title full_title "Request Account Activation"
+      expect(page).to have_title full_title 'Request Account Activation'
       expect(page).to have_selector 'p', text: 'noreply@ifarmpro.com'
       expect(page).to have_selector 'form'
       expect(page).to have_field 'Email'
@@ -94,35 +94,35 @@ describe "AccountActivations" do
         visit new_account_activation_path
       end
 
-      context "with valid user email" do
+      context 'with valid user email' do
         before :each do
           fill_in 'Email', with: user.email
         end
 
-        it "sends correct email" do
+        it 'sends correct email' do
           expect do
             click_button 'Request Email'
           end.to change { ActionMailer::Base.deliveries.count }.by(1)
           open_email(user.email)
           expect(current_email.to).to include user.email
           expect do
-            current_email.click_link "Activate"
+            current_email.click_link 'Activate'
             user.reload
           end.to change { user.activated }.to(true)
         end
 
-        it "redirects to confirmation email page with flash success message" do
+        it 'redirects to confirmation email page with flash success message' do
           click_button 'Request Email'
-          expect(page).to have_title full_title "Activation Email Sent"
+          expect(page).to have_title full_title 'Activation Email Sent'
           expect(page).to have_selector 'h1', text: 'confirmation'
           expect(page).to have_selector 'strong', text: user.email
           expect(page).to have_css('div.alert.alert-success', text: 'Activation')
         end
       end
 
-      context "with invalid user email" do
+      context 'with invalid user email' do
         it "doesn't send email, but looks like it did" do
-          fill_in 'Email', with: "not_a_user@hackers.com"
+          fill_in 'Email', with: 'not_a_user@hackers.com'
           expect do
             click_button 'Request Email'
           end.not_to change { ActionMailer::Base.deliveries.count }

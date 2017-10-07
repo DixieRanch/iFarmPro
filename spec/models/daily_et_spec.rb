@@ -23,7 +23,7 @@ RSpec.describe DailyEt, type: :model do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:daily_et)
     expect(factory).to be_valid
   end

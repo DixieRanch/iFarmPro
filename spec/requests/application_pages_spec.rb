@@ -39,43 +39,43 @@ describe 'ApplicationPages' do
     end
   end
 
-  describe "layout links" do
-    context "when signed out" do
-      it "should have the correct links" do
+  describe 'layout links' do
+    context 'when signed out' do
+      it 'should have the correct links' do
         visit root_path
-        click_link "Help"
+        click_link 'Help'
         should have_selector 'title', text: full_title('Help')
-        click_link "Sign in"
+        click_link 'Sign in'
         should have_selector 'title', text: full_title('Sign in')
         # click_link "About"
         # should have_selector 'title', text: full_title('About')
         # click_link "Contact"
         # should have_selector 'title', text: full_title('Contact')
-        click_link "iFarmPro"
+        click_link 'iFarmPro'
         should have_selector 'title', text: full_title('')
-        click_link "Sign up now!"
+        click_link 'Sign up now!'
         should have_selector 'title', text: full_title('Sign up')
       end
     end
 
-    context "when signed in" do
-      it "should have the correct links" do
+    context 'when signed in' do
+      it 'should have the correct links' do
         sign_in(user)
-        click_link "Help"
+        click_link 'Help'
         should have_selector 'title', text: full_title('Help')
-        click_link "Company"
+        click_link 'Company'
         should have_title full_title(user.company.name)
-        click_link "Edit User"
+        click_link 'Edit User'
         should have_selector 'title', text: full_title('Edit login')
-        click_link "Add User"
+        click_link 'Add User'
         should have_selector 'title', text: full_title('Add User')
         # click_link "About"
         # should have_selector 'title', text: full_title('About')
         # click_link "Contact"
         # should have_selector 'title', text: full_title('Contact')
-        click_link "iFarmPro"
+        click_link 'iFarmPro'
         should have_title full_title 'Schedule'
-        click_link "Sign out"
+        click_link 'Sign out'
         should have_selector 'title', text: full_title('')
       end
     end
@@ -98,7 +98,7 @@ describe 'ApplicationPages' do
       visit "#{URI(url).path}?email=user%40example.com"
     end
 
-    it "goes from initial setup to irrigation schedule", js: true, slow: true do
+    it 'goes from initial setup to irrigation schedule', js: true, slow: true do
       # Initial sign up
       # puts page.body
       expect(page).to have_title 'Add Farm'
@@ -148,7 +148,7 @@ describe 'ApplicationPages' do
       expect(page).to have_title full_title 'Schedule'
     end
 
-    it "redirects to farm setup until complete" do
+    it 'redirects to farm setup until complete' do
       click_link 'Irrigations'
       expect(page).to have_title full_title 'Add Farm'
       expect(page).to have_css '.alert-info'

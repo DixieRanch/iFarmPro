@@ -32,12 +32,12 @@ describe MeterReading do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:meter_reading)
     expect(factory).to be_valid
   end
 
-  describe "security" do
+  describe 'security' do
     it "should have only the current company's data" do
       meter_reading.save
       wrong_company = FactoryGirl.create(:company)
@@ -50,7 +50,7 @@ describe MeterReading do
     end
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :start }
     it { should have_db_column :stop }
     it { should have_db_column :irrigation_id }
@@ -58,7 +58,7 @@ describe MeterReading do
     it { should have_db_column :company_id }
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of :irrigation_well_id }
     it { should validate_numericality_of(:start).only_integer }
     it { should validate_numericality_of(:stop).only_integer }

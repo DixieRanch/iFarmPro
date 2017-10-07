@@ -5,8 +5,8 @@ require 'rails_helper'
 describe Tasks::UpdateEt do
   let(:update_et) { Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station') }
   let(:weather_station) { build_stubbed(:weather_station) }
-  let(:start_date) { "2015-12-25" }
-  let(:end_date) { "2016-01-06" }
+  let(:start_date) { '2015-12-25' }
+  let(:end_date) { '2016-01-06' }
   let(:page) { update_et.fetch(weather_station.id_code, start_date, end_date) }
   let(:array) { update_et.parse(page) }
   let(:rake) { Rake::Application.new }

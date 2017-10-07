@@ -84,9 +84,9 @@ end
 namespace :db do
   namespace :test do
     task prepare: :environment do
-      Rake::Task["import:et"].invoke
-      Rake::Task["import:kc"].invoke
-      Rake::Task["import:current_et"].invoke
+      Rake::Task['import:et'].invoke
+      Rake::Task['import:kc'].invoke
+      Rake::Task['import:current_et'].invoke
     end
   end
 end

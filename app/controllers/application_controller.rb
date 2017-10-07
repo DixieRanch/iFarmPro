@@ -54,9 +54,7 @@ class ApplicationController < ActionController::Base
     session.delete(:remember_token)
   end
 
-  def current_user=(user)
-    @current_user = user
-  end
+  attr_writer :current_user
 
   def current_user
     @current_user ||= User.find_by(remember_token: session[:remember_token])

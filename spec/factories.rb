@@ -4,9 +4,9 @@ FactoryGirl.define do
   end
 
   factory :website do
-    name       "NMSU"
-    url        "http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/"
-    url_suffix "/request/gdd/et/data/"
+    name       'NMSU'
+    url        'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/'
+    url_suffix '/request/gdd/et/data/'
     initialize_with { Website.find_or_create_by name: name }
   end
 
@@ -20,8 +20,8 @@ FactoryGirl.define do
 
   factory :user do
     sequence(:email) { |n| "User_#{n}@Example.com" }
-    password "foobar"
-    password_confirmation "foobar"
+    password 'foobar'
+    password_confirmation 'foobar'
     activated true
     company
   end

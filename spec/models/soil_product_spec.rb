@@ -16,7 +16,7 @@
 require 'rails_helper'
 
 describe SoilProduct do
-  valid_attributes = { name: "UAN" }
+  valid_attributes = { name: 'UAN' }
   let(:company) { build_stubbed(:company) }
   let(:product) { SoilProduct.new(valid_attributes) }
 
@@ -26,12 +26,12 @@ describe SoilProduct do
 
   it { should be_valid }
 
-  it "has a valid factory" do
+  it 'has a valid factory' do
     factory = FactoryGirl.build(:soil_product)
     expect(factory).to be_valid
   end
 
-  describe "tenant security" do
+  describe 'tenant security' do
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.create(:company)
       Company.current_id = wrong_company.id
@@ -44,7 +44,7 @@ describe SoilProduct do
     end
   end
 
-  describe "attribute" do
+  describe 'attribute' do
     it { should have_db_column :name }
     it { should have_db_column :company_id }
     it { should have_db_column :n }

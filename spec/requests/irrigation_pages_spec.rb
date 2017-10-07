@@ -22,7 +22,7 @@ describe 'Irrigation' do
         visit irrigations_path
       end
 
-      it "has the correct elements" do
+      it 'has the correct elements' do
         expect(page).to have_selector 'title', text: full_title('Irrigations')
         expect(page).to have_selector 'h1', text: 'Current Irrigations'
         expect(page).to have_selector 'td', text: field_name
@@ -36,14 +36,14 @@ describe 'Irrigation' do
         expect(page).to have_no_xpath("//*[@class='pagination']//a[text()='2']")
       end
 
-      context "with 31 irrigations" do
+      context 'with 31 irrigations' do
         before do
           Company.current_id = user.company.id
           create(:irrigation)
           visit irrigations_path
         end
 
-        it "has pagination links" do
+        it 'has pagination links' do
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
         end
@@ -63,7 +63,7 @@ describe 'Irrigation' do
           click_button 'Save'
         end
 
-        it "renders irrigation page with error" do
+        it 'renders irrigation page with error' do
           expect(page).to have_title full_title('Irrigations')
           expect(page).to have_css '.alert-danger'
         end
@@ -78,14 +78,14 @@ describe 'Irrigation' do
           click_button 'Save'
         end
 
-        it "displays record using american_date" do
+        it 'displays record using american_date' do
           expect(page).to have_selector 'td', text: '1-1'
           year = Time.now.year
           expect(page).to have_selector 'td', text: "April 1, #{year} 14:50"
         end
       end
 
-      it "has js for adding meter readings", js: true, slow: true do
+      it 'has js for adding meter readings', js: true, slow: true do
         create(:irrigation_well)
         init_meter_count = MeterReading.count
         visit irrigations_path

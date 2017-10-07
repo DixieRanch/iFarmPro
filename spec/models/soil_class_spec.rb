@@ -25,12 +25,12 @@ describe SoilClass do
     expect(FactoryGirl.build(:soil_class)).to be_valid
   end
 
-  describe "attribute" do
+  describe 'attribute' do
     it { should have_db_column :name }
     it { should have_db_column :aw }
   end
 
-  describe "relationship" do
+  describe 'relationship' do
     it { should have_many :fields }
   end
 

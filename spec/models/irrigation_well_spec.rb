@@ -27,12 +27,12 @@ describe IrrigationWell do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:irrigation_well)
     expect(factory).to be_valid
   end
 
-  describe "tenant security" do
+  describe 'tenant security' do
     it "should have only the current company's data" do
       well.save
       wrong_company = FactoryGirl.create(:company)
@@ -45,14 +45,14 @@ describe IrrigationWell do
     end
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :pod_code }
     it { should have_db_column :farm_id }
     it { should have_db_column :company_id }
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_uniqueness_of(:name).scoped_to :farm_id }
     it { should validate_presence_of :company_id }

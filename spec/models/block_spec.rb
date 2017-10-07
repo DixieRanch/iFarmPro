@@ -13,7 +13,7 @@
 require 'rails_helper'
 
 describe Block do
-  valid_attributes = { name: "1" }
+  valid_attributes = { name: '1' }
   let(:company) { build_stubbed(:company) }
   let(:farm) { build_stubbed(:farm) }
   let(:block) { farm.blocks.new(valid_attributes) }
@@ -26,12 +26,12 @@ describe Block do
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:block)
     expect(factory).to be_valid
   end
 
-  describe "tenant security" do
+  describe 'tenant security' do
     it "should have only the current company's data" do
       wrong_company = FactoryGirl.build_stubbed(:company)
       Company.current_id = wrong_company.id
@@ -46,10 +46,10 @@ describe Block do
     end
   end
 
-  describe "unvalidated attributes" do
+  describe 'unvalidated attributes' do
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :farm }
     it { should validate_presence_of :company_id }
@@ -60,14 +60,14 @@ describe Block do
     it { should validate_length_of(:name).is_at_most 8 }
   end
 
-  describe "association" do
+  describe 'association' do
     it { should accept_nested_attributes_for :fields }
 
-    it "should return fields ordered by name" do
+    it 'should return fields ordered by name' do
       block.save
-      second = block.fields.create(name: "Inbtween", soil_class_id: 1)
-      third = block.fields.create(name: "Last", soil_class_id: 1)
-      first = block.fields.create(name: "First", soil_class_id: 1)
+      second = block.fields.create(name: 'Inbtween', soil_class_id: 1)
+      third = block.fields.create(name: 'Last', soil_class_id: 1)
+      first = block.fields.create(name: 'First', soil_class_id: 1)
       correct_order = [first, second, third]
       expect(block.fields.to_a).to eq correct_order
     end

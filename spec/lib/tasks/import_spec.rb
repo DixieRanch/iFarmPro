@@ -93,7 +93,7 @@ describe 'app lib tasks import.rake', :slow do
     expect(File.exist?('db/soil_class.csv')).to be true
   end
 
-  it "has file db/soil_application_unit.csv" do
+  it 'has file db/soil_application_unit.csv' do
     expect(File.exist?('db/soil_application_unit.csv')).to be true
   end
 
@@ -148,7 +148,7 @@ describe 'app lib tasks import.rake', :slow do
     end
   end
 
-  it "loads soil_applicaiton_units table with data from db/soil_application_unit.csv" do
+  it 'loads soil_applicaiton_units table with data from db/soil_application_unit.csv' do
     Rake::Task['import:soil_application_unit'].invoke
     file = 'db/soil_application_unit.csv'
 
@@ -159,7 +159,7 @@ describe 'app lib tasks import.rake', :slow do
     end
   end
 
-  it "updates CurrentEt with Rake task" do
+  it 'updates CurrentEt with Rake task' do
     et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
     et_today = CurrentEt.find_by(doy: Date.today.yday)
     et_next_week = CurrentEt.find_by(doy: Date.today.yday)

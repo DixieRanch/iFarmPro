@@ -31,7 +31,7 @@ describe SoilApplication do
 
   it { should be_valid }
 
-  it "has a valid factory" do
+  it 'has a valid factory' do
     factory = build(:soil_application)
     expect(factory).to be_valid
   end
@@ -64,14 +64,14 @@ describe SoilApplication do
     it { should validate_presence_of :soil_application_unit_id }
   end
 
-  describe "method" do
-    describe "formatted_date" do
-      it "reutrns nil when nil" do
+  describe 'method' do
+    describe 'formatted_date' do
+      it 'reutrns nil when nil' do
         application.date = ''
         expect(application.formatted_date).to eq nil
       end
 
-      it "returns date formatted as date" do
+      it 'returns date formatted as date' do
         application.date = '1/8'
         year = Time.now.year
         expect(application.formatted_date).to eq "January 8, #{year}"

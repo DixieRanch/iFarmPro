@@ -70,7 +70,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def is_expired
-    flash[:danger] = "Expired Password Reset!  Request a new one."
+    flash[:danger] = 'Expired Password Reset!  Request a new one.'
     redirect_to new_password_reset_path
   end
 

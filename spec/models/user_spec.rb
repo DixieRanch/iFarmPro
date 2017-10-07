@@ -17,9 +17,9 @@
 require 'rails_helper'
 
 describe User do
-  valid_attributes = { email: "user@example.com",
-                       password: "foobar",
-                       password_confirmation: "foobar" }
+  valid_attributes = { email: 'user@example.com',
+                       password: 'foobar',
+                       password_confirmation: 'foobar' }
 
   let(:company) { build_stubbed(:company) }
   let(:user) { company.users.build(valid_attributes) }
@@ -27,12 +27,12 @@ describe User do
   subject { user }
 
   it { should be_valid }
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory_user = FactoryGirl.build(:user)
     expect(factory_user).to be_valid
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column(:email) }
     it { should have_db_column(:password_digest) }
     it { should have_db_column(:remember_token) }
@@ -43,18 +43,18 @@ describe User do
     it { should respond_to(:password_confirmation) }
   end
 
-  describe "associations" do
+  describe 'associations' do
     it { should respond_to :company }
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email).case_insensitive }
     it { should validate_length_of(:password).is_at_least(6) }
     it { should validate_confirmation_of(:password) }
     it { should validate_presence_of(:password_confirmation) }
 
-    it "should validate format of e-mail" do
+    it 'should validate format of e-mail' do
       valid = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       invalid = %w[user@foo,com user_at_foo.org example.user@foo.
                    foo@bar_baz.com foo@bar+baz.com]
@@ -69,9 +69,9 @@ describe User do
     end
   end
 
-  describe "callbacks" do
-    context "before create" do
-      it "sends account activation email" do
+  describe 'callbacks' do
+    context 'before create' do
+      it 'sends account activation email' do
         expect do
           user.save
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -79,21 +79,21 @@ describe User do
     end
   end
 
-  describe "methods" do
-    describe ".authenticated?" do
-      it "returns true if given token matches digest" do
+  describe 'methods' do
+    describe '.authenticated?' do
+      it 'returns true if given token matches digest' do
         user.save
         token = user.activation_token
         # .authenticated? takes 2 arguments: digest root name, matching token
-        expect(user.authenticated?("activation", token)).to be true
-        expect(user.authenticated?("activation", "wrong token")).to be false
+        expect(user.authenticated?('activation', token)).to be true
+        expect(user.authenticated?('activation', 'wrong token')).to be false
         user.activation_digest = nil
-        expect(user.authenticated?("activation", token)).to be false
+        expect(user.authenticated?('activation', token)).to be false
       end
     end
 
-    describe ".activate" do
-      it "activates a user account" do
+    describe '.activate' do
+      it 'activates a user account' do
         user.save
         user = User.last # Dumps non-persistent attributes
         expect(user.activated).to be false
@@ -105,8 +105,8 @@ describe User do
       end
     end
 
-    describe ".send_activation_email" do
-      it "sends account activation email when user is created" do
+    describe '.send_activation_email' do
+      it 'sends account activation email when user is created' do
         expect(user.activation_token).to be nil
         expect(user.activation_digest).to be nil
         expect do
@@ -118,7 +118,7 @@ describe User do
         expect(digest.is_password?(user.activation_token)).to be true
       end
 
-      it "updates activation_digest when resending activation email" do
+      it 'updates activation_digest when resending activation email' do
         user.save
         old_digest = user.activation_digest
         user.send_activation_email
@@ -133,19 +133,19 @@ describe User do
       end
     end
 
-    describe "create_remember_token" do
+    describe 'create_remember_token' do
       before { user.save }
-      it "creates remember remember" do
+      it 'creates remember remember' do
         expect(user.remember_token).not_to be_blank
       end
     end
 
-    describe "#send_password_reset_email" do
-      it "sends password_reset message to UserMailer" do
+    describe '#send_password_reset_email' do
+      it 'sends password_reset message to UserMailer' do
         # Create a double for email, then verify the the correct messages are
         # sent to the UserMailer.
         user.save
-        email = double("UserMailer.password_reset")
+        email = double('UserMailer.password_reset')
 
         expect(UserMailer).to receive(:password_reset).with(user) { email }
         expect(email).to receive(:deliver_now)
@@ -153,7 +153,7 @@ describe User do
         user.send_password_reset_email
       end
 
-      it "persists password reset data" do
+      it 'persists password reset data' do
         user.save
 
         expect do
@@ -164,7 +164,7 @@ describe User do
           .and change { user.password_reset_sent_at }
       end
 
-      it "creates a token that encrypts to digest" do
+      it 'creates a token that encrypts to digest' do
         user.save
 
         user.send_password_reset_email
@@ -173,8 +173,8 @@ describe User do
         expect(digest.is_password?(user.password_reset_token)).to be true
       end
 
-      context "when requesting new password reset" do
-        it "updates password_reset data" do
+      context 'when requesting new password reset' do
+        it 'updates password_reset data' do
           user.save
           user.send_password_reset_email
 
@@ -185,9 +185,9 @@ describe User do
       end
     end
 
-    describe "::new_token" do
+    describe '::new_token' do
       # This private method gets tested for security assurance
-      it "returns a random token" do
+      it 'returns a random token' do
         token = User.new_token
         expect(token.class).to eq String
         expect(token.length).to eq 22
@@ -196,12 +196,12 @@ describe User do
       end
     end
 
-    describe "::digest" do
+    describe '::digest' do
       # This private method gets tested for security assurance
-      it "returns hash digest of a given string" do
+      it 'returns hash digest of a given string' do
         digest = User.digest('random string')
         expect(digest.length).to eq 60
-        expect(digest.to_s[0..3]).to eq "$2a$"
+        expect(digest.to_s[0..3]).to eq '$2a$'
         another_digest = User.digest('random string')
         expect(another_digest).not_to eq digest
       end

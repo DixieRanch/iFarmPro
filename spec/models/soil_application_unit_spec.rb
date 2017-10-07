@@ -25,7 +25,7 @@ describe SoilApplicationUnit do
     expect(FactoryGirl.build(:soil_application_unit)).to be_valid
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :density }
   end

@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.company_id = Company.current_id
     if @user.save
-      flash[:success] = "New user succesfully created"
+      flash[:success] = 'New user succesfully created'
       redirect_to root_path
     else
       render 'new'
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "User login successfully update."
+      flash[:success] = 'User login successfully update.'
       sign_in @user
       redirect_to company_path(@user.company)
     else

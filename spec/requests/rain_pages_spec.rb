@@ -27,7 +27,7 @@ describe 'Rain' do
     end
 
     describe 'page detail' do
-      it "has correct elements" do
+      it 'has correct elements' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_title full_title('Rain')
         expect(page).to have_selector 'table#rain_table'
@@ -46,7 +46,7 @@ describe 'Rain' do
         expect(page).to have_button('Save')
       end
 
-      context "with 31 rains", slow: true do
+      context 'with 31 rains', slow: true do
         before do
           Company.current_id = user.company.id
           farm = rain_yesterday.farm
@@ -56,7 +56,7 @@ describe 'Rain' do
           visit rains_path
         end
 
-        it "has pagination links" do
+        it 'has pagination links' do
           expect(page).to have_selector 'table#rain_table tbody tr', count: 30
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
@@ -98,7 +98,7 @@ describe 'Rain' do
       visit edit_rain_path(rain)
     end
 
-    it "has correct elements" do
+    it 'has correct elements' do
       expect(current_path).to eq(edit_rain_path(rain))
       expect(page).to have_field 'rain_amount'
       expect(page).to have_field 'rain_date'

@@ -38,7 +38,7 @@ class IrrigationsController < ApplicationController
     @irrigation = Irrigation.find(params[:id])
     @irrigation.field_id = field.id
     if @irrigation.update(irrigation_params)
-      flash[:success] = "Irrigation successfully updated."
+      flash[:success] = 'Irrigation successfully updated.'
       redirect_to irrigations_path
     else
       get_irrigations
@@ -49,7 +49,7 @@ class IrrigationsController < ApplicationController
   private
 
   def get_irrigations
-    @irrigations = Irrigation.page(params[:page]).order("time DESC")
+    @irrigations = Irrigation.page(params[:page]).order('time DESC')
   end
 
   def irrigation_params

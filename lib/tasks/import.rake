@@ -72,11 +72,11 @@ namespace :import do
     wx_attr = { name:    'Fabian Garcia Research Center',
                 id_code: 'nmcc-da-1',
                 db_col:  'fabian_garcia' }
-    if Website.all.empty?
-      website = Website.create(attr)
-    else
-      website = Website.find_by(name: attr[:name])
-    end
+    website = if Website.all.empty?
+                Website.create(attr)
+              else
+                Website.find_by(name: attr[:name])
+              end
     website.weather_stations.create(wx_attr) if WeatherStation.all.empty?
   end
 end

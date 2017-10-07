@@ -128,14 +128,6 @@ Style/ClassVars:
     - 'spec/support/deferred_garbage_collection.rb'
     - 'spec/support/share_db_connection.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'lib/tasks/import.rake'
-
 # Offense count: 80
 Style/Documentation:
   Enabled: false

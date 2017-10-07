@@ -139,15 +139,6 @@ Style/GuardClause:
     - 'app/controllers/application_controller.rb'
     - 'spec/support/deferred_garbage_collection.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-Style/HashSyntax:
-  Exclude:
-    - 'config/environments/production.rb'
-    - 'spec/requests/rain_pages_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/LineEndConcatenation:

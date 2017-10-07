@@ -33,7 +33,7 @@ describe 'Rain' do
         expect(page).to have_selector 'table#rain_table'
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Amount'
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Date'
-        expect(page).to have_selector 'table#rain_table tbody tr', :count => 2
+        expect(page).to have_selector 'table#rain_table tbody tr', count: 2
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount_yesterday
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount
         expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date_yesterday
@@ -57,7 +57,7 @@ describe 'Rain' do
         end
 
         it "has pagination links" do
-          expect(page).to have_selector 'table#rain_table tbody tr', :count => 30
+          expect(page).to have_selector 'table#rain_table tbody tr', count: 30
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
         end

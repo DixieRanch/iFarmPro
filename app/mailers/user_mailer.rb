@@ -5,8 +5,8 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.account_activation.subject
   #
   def account_activation(user)
-    @message = "Thanks for signing up #{user.email} for iFarmPro!  " +
-               "Please click the following link to activate your account " +
+    @message = "Thanks for signing up #{user.email} for iFarmPro!  " \
+               "Please click the following link to activate your account " \
                "and finish the signup process."
     @user = user
     mail to: user.email,
@@ -14,9 +14,9 @@ class UserMailer < ApplicationMailer
   end
 
   def password_reset(user)
-    @message = "Hello, #{user.email}.  Click the link below to reset your " +
-               "password at iFarmPro.  This link will stop working after " +
-               "two(2) hours. If you did not request to reset your iFarmPro " +
+    @message = "Hello, #{user.email}.  Click the link below to reset your " \
+               "password at iFarmPro.  This link will stop working after " \
+               "two(2) hours. If you did not request to reset your iFarmPro " \
                "password, then you may be at risk."
     @user = user
     mail to: user.email,

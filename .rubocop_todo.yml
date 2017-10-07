@@ -141,12 +141,6 @@ Style/GuardClause:
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Style/LineEndConcatenation:
-  Exclude:
-    - 'app/mailers/user_mailer.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
 Style/MethodCallWithoutArgsParentheses:
   Exclude:
     - 'app/controllers/rains_controller.rb'

@@ -6,19 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'spec/requests/account_activation_pages_spec.rb'
-    - 'spec/requests/sessions_spec.rb'
-
-# Offense count: 5
-Lint/AmbiguousRegexpLiteral:
-  Exclude:
-    - 'spec/helpers/application_helper_spec.rb'
-    - 'spec/models/rain_spec.rb'
-    - 'spec/models/soil_application_spec.rb'
-
 # Offense count: 1
 Lint/Loop:
   Exclude:
@@ -35,25 +22,23 @@ Lint/UselessAssignment:
   Exclude:
     - 'spec/requests/rain_pages_spec.rb'
 
-# Offense count: 9
-Metrics/AbcSize:
-  Max: 35
+# Offense count: 1
+Rails/FilePath:
+  Exclude:
+    - 'spec/rails_helper.rb'
 
-# Offense count: 62
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 184
+# Offense count: 1
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'spec/support/share_db_connection.rb'
 
-# Offense count: 146
-# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
-Metrics/LineLength:
-  Max: 177
-
-# Offense count: 5
-# Configuration parameters: CountComments.
-Metrics/MethodLength:
-  Max: 20
+# Offense count: 2
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/requests/account_activation_pages_spec.rb'
+    - 'spec/requests/sessions_spec.rb'
 
 # Offense count: 3
 Naming/AccessorMethodName:
@@ -61,6 +46,46 @@ Naming/AccessorMethodName:
     - 'app/controllers/irrigations_controller.rb'
     - 'app/controllers/rains_controller.rb'
     - 'app/controllers/soil_applications_controller.rb'
+
+# Offense count: 3
+Style/ClassVars:
+  Exclude:
+    - 'spec/support/deferred_garbage_collection.rb'
+    - 'spec/support/share_db_connection.rb'
+
+# Offense count: 3
+# Configuration parameters: MinBodyLength.
+Style/GuardClause:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+    - 'spec/support/deferred_garbage_collection.rb'
+
+# Offense count: 3
+Style/MultilineTernaryOperator:
+  Exclude:
+    - 'Guardfile'
+    - 'app/models/user.rb'
+
+# Offense count: 5
+Lint/AmbiguousRegexpLiteral:
+  Exclude:
+    - 'spec/helpers/application_helper_spec.rb'
+    - 'spec/models/rain_spec.rb'
+    - 'spec/models/soil_application_spec.rb'
+
+# Offense count: 5
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 20
+
+# Offense count: 6
+# Configuration parameters: Blacklist.
+# Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'app/models/user.rb'
+    - 'spec/lib/tasks/import_spec.rb'
+    - 'spec/requests/sessions_spec.rb'
 
 # Offense count: 7
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -71,10 +96,9 @@ Rails/Date:
     - 'spec/lib/tasks/import_spec.rb'
     - 'spec/models/field_spec.rb'
 
-# Offense count: 1
-Rails/FilePath:
-  Exclude:
-    - 'spec/rails_helper.rb'
+# Offense count: 9
+Metrics/AbcSize:
+  Max: 35
 
 # Offense count: 10
 # Configuration parameters: Include.
@@ -88,15 +112,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/soil_class.rb'
     - 'app/models/weather_station.rb'
     - 'app/models/website.rb'
-
-# Offense count: 6
-# Configuration parameters: Blacklist.
-# Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
-Rails/SkipsModelValidations:
-  Exclude:
-    - 'app/models/user.rb'
-    - 'spec/lib/tasks/import_spec.rb'
-    - 'spec/requests/sessions_spec.rb'
 
 # Offense count: 16
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -115,32 +130,17 @@ Rails/TimeZone:
     - 'spec/requests/soil_applications_spec.rb'
     - 'spec/support/deferred_garbage_collection.rb'
 
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'spec/support/share_db_connection.rb'
-
-# Offense count: 3
-Style/ClassVars:
-  Exclude:
-    - 'spec/support/deferred_garbage_collection.rb'
-    - 'spec/support/share_db_connection.rb'
+# Offense count: 62
+# Configuration parameters: CountComments, ExcludedMethods.
+Metrics/BlockLength:
+  Max: 184
 
 # Offense count: 80
 Style/Documentation:
   Enabled: false
 
-# Offense count: 3
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'spec/support/deferred_garbage_collection.rb'
-
-# Offense count: 3
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'Guardfile'
-    - 'app/models/user.rb'
+# Offense count: 146
+# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
+# URISchemes: http, https
+Metrics/LineLength:
+  Max: 177

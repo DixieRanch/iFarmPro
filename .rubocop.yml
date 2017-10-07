@@ -8,3 +8,6 @@ Style/SymbolArray:
   
 Style/EmptyMethod:
   EnforcedStyle: expanded
+  
+Style/NumericLiterals:
+  MinDigits: 15

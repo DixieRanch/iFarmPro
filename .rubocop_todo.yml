@@ -145,12 +145,6 @@ Style/MultilineTernaryOperator:
     - 'Guardfile'
     - 'app/models/user.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: Strict.
-Style/NumericLiterals:
-  MinDigits: 15
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/RedundantParentheses:

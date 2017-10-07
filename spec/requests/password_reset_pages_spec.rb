@@ -43,9 +43,9 @@ RSpec.describe "PasswordReset", type: :request do
       end
       
       it "sends password reset email" do
-        expect {
-        click_button "Request password reset"
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect do
+          click_button "Request password reset"
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
         open_email(user.email)
         expect(current_email.to).to include user.email
       end
@@ -71,9 +71,9 @@ RSpec.describe "PasswordReset", type: :request do
     end
     
     it "does not send email" do
-      expect {
-      click_button "Request password reset"
-      }.not_to change { ActionMailer::Base.deliveries.count }
+      expect do
+        click_button "Request password reset"
+      end.not_to change { ActionMailer::Base.deliveries.count }
     end
     
     it "redirects to email sent page" do
@@ -114,26 +114,26 @@ RSpec.describe "PasswordReset", type: :request do
       it "redirects to request page" do
         click_button "Reset Your Password"
         expect(page).to have_title full_title 'Request Password Reset'
-        expect(page).to have_css('div.alert.alert-danger', text:'Expired')
+        expect(page).to have_css('div.alert.alert-danger', text: 'Expired')
       end
       
       it "does not reset the password" do
         fill_in 'Password',     with: fresh_pass
         fill_in 'Confirmation', with: fresh_pass
-        expect {
+        expect do
           click_button "Reset Your Password"
           user.reload
-        }.not_to change { user.password_digest }
+        end.not_to change { user.password_digest }
       end
     end
     
     context "with correct information and invalid password" do
       
       it "does not reset the password" do
-        expect {
+        expect do
           click_button "Reset Your Password"
           user.reload
-        }.not_to change { user.password_digest }
+        end.not_to change { user.password_digest }
       end
       
       it "redirects to password reset form" do
@@ -147,10 +147,10 @@ RSpec.describe "PasswordReset", type: :request do
       it "persists new password" do
         fill_in 'Password',     with: fresh_pass
         fill_in 'Confirmation', with: fresh_pass
-        expect {
+        expect do
           click_button "Reset Your Password"
           user.reload
-        }.to change { user.password_digest }
+        end.to change { user.password_digest }
       end
       
       it "signs in user after reset" do
@@ -187,10 +187,10 @@ RSpec.describe "PasswordReset", type: :request do
     it "does not reset the password" do
       fill_in 'Password',     with: fresh_pass
       fill_in 'Confirmation', with: fresh_pass
-      expect {
+      expect do
         click_button "Reset Your Password"
         user.reload
-      }.not_to change { user.password_digest }
+      end.not_to change { user.password_digest }
     end
   end
 end

@@ -55,7 +55,7 @@ describe "ReportPages" do
       before do
         Company.current_id = user.company.id
         @app = create(:soil_application, quantity: 150,
-                                         field: (create(:field, name: 'new', acreage: 7)))
+                                         field: create(:field, name: 'new', acreage: 7))
         visit report_path(:fertilizer)
         # save_and_open_page
         Company.current_id = user.company.id

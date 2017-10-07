@@ -145,20 +145,6 @@ Style/MultilineTernaryOperator:
     - 'Guardfile'
     - 'app/models/user.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'spec/requests/report_pages_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'config/routes.rb'
-
 # Offense count: 728
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.

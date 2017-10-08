@@ -1,7 +1,19 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
   TargetRailsVersion: 4.2
+  DisplayCopNames: true
+  AutoCorrect: true
+    
+Rails:
+  Enabled: true
   
 Style/SymbolArray:
   EnforcedStyle: brackets

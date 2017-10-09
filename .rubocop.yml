@@ -10,7 +10,6 @@ AllCops:
     - 'script/**/*'
   TargetRailsVersion: 4.2
   DisplayCopNames: true
-  AutoCorrect: true
     
 Rails:
   Enabled: true

@@ -1,8 +1,51 @@
 <% provide(:title, 'Help') %>
 <h1>Help</h1>
-<p>  
-  Get help on the iFarmPro application at the
-  <%= link_to 'iFarmPro help page', help_path %>.
-  Assistance in writing this application was provided by the
-  <a href="http://railstutorial.org/book">Rails Tutorial book</a>.
-</p>
+
+<div class="col-xs-10 col-md-8">
+  <h2 style="color:#0A8E42">Getting Started</h2>
+
+  <h3 style="margin:2em">- Creating an account</h3>
+  <p>
+    <font size="4">
+      From the iFarmPro home page, click the "Sign up now!" button to begin the
+      process of creating a company.
+    </font>
+    
+    <%= image_tag("HomePage.png", alt: "HomePage") %>
+  </p><br><br>
+  
+  <p>
+    <font size="4">
+      At the sign up page you will find a submission form requiring a company
+      name, an associated email, and a password with password confirmation.  
+      Please ensure that you have access to the email address as this will be
+      important as you go along.
+    </font>
+    
+    <%= image_tag("SignupPage.png", alt: "SignupPage") %>
+  </p><br><br><br>
+  
+  <h3 style="margin:2em">- Email Confirmation</h3>
+  
+  <p>
+    <font size="4">
+      Upon successful sign up you should see an email confirmation page.  Now 
+      you need to go to the email you signed up with.  
+    </font>
+    <%= image_tag("ActivationEmailSent.png", alt: "ActivationEmailSent") %>
+    <br>
+    
+    <font size="4">
+      At this point you must verify your email by clicking the link that was 
+      emailed to you.  If you did not recieve an email, you may request a new 
+      one on the above page. <b><em>Make certain you did not recieve it before
+      making a request for a new email to prevent conflicts.</em></b>
+    </font>
+    <%= image_tag("ActivationEmail.png", alt: "ActivationEmail") %>
+    <br>
+    
+    <font size="4">
+      After verifying your email, the confirmation process is complete.
+    </font>
+  </p>
+</div>

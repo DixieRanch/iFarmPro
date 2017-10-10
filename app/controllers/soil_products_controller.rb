@@ -14,7 +14,6 @@
 #
 
 class SoilProductsController < ApplicationController
-
   def index
     @product  = SoilProduct.new
     @products = SoilProduct.order('name')
@@ -23,7 +22,7 @@ class SoilProductsController < ApplicationController
   def create
     @product  = SoilProduct.new(soil_product_params)
     if @product.save
-      flash[:success] = "product successfully added."
+      flash[:success] = 'product successfully added.'
       redirect_to soil_products_path
     else
       @products = SoilProduct.order('name')
@@ -38,9 +37,9 @@ class SoilProductsController < ApplicationController
   end
 
   def update
-    @product  = SoilProduct.find(params[:id])
+    @product = SoilProduct.find(params[:id])
     if @product.update_attributes(soil_product_params)
-      flash[:success] = "Soil Product successfully updated."
+      flash[:success] = 'Soil Product successfully updated.'
       redirect_to soil_products_path
     else
       @products = SoilProduct.order('name')
@@ -48,13 +47,13 @@ class SoilProductsController < ApplicationController
     end
   end
 
-private
+  private
 
-    def soil_product_params
-      params.require(:soil_product).permit(permitted_params)
-    end
+  def soil_product_params
+    params.require(:soil_product).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:name, :n, :p, :k, :s]
-    end
+  def permitted_params
+    [:name, :n, :p, :k, :s]
+  end
 end

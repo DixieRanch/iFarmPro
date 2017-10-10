@@ -2,7 +2,6 @@ require 'open-uri'
 
 module Tasks
   class UpdateEt
-
     attr_reader :url
     attr_writer :doy
 
@@ -26,7 +25,7 @@ module Tasks
     def parse(page)
       array = []
       page.search('table')[0].search('tbody').search('tr').each do |row|
-        array << {doy: row.search('td')[0].text.to_date.yday, eth: row.search('td')[10].text}
+        array << { doy: row.search('td')[0].text.to_date.yday, eth: row.search('td')[10].text }
       end
       array
     end
@@ -34,7 +33,7 @@ module Tasks
     def update(array, weather_station)
       array.each do |row|
         @doy = row[:doy]
-        current_et = CurrentEt.find_by_doy(@doy)
+        current_et = CurrentEt.find_by(doy: @doy)
         current_et[weather_station.db_col] = row[:eth]
         current_et.save!
       end
@@ -47,15 +46,15 @@ module Tasks
         else
           @doy = 1
         end
-        current_et = CurrentEt.find_by_doy(@doy)
+        current_et = CurrentEt.find_by(doy: @doy)
         current_et[weather_station.db_col] = nil
         current_et.save!
       end
     end
 
     def fetch_parse_update_pad_table
-      end_date =   (Time.now-1.days).strftime('%F')
-      start_date = (Time.now-180.days).strftime('%F')
+      end_date =   (Time.now - 1.day).strftime('%F')
+      start_date = (Time.now - 180.days).strftime('%F')
       WeatherStation.all.each do |weather_station|
         page = fetch(weather_station.id_code, start_date, end_date)
         array = parse(page)
@@ -63,6 +62,5 @@ module Tasks
         pad(weather_station)
       end
     end
-
   end
 end

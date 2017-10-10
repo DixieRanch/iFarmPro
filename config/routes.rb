@@ -49,7 +49,6 @@
 #
 
 Ifarm::Application.routes.draw do
-
   resources :sessions, only: [:new, :create, :destroy]
   resources :companies, only: [:create, :show]
   resources :users, only: [:new, :create, :edit, :update]
@@ -59,7 +58,7 @@ Ifarm::Application.routes.draw do
   resources :rains, only: [:index, :edit, :create, :update]
   resources :soil_products, only: [:index, :create, :edit, :update]
   resources :soil_applications, only: [:index, :create, :edit, :update]
-  resources :account_activations, only: [:show, :new, :create, :edit], 
+  resources :account_activations, only: [:show, :new, :create, :edit],
                                   constraints: { id: /[^\/]+/ }
   resources :password_resets, only: [:show, :new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
@@ -69,11 +68,11 @@ Ifarm::Application.routes.draw do
   get '/signup',  to: 'companies#new'
   get '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
-  
+
   get '/help',    to: 'static_pages#help'
   get '/contact', to: 'static_pages#contact'
   get '/about',   to: 'static_pages#about'
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

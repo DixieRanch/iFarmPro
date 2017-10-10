@@ -14,20 +14,19 @@
 #
 
 class SoilApplicationsController < ApplicationController
-
   def index
     get_soil_applications
-    @application  = SoilApplication.new
+    @application = SoilApplication.new
   end
 
   def create
     @application = field.soil_applications.build(soil_app_params)
     if @application.save
-      flash[:success] = "Soil Application successfully saved."
+      flash[:success] = 'Soil Application successfully saved.'
       redirect_to soil_applications_path
     else
-     get_soil_applications
-     render :index
+      get_soil_applications
+      render :index
     end
   end
 
@@ -41,7 +40,7 @@ class SoilApplicationsController < ApplicationController
     @application = SoilApplication.find(params[:id])
     @application.field_id = field.id
     if @application.update(soil_app_params)
-      flash[:success] = "Soil Application successfully updated."
+      flash[:success] = 'Soil Application successfully updated.'
       redirect_to soil_applications_path
     else
       get_soil_applications
@@ -51,21 +50,21 @@ class SoilApplicationsController < ApplicationController
 
   private
 
-    def get_soil_applications
-      @applications = SoilApplication.page(params[:page])
-                                     .per_page(30)
-                                     .order("date DESC")
-    end
+  def get_soil_applications
+    @applications = SoilApplication.page(params[:page])
+                                   .per_page(30)
+                                   .order('date DESC')
+  end
 
-    def soil_app_params
-      params.require(:soil_application).permit(permitted_params)
-    end
+  def soil_app_params
+    params.require(:soil_application).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:quantity, :soil_product_id, :date, :soil_application_unit_id]
-    end
+  def permitted_params
+    [:quantity, :soil_product_id, :date, :soil_application_unit_id]
+  end
 
-    def field
-      Field.find(params[:soil_application][:field_id])
-    end
+  def field
+    Field.find(params[:soil_application][:field_id])
+  end
 end

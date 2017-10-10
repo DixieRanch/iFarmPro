@@ -8,14 +8,12 @@ require 'rake'
 # http://pivotallabs.com/how-i-test-rake-tasks/
 # http://www.philsergi.com/2009/02/testing-rake-tasks-with-rspec.html
 
-describe 'app lib tasks import.rake', :slow  do
-
+describe 'app lib tasks import.rake', :slow do
   let(:agent) { Mechanize.new }
   let(:weather_url) { 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/' }
   let(:weather_page) { agent.get(weather_url) }
   let(:rake) { Rake::Application.new }
   let(:task_path) { 'lib/tasks/import' }
-
 
   before do
     create(:weather_station)
@@ -25,7 +23,6 @@ describe 'app lib tasks import.rake', :slow  do
   end
 
   context 'get weather url' do
-
     it 'parses URL' do
       expect(weather_page.uri.to_s).to eq 'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
     end
@@ -36,10 +33,9 @@ describe 'app lib tasks import.rake', :slow  do
   end
 
   context 'post weather url' do
-
     let(:data_page) do
       end_date = Time.now.to_date.strftime('%F')
-      start_date = (Time.now-180.days).strftime('%F')
+      start_date = (Time.now - 180.days).strftime('%F')
       weather_page.forms[0]['start_date'] = start_date
       weather_page.forms[0]['end_date'] = end_date
       weather_page.forms[0].submit
@@ -97,7 +93,7 @@ describe 'app lib tasks import.rake', :slow  do
     expect(File.exist?('db/soil_class.csv')).to be true
   end
 
-  it "has file db/soil_application_unit.csv" do
+  it 'has file db/soil_application_unit.csv' do
     expect(File.exist?('db/soil_application_unit.csv')).to be true
   end
 
@@ -105,7 +101,7 @@ describe 'app lib tasks import.rake', :slow  do
     Rake::Task['import:et'].invoke
     file = 'db/et0.csv'
 
-    WeatherStation.all.each do |station|
+    WeatherStation.all.each do |_station|
       CSV.foreach(file, headers: true) do |row|
         et = Et.find_by(doy: row['doy'])
         row[0] = row[0].to_i
@@ -131,7 +127,7 @@ describe 'app lib tasks import.rake', :slow  do
     Rake::Task['import:current_et'].invoke
     file = 'db/current_et.csv'
 
-    WeatherStation.all.each do |station|
+    WeatherStation.all.each do |_station|
       CSV.foreach(file, headers: true) do |row|
         et = CurrentEt.find_by(doy: row['doy'])
         row[0] = row[0].to_i
@@ -152,7 +148,7 @@ describe 'app lib tasks import.rake', :slow  do
     end
   end
 
-  it "loads soil_applicaiton_units table with data from db/soil_application_unit.csv" do
+  it 'loads soil_applicaiton_units table with data from db/soil_application_unit.csv' do
     Rake::Task['import:soil_application_unit'].invoke
     file = 'db/soil_application_unit.csv'
 
@@ -162,11 +158,11 @@ describe 'app lib tasks import.rake', :slow  do
       expect(unit.attributes).to include row.to_hash
     end
   end
-  
-  it "updates CurrentEt with Rake task" do
-    et_last_week = CurrentEt.find_by_doy(5.days.ago.yday)
-    et_today = CurrentEt.find_by_doy(Date.today.yday)
-    et_next_week = CurrentEt.find_by_doy(Date.today.yday)
+
+  it 'updates CurrentEt with Rake task' do
+    et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
+    et_today = CurrentEt.find_by(doy: Date.today.yday)
+    et_next_week = CurrentEt.find_by(doy: Date.today.yday)
     et_last_week.update_attribute(:fabian_garcia, nil)
     et_today.update_attribute(:fabian_garcia, 0.15)
     et_next_week.update_attribute(:fabian_garcia, 0.20)

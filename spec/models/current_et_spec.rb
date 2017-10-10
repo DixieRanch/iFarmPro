@@ -20,14 +20,12 @@ describe CurrentEt do
     it { should have_db_column :doy }
     it { should have_db_column :fabian_garcia }
   end
-  
-  context "when updating et" do
-    
+
+  context 'when updating et' do
     it "doesn't save et with a 0.0 value" do
       expect(current_et).to be_valid
       current_et.fabian_garcia = 0.0
       expect(current_et.save).to be false
     end
-    
   end
 end

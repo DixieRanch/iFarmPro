@@ -11,7 +11,7 @@
 
 class SoilApplicationUnit < ActiveRecord::Base
   # has_many :soil_applications
-  
+
   validates :name,    presence: true, uniqueness: { case_sensitive: false }
   validates :density, presence: true, numericality: true
 end

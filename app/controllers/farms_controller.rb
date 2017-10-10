@@ -11,8 +11,7 @@
 #
 
 class FarmsController < ApplicationController
-
-  skip_before_filter :farm_setup, only: [:new, :create, :edit, :update]
+  skip_before_action :farm_setup, only: [:new, :create, :edit, :update]
 
   def index
     @farms = Farm.all
@@ -29,7 +28,7 @@ class FarmsController < ApplicationController
   def create
     @farm = Farm.new(farm_params)
     if @farm.save!
-      flash[:success] = "New farm successfully added."
+      flash[:success] = 'New farm successfully added.'
       redirect_to farms_path
     else
       render 'new'
@@ -43,7 +42,7 @@ class FarmsController < ApplicationController
   def update
     @farm = Farm.find(params[:id])
     if @farm.update(farm_params)
-      flash[:success] = "Updated"
+      flash[:success] = 'Updated'
       redirect_to @farm
     else
       render 'edit'
@@ -51,23 +50,24 @@ class FarmsController < ApplicationController
   end
 
   private
-    def farm_params
-      params.require(:farm).permit(permitted_params)
-    end
 
-    def permitted_params
-      [:name, :weather_station_id, wells_attributes, blocks_attributes]
-    end
+  def farm_params
+    params.require(:farm).permit(permitted_params)
+  end
 
-    def wells_attributes
-      { irrigation_wells_attributes: [:name, :pod_code, :id] }
-    end
+  def permitted_params
+    [:name, :weather_station_id, wells_attributes, blocks_attributes]
+  end
 
-    def blocks_attributes
-      { blocks_attributes: [:name, :id, fields_attributes] }
-    end
+  def wells_attributes
+    { irrigation_wells_attributes: [:name, :pod_code, :id] }
+  end
 
-    def fields_attributes
-      { fields_attributes: [:acreage, :name, :soil_class_id, :id] }
-    end
+  def blocks_attributes
+    { blocks_attributes: [:name, :id, fields_attributes] }
+  end
+
+  def fields_attributes
+    { fields_attributes: [:acreage, :name, :soil_class_id, :id] }
+  end
 end

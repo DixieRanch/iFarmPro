@@ -12,7 +12,6 @@
 #
 
 class IrrigationsController < ApplicationController
-
   def index
     @irrigation = Irrigation.new
     get_irrigations
@@ -39,7 +38,7 @@ class IrrigationsController < ApplicationController
     @irrigation = Irrigation.find(params[:id])
     @irrigation.field_id = field.id
     if @irrigation.update(irrigation_params)
-      flash[:success] = "Irrigation successfully updated."
+      flash[:success] = 'Irrigation successfully updated.'
       redirect_to irrigations_path
     else
       get_irrigations
@@ -47,25 +46,25 @@ class IrrigationsController < ApplicationController
     end
   end
 
-private
+  private
 
-    def get_irrigations
-      @irrigations = Irrigation.page(params[:page]).order("time DESC")
-    end
+  def get_irrigations
+    @irrigations = Irrigation.page(params[:page]).order('time DESC')
+  end
 
-    def irrigation_params
-      params.require(:irrigation).permit(permitted_params)
-    end
+  def irrigation_params
+    params.require(:irrigation).permit(permitted_params)
+  end
 
-    def permitted_params
-      [:time, meter_attributes]
-    end
+  def permitted_params
+    [:time, meter_attributes]
+  end
 
-    def meter_attributes
-      { meter_readings_attributes: [:irrigation_well_id, :start, :stop, :id] }
-    end
+  def meter_attributes
+    { meter_readings_attributes: [:irrigation_well_id, :start, :stop, :id] }
+  end
 
-    def field
-      Field.find(params[:irrigation][:field_id])
-    end
+  def field
+    Field.find(params[:irrigation][:field_id])
+  end
 end

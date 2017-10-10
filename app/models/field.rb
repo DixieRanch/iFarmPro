@@ -14,7 +14,6 @@
 #
 
 class Field < ActiveRecord::Base
-
   # attr_accessor :current_n
 
   belongs_to :block
@@ -32,16 +31,16 @@ class Field < ActiveRecord::Base
   validates :soil_class_id, presence: true
 
   def name_with_block
-    block.name + "-" + name
+    block.name + '-' + name
   end
 
   def get_yearly_amount_of(nutrient, year)
     total_nutrient = 0
-    current_apps = soil_applications.where("extract(year from date) = ?", year)
+    current_apps = soil_applications.where('extract(year from date) = ?', year)
     current_apps.each do |soil_app|
       units = soil_app.soil_product.send(nutrient).to_f * soil_app.quantity / 100
       density = soil_app.soil_application_unit.density
-      total_nutrient +=  units * density / acreage
+      total_nutrient += units * density / acreage
     end
     total_nutrient.to_f
   end

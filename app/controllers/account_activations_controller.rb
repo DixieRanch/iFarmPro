@@ -1,11 +1,10 @@
 class AccountActivationsController < ApplicationController
+  skip_before_action :signed_in_user
 
-  skip_before_filter :signed_in_user
-  
   def show
     @email = params[:id]
   end
-  
+
   def create
     email = params[:account_activation][:email]
     user = User.find_by(email: email)
@@ -20,10 +19,10 @@ class AccountActivationsController < ApplicationController
     if user && user.authenticated?(:activation, params[:id])
       user.activate
       sign_in(user)
-      flash[:success] = "Account Activated!"
+      flash[:success] = 'Account Activated!'
       redirect_to root_path
     else
-      flash.now[:danger] = "Invalid Activation Link"
+      flash.now[:danger] = 'Invalid Activation Link'
       render 'new'
     end
   end

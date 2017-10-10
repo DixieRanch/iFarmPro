@@ -1,10 +1,8 @@
 class SessionsController < ApplicationController
-
-  skip_before_filter :signed_in_user, only: [:new, :create]
-  skip_before_filter :farm_setup, only: [:destroy]
+  skip_before_action :signed_in_user, only: [:new, :create]
+  skip_before_action :farm_setup, only: [:destroy]
 
   def new
-    
   end
 
   def create

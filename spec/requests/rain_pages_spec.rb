@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Rain' do
-
   let(:user) { create(:user) }
 
   before(:each) do
@@ -9,7 +8,6 @@ describe 'Rain' do
   end
 
   describe 'index page' do
-
     let!(:rain) { create(:rain) }
     let(:amount) { rain.amount.to_s }
     let(:date) { rain.formatted_date }
@@ -29,14 +27,13 @@ describe 'Rain' do
     end
 
     describe 'page detail' do
-
-      it "has correct elements" do
+      it 'has correct elements' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_title full_title('Rain')
         expect(page).to have_selector 'table#rain_table'
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Amount'
         expect(page).to have_selector 'table#rain_table thead tr th', text: 'Date'
-        expect(page).to have_selector 'table#rain_table tbody tr', :count => 2
+        expect(page).to have_selector 'table#rain_table tbody tr', count: 2
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount_yesterday
         expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount
         expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date_yesterday
@@ -46,11 +43,10 @@ describe 'Rain' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_field 'rain_amount'
         expect(page).to have_field 'rain_date'
-        expect(page).to have_button('Save')        
+        expect(page).to have_button('Save')
       end
-      
-      context "with 31 rains", slow: true do
-        
+
+      context 'with 31 rains', slow: true do
         before do
           Company.current_id = user.company.id
           farm = rain_yesterday.farm
@@ -59,22 +55,20 @@ describe 'Rain' do
           end
           visit rains_path
         end
-        
-        it "has pagination links" do
-          expect(page).to have_selector 'table#rain_table tbody tr', :count => 30
+
+        it 'has pagination links' do
+          expect(page).to have_selector 'table#rain_table tbody tr', count: 30
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
         end
       end
-      
+
       it 'click edit link' do
         page.find('#link_1').click
         expect(current_path).to eq(edit_rain_path(rain_yesterday))
       end
 
-
       context 'create with valid data' do
-
         it 'create rain' do
           fill_in 'Date', with: '5/31/2014'
           fill_in 'Amount', with: 1.75
@@ -85,7 +79,6 @@ describe 'Rain' do
       end
 
       context 'create with invalid data' do
-
         it 'create rain' do
           fill_in 'rain_amount', with: -23
           fill_in 'rain_date', with: 'abc'
@@ -97,7 +90,6 @@ describe 'Rain' do
   end
 
   describe 'edit page' do
-
     let!(:rain) { create(:rain) }
     let(:amount) { rain.amount.to_s }
     let(:date) { rain.formatted_date }
@@ -106,7 +98,7 @@ describe 'Rain' do
       visit edit_rain_path(rain)
     end
 
-    it "has correct elements" do
+    it 'has correct elements' do
       expect(current_path).to eq(edit_rain_path(rain))
       expect(page).to have_field 'rain_amount'
       expect(page).to have_field 'rain_date'
@@ -114,8 +106,7 @@ describe 'Rain' do
     end
 
     context 'with valid data' do
-
-      let!(:rain_update) { Rain.new(amount: 7.777, date: 3.day.from_now) }
+      let!(:rain_update) { Rain.new(amount: 7.777, date: 3.days.from_now) }
       let(:amount_update) { rain_update.amount.to_s }
       let(:date_update) { rain_update.formatted_date }
 

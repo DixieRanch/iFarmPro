@@ -18,27 +18,26 @@ describe MeterReading do
   let(:company) { build_stubbed(:company) }
   let(:irrigation) { build_stubbed(:irrigation) }
   let(:well) { build_stubbed(:irrigation_well) }
-  
+
   let(:meter_reading) { irrigation.meter_readings.build(@valid_attributes) }
 
   before do
     Company.current_id = company.id
-    @valid_attributes = { start: 112233, 
-                       stop: 223344,
-                       irrigation_well_id: well.id }
+    @valid_attributes = { start: 112233,
+                          stop: 223344,
+                          irrigation_well_id: well.id }
   end
 
   subject { meter_reading }
 
   it { should be_valid }
 
-  it "should have a valid factory" do
+  it 'should have a valid factory' do
     factory = FactoryGirl.build(:meter_reading)
     expect(factory).to be_valid
   end
 
-  describe "security" do
-    
+  describe 'security' do
     it "should have only the current company's data" do
       meter_reading.save
       wrong_company = FactoryGirl.create(:company)
@@ -51,7 +50,7 @@ describe MeterReading do
     end
   end
 
-  describe "attributes" do
+  describe 'attributes' do
     it { should have_db_column :start }
     it { should have_db_column :stop }
     it { should have_db_column :irrigation_id }
@@ -59,11 +58,13 @@ describe MeterReading do
     it { should have_db_column :company_id }
   end
 
-  describe "validations" do
+  describe 'validations' do
     it { should validate_presence_of :irrigation_well_id }
     it { should validate_numericality_of(:start).only_integer }
     it { should validate_numericality_of(:stop).only_integer }
-    it { should validate_uniqueness_of(:irrigation_well_id)
-                            .scoped_to(:irrigation_id) }
+    it {
+      should validate_uniqueness_of(:irrigation_well_id)
+        .scoped_to(:irrigation_id)
+    }
   end
 end

@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.3.0'
 
-gem 'rails',                  '4.2.6'
 gem 'american_date',          '1.1.1'
 gem 'bcrypt',                 '3.1.11'
 gem 'bootstrap-sass',         '3.3.6'
@@ -9,6 +8,7 @@ gem 'coffee-rails',           '4.1.1'
 gem 'jquery-rails',           '4.1.1'
 gem 'mechanize',              '2.7.4'
 gem 'pg',                     '0.18.4'
+gem 'rails',                  '4.2.6'
 gem 'sass',                   '3.4.22'
 gem 'sass-rails',             '5.0.4'
 gem 'simple_form',            '3.2.1'
@@ -29,13 +29,11 @@ group :development, :test do
   gem 'rspec-rails',          '3.4.2'
   gem 'rubocop',              '0.50.0', require: false
   gem 'spring',               '1.7.1'
-  gem 'spring-commands-rspec','1.0.4'
+  gem 'spring-commands-rspec', '1.0.4'
 end
 
 # Gems used only for assets and not required
 # in production environments by default.
-
-
 
 group :test do
   gem 'capybara',           '2.7.0'

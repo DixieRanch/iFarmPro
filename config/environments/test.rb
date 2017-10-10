@@ -6,7 +6,7 @@ Ifarm::Application.configure do
   silence_warnings do
     BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST
   end
-  
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -15,7 +15,7 @@ Ifarm::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_files = true
-  config.static_cache_control = "public, max-age=3600"
+  config.static_cache_control = 'public, max-age=3600'
 
   config.eager_load = false
 
@@ -27,7 +27,7 @@ Ifarm::Application.configure do
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -35,7 +35,6 @@ Ifarm::Application.configure do
   config.action_mailer.delivery_method = :test
   host = 'www.ifarmpro.com'
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
-
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr

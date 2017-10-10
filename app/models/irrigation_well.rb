@@ -12,7 +12,6 @@
 #
 
 class IrrigationWell < ActiveRecord::Base
-
   belongs_to :farm
 
   default_scope { where(company_id: Company.current_id) }

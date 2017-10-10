@@ -15,7 +15,7 @@
 #
 
 class UsersController < ApplicationController
-  before_filter :correct_user,   only: [:edit, :update]
+  before_action :correct_user,   only: [:edit, :update]
 
   def new
     @user = User.new
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.company_id = Company.current_id
     if @user.save
-      flash[:success] = "New user succesfully created"
+      flash[:success] = 'New user succesfully created'
       redirect_to root_path
     else
       render 'new'
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "User login successfully update."
+      flash[:success] = 'User login successfully update.'
       sign_in @user
       redirect_to company_path(@user.company)
     else
@@ -46,16 +46,17 @@ class UsersController < ApplicationController
   end
 
   private
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
-    end
 
-    def user_params
-      params.require(:user).permit(permitted_params)
-    end
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_path) unless current_user?(@user)
+  end
 
-    def permitted_params
-      [:email, :password, :password_confirmation]
-    end
+  def user_params
+    params.require(:user).permit(permitted_params)
+  end
+
+  def permitted_params
+    [:email, :password, :password_confirmation]
+  end
 end

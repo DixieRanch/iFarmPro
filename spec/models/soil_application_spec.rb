@@ -21,24 +21,22 @@ describe SoilApplication do
   let(:product) { build_stubbed(:soil_product) }
   let(:application) { field.soil_applications.build(@valid_attributes) }
 
-
   subject { application }
 
   before do
     Company.current_id = company.id
-    @valid_attributes = { quantity: 150, soil_product_id: product.id, 
+    @valid_attributes = { quantity: 150, soil_product_id: product.id,
                           date: '01/01/2014', soil_application_unit_id: 1 }
   end
 
   it { should be_valid }
 
-  it "has a valid factory" do
+  it 'has a valid factory' do
     factory = build(:soil_application)
     expect(factory).to be_valid
   end
 
   describe 'security' do
-    
     it "has only the current company's data" do
       application.save
       wrong_company = create(:company)
@@ -66,16 +64,14 @@ describe SoilApplication do
     it { should validate_presence_of :soil_application_unit_id }
   end
 
-  describe "method" do
-    
-    describe "formatted_date" do
-      
-      it "reutrns nil when nil" do
+  describe 'method' do
+    describe 'formatted_date' do
+      it 'reutrns nil when nil' do
         application.date = ''
         expect(application.formatted_date).to eq nil
       end
 
-      it "returns date formatted as date" do
+      it 'returns date formatted as date' do
         application.date = '1/8'
         year = Time.now.year
         expect(application.formatted_date).to eq "January 8, #{year}"

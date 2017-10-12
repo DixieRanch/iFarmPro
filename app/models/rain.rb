@@ -31,6 +31,4 @@ class Rain < ActiveRecord::Base
   rescue ArgumentError, TypeError
     self[:date] = value
   end
-
-  private
 end

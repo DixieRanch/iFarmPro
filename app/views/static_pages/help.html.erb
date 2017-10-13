@@ -60,31 +60,30 @@
       important that you choose the right weather station for your area.<br><br>
       
       The second step is to declare and name all the wells you use for your 
-      irrigations. You can name wells whatever you like, but the Point of 
-      Diversion code (AKA LRG Number) is a legal identification that should be 
-      labeled correctly.
+      irrigations.  This step is completely optional.  You can name wells 
+      whatever you like, but the Point of Diversion code (AKA LRG Number) is a 
+      legal identification that should be labeled correctly.
     </font>
     <%= image_tag("AddFarm_part1.png", alt: "AddFarm_part1") %><br><br>
     
     <font size="4">
-      The final initialization step is to add your blocks, fields, soil water 
-      level, and acreage.  Start by clicking the "Add Block" button.  Name the 
-      block whatever you like.  An easily identifiable value is recommended.  
-      Then click the "Add Field" button.  Name the field whatever you like.  An
-      easy identification name is recommended again.  An example would be 
-      <i>block-A, field-1, (block-field A-1)</i>.  The soil water value depends 
-      upon the soil type of your field.  <b>This piece is most important to get 
-      correct because your schedule will be built based on this information.</b>
-      Below are some examples of what your soil type and corresponding soil 
-      water may be.  Once this has been done, click the "Save" button to finish
-      setup.<br>
+      The final initialization step is to add your blocks, fields, soil type, 
+      and acreage.  The "Acres" field can be left blank, but you may also
+      fill this in if you prefer.  Start by clicking the "Add Block" button.  
+      Name the block whatever you like.  An easily identifiable name is 
+      recommended.  Then click the "Add Field" button.  Name the field whatever 
+      you like.  An easily identifiable name is recommended again.  The soil 
+      water section depends upon the soil type of your field.  <b>This piece is 
+      most important to get correct because your schedule will be built based on
+      this information.</b>  Below are some examples of what your soil type and 
+      corresponding soil water may be.  Once this has been done, click the 
+      "Save" button to finish setup.<br>
     </font>
     <%= image_tag("AddFarm_part2.png", alt: "Add blocks, fields, and soil") %>
     
     <br>
     <font size="4">
-      The "Acres" field can be left blank, but you may also fill this in if you 
-      prefer.<br><br>
+      <br><br>
     </font>
     
     <font size="4">
@@ -95,5 +94,54 @@
     </font>
     <%= image_tag("AddFarm_part3.png", alt: "Your Farm Page") %>
     
+  </p><br><br>
+  
+  <h3 style="margin:2em">- Irrigation Schedule</h3>
+  <p>
+    <font size="4">
+      Immediately after finishing farm setup, you may notice that your 
+      irrigation schedule looks something like this:<br>
+    </font>
+    <%= image_tag("IrrigationScheduleInitial.png",
+                  alt: "IrrigationScheduleInitial") %><br>
+    
+    <font size="4">
+      Naturally you've irrigated more recently than early July from a year ago.  
+      This is a default value set to help ensure you don't leave a field out of 
+      your schedule by accident.  To resolve this, start by clicking on the 
+      irrigations tab.<br><br>
+      
+      From there you should input a field, and the most recent time that it was 
+      irrigated.  This should be in the form of a date (mm/dd/yyyy).  Then 
+      click save.<br>
+      <%= image_tag("AddIrrigation_part1.png", alt: "AddIrrigation Date") %>
+      <br><br>
+      
+      Alternatively, you can enter a date and time of the last irrigation, and 
+      use shorthand dates (m/d hour:min).<br>
+      <%= image_tag("AddIrrigation_part2.png", alt: "AddIrrigation date/time") %>
+      <br><br>
+      
+      If the year is left blank, then it will default to the current year.  
+      Similarly if the time is left blank, it will default to midnight (00:00)
+      of the input date.  After a couple of fields, your schedule will look 
+      something like this:<br>
+      <%= image_tag("IrrigationSchedule_PartiallyComplete",
+                    alt: "IrrigationSchedule_PartiallyComplete") %><br><br>
+      
+      Repeat the steps until you have input the most recent irrigation for each 
+      field.  If at any point you save incorrect data, you can easily fix it 
+      after clicking the edit button next to the mistaken irrigation.<br>
+      <%= image_tag("AddIrrigation_part3.png", alt: "AddIrrigation plus edit") %>
+      <br><br>
+      
+      Once you've input the data for each field, the schedule should tell you 
+      when each is due for an irrigation based upon the soil type, and how long 
+      since your last irrigation.<br>
+      <%= image_tag("IrrigationSchedule_Final.png",
+                    alt: "IrrigationSchedule_Final") %>
+      <br><br>
+      
+    </font>
   </p>
 </div>

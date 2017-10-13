@@ -2,8 +2,10 @@
 <h1>Help</h1>
 
 <div class="col-xs-10 col-md-8">
-  <h2 style="color:#0A8E42">Getting Started</h2>
+  <!--<h2 style="color:#0A8E42">Getting Started</h2>-->
+  <h2> <%= link_to "Getting Started" %></h2>
 
+  <!--<h3 style="margin:2em">- Creating an account</h3>-->
   <h3 style="margin:2em">- Creating an account</h3>
   <p>
     <font size="4">
@@ -47,5 +49,51 @@
     <font size="4">
       After verifying your email, the confirmation process is complete.
     </font>
+  </p>
+  
+  <h3 style="margin:2em">- Farm Setup</h3>
+  <p>
+    <font size="4">
+      At this point you must setup your farm before you will be able to do 
+      anything else.  Begin by naming your farm and selecting the appropriate 
+      weather station.  You may name your farm whatever you like, but it is 
+      important that you choose the right weather station for your area.<br><br>
+      
+      The second step is to declare and name all the wells you use for your 
+      irrigations. You can name wells whatever you like, but the Point of 
+      Diversion code (AKA LRG Number) is a legal identification that should be 
+      labeled correctly.
+    </font>
+    <%= image_tag("AddFarm_part1.png", alt: "AddFarm_part1") %><br><br>
+    
+    <font size="4">
+      The final initialization step is to add your blocks, fields, soil water 
+      level, and acreage.  Start by clicking the "Add Block" button.  Name the 
+      block whatever you like.  An easily identifiable value is recommended.  
+      Then click the "Add Field" button.  Name the field whatever you like.  An
+      easy identification name is recommended again.  An example would be 
+      <i>block-A, field-1, (block-field A-1)</i>.  The soil water value depends 
+      upon the soil type of your field.  <b>This piece is most important to get 
+      correct because your schedule will be built based on this information.</b>
+      Below are some examples of what your soil type and corresponding soil 
+      water may be.  Once this has been done, click the "Save" button to finish
+      setup.<br>
+    </font>
+    <%= image_tag("AddFarm_part2.png", alt: "Add blocks, fields, and soil") %>
+    
+    <br>
+    <font size="4">
+      The "Acres" field can be left blank, but you may also fill this in if you 
+      prefer.<br><br>
+    </font>
+    
+    <font size="4">
+      Once you've finished setting up your farm and you hit "Save", you should 
+      see a page listing all the farms you have (one in this case).  You can 
+      click on the farm name to see the information you've put in, and from 
+      there you get the option to edit the farm.
+    </font>
+    <%= image_tag("AddFarm_part3.png", alt: "Your Farm Page") %>
+    
   </p>
 </div>

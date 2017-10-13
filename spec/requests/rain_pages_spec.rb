@@ -49,7 +49,6 @@ describe 'Rain' do
       context 'with 31 rains', slow: true do
         before do
           Company.current_id = user.company.id
-          farm = rain_yesterday.farm
           31.times do |i|
             create(:rain, date: Date.yesterday - i - 1)
           end

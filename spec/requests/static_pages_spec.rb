@@ -24,7 +24,7 @@ describe 'StaticPages' do
     let(:heading) { 'Help' }
     let(:page_title) { 'Help' }
 
-    it_should_behave_like "all static pages"
+    it_should_behave_like 'all static pages'
     
     context "links to walkthrough pages" do
       

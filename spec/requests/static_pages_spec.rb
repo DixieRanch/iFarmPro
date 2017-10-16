@@ -25,6 +25,15 @@ describe 'StaticPages' do
     let(:page_title) { 'Help' }
 
     it_should_behave_like 'all static pages'
+    
+    context "links to walkthrough pages" do
+      
+      it "redirects to setup walkthrough" do
+        
+        click_link "Getting Started"
+        expect(page).to have_title full_title(page_title)
+      end
+    end
   end
 
   describe 'About page' do

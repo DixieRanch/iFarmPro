@@ -1,8 +1,147 @@
 <% provide(:title, 'Help') %>
 <h1>Help</h1>
-<p>  
-  Get help on the iFarmPro application at the
-  <%= link_to 'iFarmPro help page', help_path %>.
-  Assistance in writing this application was provided by the
-  <a href="http://railstutorial.org/book">Rails Tutorial book</a>.
-</p>
+
+<div class="col-xs-10 col-md-8">
+  <!--<h2 style="color:#0A8E42">Getting Started</h2>-->
+  <h2> <%= link_to "Getting Started" %></h2>
+
+  <!--<h3 style="margin:2em">- Creating an account</h3>-->
+  <h3 style="margin:2em">- Creating an account</h3>
+  <p>
+    <font size="4">
+      From the iFarmPro home page, click the "Sign up now!" button to begin the
+      process of creating a company.
+    </font>
+    
+    <%= image_tag("HomePage.png", alt: "HomePage") %>
+  </p><br><br>
+  
+  <p>
+    <font size="4">
+      At the sign up page you will find a submission form requiring a company
+      name, an associated email, and a password with password confirmation.  
+      Please ensure that you have access to the email address as this will be
+      important as you go along.
+    </font>
+    
+    <%= image_tag("SignupPage.png", alt: "SignupPage") %>
+  </p><br><br><br>
+  
+  <h3 style="margin:2em">- Email Confirmation</h3>
+  
+  <p>
+    <font size="4">
+      Upon successful sign up you should see an email confirmation page.  Now 
+      you need to go to the email you signed up with.  
+    </font>
+    <%= image_tag("ActivationEmailSent.png", alt: "ActivationEmailSent") %>
+    <br>
+    
+    <font size="4">
+      At this point you must verify your email by clicking the link that was 
+      emailed to you.  If you did not recieve an email, you may request a new 
+      one on the above page. <b><em>Make certain you did not recieve it before
+      making a request for a new email to prevent conflicts.</em></b>
+    </font>
+    <%= image_tag("ActivationEmail.png", alt: "ActivationEmail") %>
+    <br>
+    
+    <font size="4">
+      After verifying your email, the confirmation process is complete.
+    </font>
+  </p>
+  
+  <h3 style="margin:2em">- Farm Setup</h3>
+  <p>
+    <font size="4">
+      At this point you must setup your farm before you will be able to do 
+      anything else.  Begin by naming your farm and selecting the appropriate 
+      weather station.  You may name your farm whatever you like, but it is 
+      important that you choose the right weather station for your area.<br><br>
+      
+      The second step is to declare and name all the wells you use for your 
+      irrigations.  This step is completely optional.  You can name wells 
+      whatever you like, but the Point of Diversion code (AKA LRG Number) is a 
+      legal identification that should be labeled correctly.
+    </font>
+    <%= image_tag("AddFarm_part1.png", alt: "AddFarm_part1") %><br><br>
+    
+    <font size="4">
+      The final initialization step is to add your blocks, fields, soil type, 
+      and acreage.  The "Acres" field can be left blank, but you may also
+      fill this in if you prefer.  Start by clicking the "Add Block" button.  
+      Name the block whatever you like.  An easily identifiable name is 
+      recommended.  Then click the "Add Field" button.  Name the field whatever 
+      you like.  An easily identifiable name is recommended again.  The soil 
+      water section depends upon the soil type of your field.  <b>This piece is 
+      most important to get correct because your schedule will be built based on
+      this information.</b>  Below are some examples of what your soil type and 
+      corresponding soil water may be.  Once this has been done, click the 
+      "Save" button to finish setup.<br>
+    </font>
+    <%= image_tag("AddFarm_part2.png", alt: "Add blocks, fields, and soil") %>
+    
+    <br>
+    <font size="4">
+      <br><br>
+    </font>
+    
+    <font size="4">
+      Once you've finished setting up your farm and you hit "Save", you should 
+      see a page listing all the farms you have (one in this case).  You can 
+      click on the farm name to see the information you've put in, and from 
+      there you get the option to edit the farm.
+    </font>
+    <%= image_tag("AddFarm_part3.png", alt: "Your Farm Page") %>
+    
+  </p><br><br>
+  
+  <h3 style="margin:2em">- Irrigation Schedule</h3>
+  <p>
+    <font size="4">
+      Immediately after finishing farm setup, you may notice that your 
+      irrigation schedule looks something like this:<br>
+    </font>
+    <%= image_tag("IrrigationScheduleInitial.png",
+                  alt: "IrrigationScheduleInitial") %><br>
+    
+    <font size="4">
+      Naturally you've irrigated more recently than early July from a year ago.  
+      This is a default value set to help ensure you don't leave a field out of 
+      your schedule by accident.  To resolve this, start by clicking on the 
+      irrigations tab.<br><br>
+      
+      From there you should input a field, and the most recent time that it was 
+      irrigated.  This should be in the form of a date (mm/dd/yyyy).  Then 
+      click save.<br>
+      <%= image_tag("AddIrrigation_part1.png", alt: "AddIrrigation Date") %>
+      <br><br>
+      
+      Alternatively, you can enter a date and time of the last irrigation, and 
+      use shorthand dates (m/d hour:min).<br>
+      <%= image_tag("AddIrrigation_part2.png", alt: "AddIrrigation date/time") %>
+      <br><br>
+      
+      If the year is left blank, then it will default to the current year.  
+      Similarly if the time is left blank, it will default to midnight (00:00)
+      of the input date.  After a couple of fields, your schedule will look 
+      something like this:<br>
+      <%= image_tag("IrrigationSchedule_PartiallyComplete",
+                    alt: "IrrigationSchedule_PartiallyComplete") %><br><br>
+      
+      Repeat the steps until you have input the most recent irrigation for each 
+      field.  If at any point you save incorrect data, you can easily fix it 
+      after clicking the edit button next to the mistaken irrigation.<br>
+      <%= image_tag("AddIrrigation_part3.png", alt: "AddIrrigation plus edit") %>
+      <br><br>
+      
+      Once you've input the data for each field, the schedule should tell you 
+      when each is due for an irrigation based upon the soil type, and how long 
+      since your last irrigation.<br>
+      <%= image_tag("IrrigationSchedule_Final.png",
+                    alt: "IrrigationSchedule_Final") %>
+      <br><br>
+      
+    </font>
+  </p>
+</div>

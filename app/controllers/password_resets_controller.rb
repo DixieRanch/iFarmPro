@@ -10,8 +10,15 @@ class PasswordResetsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:password_reset][:email])
-
-    check_existance(user)
+    
+    if user.nil?
+      redirect_to password_reset_path(params[:password_reset][:email])
+    elsif !user.activated?
+      redirect_to account_activation_path(user.email)
+    else
+      user.send_password_reset_email
+      redirect_to password_reset_path(user.email)
+    end
   end
 
   def edit
@@ -28,27 +35,6 @@ class PasswordResetsController < ApplicationController
 
   def get_user
     @user = User.find_by(email: params[:email])
-  end
-
-  def check_existance(user)
-    if user
-      check_activation(user)
-    else
-      redirect_to password_reset_path(params[:password_reset][:email])
-    end
-  end
-
-  def check_activation(user)
-    if user.activated?
-      send_email(user)
-    else
-      redirect_to account_activation_path(user.email)
-    end
-  end
-
-  def send_email(user)
-    user.send_password_reset_email
-    redirect_to password_reset_path(user.email)
   end
 
   def check_authentication(user)

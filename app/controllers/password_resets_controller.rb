@@ -10,7 +10,7 @@ class PasswordResetsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:password_reset][:email])
-    
+
     if user.nil?
       redirect_to password_reset_path(params[:password_reset][:email])
     elsif !user.activated?

@@ -107,4 +107,26 @@ describe 'UserPages' do
       end
     end
   end
+
+  describe 'change password link' do
+    it 'renders password reset email sent page' do
+      user = create(:user)
+      sign_in user
+
+      click_link 'Change Password'
+
+      expect(page).to have_title full_title 'Password Reset Email Sent'
+    end
+
+    it 'sends password reset email to current user' do
+      user = create(:user)
+      sign_in user
+
+      click_link 'Change Password'
+
+      last_email = ActionMailer::Base.deliveries.last
+      expect(last_email.to).to eq [user.email]
+      expect(last_email.subject).to include 'password reset'
+    end
+  end
 end

@@ -65,8 +65,6 @@ describe 'ApplicationPages' do
         should have_selector 'title', text: full_title('Help')
         click_link 'Company'
         should have_title full_title(user.company.name)
-        click_link 'Edit User'
-        should have_selector 'title', text: full_title('Edit login')
         click_link 'Add User'
         should have_selector 'title', text: full_title('Add User')
         # click_link "About"

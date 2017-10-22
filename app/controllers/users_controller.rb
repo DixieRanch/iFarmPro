@@ -15,8 +15,6 @@
 #
 
 class UsersController < ApplicationController
-  before_action :correct_user,   only: [:edit, :update]
-
   def new
     @user = User.new
   end
@@ -32,25 +30,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @user.update_attributes(user_params)
-      flash[:success] = 'User login successfully update.'
-      sign_in @user
-      redirect_to company_path(@user.company)
-    else
-      render 'edit'
-    end
-  end
-
   private
-
-  def correct_user
-    @user = User.find(params[:id])
-    redirect_to(root_path) unless current_user?(@user)
-  end
 
   def user_params
     params.require(:user).permit(permitted_params)

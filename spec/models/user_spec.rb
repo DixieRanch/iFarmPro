@@ -80,6 +80,26 @@ describe User do
   end
 
   describe 'methods' do
+    describe '::new_token' do
+      it 'returns a random token' do
+        token = User.new_token
+        expect(token.class).to eq String
+        expect(token.length).to eq 22
+        another_token = User.new_token
+        expect(another_token).not_to eq token
+      end
+    end
+
+    describe '::digest' do
+      it 'returns hash digest of a given string' do
+        digest = User.digest('random string')
+        expect(digest.length).to eq 60
+        expect(digest.to_s[0..3]).to eq '$2a$'
+        another_digest = User.digest('random string')
+        expect(another_digest).not_to eq digest
+      end
+    end
+
     describe '.authenticated?' do
       it 'returns true if given token matches digest' do
         user.save
@@ -182,28 +202,6 @@ describe User do
             user.send_password_reset_email
           end.to change { user.password_reset_digest }
         end
-      end
-    end
-
-    describe '::new_token' do
-      # This private method gets tested for security assurance
-      it 'returns a random token' do
-        token = User.new_token
-        expect(token.class).to eq String
-        expect(token.length).to eq 22
-        another_token = User.new_token
-        expect(another_token).not_to eq token
-      end
-    end
-
-    describe '::digest' do
-      # This private method gets tested for security assurance
-      it 'returns hash digest of a given string' do
-        digest = User.digest('random string')
-        expect(digest.length).to eq 60
-        expect(digest.to_s[0..3]).to eq '$2a$'
-        another_digest = User.digest('random string')
-        expect(another_digest).not_to eq digest
       end
     end
   end

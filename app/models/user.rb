@@ -33,6 +33,20 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
 
+  # Returns random token
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  # Returns hash digest of a given string
+  def self.digest(string)
+    # establish cost
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    # create hash digest
+    BCrypt::Password.create(string, cost: cost)
+  end
+
   # Returns true if given token matches digest
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
@@ -59,20 +73,6 @@ class User < ActiveRecord::Base
   end
 
   private
-
-  # Returns random token
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
-
-  # Returns hash digest of a given string
-  def self.digest(string)
-    # establish cost
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    # create hash digest
-    BCrypt::Password.create(string, cost: cost)
-  end
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64

@@ -95,12 +95,13 @@ class WeatherStation < ActiveRecord::Base
     # Add 20 years of past et data for weatherstation
 
     n = 0
-    begin
+    while n < 20
       start_date = (n + 1).years.ago.to_date
       end_date   = n.years.ago.to_date.-1
       et_array = parse(fetch(start_date, end_date))
       store(et_array)
       n += 1
-    end while !et_array.empty? && (n < 20)
+      break if et_array.empty?
+    end
   end
 end

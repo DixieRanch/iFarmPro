@@ -47,14 +47,6 @@ RSpec.describe 'PasswordReset', type: :request do
     end
 
     context 'when user is not activated' do
-      # xit 'redirects to activation show page' do
-      #   visit new_password_reset_path
-      #   fill_in 'Email', with: user.email
-      #   user.update_attribute(:activated, false)
-      #   click_button 'Request password reset'
-      #   expect(page).to have_title full_title 'Activation Email Sent'
-      # end
-
       it 'sends reset email' do
         user = create(:user, activated: false)
         visit new_password_reset_path

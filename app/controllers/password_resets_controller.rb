@@ -13,8 +13,6 @@ class PasswordResetsController < ApplicationController
 
     if user.nil?
       redirect_to password_reset_path(params[:password_reset][:email])
-      # elsif !user.activated?
-      # redirect_to account_activation_path(user.email)
     else
       user.send_password_reset_email
       redirect_to password_reset_path(user.email)

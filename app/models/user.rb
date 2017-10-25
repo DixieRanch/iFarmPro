@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
 
   # Activates a user account
   def activate
-    if !self.activated?
+    unless activated
       update_columns(activated: true, activated_at: Time.zone.now)
     end
   end

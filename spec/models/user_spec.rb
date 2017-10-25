@@ -123,6 +123,13 @@ describe User do
         expect(user.activated).to be true
         expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
       end
+
+      it 'does not reactivate an activated user' do
+        user = create(:user)
+
+        expect(user.activate).to eq(nil)
+        expect(user.activated?).to eq(true)
+      end
     end
 
     describe '.send_activation_email' do

@@ -21,9 +21,7 @@ class PasswordResetsController < ApplicationController
 
   def edit
     @user = User.find_by(email: params[:email])
-    if !@user.activated? && @user.authenticated?(:password_reset, params[:id])
-      @user.activate
-    end
+    @user.activate if @user.authenticated?(:password_reset, params[:id])
   end
 
   def update

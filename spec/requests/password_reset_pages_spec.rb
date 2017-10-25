@@ -68,8 +68,8 @@ RSpec.describe 'PasswordReset', type: :request do
           open_email(user.email)
 
           current_email.click_link 'Reset Password'
-          user.reload
 
+          user.reload
           expect(user.activated?).to eq(true)
         end
       end
@@ -83,8 +83,8 @@ RSpec.describe 'PasswordReset', type: :request do
           click_button 'Request password reset'
 
           visit edit_password_reset_path(token, email: user.email)
-          user.reload
 
+          user.reload
           expect(user.activated?).to eq(false)
         end
       end

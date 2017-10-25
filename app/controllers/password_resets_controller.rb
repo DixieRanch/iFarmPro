@@ -13,8 +13,6 @@ class PasswordResetsController < ApplicationController
 
     if user.nil?
       redirect_to password_reset_path(params[:password_reset][:email])
-    elsif !user.activated?
-      redirect_to account_activation_path(user.email)
     else
       user.send_password_reset_email
       redirect_to password_reset_path(user.email)
@@ -23,10 +21,12 @@ class PasswordResetsController < ApplicationController
 
   def edit
     @user = User.find_by(email: params[:email])
+    @user.activate if @user.authenticated?(:password_reset, params[:id])
   end
 
   def update
     @user = User.find_by(email: params[:user][:email])
+
     if @user.nil? || !@user.authenticated?(:password_reset, params[:id])
       redirect_to password_reset_path(@user.email)
     elsif @user.password_reset_sent_at < 2.hours.ago

@@ -47,12 +47,46 @@ RSpec.describe 'PasswordReset', type: :request do
     end
 
     context 'when user is not activated' do
-      it 'redirects to activation show page' do
+      it 'sends reset email' do
+        user = create(:user, activated: false)
         visit new_password_reset_path
         fill_in 'Email', with: user.email
-        user.update_attribute(:activated, false)
+
         click_button 'Request password reset'
-        expect(page).to have_title full_title 'Activation Email Sent'
+
+        email = ActionMailer::Base.deliveries.last
+        expect(email.to).to eq([user.email])
+        expect(email.subject).to eq('iFarmPro password reset')
+      end
+
+      context 'with correct email and correct reset token' do
+        it 'activates user' do
+          user = create(:user, activated: false)
+          visit new_password_reset_path
+          fill_in 'Email', with: user.email
+          click_button 'Request password reset'
+          open_email(user.email)
+
+          current_email.click_link 'Reset Password'
+
+          user.reload
+          expect(user.activated?).to eq(true)
+        end
+      end
+
+      context 'correct email but wrong token' do
+        it 'does not activate user' do
+          user = create(:user, activated: false)
+          token = 'wrongtoken'
+          visit new_password_reset_path
+          fill_in 'Email', with: user.email
+          click_button 'Request password reset'
+
+          visit edit_password_reset_path(token, email: user.email)
+
+          user.reload
+          expect(user.activated?).to eq(false)
+        end
       end
     end
   end

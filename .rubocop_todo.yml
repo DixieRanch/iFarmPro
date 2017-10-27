@@ -115,8 +115,3 @@ Metrics/LineLength:
 # Offense count: 43
 Style/Documentation:
   Enabled: false
-
-# Offense count: 66
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 157

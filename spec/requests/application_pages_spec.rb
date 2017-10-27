@@ -80,81 +80,82 @@ describe 'ApplicationPages' do
   end
 
   describe 'New User signup' do
-    before do
-      create(:weather_station)
-      create(:soil_class)
-      click_link 'Sign up now!'
-      fill_in 'Company Name', with: 'New Company'
-      fill_in 'Email', with: 'user@example.com'
-      fill_in 'Password', with: 'password'
-      fill_in 'Confirmation', with: 'password'
-      click_button 'Create my account'
-      open_email('user@example.com')
-      # Can't click_link a url with js:true, extract email link and visit
-      # current_email.click_link 'Activate' <-- won't work with js: true
-      url = current_email.find_link('Activate')[:href]
-      visit "#{URI(url).path}?email=user%40example.com"
-    end
-
     it 'goes from initial setup to irrigation schedule', js: true, slow: true do
-      # Initial sign up
-      # puts page.body
+      sign_up_new_user
+
       expect(page).to have_title 'Add Farm'
+
       click_link 'iFarmPro'
+
       expect(page).to have_title full_title 'Add Farm'
 
-      # Sign in before creating First Farm
+      sign_out_then_sign_in
 
-      click_link 'Account'
-      click_link 'Sign out'
-      click_link 'Sign in'
-      fill_in 'Email', with: 'user@example.com'
-      fill_in 'Password', with: 'password'
-      click_button 'Sign in'
       expect(page).to have_title full_title 'Add Farm'
+
       fill_in 'Farm Name', with: 'First Farm'
       click_button 'Save'
       click_link 'iFarmPro'
+
       expect(page).to have_title full_title 'Edit First Farm'
 
-      # Sign in before creating First Field
+      build_first_farm
+      sign_out_then_sign_in
 
-      click_link 'Account'
-      click_link 'Sign out'
-      click_link 'Sign in'
-      fill_in 'Email', with: 'user@example.com'
-      fill_in 'Password', with: 'password'
-      click_button 'Sign in'
-      expect(page).to have_title full_title 'Edit First Farm'
-      click_link 'Add Block'
-      click_link 'Add Field'
-      fill_in 'Block', with: 1
-      fill_in 'Field', with: 1
-      click_button 'Save'
-      expect(page).to have_title full_title 'First Farm'
-      click_link 'iFarmPro'
-      expect(page).to have_title full_title 'Schedule'
-
-      # Sign in after completing setup
-
-      click_link 'Account'
-      click_link 'Sign out'
-      click_link 'Sign in'
-      fill_in 'Email', with: 'user@example.com'
-      fill_in 'Password', with: 'password'
-      click_button 'Sign in'
       expect(page).to have_title full_title 'Schedule'
     end
 
     it 'redirects to farm setup until complete' do
+      sign_up_new_user
+
       click_link 'Irrigations'
+
       expect(page).to have_title full_title 'Add Farm'
       expect(page).to have_css '.alert-info'
+
       fill_in 'Farm Name', with: 'First Farm'
       click_button 'Save'
+
       expect(page).to have_title full_title 'Edit First Farm'
+
       click_link 'Irrigations'
+
       expect(page).to have_title full_title 'Edit First Farm'
     end
   end
+end
+
+private
+
+def sign_up_new_user
+  create(:weather_station)
+  create(:soil_class)
+  click_link 'Sign up now!'
+  fill_in 'Company Name', with: 'New Company'
+  fill_in 'Email', with: 'user@example.com'
+  fill_in 'Password', with: 'password'
+  fill_in 'Confirmation', with: 'password'
+  click_button 'Create my account'
+  open_email('user@example.com')
+  # Can't click_link a url with js:true, extract email link and visit
+  # current_email.click_link 'Activate' <-- won't work with js: true
+  url = current_email.find_link('Activate')[:href]
+  visit "#{URI(url).path}?email=user%40example.com"
+end
+
+def sign_out_then_sign_in
+  click_link 'Account'
+  click_link 'Sign out'
+  click_link 'Sign in'
+  fill_in 'Email', with: 'user@example.com'
+  fill_in 'Password', with: 'password'
+  click_button 'Sign in'
+end
+
+def build_first_farm
+  click_link 'Add Block'
+  click_link 'Add Field'
+  fill_in 'Block', with: 1
+  fill_in 'Field', with: 1
+  click_button 'Save'
 end

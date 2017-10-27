@@ -24,3 +24,14 @@ Style/EmptyMethod:
   
 Style/NumericLiterals:
   MinDigits: 15
+  
+Metrics/BlockLength:
+  ExcludedMethods: 
+    - configure
+    - context
+    - define
+    - describe
+    - group
+    - guard
+    - namespace
+    

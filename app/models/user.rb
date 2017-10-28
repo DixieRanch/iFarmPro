@@ -56,9 +56,8 @@ class User < ActiveRecord::Base
 
   # Activates a user account
   def activate
-    unless activated
-      update_columns(activated: true, activated_at: Time.zone.now)
-    end
+    return if activated?
+    update_columns(activated: true, activated_at: Time.zone.now)
   end
 
   # Sends account activation email

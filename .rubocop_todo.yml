@@ -13,13 +13,6 @@ Style/ClassVars:
     - 'spec/support/share_db_connection.rb'
 
 # Offense count: 3
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'spec/support/deferred_garbage_collection.rb'
-
-# Offense count: 3
 Style/MultilineTernaryOperator:
   Exclude:
     - 'Guardfile'
@@ -115,8 +108,3 @@ Metrics/LineLength:
 # Offense count: 43
 Style/Documentation:
   Enabled: false
-
-# Offense count: 66
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/BlockLength:
-  Max: 157

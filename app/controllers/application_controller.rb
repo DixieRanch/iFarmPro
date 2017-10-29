@@ -23,10 +23,9 @@ class ApplicationController < ActionController::Base
   # -------- User Authentication Methods ----------
 
   def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_url, notice: 'Please sign in.'
-    end
+    return if signed_in?
+    store_location
+    redirect_to signin_url, notice: 'Please sign in.'
   end
 
   def sign_in(user)
@@ -86,17 +85,16 @@ class ApplicationController < ActionController::Base
   # --------- Farm Setup Methods ----------
 
   def farm_setup
-    if signed_in?
-      if Farm.all.empty?
-        flash[:info] = '<strong>Welcome to iFarmPro.</strong>
-                          Please setup your first farm.'
-        flash.keep
-        redirect_to new_farm_path
-      elsif Field.all.empty?
-        flash[:info] = '<strong>Welcome to iFarmPro.</strong>
-                          Please add a field to get started.'
-        redirect_to edit_farm_path(Farm.first)
-      end
+    return unless signed_in?
+    if Farm.all.empty?
+      flash[:info] = '<strong>Welcome to iFarmPro.</strong>
+                        Please setup your first farm.'
+      flash.keep
+      redirect_to new_farm_path
+    elsif Field.all.empty?
+      flash[:info] = '<strong>Welcome to iFarmPro.</strong>
+                        Please add a field to get started.'
+      redirect_to edit_farm_path(Farm.first)
     end
   end
 end

@@ -15,7 +15,7 @@
 
 class SoilApplicationsController < ApplicationController
   def index
-    get_soil_applications
+    @applications = soil_application_list
     @application = SoilApplication.new
   end
 
@@ -25,13 +25,13 @@ class SoilApplicationsController < ApplicationController
       flash[:success] = 'Soil Application successfully saved.'
       redirect_to soil_applications_path
     else
-      get_soil_applications
+      @applications = soil_application_list
       render :index
     end
   end
 
   def edit
-    get_soil_applications
+    @applications = soil_application_list
     @application = SoilApplication.find(params[:id])
     render :index
   end
@@ -43,17 +43,15 @@ class SoilApplicationsController < ApplicationController
       flash[:success] = 'Soil Application successfully updated.'
       redirect_to soil_applications_path
     else
-      get_soil_applications
+      @applications = soil_application_list
       render :index
     end
   end
 
   private
 
-  def get_soil_applications
-    @applications = SoilApplication.page(params[:page])
-                                   .per_page(30)
-                                   .order('date DESC')
+  def soil_application_list
+    SoilApplication.page(params[:page]).per_page(30).order('date DESC')
   end
 
   def soil_app_params

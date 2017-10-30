@@ -14,7 +14,7 @@
 class IrrigationsController < ApplicationController
   def index
     @irrigation = Irrigation.new
-    get_irrigations
+    @irrigations = irrigation_list
   end
 
   def create
@@ -23,14 +23,14 @@ class IrrigationsController < ApplicationController
     if @irrigation.save
       redirect_to irrigations_path
     else
-      get_irrigations
+      @irrigations = irrigation_list
       render :index
     end
   end
 
   def edit
     @irrigation = Irrigation.find(params[:id])
-    get_irrigations
+    @irrigations = irrigation_list
     render :index
   end
 
@@ -41,15 +41,15 @@ class IrrigationsController < ApplicationController
       flash[:success] = 'Irrigation successfully updated.'
       redirect_to irrigations_path
     else
-      get_irrigations
+      @irrigations = irrigation_list
       render :index
     end
   end
 
   private
 
-  def get_irrigations
-    @irrigations = Irrigation.page(params[:page]).order('time DESC')
+  def irrigation_list
+    Irrigation.page(params[:page]).order('time DESC')
   end
 
   def irrigation_params

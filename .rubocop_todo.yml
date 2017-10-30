@@ -6,30 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-Style/ClassVars:
-  Exclude:
-    - 'spec/support/deferred_garbage_collection.rb'
-    - 'spec/support/share_db_connection.rb'
-
-# Offense count: 3
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'Guardfile'
-    - 'app/models/user.rb'
-
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 20
-
-# Offense count: 4
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/irrigations_controller.rb'
-    - 'app/controllers/password_resets_controller.rb'
-    - 'app/controllers/rains_controller.rb'
-    - 'app/controllers/soil_applications_controller.rb'
 
 # Offense count: 5
 Lint/AmbiguousRegexpLiteral:

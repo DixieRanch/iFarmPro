@@ -1,7 +1,7 @@
 module ActiveRecord
   class Base
     mattr_accessor :shared_connection
-    @@shared_connection = nil
+    @@shared_connection = nil # rubocop:disable Style/ClassVars
 
     def self.connection
       @@shared_connection || retrieve_connection

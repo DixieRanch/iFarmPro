@@ -13,12 +13,12 @@
 
 class RainsController < ApplicationController
   def index
-    get_rains
+    @rains = rain_list
     @rain = Rain.new
   end
 
   def edit
-    get_rains
+    @rains = rain_list
     @rain = Rain.find(params[:id])
   end
 
@@ -29,7 +29,7 @@ class RainsController < ApplicationController
     if @rain.save
       redirect_to rains_path
     else
-      get_rains
+      @rains = rain_list
     end
   end
 
@@ -38,15 +38,14 @@ class RainsController < ApplicationController
     if @rain.update(rain_params)
       redirect_to rains_path
     else
-      get_rains
+      @rains = rain_list
     end
   end
 
   private
 
-  # TODO: write a controller test for this?
-  def get_rains
-    @rains = Rain.page(params[:page]).per_page(30).order('date desc')
+  def rain_list
+    Rain.page(params[:page]).per_page(30).order('date desc')
   end
 
   def rain_params

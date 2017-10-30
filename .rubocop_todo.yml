@@ -11,14 +11,6 @@
 Metrics/MethodLength:
   Max: 20
 
-# Offense count: 4
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/irrigations_controller.rb'
-    - 'app/controllers/password_resets_controller.rb'
-    - 'app/controllers/rains_controller.rb'
-    - 'app/controllers/soil_applications_controller.rb'
-
 # Offense count: 5
 Lint/AmbiguousRegexpLiteral:
   Exclude:

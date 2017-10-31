@@ -62,7 +62,7 @@ describe Rain do
   end
 
   describe 'validation' do
-    it { should validate_presence_of(:date).with_message /must be a date/ }
+    it { should validate_presence_of(:date).with_message(/must be a date/) }
     it { should validate_uniqueness_of(:date).scoped_to :farm_id }
     it { should validate_presence_of :amount }
     it { should validate_numericality_of :amount }

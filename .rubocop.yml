@@ -16,6 +16,9 @@ AllCops:
 Rails:
   Enabled: true
   
+Style/Documentation:
+  Enabled: false
+  
 Style/SymbolArray:
   EnforcedStyle: brackets
   

@@ -43,7 +43,3 @@ Rails/HasManyOrHasOneDependent:
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 114
-
-# Offense count: 43
-Style/Documentation:
-  Enabled: false

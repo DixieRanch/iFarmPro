@@ -78,7 +78,7 @@ describe 'SoilApplication' do
 
       it 'displays the new record with success' do
         expect(page).to have_selector 'td', text: '1-1'
-        year = Time.now.year
+        year = Time.zone.now.year
         expect(page).to have_selector 'td', text: "April 1, #{year}"
         expect(page).to have_css '.alert-success'
       end
@@ -106,7 +106,7 @@ describe 'SoilApplication' do
         fill_in 'Date', with: '1/4'
         select('This-One', from: 'soil_application_field_id')
         click_button 'Save'
-        year = Time.now.year
+        year = Time.zone.now.year
         expect(page).to have_selector 'td', text: "January 4, #{year}"
         expect(page).to have_css '.alert-success'
       end

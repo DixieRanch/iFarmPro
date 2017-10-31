@@ -56,7 +56,7 @@ FactoryGirl.define do
   end
 
   factory :irrigation do
-    time Time.now
+    time Time.zone.now
     field
   end
 

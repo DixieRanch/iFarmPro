@@ -73,7 +73,7 @@ describe SoilApplication do
 
       it 'returns date formatted as date' do
         application.date = '1/8'
-        year = Time.now.year
+        year = Time.zone.now.year
         expect(application.formatted_date).to eq "January 8, #{year}"
       end
     end

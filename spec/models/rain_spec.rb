@@ -52,7 +52,7 @@ describe Rain do
 
     it 'formatted date' do
       rain.date = '4/1'
-      current_year = Time.new.year
+      current_year = Time.zone.now.year
       expect(rain.formatted_date).to eq "April 1, #{current_year}"
     end
 

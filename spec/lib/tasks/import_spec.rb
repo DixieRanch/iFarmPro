@@ -34,8 +34,8 @@ describe 'app lib tasks import.rake', :slow do
 
   context 'post weather url' do
     let(:data_page) do
-      end_date = Time.now.to_date.strftime('%F')
-      start_date = (Time.now - 180.days).strftime('%F')
+      end_date = Time.zone.now.to_date.strftime('%F')
+      start_date = (Time.zone.now - 180.days).strftime('%F')
       weather_page.forms[0]['start_date'] = start_date
       weather_page.forms[0]['end_date'] = end_date
       weather_page.forms[0].submit

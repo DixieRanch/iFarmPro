@@ -36,7 +36,9 @@ class Irrigation < ActiveRecord::Base
         if field.irrigations.last
           field.irrigations.order('time').last
         else
-          field.irrigations.new(time: Time.new(Time.zone.now.year) - 184.days)
+          field.irrigations.new(
+            time: Time.zone.local(Time.zone.now.year) - 184.days
+          )
         end
       end
     et ||= Et.order('doy')

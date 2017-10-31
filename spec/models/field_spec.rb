@@ -114,7 +114,7 @@ describe Field do
 
       it 'handles nil values for nutrients' do
         app = create(:soil_application, soil_product: create(:soil_product, n: nil))
-        expect(app.field.get_yearly_amount_of(:n, Time.now.year)).to eq 0
+        expect(app.field.get_yearly_amount_of(:n, Time.zone.now.year)).to eq 0
       end
     end
   end

@@ -32,7 +32,7 @@ FactoryGirl.define do
   end
 
   factory :rain do
-    date Date.today
+    date Time.zone.today
     amount 0.75
     farm
   end
@@ -76,7 +76,7 @@ FactoryGirl.define do
   end
 
   factory :soil_application do
-    date Date.today
+    date Time.zone.today
     quantity 175
     field
     soil_product
@@ -84,7 +84,7 @@ FactoryGirl.define do
   end
 
   factory :daily_et do
-    date Date.today
+    date Time.zone.today
     eth  0.27
     weather_station
   end

@@ -161,8 +161,8 @@ describe 'app lib tasks import.rake', :slow do
 
   it 'updates CurrentEt with Rake task' do
     et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
-    et_today = CurrentEt.find_by(doy: Date.today.yday)
-    et_next_week = CurrentEt.find_by(doy: Date.today.yday)
+    et_today = CurrentEt.find_by(doy: Time.zone.today.yday)
+    et_next_week = CurrentEt.find_by(doy: Time.zone.today.yday)
     et_last_week.update_attribute(:fabian_garcia, nil)
     et_today.update_attribute(:fabian_garcia, 0.15)
     et_next_week.update_attribute(:fabian_garcia, 0.20)

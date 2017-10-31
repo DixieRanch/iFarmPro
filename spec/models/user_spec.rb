@@ -186,9 +186,9 @@ describe User do
         expect do
           user.send_password_reset_email
           user.reload
-        end.to change { user.password_reset_token }
-          .and change { user.password_reset_digest }
-          .and change { user.password_reset_sent_at }
+        end.to((change { user.password_reset_token })
+           .and(change { user.password_reset_digest })
+           .and(change { user.password_reset_sent_at }))
       end
 
       it 'creates a token that encrypts to digest' do
@@ -207,7 +207,7 @@ describe User do
 
           expect do
             user.send_password_reset_email
-          end.to change { user.password_reset_digest }
+          end.to(change { user.password_reset_digest })
         end
       end
     end

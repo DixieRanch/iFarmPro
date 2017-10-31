@@ -69,7 +69,7 @@ describe 'Authentication' do
         it "doesn't send email" do
           expect do
             click_button 'Sign in'
-          end.not_to change { ActionMailer::Base.deliveries.count }
+          end.not_to(change { ActionMailer::Base.deliveries.count })
         end
       end
     end

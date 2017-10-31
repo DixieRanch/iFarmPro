@@ -12,14 +12,6 @@ Metrics/MethodLength:
   Max: 20
 
 # Offense count: 9
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'spec/models/user_spec.rb'
-    - 'spec/requests/account_activation_pages_spec.rb'
-    - 'spec/requests/password_reset_pages_spec.rb'
-    - 'spec/requests/sessions_spec.rb'
-
-# Offense count: 9
 Metrics/AbcSize:
   Max: 35
 

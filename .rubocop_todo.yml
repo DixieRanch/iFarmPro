@@ -11,30 +11,6 @@
 Metrics/MethodLength:
   Max: 20
 
-# Offense count: 5
-Lint/AmbiguousRegexpLiteral:
-  Exclude:
-    - 'spec/helpers/application_helper_spec.rb'
-    - 'spec/models/rain_spec.rb'
-    - 'spec/models/soil_application_spec.rb'
-
-# Offense count: 7
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: strict, flexible
-Rails/Date:
-  Exclude:
-    - 'spec/factories.rb'
-    - 'spec/lib/tasks/import_spec.rb'
-    - 'spec/models/field_spec.rb'
-
-# Offense count: 9
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'spec/models/user_spec.rb'
-    - 'spec/requests/account_activation_pages_spec.rb'
-    - 'spec/requests/password_reset_pages_spec.rb'
-    - 'spec/requests/sessions_spec.rb'
-
 # Offense count: 9
 Metrics/AbcSize:
   Max: 35
@@ -62,29 +38,8 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/weather_station.rb'
     - 'app/models/website.rb'
 
-# Offense count: 16
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'app/controllers/reports_controller.rb'
-    - 'app/models/irrigation.rb'
-    - 'lib/tasks/update_et.rb'
-    - 'spec/factories.rb'
-    - 'spec/lib/tasks/import_spec.rb'
-    - 'spec/models/field_spec.rb'
-    - 'spec/models/rain_spec.rb'
-    - 'spec/models/soil_application_spec.rb'
-    - 'spec/requests/irrigation_pages_spec.rb'
-    - 'spec/requests/soil_applications_spec.rb'
-    - 'spec/support/deferred_garbage_collection.rb'
-
 # Offense count: 38
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 114
-
-# Offense count: 43
-Style/Documentation:
-  Enabled: false

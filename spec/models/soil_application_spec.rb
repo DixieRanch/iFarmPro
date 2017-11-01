@@ -60,7 +60,7 @@ describe SoilApplication do
   describe 'validations' do
     it { should validate_presence_of :soil_product_id }
     it { should validate_numericality_of :quantity }
-    it { should validate_presence_of(:date).with_message /must be a date/ }
+    it { should validate_presence_of(:date).with_message(/must be a date/) }
     it { should validate_presence_of :soil_application_unit_id }
   end
 
@@ -73,7 +73,7 @@ describe SoilApplication do
 
       it 'returns date formatted as date' do
         application.date = '1/8'
-        year = Time.now.year
+        year = Time.zone.now.year
         expect(application.formatted_date).to eq "January 8, #{year}"
       end
     end

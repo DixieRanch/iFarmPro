@@ -100,8 +100,8 @@ describe Field do
                  soil_product: soil_product, quantity: 100, field: field)
         end
         # Previous years application - should not be included
-        create(:soil_application, date: Date.today - 1.year, field: field)
-        year = Date.today.year
+        create(:soil_application, date: Time.zone.today - 1.year, field: field)
+        year = Time.zone.today.year
         # n = 200 gal * 11 lb/gal * 16% N / 5 acres -> 70.4
         expect(field.get_yearly_amount_of(:n, year)).to eq 70.4
         # p = 200 gal * 11 lb/gal * 8% P / 5 acres -> 35.2
@@ -114,7 +114,7 @@ describe Field do
 
       it 'handles nil values for nutrients' do
         app = create(:soil_application, soil_product: create(:soil_product, n: nil))
-        expect(app.field.get_yearly_amount_of(:n, Time.now.year)).to eq 0
+        expect(app.field.get_yearly_amount_of(:n, Time.zone.now.year)).to eq 0
       end
     end
   end

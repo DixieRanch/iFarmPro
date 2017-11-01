@@ -80,7 +80,7 @@ describe 'Irrigation' do
 
         it 'displays record using american_date' do
           expect(page).to have_selector 'td', text: '1-1'
-          year = Time.now.year
+          year = Time.zone.now.year
           expect(page).to have_selector 'td', text: "April 1, #{year} 14:50"
         end
       end

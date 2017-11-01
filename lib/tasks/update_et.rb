@@ -53,8 +53,8 @@ module Tasks
     end
 
     def fetch_parse_update_pad_table
-      end_date =   (Time.now - 1.day).strftime('%F')
-      start_date = (Time.now - 180.days).strftime('%F')
+      end_date =   (Time.zone.now - 1.day).strftime('%F')
+      start_date = (Time.zone.now - 180.days).strftime('%F')
       WeatherStation.all.each do |weather_station|
         page = fetch(weather_station.id_code, start_date, end_date)
         array = parse(page)

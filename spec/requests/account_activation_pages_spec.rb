@@ -125,7 +125,7 @@ describe 'AccountActivations' do
           fill_in 'Email', with: 'not_a_user@hackers.com'
           expect do
             click_button 'Request Email'
-          end.not_to change { ActionMailer::Base.deliveries.count }
+          end.not_to(change { ActionMailer::Base.deliveries.count })
           expect(page).to have_selector 'h1', text: 'confirmation'
           expect(page).to have_css('div.alert.alert-success', text: 'Activation')
         end

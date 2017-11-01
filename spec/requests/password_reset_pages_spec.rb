@@ -100,7 +100,7 @@ RSpec.describe 'PasswordReset', type: :request do
     it 'does not send email' do
       expect do
         click_button 'Request password reset'
-      end.not_to change { ActionMailer::Base.deliveries.count }
+      end.not_to(change { ActionMailer::Base.deliveries.count })
     end
 
     it 'redirects to email sent page' do
@@ -147,7 +147,7 @@ RSpec.describe 'PasswordReset', type: :request do
         expect do
           click_button 'Reset Your Password'
           user.reload
-        end.not_to change { user.password_digest }
+        end.not_to(change { user.password_digest })
       end
     end
 
@@ -156,7 +156,7 @@ RSpec.describe 'PasswordReset', type: :request do
         expect do
           click_button 'Reset Your Password'
           user.reload
-        end.not_to change { user.password_digest }
+        end.not_to(change { user.password_digest })
       end
 
       it 'redirects to password reset form' do
@@ -172,7 +172,7 @@ RSpec.describe 'PasswordReset', type: :request do
         expect do
           click_button 'Reset Your Password'
           user.reload
-        end.to change { user.password_digest }
+        end.to(change { user.password_digest })
       end
 
       it 'signs in user after reset' do
@@ -211,7 +211,7 @@ RSpec.describe 'PasswordReset', type: :request do
       expect do
         click_button 'Reset Your Password'
         user.reload
-      end.not_to change { user.password_digest }
+      end.not_to(change { user.password_digest })
     end
   end
 end

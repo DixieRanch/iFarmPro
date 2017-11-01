@@ -34,8 +34,8 @@ describe 'app lib tasks import.rake', :slow do
 
   context 'post weather url' do
     let(:data_page) do
-      end_date = Time.now.to_date.strftime('%F')
-      start_date = (Time.now - 180.days).strftime('%F')
+      end_date = Time.zone.now.to_date.strftime('%F')
+      start_date = (Time.zone.now - 180.days).strftime('%F')
       weather_page.forms[0]['start_date'] = start_date
       weather_page.forms[0]['end_date'] = end_date
       weather_page.forms[0].submit
@@ -161,8 +161,8 @@ describe 'app lib tasks import.rake', :slow do
 
   it 'updates CurrentEt with Rake task' do
     et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
-    et_today = CurrentEt.find_by(doy: Date.today.yday)
-    et_next_week = CurrentEt.find_by(doy: Date.today.yday)
+    et_today = CurrentEt.find_by(doy: Time.zone.today.yday)
+    et_next_week = CurrentEt.find_by(doy: Time.zone.today.yday)
     et_last_week.update_attribute(:fabian_garcia, nil)
     et_today.update_attribute(:fabian_garcia, 0.15)
     et_next_week.update_attribute(:fabian_garcia, 0.20)

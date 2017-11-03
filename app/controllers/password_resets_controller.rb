@@ -16,7 +16,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(email: params[:email])
+    @user = User.find_by(email: params[:email]) || NullUser.new
     @user.activate if @user.authenticated?(:password_reset, params[:id])
 
     if @user.password_reset_sent_at < 2.hours.ago

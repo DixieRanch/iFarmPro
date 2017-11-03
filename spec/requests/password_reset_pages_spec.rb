@@ -243,5 +243,13 @@ RSpec.describe 'PasswordReset', type: :request do
         expect(page).to have_title full_title('Request Password Reset')
       end
     end
+    
+    context 'with email without associated user' do
+      it 'renders the expired flash message' do
+        visit edit_password_reset_path('token', email: 'Hacker@badguys.net')
+        
+        expect(page).to have_css('div.alert.alert-danger', text: 'Expired')
+      end
+    end
   end
 end

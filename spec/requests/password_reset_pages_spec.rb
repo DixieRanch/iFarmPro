@@ -214,4 +214,21 @@ RSpec.describe 'PasswordReset', type: :request do
       end.not_to(change { user.password_digest })
     end
   end
+
+  describe '#edit' do
+    context 'with expired timestamp' do
+      it 'renders a flash message' do
+        user = create(:user)
+        visit new_password_reset_path
+        fill_in 'Email', with: user.email
+        click_button 'Request password reset'
+        user.update_attribute(:password_reset_sent_at, 3.hours.ago)
+        open_email(user.email)
+
+        current_email.click_link 'Reset Password'
+
+        expect(page).to have_css('div.alert.alert-danger', text: 'Expired')
+      end
+    end
+  end
 end

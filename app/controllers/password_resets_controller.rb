@@ -21,6 +21,7 @@ class PasswordResetsController < ApplicationController
 
     if @user.password_reset_sent_at < 2.hours.ago
       flash[:danger] = 'Expired Password Reset link!  Request a new one.'
+      redirect_to new_password_reset_path
     end
   end
 

@@ -229,6 +229,19 @@ RSpec.describe 'PasswordReset', type: :request do
 
         expect(page).to have_css('div.alert.alert-danger', text: 'Expired')
       end
+
+      it 'redirects to email request page' do
+        user = create(:user)
+        visit new_password_reset_path
+        fill_in 'Email', with: user.email
+        click_button 'Request password reset'
+        user.update_attribute(:password_reset_sent_at, 3.hours.ago)
+        open_email(user.email)
+
+        current_email.click_link 'Reset Password'
+
+        expect(page).to have_title full_title('Request Password Reset')
+      end
     end
   end
 end

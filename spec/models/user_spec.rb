@@ -230,4 +230,17 @@ describe User do
       end
     end
   end
+
+  describe '#find_by_email' do
+    context 'with existing user' do
+      it 'returns the user' do
+        user = create(:user)
+        email = user.email.upcase
+
+        found_user = User.with_email(email)
+
+        expect(found_user).to eq user
+      end
+    end
+  end
 end

@@ -51,6 +51,10 @@ class User < ActiveRecord::Base
     BCrypt::Password.create(string, cost: cost)
   end
 
+  def self.with_email(email)
+    where('lower(email) = ?', email.downcase).first
+  end
+
   # Returns true if given token matches digest
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")

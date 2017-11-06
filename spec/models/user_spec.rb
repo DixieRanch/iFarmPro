@@ -242,5 +242,13 @@ describe User do
         expect(found_user).to eq user
       end
     end
+
+    context 'without exisiting user' do
+      it 'returns the NullUser' do
+        found_user = User.with_email('NoUser@example.com')
+
+        expect(found_user).to be_a(NullUser)
+      end
+    end
   end
 end

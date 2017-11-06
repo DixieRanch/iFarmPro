@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def self.with_email(email)
-    where('lower(email) = ?', email.downcase).first
+    where('lower(email) = ?', email.downcase).first || NullUser.new
   end
 
   # Returns true if given token matches digest

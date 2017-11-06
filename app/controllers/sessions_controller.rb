@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.with_email(params[:session][:email])
-    if user && user.authenticated?(:password, params[:session][:password])
+    if user.authenticated?(:password, params[:session][:password])
       sign_in user
       redirect_back_or root_path if user.activated?
     else

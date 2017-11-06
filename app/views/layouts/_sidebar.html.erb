@@ -1,15 +1,21 @@
 <h4><%= current_farm.name if current_farm %></h4>
 <ul class="list-group">
     <%= link_to 'Farms', farms_path, class: "list-group-item" %>
-    <li class="nav-header list-group-item">Water</li>
+    <li class="nav-header list-group-item"></li>
+    
+    <li class="nav-header list-group-item"><b>Water</b></li>
     <%= link_to 'Irrigations', irrigations_path, class: "list-group-item" %>
     <%= link_to 'Rains', rains_path, class: "list-group-item" %>
-    <li class="nav-header list-group-item">Nutrition / Pests</li>
+    <li class="nav-header list-group-item"></li>
+    
+    <li class="nav-header list-group-item"><b>Nutrition / Pests</b></li>
     <%= link_to 'Soil Products', soil_products_path, class: "list-group-item" %>
     <%= link_to 'Soil Applications', 
                 soil_applications_path, 
                 class: "list-group-item" %>
-    <li class="nav-header list-group-item">Reports</li>
+    <li class="nav-header list-group-item"></li>
+    
+    <li class="nav-header list-group-item"><b>Reports</b></li>
     <%= link_to 'Schedule', 
                 report_path(:next_irrigations), 
                 class: "list-group-item" %>

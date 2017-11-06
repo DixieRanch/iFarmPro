@@ -6,8 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    email = params[:session][:email].downcase
-    user = User.where('lower(email) = ?', email).first
+    user = User.with_email(params[:session][:email])
     if user && user.authenticate(params[:session][:password])
       sign_in user
       redirect_back_or root_path if user.activated?

@@ -15,7 +15,7 @@ class AccountActivationsController < ApplicationController
   end
 
   def edit
-    user = User.where('lower(email) = ?', params[:email].downcase).first || NullUser.new
+    user = User.with_email(params[:email]) || NullUser.new
     if user.authenticated?(:activation, params[:id])
       user.activate
       sign_in(user)

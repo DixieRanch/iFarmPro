@@ -51,6 +51,10 @@ class User < ActiveRecord::Base
     BCrypt::Password.create(string, cost: cost)
   end
 
+  def self.with_email(email)
+    where('lower(email) = ?', email.downcase).first || NullUser.new
+  end
+
   # Returns true if given token matches digest
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
@@ -75,6 +79,10 @@ class User < ActiveRecord::Base
   def send_password_reset_email
     create_password_reset_digest
     UserMailer.password_reset(self).deliver_now
+  end
+
+  def password_reset_expired?
+    password_reset_sent_at < 2.hours.ago
   end
 
   private

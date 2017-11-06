@@ -6,17 +6,16 @@ class AccountActivationsController < ApplicationController
   end
 
   def create
-    email = params[:account_activation][:email]
-    user = User.find_by(email: email)
-    user.send_activation_email if user
+    user = User.with_email(params[:account_activation][:email])
+    user.send_activation_email
     flash[:success] = "Activation email sucessfully sent.  Please check your
                        email for the link to activate your account."
-    redirect_to account_activation_path(email)
+    redirect_to account_activation_path(params[:account_activation][:email])
   end
 
   def edit
-    user = User.where('lower(email) = ?', params[:email].downcase).first
-    if user && user.authenticated?(:activation, params[:id])
+    user = User.with_email(params[:email])
+    if user.authenticated?(:activation, params[:id])
       user.activate
       sign_in(user)
       flash[:success] = 'Account Activated!'

@@ -79,136 +79,175 @@ describe User do
     end
   end
 
-  describe 'methods' do
-    describe '::new_token' do
-      it 'returns a random token' do
-        token = User.new_token
-        expect(token.class).to eq String
-        expect(token.length).to eq 22
-        another_token = User.new_token
-        expect(another_token).not_to eq token
-      end
+  # Methods
+
+  describe '::new_token' do
+    it 'returns a random token' do
+      token = User.new_token
+      expect(token.class).to eq String
+      expect(token.length).to eq 22
+      another_token = User.new_token
+      expect(another_token).not_to eq token
+    end
+  end
+
+  describe '::digest' do
+    it 'returns hash digest of a given string' do
+      digest = User.digest('random string')
+      expect(digest.length).to eq 60
+      expect(digest.to_s[0..3]).to eq '$2a$'
+      another_digest = User.digest('random string')
+      expect(another_digest).not_to eq digest
+    end
+  end
+
+  describe '.authenticated?' do
+    it 'returns true if given token matches digest' do
+      user.save
+      token = user.activation_token
+      # .authenticated? takes 2 arguments: digest root name, matching token
+      expect(user.authenticated?('activation', token)).to be true
+      expect(user.authenticated?('activation', 'wrong token')).to be false
+      user.activation_digest = nil
+      expect(user.authenticated?('activation', token)).to be false
+    end
+  end
+
+  describe '.activate' do
+    it 'activates a user account' do
+      user.save
+      user = User.last # Dumps non-persistent attributes
+      expect(user.activated).to be false
+      expect(user.activated_at).to be nil
+      user.activate
+      user.reload # Ensure database is updated
+      expect(user.activated).to be true
+      expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
     end
 
-    describe '::digest' do
-      it 'returns hash digest of a given string' do
-        digest = User.digest('random string')
-        expect(digest.length).to eq 60
-        expect(digest.to_s[0..3]).to eq '$2a$'
-        another_digest = User.digest('random string')
-        expect(another_digest).not_to eq digest
-      end
+    it 'does not reactivate an activated user' do
+      user = create(:user)
+
+      expect(user.activate).to eq(nil)
+      expect(user.activated?).to eq(true)
     end
+  end
 
-    describe '.authenticated?' do
-      it 'returns true if given token matches digest' do
-        user.save
-        token = user.activation_token
-        # .authenticated? takes 2 arguments: digest root name, matching token
-        expect(user.authenticated?('activation', token)).to be true
-        expect(user.authenticated?('activation', 'wrong token')).to be false
-        user.activation_digest = nil
-        expect(user.authenticated?('activation', token)).to be false
-      end
-    end
-
-    describe '.activate' do
-      it 'activates a user account' do
-        user.save
-        user = User.last # Dumps non-persistent attributes
-        expect(user.activated).to be false
-        expect(user.activated_at).to be nil
-        user.activate
-        user.reload # Ensure database is updated
-        expect(user.activated).to be true
-        expect(user.activated_at.class).to be ActiveSupport::TimeWithZone
-      end
-
-      it 'does not reactivate an activated user' do
-        user = create(:user)
-
-        expect(user.activate).to eq(nil)
-        expect(user.activated?).to eq(true)
-      end
-    end
-
-    describe '.send_activation_email' do
-      it 'sends account activation email when user is created' do
-        expect(user.activation_token).to be nil
-        expect(user.activation_digest).to be nil
-        expect do
-          user.send_activation_email
-        end.to change { ActionMailer::Base.deliveries.count }.by(1)
-        expect(user.activation_token).not_to be_blank
-        expect(user.activation_digest).not_to be_blank
-        digest = BCrypt::Password.new(user.activation_digest)
-        expect(digest.is_password?(user.activation_token)).to be true
-      end
-
-      it 'updates activation_digest when resending activation email' do
-        user.save
-        old_digest = user.activation_digest
+  describe '.send_activation_email' do
+    it 'sends account activation email when user is created' do
+      expect(user.activation_token).to be nil
+      expect(user.activation_digest).to be nil
+      expect do
         user.send_activation_email
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect(user.activation_token).not_to be_blank
+      expect(user.activation_digest).not_to be_blank
+      digest = BCrypt::Password.new(user.activation_digest)
+      expect(digest.is_password?(user.activation_token)).to be true
+    end
+
+    it 'updates activation_digest when resending activation email' do
+      user.save
+      old_digest = user.activation_digest
+      user.send_activation_email
+      user.reload
+      new_digest = user.activation_digest
+      expect(new_digest).not_to eq old_digest
+    end
+
+    it "doesn't save the user if it hasn't been created yet" do
+      user.send_activation_email
+      expect(user.new_record?).to be true
+    end
+  end
+
+  describe 'create_remember_token' do
+    before { user.save }
+    it 'creates remember remember' do
+      expect(user.remember_token).not_to be_blank
+    end
+  end
+
+  describe '#send_password_reset_email' do
+    it 'sends password_reset message to UserMailer' do
+      # Create a double for email, then verify the the correct messages are
+      # sent to the UserMailer.
+      user.save
+      email = double('UserMailer.password_reset')
+
+      expect(UserMailer).to receive(:password_reset).with(user) { email }
+      expect(email).to receive(:deliver_now)
+
+      user.send_password_reset_email
+    end
+
+    it 'persists password reset data' do
+      user.save
+
+      expect do
+        user.send_password_reset_email
         user.reload
-        new_digest = user.activation_digest
-        expect(new_digest).not_to eq old_digest
-      end
-
-      it "doesn't save the user if it hasn't been created yet" do
-        user.send_activation_email
-        expect(user.new_record?).to be true
-      end
+      end.to((change { user.password_reset_token })
+         .and(change { user.password_reset_digest })
+         .and(change { user.password_reset_sent_at }))
     end
 
-    describe 'create_remember_token' do
-      before { user.save }
-      it 'creates remember remember' do
-        expect(user.remember_token).not_to be_blank
-      end
+    it 'creates a token that encrypts to digest' do
+      user.save
+
+      user.send_password_reset_email
+
+      digest = BCrypt::Password.new(user.password_reset_digest)
+      expect(digest.is_password?(user.password_reset_token)).to be true
     end
 
-    describe '#send_password_reset_email' do
-      it 'sends password_reset message to UserMailer' do
-        # Create a double for email, then verify the the correct messages are
-        # sent to the UserMailer.
+    context 'when requesting new password reset' do
+      it 'updates password_reset data' do
         user.save
-        email = double('UserMailer.password_reset')
-
-        expect(UserMailer).to receive(:password_reset).with(user) { email }
-        expect(email).to receive(:deliver_now)
-
         user.send_password_reset_email
-      end
-
-      it 'persists password reset data' do
-        user.save
 
         expect do
           user.send_password_reset_email
-          user.reload
-        end.to((change { user.password_reset_token })
-           .and(change { user.password_reset_digest })
-           .and(change { user.password_reset_sent_at }))
+        end.to(change { user.password_reset_digest })
       end
+    end
+  end
 
-      it 'creates a token that encrypts to digest' do
-        user.save
+  describe '#password_reset_expired?' do
+    context 'with expired password_reset_token' do
+      it 'is true' do
+        user = User.new(password_reset_sent_at: 121.minutes.ago)
 
-        user.send_password_reset_email
-
-        digest = BCrypt::Password.new(user.password_reset_digest)
-        expect(digest.is_password?(user.password_reset_token)).to be true
+        expect(user.password_reset_expired?).to be true
       end
+    end
 
-      context 'when requesting new password reset' do
-        it 'updates password_reset data' do
-          user.save
-          user.send_password_reset_email
+    context 'with unexpired password_reset_token' do
+      it 'is false' do
+        user = User.new(password_reset_sent_at: 119.minutes.ago)
 
-          expect do
-            user.send_password_reset_email
-          end.to(change { user.password_reset_digest })
-        end
+        expect(user.password_reset_expired?).to be false
+      end
+    end
+  end
+
+  describe '#find_by_email' do
+    context 'with existing user' do
+      it 'returns the user' do
+        user = create(:user)
+        email = user.email.upcase
+
+        found_user = User.with_email(email)
+
+        expect(found_user).to eq user
+      end
+    end
+
+    context 'without exisiting user' do
+      it 'returns the NullUser' do
+        found_user = User.with_email('NoUser@example.com')
+
+        expect(found_user).to be_a(NullUser)
       end
     end
   end

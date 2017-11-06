@@ -16,6 +16,12 @@ AllCops:
 Rails:
   Enabled: true
   
+Rails/FindBy:
+  Include:
+    - 'app/**/*'
+  Exclude:
+    - 'app/models/user.rb'
+  
 Style/Documentation:
   Enabled: false
   

@@ -1,0 +1,13 @@
+require 'rails_helper'
+
+describe NullUser do
+  describe '#password_reset_sent_at' do
+    it 'returns datetime midnight 1/1/1900' do
+      user = NullUser.new
+
+      time = user.password_reset_sent_at
+
+      expect(time).to be < 2.hours.ago
+    end
+  end
+end

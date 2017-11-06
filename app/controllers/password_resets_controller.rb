@@ -9,27 +9,27 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:password_reset][:email])
+    user = User.with_email(params[:password_reset][:email])
 
-    if user.nil?
-      redirect_to password_reset_path(params[:password_reset][:email])
-    else
-      user.send_password_reset_email
-      redirect_to password_reset_path(user.email)
-    end
+    user.send_password_reset_email
+    redirect_to password_reset_path(params[:password_reset][:email])
   end
 
   def edit
-    @user = User.find_by(email: params[:email])
+    @user = User.with_email(params[:email])
     @user.activate if @user.authenticated?(:password_reset, params[:id])
+
+    return unless @user.password_reset_expired?
+    flash[:danger] = 'Expired Password Reset link!  Request a new one.'
+    redirect_to new_password_reset_path
   end
 
   def update
-    @user = User.find_by(email: params[:user][:email])
+    @user = User.with_email(params[:user][:email])
 
-    if @user.nil? || !@user.authenticated?(:password_reset, params[:id])
+    if !@user.authenticated?(:password_reset, params[:id])
       redirect_to password_reset_path(@user.email)
-    elsif @user.password_reset_sent_at < 2.hours.ago
+    elsif @user.password_reset_expired?
       flash[:danger] = 'Expired Password Reset!  Request a new one.'
       redirect_to new_password_reset_path
     elsif @user.update(user_params)

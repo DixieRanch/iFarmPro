@@ -8,4 +8,8 @@ class NullUser
   def password_reset_sent_at
     Time.zone.local(1900)
   end
+
+  def password_reset_expired?
+    true
+  end
 end

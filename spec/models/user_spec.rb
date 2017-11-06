@@ -212,4 +212,22 @@ describe User do
       end
     end
   end
+
+  describe '#password_reset_expired?' do
+    context 'with expired password_reset_token' do
+      it 'is true' do
+        user = User.new(password_reset_sent_at: 121.minutes.ago)
+
+        expect(user.password_reset_expired?).to be true
+      end
+    end
+
+    context 'with unexpired password_reset_token' do
+      it 'is false' do
+        user = User.new(password_reset_sent_at: 119.minutes.ago)
+
+        expect(user.password_reset_expired?).to be false
+      end
+    end
+  end
 end

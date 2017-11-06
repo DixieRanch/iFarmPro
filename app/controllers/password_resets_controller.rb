@@ -19,7 +19,7 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by(email: params[:email]) || NullUser.new
     @user.activate if @user.authenticated?(:password_reset, params[:id])
 
-    return if @user.password_reset_sent_at >= 2.hours.ago
+    return unless @user.password_reset_expired?
     flash[:danger] = 'Expired Password Reset link!  Request a new one.'
     redirect_to new_password_reset_path
   end

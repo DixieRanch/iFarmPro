@@ -9,14 +9,14 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    user = User.with_email(params[:password_reset][:email]) || NullUser.new
+    user = User.with_email(params[:password_reset][:email])
 
     user.send_password_reset_email
     redirect_to password_reset_path(params[:password_reset][:email])
   end
 
   def edit
-    @user = User.with_email(params[:email]) || NullUser.new
+    @user = User.with_email(params[:email])
     @user.activate if @user.authenticated?(:password_reset, params[:id])
 
     return unless @user.password_reset_expired?

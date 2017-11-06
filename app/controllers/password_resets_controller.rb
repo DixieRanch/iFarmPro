@@ -27,7 +27,7 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.find_by(email: params[:user][:email])
 
-    if @user.nil? || !@user.authenticated?(:password_reset, params[:id])
+    if !@user.authenticated?(:password_reset, params[:id])
       redirect_to password_reset_path(@user.email)
     elsif @user.password_reset_sent_at < 2.hours.ago
       flash[:danger] = 'Expired Password Reset!  Request a new one.'

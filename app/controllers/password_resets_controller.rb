@@ -9,14 +9,14 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:password_reset][:email]) || NullUser.new
+    user = User.with_email(params[:password_reset][:email]) || NullUser.new
 
     user.send_password_reset_email
     redirect_to password_reset_path(params[:password_reset][:email])
   end
 
   def edit
-    @user = User.find_by(email: params[:email]) || NullUser.new
+    @user = User.with_email(params[:email]) || NullUser.new
     @user.activate if @user.authenticated?(:password_reset, params[:id])
 
     return unless @user.password_reset_expired?
@@ -25,7 +25,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    @user = User.find_by(email: params[:user][:email])
+    @user = User.with_email(params[:user][:email])
 
     if !@user.authenticated?(:password_reset, params[:id])
       redirect_to password_reset_path(@user.email)

@@ -1,4 +1,7 @@
 class NullUser
+  def send_activation_email
+  end
+
   def send_password_reset_email
   end
 

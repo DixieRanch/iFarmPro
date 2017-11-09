@@ -133,7 +133,7 @@ RSpec.describe 'PasswordReset', type: :request do
     end
 
     context 'with expired time stamp' do
-      before { user.update_attribute(:password_reset_sent_at, 3.hours.ago) }
+      before { user.update_attributes(password_reset_sent_at: 3.hours.ago) }
 
       it 'redirects to request page' do
         click_button 'Reset Your Password'
@@ -222,7 +222,7 @@ RSpec.describe 'PasswordReset', type: :request do
         visit new_password_reset_path
         fill_in 'Email', with: user.email
         click_button 'Request password reset'
-        user.update_attribute(:password_reset_sent_at, 3.hours.ago)
+        user.update_attributes(password_reset_sent_at: 3.hours.ago)
         open_email(user.email)
 
         current_email.click_link 'Reset Password'
@@ -235,7 +235,7 @@ RSpec.describe 'PasswordReset', type: :request do
         visit new_password_reset_path
         fill_in 'Email', with: user.email
         click_button 'Request password reset'
-        user.update_attribute(:password_reset_sent_at, 3.hours.ago)
+        user.update_attributes(password_reset_sent_at: 3.hours.ago)
         open_email(user.email)
 
         current_email.click_link 'Reset Password'

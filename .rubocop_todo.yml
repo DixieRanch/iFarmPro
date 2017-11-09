@@ -15,16 +15,6 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 35
 
-# Offense count: 9
-# Configuration parameters: Blacklist.
-# Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
-Rails/SkipsModelValidations:
-  Exclude:
-    - 'app/models/user.rb'
-    - 'spec/lib/tasks/import_spec.rb'
-    - 'spec/requests/password_reset_pages_spec.rb'
-    - 'spec/requests/sessions_spec.rb'
-
 # Offense count: 10
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

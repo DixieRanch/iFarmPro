@@ -58,13 +58,13 @@ class User < ActiveRecord::Base
 
   def activate
     return if activated?
-    update_columns(activated: true, activated_at: Time.zone.now)
+    update_attributes(activated: true, activated_at: Time.zone.now)
   end
 
   def send_activation_email
     create_activation_digest
     UserMailer.account_activation(self).deliver_now
-    update_columns(activation_digest: activation_digest) unless new_record?
+    update_attributes(activation_digest: activation_digest) unless new_record?
   end
 
   def send_password_reset_email
@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
     self.password_reset_token  = User.new_token
     self.password_reset_digest = User.digest(password_reset_token)
     self.password_reset_sent_at = Time.zone.now
-    update_columns(password_reset_digest: password_reset_digest,
-                   password_reset_sent_at: password_reset_sent_at)
+    update_attributes(password_reset_digest: password_reset_digest,
+                      password_reset_sent_at: password_reset_sent_at)
   end
 end

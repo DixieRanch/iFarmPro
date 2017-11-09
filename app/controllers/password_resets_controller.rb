@@ -32,7 +32,7 @@ class PasswordResetsController < ApplicationController
     elsif @user.password_reset_expired?
       flash[:danger] = 'Expired Password Reset!  Request a new one.'
       redirect_to new_password_reset_path
-    elsif @user.update(user_params)
+    elsif params[:user][:password].present? && @user.update(user_params)
       sign_in(@user)
       redirect_to root_path
     else

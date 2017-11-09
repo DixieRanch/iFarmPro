@@ -13,9 +13,9 @@
 
 class WeatherStation < ActiveRecord::Base
   belongs_to :website
-  has_many :farms
-  has_many :daily_ets
-  has_many :average_ets
+  has_many :farms, dependent: :restrict_with_error
+  has_many :daily_ets, dependent: :restrict_with_error
+  has_many :average_ets, dependent: :restrict_with_error
 
   validates :name,       presence: true, uniqueness: { case_sensitive: false }
   validates :db_col,     presence: true

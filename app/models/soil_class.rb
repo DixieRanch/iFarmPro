@@ -10,7 +10,7 @@
 #
 
 class SoilClass < ActiveRecord::Base
-  has_many :fields
+  has_many :fields, dependent: :restrict_with_error
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :aw,   presence: true, numericality: true

@@ -15,7 +15,7 @@ class Irrigation < ActiveRecord::Base
   attr_accessor :next_irrigation
 
   belongs_to :field
-  has_many :meter_readings
+  has_many :meter_readings, dependent: :restrict_with_error
   accepts_nested_attributes_for :meter_readings
 
   default_scope { where(company_id: Company.current_id) }

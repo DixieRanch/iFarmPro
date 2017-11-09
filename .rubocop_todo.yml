@@ -15,19 +15,6 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 35
 
-# Offense count: 10
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/company.rb'
-    - 'app/models/farm.rb'
-    - 'app/models/field.rb'
-    - 'app/models/irrigation.rb'
-    - 'app/models/soil_class.rb'
-    - 'app/models/weather_station.rb'
-    - 'app/models/website.rb'
-
 # Offense count: 38
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https

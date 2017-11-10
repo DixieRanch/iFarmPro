@@ -54,8 +54,8 @@ describe 'ReportPages' do
     context 'with data' do
       before do
         Company.current_id = user.company.id
-        @app = create(:soil_application, quantity: 150,
-                                         field: create(:field, name: 'new', acreage: 7))
+        field = create(:field, name: 'new', acreage: 7)
+        @app  = create(:soil_application, quantity: 150, field: field)
         visit report_path(:fertilizer)
         # save_and_open_page
         Company.current_id = user.company.id
@@ -63,10 +63,18 @@ describe 'ReportPages' do
 
       it 'displays fertilizer report' do
         expect(page).to have_selector 'td', text: @app.field.name_with_block
-        expect(page).to have_selector 'td', text: (150 * 11 * 0.16 / 7).round.to_s
-        expect(page).to have_selector 'td', text: (150 * 11 * 0.08 / 7).round.to_s
-        expect(page).to have_selector 'td', text: (150 * 11 * 0.03 / 7).round.to_s
-        expect(page).to have_selector 'td', text: (150 * 11 * 0.04 / 7).round.to_s
+        expect(page).to have_selector(
+          'td', text: (150 * 11 * 0.16 / 7).round.to_s
+        )
+        expect(page).to have_selector(
+          'td', text: (150 * 11 * 0.08 / 7).round.to_s
+        )
+        expect(page).to have_selector(
+          'td', text: (150 * 11 * 0.03 / 7).round.to_s
+        )
+        expect(page).to have_selector(
+          'td', text: (150 * 11 * 0.04 / 7).round.to_s
+        )
       end
     end
   end

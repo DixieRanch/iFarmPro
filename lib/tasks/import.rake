@@ -51,7 +51,8 @@ namespace :import do
     file = 'db/soil_application_unit.csv'
 
     CSV.foreach(file, headers: true) do |row|
-      unit = SoilApplicationUnit.find_by(name: row['name']) || SoilApplicationUnit.new
+      unit = SoilApplicationUnit.find_by(name: row['name']) ||
+             SoilApplicationUnit.new
       unit.attributes = row.to_hash
       unit.save!
     end

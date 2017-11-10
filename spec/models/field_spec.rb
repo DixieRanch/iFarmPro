@@ -63,7 +63,9 @@ describe Field do
 
   describe 'validations' do
     it { should validate_presence_of :name }
-    it { should validate_uniqueness_of(:name).case_insensitive.scoped_to :block_id }
+    it {
+      should validate_uniqueness_of(:name).case_insensitive.scoped_to :block_id
+    }
     it { should validate_length_of(:name).is_at_most 8 }
     it { should validate_numericality_of :acreage }
     it { should_not validate_presence_of :block_id }
@@ -113,7 +115,8 @@ describe Field do
       end
 
       it 'handles nil values for nutrients' do
-        app = create(:soil_application, soil_product: create(:soil_product, n: nil))
+        app = create(:soil_application,
+                     soil_product: create(:soil_product, n: nil))
         expect(app.field.get_yearly_amount_of(:n, Time.zone.now.year)).to eq 0
       end
     end

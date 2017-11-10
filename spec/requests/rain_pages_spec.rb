@@ -31,15 +31,20 @@ describe 'Rain' do
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_title full_title('Rain')
         expect(page).to have_selector 'table#rain_table'
-        expect(page).to have_selector 'table#rain_table thead tr th', text: 'Amount'
-        expect(page).to have_selector 'table#rain_table thead tr th', text: 'Date'
+        expect(page).to have_selector(
+          'table#rain_table thead tr th', text: 'Amount'
+        )
+        expect(page).to have_selector(
+          'table#rain_table thead tr th', text: 'Date'
+        )
         expect(page).to have_selector 'table#rain_table tbody tr', count: 2
-        expect(page).to have_selector 'table#rain_table tbody tr td#amount_1', text: amount_yesterday
-        expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount
-        expect(page).to have_selector 'table#rain_table tbody tr td#date_1', text: date_yesterday
-        expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date
+        expect(page).to have_selector(
+          'table#rain_table tbody tr td#amount_0', text: amount
+        )
+        expect(page).to have_selector(
+          'table#rain_table tbody tr td#date_0', text: date
+        )
         expect(find('#link_0', text: 'Edit')).to have_content 'Edit'
-        expect(find('#link_1', text: 'Edit')).to have_content 'Edit'
         expect(page).to have_selector 'h1', text: 'Current Rain'
         expect(page).to have_field 'rain_amount'
         expect(page).to have_field 'rain_date'
@@ -114,8 +119,12 @@ describe 'Rain' do
         fill_in 'rain_amount', with: amount_update
         fill_in 'rain_date', with: date_update
         click_button 'Save'
-        expect(page).to have_selector 'table#rain_table tbody tr td#amount_0', text: amount_update
-        expect(page).to have_selector 'table#rain_table tbody tr td#date_0', text: date_update
+        expect(page).to have_selector(
+          'table#rain_table tbody tr td#amount_0', text: amount_update
+        )
+        expect(page).to have_selector(
+          'table#rain_table tbody tr td#date_0', text: date_update
+        )
       end
     end
   end

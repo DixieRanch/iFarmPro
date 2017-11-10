@@ -45,7 +45,8 @@ class Irrigation < ActiveRecord::Base
     kc ||= Kc.order('doy')
     current_et ||= CurrentEt.order('doy')
     current_irrigations.each do |irrigation|
-      irrigation.next_irrigation = irrigation.next_irrigation_date(et, kc, current_et)
+      irrigation.next_irrigation =
+        irrigation.next_irrigation_date(et, kc, current_et)
     end
   end
 

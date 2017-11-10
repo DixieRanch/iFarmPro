@@ -13,8 +13,11 @@
 class Farm < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
-  has_many :blocks, -> { order :name }, inverse_of: :farm, dependent: :restrict_with_error
-  has_many :irrigation_wells, -> { order :name }, dependent: :restrict_with_error
+  has_many :blocks, -> { order :name },
+           inverse_of: :farm,
+           dependent: :restrict_with_error
+  has_many :irrigation_wells, -> { order :name },
+           dependent: :restrict_with_error
   has_many :rains, dependent: :restrict_with_error
   belongs_to :weather_station
   accepts_nested_attributes_for :blocks

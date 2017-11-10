@@ -3,7 +3,11 @@ require 'rake'
 require 'rails_helper'
 
 describe Tasks::UpdateEt do
-  let(:update_et) { Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station') }
+  let(:update_et) do
+    Tasks::UpdateEt.new(
+      'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
+    )
+  end
   let(:weather_station) { build_stubbed(:weather_station) }
   let(:start_date) { '2015-12-25' }
   let(:end_date) { '2016-01-06' }
@@ -20,7 +24,9 @@ describe Tasks::UpdateEt do
 
   describe '#initialize' do
     it 'stores a URL' do
-      expect(update_et.url).to eq 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
+      expect(update_et.url).to eq(
+        'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
+      )
     end
   end
 

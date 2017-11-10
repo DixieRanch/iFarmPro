@@ -12,6 +12,9 @@ AllCops:
     - 'script/**/*'
   TargetRailsVersion: 4.2
   DisplayCopNames: true
+  
+Metrics/LineLength:
+  IgnoredPatterns: ['\A#']
     
 Rails:
   Enabled: true

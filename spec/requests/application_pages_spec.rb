@@ -131,11 +131,19 @@ def sign_up_new_user
   create(:weather_station)
   create(:soil_class)
   click_link 'Sign up now!'
+  complete_signup_form
+  activate_account_with_activation_email
+end
+
+def complete_signup_form
   fill_in 'Company Name', with: 'New Company'
   fill_in 'Email', with: 'user@example.com'
   fill_in 'Password', with: 'password'
   fill_in 'Confirmation', with: 'password'
   click_button 'Create my account'
+end
+
+def activate_account_with_activation_email
   open_email('user@example.com')
   # Can't click_link a url with js:true, extract email link and visit
   # current_email.click_link 'Activate' <-- won't work with js: true

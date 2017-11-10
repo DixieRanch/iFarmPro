@@ -11,8 +11,8 @@
 class Company < ActiveRecord::Base
   cattr_accessor :current_id
 
-  has_many :users
-  has_many :farms
+  has_many :users, dependent: :restrict_with_error
+  has_many :farms, dependent: :restrict_with_error
 
   accepts_nested_attributes_for :users
 

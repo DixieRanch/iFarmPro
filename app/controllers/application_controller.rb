@@ -31,11 +31,7 @@ class ApplicationController < ActionController::Base
   def sign_in(user)
     if user.activated?
       session[:remember_token] = user.remember_token
-      Farm.unscoped do
-        if user.company.farms.order('id').to_a.any?
-          session[:farm_id] = user.company.farms.order('id').first.id
-        end
-      end
+      scope_current_farm(user)
       self.current_user = user
     else
       user.send_activation_email unless user.activation_digest?
@@ -64,7 +60,15 @@ class ApplicationController < ActionController::Base
     user == current_user
   end
 
-  # -------- current_farm methods ----------
+  # -------- Company Data Segration Methods ----------
+
+  def scope_current_farm(user)
+    Farm.unscoped do
+      if user.company.farms.order('id').to_a.any?
+        session[:farm_id] = user.company.farms.order('id').first.id
+      end
+    end
+  end
 
   def current_farm
     Farm.find_by(id: session[:farm_id])
@@ -86,6 +90,10 @@ class ApplicationController < ActionController::Base
 
   def farm_setup
     return unless signed_in?
+    redirect_to_farm_setup
+  end
+
+  def redirect_to_farm_setup
     if Farm.all.empty?
       flash[:info] = '<strong>Welcome to iFarmPro.</strong>
                         Please setup your first farm.'

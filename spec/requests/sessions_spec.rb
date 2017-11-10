@@ -58,7 +58,7 @@ describe 'Authentication' do
 
       context 'when activation email not sent' do
         it 'sends email' do
-          user.update_attribute(:activation_digest, nil)
+          user.update_attributes(activation_digest: nil)
           expect do
             click_button 'Sign in'
           end.to change { ActionMailer::Base.deliveries.count }.by(1)

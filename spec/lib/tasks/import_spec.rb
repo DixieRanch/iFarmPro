@@ -10,7 +10,9 @@ require 'rake'
 
 describe 'app lib tasks import.rake', :slow do
   let(:agent) { Mechanize.new }
-  let(:weather_url) { 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/' }
+  let(:weather_url) do
+    'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+  end
   let(:weather_page) { agent.get(weather_url) }
   let(:rake) { Rake::Application.new }
   let(:task_path) { 'lib/tasks/import' }
@@ -24,11 +26,13 @@ describe 'app lib tasks import.rake', :slow do
 
   context 'get weather url' do
     it 'parses URL' do
-      expect(weather_page.uri.to_s).to eq 'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+      expect(weather_page.uri.to_s).to eq('https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/')
     end
 
     it 'parses heading' do
-      expect(weather_page.at('h1').content).to eq 'Request GDD and ET Data for Fabian Garcia SC'
+      expect(weather_page.at('h1').content).to eq(
+        'Request GDD and ET Data for Fabian Garcia SC'
+      )
     end
   end
 
@@ -42,15 +46,18 @@ describe 'app lib tasks import.rake', :slow do
     end
 
     it 'parses URL pre-post' do
-      expect(data_page.uri.to_s).to eq 'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+      expect(data_page.uri.to_s).to eq('https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/')
     end
 
     it 'parses heading pre post' do
-      expect(data_page.at('h1').content).to eq 'Fabian Garcia SC GDD and ET Data'
+      expect(data_page.at('h1').content).to eq(
+        'Fabian Garcia SC GDD and ET Data'
+      )
     end
 
     it 'parses first header row' do
-      row = data_page.search('table')[0].search('thead').search('tr')[0].search('th')
+      row = data_page.search('table')[0].search('thead').search('tr')[0]
+                     .search('th')
       expect(row[0].text).to eq ''
       expect(row[1].text).to eq 'Temperature'
       expect(row[2].text).to eq 'RH'
@@ -61,7 +68,8 @@ describe 'app lib tasks import.rake', :slow do
     end
 
     it 'parses second header row' do
-      row = data_page.search('table')[0].search('thead').search('tr')[1].search('th')
+      row = data_page.search('table')[0].search('thead').search('tr')[1]
+                     .search('th')
       expect(row[0].text).to eq 'Date'
       expect(row[1].text).to eq 'Max'
       expect(row[2].text).to eq 'Min'
@@ -148,7 +156,7 @@ describe 'app lib tasks import.rake', :slow do
     end
   end
 
-  it 'loads soil_applicaiton_units table with data from db/soil_application_unit.csv' do
+  it 'loads db/soil_application_unit.csv' do
     Rake::Task['import:soil_application_unit'].invoke
     file = 'db/soil_application_unit.csv'
 
@@ -163,9 +171,9 @@ describe 'app lib tasks import.rake', :slow do
     et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
     et_today = CurrentEt.find_by(doy: Time.zone.today.yday)
     et_next_week = CurrentEt.find_by(doy: Time.zone.today.yday)
-    et_last_week.update_attribute(:fabian_garcia, nil)
-    et_today.update_attribute(:fabian_garcia, 0.15)
-    et_next_week.update_attribute(:fabian_garcia, 0.20)
+    et_last_week.update_attributes(fabian_garcia: nil)
+    et_today.update_attributes(fabian_garcia: 0.15)
+    et_next_week.update_attributes(fabian_garcia: 0.20)
     Rake::Task['import:update_et'].invoke
     et_last_week.reload
     et_today.reload

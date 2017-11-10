@@ -18,8 +18,8 @@ class Field < ActiveRecord::Base
 
   belongs_to :block
   belongs_to :soil_class
-  has_many :irrigations, -> { order :time }
-  has_many :soil_applications
+  has_many :irrigations, -> { order :time }, dependent: :restrict_with_error
+  has_many :soil_applications, dependent: :restrict_with_error
 
   default_scope { where(company_id: Company.current_id) }
 
@@ -38,7 +38,8 @@ class Field < ActiveRecord::Base
     total_nutrient = 0
     current_apps = soil_applications.where('extract(year from date) = ?', year)
     current_apps.each do |soil_app|
-      units = soil_app.soil_product.send(nutrient).to_f * soil_app.quantity / 100
+      nutrient_units = soil_app.soil_product.send(nutrient).to_f
+      units = nutrient_units * soil_app.quantity / 100
       density = soil_app.soil_application_unit.density
       total_nutrient += units * density / acreage
     end

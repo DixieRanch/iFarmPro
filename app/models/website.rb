@@ -11,7 +11,7 @@
 #
 
 class Website < ActiveRecord::Base
-  has_many :weather_stations
+  has_many :weather_stations, dependent: :restrict_with_error
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :url,  presence: true, uniqueness: { case_sensitive: false,

@@ -89,7 +89,7 @@ describe Irrigation do
 
   describe '.next_irrigation_date' do
     let(:next_irrigation) do
-      irrigation.next_irrigation_date(Et.all, Kc.all, CurrentEt.all)
+      irrigation.next_irrigation_date
     end
 
     it 'should return a the next irrigation date' do
@@ -104,7 +104,7 @@ describe Irrigation do
     end
 
     context 'after rain' do
-      let(:args) { [Et.all, Kc.all, CurrentEt.all] }
+      let(:args) {}
       let(:farm) { irrigation.field.block.farm }
 
       it 'has later date' do

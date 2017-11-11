@@ -30,31 +30,30 @@ class Irrigation < ActiveRecord::Base
     time.strftime('%B %-d, %Y %R') if time
   end
 
-  def self.next_irrigations
-    current_irrigations =
-      Field.includes(:irrigations).map do |field|
-        if field.irrigations.last
-          field.irrigations.order('time').last
-        else
-          field.irrigations.new(
-            time: Time.zone.local(Time.zone.now.year) - 184.days
-          )
-        end
+  def self.current_irrigations
+    Field.includes(:irrigations).map do |field|
+      if field.irrigations.last
+        field.irrigations.order('time').last
+      else
+        field.irrigations.new(
+          time: Time.zone.local(Time.zone.now.year) - 184.days
+        )
       end
-    et ||= Et.order('doy')
-    kc ||= Kc.order('doy')
-    current_et ||= CurrentEt.order('doy')
-    current_irrigations.each do |irrigation|
-      irrigation.next_irrigation =
-        irrigation.next_irrigation_date(et, kc, current_et)
     end
   end
 
-  def next_irrigation_date(et, kc, current_et)
-    aw = max_aw * mad # initialize available water -> assumes field capacity
+  def self.next_irrigations
+    current_irrigations.each do |irrigation|
+      irrigation.next_irrigation =
+        irrigation.next_irrigation_date
+    end
+  end
+
+  def next_irrigation_date
     date = time.to_date
+    aw = max_aw * mad # initialize available water -> assumes field capacity
     while aw > 0
-      aw -= etref(et, current_et, date.yday) * kcref(kc, date.yday)
+      aw -= etref(date.yday) * kcref(date.yday)
       aw += rain(date).amount * rain_coefficient if rain(date) # add rain water
       aw = max_aw * mad if aw > max_aw * mad # Limited to field capacity
       date += 1
@@ -80,19 +79,27 @@ class Irrigation < ActiveRecord::Base
     0.8 # % of rain added to available water
   end
 
-  def aw
-    max_aw * mad # initialize available water -> assumes field capacity
-  end
-
-  def etref(et, current_et, doy)
+  def etref(doy)
     current_et[doy - 1].send(station.db_col) || et[doy - 1].send(station.db_col)
   end
 
-  def kcref(kc, doy)
+  def kcref(doy)
     kc[doy - 1].pecan
   end
 
   def rain(date)
     Rain.find_by(date: date)
+  end
+
+  def current_et
+    @current_et ||= CurrentEt.order('doy')
+  end
+
+  def kc
+    @kc ||= Kc.order('doy')
+  end
+
+  def et
+    @et ||= Et.order('doy')
   end
 end

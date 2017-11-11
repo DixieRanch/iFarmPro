@@ -23,12 +23,7 @@ describe 'ReportPages' do
     context 'with data' do
       let!(:irrigation) { create(:irrigation) }
       let(:current_irrigation) { irrigation.time.to_date.to_s(:long) }
-      let(:next_irrigation) do
-        et = Et.order('doy')
-        kc = Kc.order('doy')
-        current_et = CurrentEt.order('doy')
-        irrigation.next_irrigation_date(et, kc, current_et).to_s(:long)
-      end
+      let(:next_irrigation) { irrigation.next_irrigation_date.to_s(:long) }
 
       before { visit report_path(:next_irrigations) }
 

@@ -2,16 +2,6 @@ require 'csv'
 require 'tasks/update_et'
 
 namespace :import do
-  desc 'Import ETo data from csv file'
-  task et: :environment do
-    file = 'db/et0.csv'
-
-    CSV.foreach(file, headers: true) do |row|
-      et = Et.find_by(doy: row['doy']) || Et.new
-      et.attributes = row.to_hash
-      et.save!
-    end
-  end
 
   desc 'Import KCref data from csv file'
   task kc: :environment do

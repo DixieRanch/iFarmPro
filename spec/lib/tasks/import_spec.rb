@@ -24,26 +24,6 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  it 'should test for the existence of db/et0.csv' do
-    expect(File.exist?('db/et0.csv')).to be true
-  end
-
-  it 'should test for the existence of db/kcref.csv' do
-    expect(File.exist?('db/kcref.csv')).to be true
-  end
-
-  it 'should test for the existence of db/current_et.csv' do
-    expect(File.exist?('db/current_et.csv')).to be true
-  end
-
-  it 'should test for the existence of db/soil_class.csv' do
-    expect(File.exist?('db/soil_class.csv')).to be true
-  end
-
-  it 'has file db/soil_application_unit.csv' do
-    expect(File.exist?('db/soil_application_unit.csv')).to be true
-  end
-
   it 'should load ets table with data from db/et0.csv', :slow do
     Rake::Task['import:et'].invoke
     file = 'db/et0.csv'

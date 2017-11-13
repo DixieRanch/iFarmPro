@@ -77,10 +77,12 @@ describe 'Company' do
   end
 
   describe 'show page' do
-    before { sign_in(user) }
-
     it 'has the correct elements' do
-      click_link 'Company'
+      create(:user)
+      sign_in(user)
+
+      visit company_path(user.company)
+
       expect(page).to have_title full_title user.company.name
     end
   end

@@ -63,8 +63,7 @@ describe 'ApplicationPages' do
         sign_in(user)
         click_link 'Help'
         should have_selector 'title', text: full_title('Help')
-        click_link 'Company'
-        should have_title full_title(user.company.name)
+        expect(page).not_to have_link 'Company'
         click_link 'Add User'
         should have_selector 'title', text: full_title('Add User')
         # click_link "About"

@@ -4,9 +4,7 @@ def sign_in(user)
   Company.current_id = user.company.id
   create(:field)
   visit signin_path
-  fill_in 'Email', with: user.email
-  fill_in 'Password', with: user.password
-  click_button 'Sign in'
+  submit_signin_form_for(user)
   # Sign in when not using Capybara as well.
   # session[:remember_token] = user.remember_token
   # The above code doesn't work. 'session' is unavailable in integeration tests.
@@ -30,4 +28,12 @@ end
 
 def reset_email
   ActionMailer::Base.deliveries = []
+end
+
+private
+
+def submit_signin_form_for(user)
+  fill_in 'Email', with: user.email
+  fill_in 'Password', with: user.password
+  click_button 'Sign in'
 end

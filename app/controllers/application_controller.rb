@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
       session[:remember_token] = user.remember_token
       scope_current_farm(user)
       self.current_user = user
+      redirect_back_or root_path
     else
       user.send_activation_email unless user.activation_digest?
       redirect_to account_activation_path(user.email)

@@ -34,7 +34,6 @@ class PasswordResetsController < ApplicationController
       redirect_to new_password_reset_path
     elsif params[:user][:password].present? && @user.update(user_params)
       sign_in(@user)
-      redirect_to root_path
     else
       render 'edit'
     end

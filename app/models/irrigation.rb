@@ -30,46 +30,93 @@ class Irrigation < ActiveRecord::Base
     time.strftime('%B %-d, %Y %R') if time
   end
 
-  def self.next_irrigations
-    current_irrigations =
-      Field.includes(:irrigations).map do |field|
-        if field.irrigations.last
-          field.irrigations.order('time').last
-        else
-          field.irrigations.new(
-            time: Time.zone.local(Time.zone.now.year) - 184.days
-          )
-        end
-      end
-    et ||= Et.order('doy')
-    kc ||= Kc.order('doy')
-    current_et ||= CurrentEt.order('doy')
-    current_irrigations.each do |irrigation|
-      irrigation.next_irrigation =
-        irrigation.next_irrigation_date(et, kc, current_et)
+  def self.current_irrigations
+    Field.includes(:irrigations).map do |field|
+      last_irrigation(field) || default_irrigation(field)
     end
   end
 
-  def next_irrigation_date(et, kc, current_et)
-    max_aw = field.soil_class.aw # max available water for soil type
-    station = field.block.farm.weather_station
-    mad = 0.45 # management allowed depletion as % of available water
-    rain_coefficient = 0.8 # % of rain added to available water
-    aw = max_aw * mad # initialize available water -> assumes field capacity
+  def self.next_irrigations
+    current_irrigations.each do |irrigation|
+      irrigation.next_irrigation =
+        irrigation.next_irrigation_date
+    end
+  end
+
+  def next_irrigation_date
     date = time.to_date
+    aw = max_aw * mad # initialize available water -> assumes field capacity
     while aw > 0
-      doy = date.yday
-      etref = current_et[doy - 1].send(station.db_col) ||
-              et[doy - 1].send(station.db_col)
-      kcref = kc[doy - 1].pecan
-      aw -= etref * kcref # remove extracted water
-      rain = Rain.find_by(date: date)
-      aw += rain.amount * rain_coefficient if rain # add rain water
-      if aw > max_aw * mad # if rain added overfills field capacity,
-        aw = max_aw * mad  # then reset to field capacity
-      end
+      aw += effective_rain(date) - daily_et(date)
+      aw = field_capacity_after_excess_rain(aw)
       date += 1
     end
     date
+  end
+
+  private
+
+  private_class_method def self.last_irrigation(field)
+    field.irrigations.order('time').last
+  end
+
+  private_class_method def self.default_irrigation(field)
+    field.irrigations.new(
+      time: Time.zone.local(Time.zone.now.year) - 184.days
+    )
+  end
+
+  def current_et
+    @current_et ||= CurrentEt.order('doy')
+  end
+
+  def daily_et(date)
+    etref(date.yday) * kcref(date.yday)
+  end
+
+  def effective_rain(date)
+    return 0 unless rain(date)
+    rain(date).amount * rain_coefficient if rain(date)
+  end
+
+  def et
+    @et ||= Et.order('doy')
+  end
+
+  def etref(doy)
+    current_et[doy - 1].send(station.db_col) || et[doy - 1].send(station.db_col)
+  end
+
+  def field_capacity_after_excess_rain(aw)
+    return aw unless aw > max_aw * mad
+    max_aw * mad
+  end
+
+  def kc
+    @kc ||= Kc.order('doy')
+  end
+
+  def kcref(doy)
+    kc[doy - 1].pecan
+  end
+
+  def mad
+    0.45 # management allowed depletion as % of available water
+  end
+
+  def max_aw
+    field.soil_class.aw # max available water for soil type
+  end
+
+  def rain(date)
+    Rain.find_by(date: date)
+  end
+
+  def rain_coefficient
+    0.8 # % of rain added to available water
+  end
+
+  def station
+    field.block.farm.weather_station
   end
 end

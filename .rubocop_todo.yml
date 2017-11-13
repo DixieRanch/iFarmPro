@@ -11,8 +11,7 @@
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/password_resets_controller.rb'
-    - 'app/models/irrigation.rb'
 
-# Offense count: 9
 Metrics/AbcSize:
-  Max: 35
+  Exclude:
+    - 'app/controllers/password_resets_controller.rb'

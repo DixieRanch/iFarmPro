@@ -11,3 +11,7 @@
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/password_resets_controller.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/password_resets_controller.rb'

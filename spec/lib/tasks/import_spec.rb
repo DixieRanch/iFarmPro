@@ -8,7 +8,7 @@ require 'rake'
 # http://pivotallabs.com/how-i-test-rake-tasks/
 # http://www.philsergi.com/2009/02/testing-rake-tasks-with-rspec.html
 
-describe 'app lib tasks import.rake', :slow do
+describe 'app lib tasks import.rake' do
   let(:agent) { Mechanize.new }
   let(:weather_url) do
     'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
@@ -25,11 +25,11 @@ describe 'app lib tasks import.rake', :slow do
   end
 
   context 'get weather url' do
-    it 'parses URL' do
+    it 'parses URL', :slow do
       expect(weather_page.uri.to_s).to eq('https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/')
     end
 
-    it 'parses heading' do
+    it 'parses heading', :slow do
       expect(weather_page.at('h1').content).to eq(
         'Request GDD and ET Data for Fabian Garcia SC'
       )
@@ -45,17 +45,17 @@ describe 'app lib tasks import.rake', :slow do
       weather_page.forms[0].submit
     end
 
-    it 'parses URL pre-post' do
+    it 'parses URL pre-post', :slow do
       expect(data_page.uri.to_s).to eq('https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/')
     end
 
-    it 'parses heading pre post' do
+    it 'parses heading pre post', :slow do
       expect(data_page.at('h1').content).to eq(
         'Fabian Garcia SC GDD and ET Data'
       )
     end
 
-    it 'parses first header row' do
+    it 'parses first header row', :slow do
       row = data_page.search('table')[0].search('thead').search('tr')[0]
                      .search('th')
       expect(row[0].text).to eq ''
@@ -67,7 +67,7 @@ describe 'app lib tasks import.rake', :slow do
       expect(row[6].text).to eq 'Growing Degree Days'
     end
 
-    it 'parses second header row' do
+    it 'parses second header row', :slow do
       row = data_page.search('table')[0].search('thead').search('tr')[1]
                      .search('th')
       expect(row[0].text).to eq 'Date'
@@ -105,7 +105,7 @@ describe 'app lib tasks import.rake', :slow do
     expect(File.exist?('db/soil_application_unit.csv')).to be true
   end
 
-  it 'should load ets table with data from db/et0.csv' do
+  it 'should load ets table with data from db/et0.csv', :slow do
     Rake::Task['import:et'].invoke
     file = 'db/et0.csv'
 
@@ -119,7 +119,7 @@ describe 'app lib tasks import.rake', :slow do
     end
   end
 
-  it 'should load kcs table with data from db/kcref.csv' do
+  it 'should load kcs table with data from db/kcref.csv', :slow do
     Rake::Task['import:kc'].invoke
     file = 'db/kcref.csv'
 
@@ -131,7 +131,7 @@ describe 'app lib tasks import.rake', :slow do
     end
   end
 
-  it 'should load current_ets table with data from db/current_et.csv' do
+  it 'should load current_ets table with data from db/current_et.csv', :slow do
     Rake::Task['import:current_et'].invoke
     file = 'db/current_et.csv'
 
@@ -167,7 +167,7 @@ describe 'app lib tasks import.rake', :slow do
     end
   end
 
-  it 'updates CurrentEt with Rake task' do
+  it 'updates CurrentEt with Rake task', :slow do
     et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
     et_today = CurrentEt.find_by(doy: Time.zone.today.yday)
     et_next_week = CurrentEt.find_by(doy: Time.zone.today.yday)

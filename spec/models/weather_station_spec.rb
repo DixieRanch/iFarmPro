@@ -13,7 +13,7 @@
 
 require 'rails_helper'
 
-describe WeatherStation, :slow do
+describe WeatherStation do
   valid_attributes = { name: 'Fabian Garcia',
                        db_col: 'fabian_garcia',
                        id_code: 'nmcc-da-1' }
@@ -65,23 +65,23 @@ describe WeatherStation, :slow do
       expect(url).to eq correct_url
     end
 
-    it 'should fetch a webpage' do
+    it 'should fetch a webpage', :slow do
       expect(page.content_type).to match 'text/html'
     end
 
-    it 'should create an array from page data' do
+    it 'should create an array from page data', :slow do
       expect(array).to eq [{ date: '2015-07-01'.to_date, eth: 0.29 },
                            { date: '2015-07-02'.to_date, eth: 0.31 }]
     end
 
-    it 'should update DailyEts from website data' do
+    it 'should update DailyEts from website data', :slow do
       station.save
       expect { station.store(array) }.to change { DailyEt.count }.by(2)
       expect(station.daily_ets.find_by(date: '2015-07-01').eth).to eq 0.29
       expect(station.daily_ets.find_by(date: '2015-07-02').eth).to eq 0.31
     end
 
-    it 'should update the last 30 days of Et data' do
+    it 'should update the last 30 days of Et data', :slow do
       station.save
       expect { station.update_daily_et }.to change { DailyEt.count }.by(30)
       expect(station.daily_ets.last.date).to eq Date.yesterday
@@ -110,7 +110,7 @@ describe WeatherStation, :slow do
     end
   end
 
-  describe 'load_history', :slow do
+  describe 'load_history' do
     # This test is so slow, that it is commented out until needed.
 
     # it "should load a weather_staion past et history into DailyEts" do

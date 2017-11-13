@@ -36,13 +36,21 @@ class Field < ActiveRecord::Base
 
   def get_yearly_amount_of(nutrient, year)
     total_nutrient = 0
-    current_apps = soil_applications.where('extract(year from date) = ?', year)
-    current_apps.each do |soil_app|
-      nutrient_units = soil_app.soil_product.send(nutrient).to_f
-      units = nutrient_units * soil_app.quantity / 100
+    current_apps(year).each do |soil_app|
+      units = nutrient_units(soil_app, nutrient) * soil_app.quantity / 100
       density = soil_app.soil_application_unit.density
       total_nutrient += units * density / acreage
     end
     total_nutrient.to_f
+  end
+
+  private
+
+  def current_apps(year)
+    soil_applications.where('extract(year from date) = ?', year)
+  end
+
+  def nutrient_units(soil_app, nutrient)
+    soil_app.soil_product.send(nutrient).to_f
   end
 end

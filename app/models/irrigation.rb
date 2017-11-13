@@ -66,6 +66,10 @@ class Irrigation < ActiveRecord::Base
     )
   end
 
+  def current_et
+    @current_et ||= CurrentEt.order('doy')
+  end
+
   def daily_et(date)
     etref(date.yday) * kcref(date.yday)
   end
@@ -75,48 +79,44 @@ class Irrigation < ActiveRecord::Base
     rain(date).amount * rain_coefficient if rain(date)
   end
 
-  def field_capacity_after_excess_rain(aw)
-    return aw unless aw > max_aw * mad
-    max_aw * mad
-  end
-
-  def max_aw
-    field.soil_class.aw # max available water for soil type
-  end
-
-  def station
-    field.block.farm.weather_station
-  end
-
-  def mad
-    0.45 # management allowed depletion as % of available water
-  end
-
-  def rain_coefficient
-    0.8 # % of rain added to available water
+  def et
+    @et ||= Et.order('doy')
   end
 
   def etref(doy)
     current_et[doy - 1].send(station.db_col) || et[doy - 1].send(station.db_col)
   end
 
-  def kcref(doy)
-    kc[doy - 1].pecan
-  end
-
-  def rain(date)
-    Rain.find_by(date: date)
-  end
-
-  def current_et
-    @current_et ||= CurrentEt.order('doy')
+  def field_capacity_after_excess_rain(aw)
+    return aw unless aw > max_aw * mad
+    max_aw * mad
   end
 
   def kc
     @kc ||= Kc.order('doy')
   end
 
-  def et
-    @et ||= Et.order('doy')
+  def kcref(doy)
+    kc[doy - 1].pecan
+  end
+
+  def mad
+    0.45 # management allowed depletion as % of available water
+  end
+
+  def max_aw
+    field.soil_class.aw # max available water for soil type
+  end
+
+  def rain(date)
+    Rain.find_by(date: date)
+  end
+
+  def rain_coefficient
+    0.8 # % of rain added to available water
+  end
+
+  def station
+    field.block.farm.weather_station
   end
 end

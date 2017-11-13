@@ -24,67 +24,6 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  context 'get weather url' do
-    it 'parses URL', :slow do
-      expect(weather_page.uri.to_s).to eq('https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/')
-    end
-
-    it 'parses heading', :slow do
-      expect(weather_page.at('h1').content).to eq(
-        'Request GDD and ET Data for Fabian Garcia SC'
-      )
-    end
-  end
-
-  context 'post weather url' do
-    let(:data_page) do
-      end_date = Time.zone.now.to_date.strftime('%F')
-      start_date = (Time.zone.now - 180.days).strftime('%F')
-      weather_page.forms[0]['start_date'] = start_date
-      weather_page.forms[0]['end_date'] = end_date
-      weather_page.forms[0].submit
-    end
-
-    it 'parses URL pre-post', :slow do
-      expect(data_page.uri.to_s).to eq('https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/')
-    end
-
-    it 'parses heading pre post', :slow do
-      expect(data_page.at('h1').content).to eq(
-        'Fabian Garcia SC GDD and ET Data'
-      )
-    end
-
-    it 'parses first header row', :slow do
-      row = data_page.search('table')[0].search('thead').search('tr')[0]
-                     .search('th')
-      expect(row[0].text).to eq ''
-      expect(row[1].text).to eq 'Temperature'
-      expect(row[2].text).to eq 'RH'
-      expect(row[3].text).to eq 'Wind Speed'
-      expect(row[4].text).to eq 'Solar Radiation'
-      # expect(row[5].text).to eq 'Reference ET'
-      expect(row[6].text).to eq 'Growing Degree Days'
-    end
-
-    it 'parses second header row', :slow do
-      row = data_page.search('table')[0].search('thead').search('tr')[1]
-                     .search('th')
-      expect(row[0].text).to eq 'Date'
-      expect(row[1].text).to eq 'Max'
-      expect(row[2].text).to eq 'Min'
-      expect(row[3].text).to eq 'Max'
-      expect(row[4].text).to eq 'Min'
-      expect(row[5].text).to eq 'Mean'
-      expect(row[6].text).to eq 'Total'
-      # expect(row[7].text).to eq 'ETh'
-      # expect(row[8].text).to eq 'ETo'
-      # expect(row[9].text).to eq 'ETr'
-      # expect(row[10].text).to eq 'Daily'
-      # expect(row[11].text).to eq 'Cumulative'
-    end
-  end
-
   it 'should test for the existence of db/et0.csv' do
     expect(File.exist?('db/et0.csv')).to be true
   end

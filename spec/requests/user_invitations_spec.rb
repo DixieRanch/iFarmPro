@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'UserInvitations' do
+<<<<<<< 492c9c9b8312d6276992559b1ec68fb78b5b6677
   context 'users dropdown' do
     context 'invitation link' do
       it 'does exist' do
@@ -126,3 +127,21 @@ describe 'UserInvitations' do
     end
   end
 end
+=======
+  
+  describe 'Email' do
+    
+    it 'sends invitation' do
+      user = create(:user)
+      sign_in user
+      visit new_user_path
+      
+      fill_in 'Email', with: 'newUser@example.com'
+      
+      expect do
+        click_button 'Save'
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+end
+>>>>>>> Add failing test for user invitation email

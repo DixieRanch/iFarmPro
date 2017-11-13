@@ -24,18 +24,6 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  it 'should load kcs table with data from db/kcref.csv', :slow do
-    Rake::Task['import:kc'].invoke
-    file = 'db/kcref.csv'
-
-    CSV.foreach(file, headers: true) do |row|
-      et = Kc.find_by(doy: row['doy'])
-      row[0] = row[0].to_i
-      row[1] = BigDecimal(row[1]) unless row[1].nil?
-      expect(et.attributes).to include row.to_hash
-    end
-  end
-
   it 'should load current_ets table with data from db/current_et.csv', :slow do
     Rake::Task['import:current_et'].invoke
     file = 'db/current_et.csv'

@@ -4,17 +4,6 @@ require 'tasks/update_et'
 namespace :import do
 
   desc 'Import Current Et data from csv file'
-  task current_et: :environment do
-    file = 'db/current_et.csv'
-
-    CSV.foreach(file, headers: true) do |row|
-      current_et = CurrentEt.find_by(doy: row['doy']) || CurrentEt.new
-      current_et.attributes = row.to_hash
-      current_et.save!
-    end
-  end
-
-  desc 'Import Current Et data from csv file'
   task soil_class: :environment do
     file = 'db/soil_class.csv'
 

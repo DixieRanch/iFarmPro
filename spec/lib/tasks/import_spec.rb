@@ -24,20 +24,6 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  it 'should load current_ets table with data from db/current_et.csv', :slow do
-    Rake::Task['import:current_et'].invoke
-    file = 'db/current_et.csv'
-
-    WeatherStation.all.each do |_station|
-      CSV.foreach(file, headers: true) do |row|
-        et = CurrentEt.find_by(doy: row['doy'])
-        row[0] = row[0].to_i
-        row[1] = BigDecimal(row[1]) unless row[1].nil?
-        expect(et.attributes).to include row.to_hash
-      end
-    end
-  end
-
   it 'should load soils_classes table with data from db/soil_class.csv' do
     Rake::Task['import:soil_class'].invoke
     file = 'db/soil_class.csv'

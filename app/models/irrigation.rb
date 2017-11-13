@@ -32,13 +32,7 @@ class Irrigation < ActiveRecord::Base
 
   def self.current_irrigations
     Field.includes(:irrigations).map do |field|
-      if field.irrigations.last
-        field.irrigations.order('time').last
-      else
-        field.irrigations.new(
-          time: Time.zone.local(Time.zone.now.year) - 184.days
-        )
-      end
+      last_irrigation(field) || default_irrigation(field)
     end
   end
 
@@ -62,6 +56,16 @@ class Irrigation < ActiveRecord::Base
   end
 
   private
+
+  private_class_method def self.last_irrigation(field)
+    field.irrigations.order('time').last
+  end
+
+  private_class_method def self.default_irrigation(field)
+    field.irrigations.new(
+      time: Time.zone.local(Time.zone.now.year) - 184.days
+    )
+  end
 
   def max_aw
     field.soil_class.aw # max available water for soil type

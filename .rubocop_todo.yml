@@ -11,7 +11,3 @@
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/password_resets_controller.rb'
-
-# Offense count: 9
-Metrics/AbcSize:
-  Max: 35

@@ -47,9 +47,8 @@ class Irrigation < ActiveRecord::Base
     date = time.to_date
     aw = max_aw * mad # initialize available water -> assumes field capacity
     while aw > 0
-      aw -= etref(date.yday) * kcref(date.yday)
-      aw += rain(date).amount * rain_coefficient if rain(date) # add rain water
-      aw = max_aw * mad if aw > max_aw * mad # Limited to field capacity
+      aw += effective_rain(date) - daily_et(date)
+      aw = field_capacity_after_excess_rain(aw)
       date += 1
     end
     date
@@ -65,6 +64,20 @@ class Irrigation < ActiveRecord::Base
     field.irrigations.new(
       time: Time.zone.local(Time.zone.now.year) - 184.days
     )
+  end
+
+  def daily_et(date)
+    etref(date.yday) * kcref(date.yday)
+  end
+
+  def effective_rain(date)
+    return 0 unless rain(date)
+    rain(date).amount * rain_coefficient if rain(date)
+  end
+
+  def field_capacity_after_excess_rain(aw)
+    return aw unless aw > max_aw * mad
+    max_aw * mad
   end
 
   def max_aw

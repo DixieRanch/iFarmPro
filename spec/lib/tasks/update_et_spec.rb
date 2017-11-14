@@ -35,7 +35,7 @@ describe Tasks::UpdateEt do
   describe '#fetch' do
     it 'returns a Mechanize::Page from weather station url' do
       weather_station_code = create(:weather_station).id_code
-      update_et = Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station')
+      update_et = Tasks::UpdateEt.new(url_prefix)
       stub_request(:get,  url).to_return(form_file)
       stub_request(:post, url).to_return(response_file)
 
@@ -59,6 +59,40 @@ describe Tasks::UpdateEt do
     end
   end
 
+  describe '#update' do
+    it 'saves downloaded eth data to CurrentEt' do
+      array = [{ eth: '0.31', doy: 180 }]
+      weather_station = build_stubbed(:weather_station)
+
+      expect { Tasks::UpdateEt.new(url).update(array, weather_station) }.to(
+        change { CurrentEt.find_by(doy: 180)[weather_station.db_col] }.to(0.31)
+      )
+    end
+  end
+
+  describe '#fetch_parse_update_pad_table' do
+    it 'downloads, updates, and pads CurrentEt' do
+      weather_station = create(:weather_station)
+      station_symbol = weather_station.db_col.to_sym
+      update_et = Tasks::UpdateEt.new(url_prefix)
+      366.times do |doy|
+        CurrentEt.find_or_create_by(doy: doy)
+                 .update_attributes(station_symbol => 0.05)
+      end
+      stub_request(:get,  url).to_return(form_file)
+      stub_request(:post, url).to_return(response_file)
+
+      update_et.fetch_parse_update_pad_table
+
+      expect(CurrentEt.find_by(doy: 175)[weather_station.db_col]).to eq 0.05
+      expect(CurrentEt.find_by(doy: 176)[weather_station.db_col]).to eq 0.27
+      expect(CurrentEt.find_by(doy: 181)[weather_station.db_col]).to eq 0.23
+      expect(CurrentEt.find_by(doy: 182)[weather_station.db_col]).to be_nil
+      expect(CurrentEt.find_by(doy: 366)[weather_station.db_col]).to be_nil
+      expect(CurrentEt.find_by(doy: 1)[weather_station.db_col]).to eq 0.05
+    end
+  end
+
   private
 
   def form_file
@@ -71,5 +105,9 @@ describe Tasks::UpdateEt do
 
   def url
     'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+  end
+
+  def url_prefix
+    'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
   end
 end

@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+<<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 describe UserInvitation, :not_a_tenant_model do
   describe 'associations' do
     it { should belong_to :company }
@@ -98,6 +99,14 @@ describe UserInvitation, :not_a_tenant_model do
 
         expect(found_invitation.class).to eq invitation.class
       end
+=======
+describe UserInvitation do
+  describe 'associations' do
+    it 'respond to company' do
+      invitation = UserInvitation.new
+
+      expect(invitation).to respond_to :company
+>>>>>>> Add link in header for user invitation
     end
   end
 end

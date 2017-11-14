@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'UserInvitations' do
+<<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 <<<<<<< 492c9c9b8312d6276992559b1ec68fb78b5b6677
   context 'users dropdown' do
     context 'invitation link' do
@@ -128,20 +129,44 @@ describe 'UserInvitations' do
   end
 end
 =======
+=======
+  context 'users dropdown' do
+    it 'has invitation link' do
+      user = create(:user)
+      sign_in user
+      
+      expect(page).to have_link "Invite User"
+    end
+  end
+>>>>>>> Add link in header for user invitation
   
-  describe 'Email' do
-    
-    it 'sends invitation' do
+  describe 'inviting new user' do
+    xit 'sends invitation email' do
       user = create(:user)
       sign_in user
       visit new_user_path
-      
+
       fill_in 'Email', with: 'newUser@example.com'
-      
+
       expect do
         click_button 'Save'
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
+
+    xit 'creates invitation object' do
+      user = create(:user)
+      sign_in user
+      visit new_user_path
+
+      fill_in 'Email', with: 'newUser@example.com'
+
+      expect do
+        click_button 'Save'
+      end.to change(UserInvitation, :count).by(1)
+    end
   end
 end
+<<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 >>>>>>> Add failing test for user invitation email
+=======
+>>>>>>> Add link in header for user invitation

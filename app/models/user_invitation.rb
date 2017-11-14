@@ -1,5 +1,6 @@
 class UserInvitation < ActiveRecord::Base
   belongs_to :company
+<<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 
   attr_accessor :invitation_token
 
@@ -51,4 +52,6 @@ class UserInvitation < ActiveRecord::Base
     self.invitation_sent_at = Time.zone.now
     update_attributes(invitation_sent_at: invitation_sent_at)
   end
+=======
+>>>>>>> Add link in header for user invitation
 end

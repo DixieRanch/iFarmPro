@@ -24,17 +24,6 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  it 'loads db/soil_application_unit.csv' do
-    Rake::Task['import:soil_application_unit'].invoke
-    file = 'db/soil_application_unit.csv'
-
-    CSV.foreach(file, headers: true) do |row|
-      unit = SoilApplicationUnit.find_by(name: row['name'])
-      row[1] = BigDecimal(row[1]) unless row[1].nil?
-      expect(unit.attributes).to include row.to_hash
-    end
-  end
-
   it 'updates CurrentEt with Rake task', :slow do
     et_last_week = CurrentEt.find_by(doy: 5.days.ago.yday)
     et_today = CurrentEt.find_by(doy: Time.zone.today.yday)

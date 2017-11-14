@@ -3,18 +3,6 @@ require 'tasks/update_et'
 
 namespace :import do
 
-  desc 'Import Soil Application Unit data from csv file'
-  task soil_application_unit: :environment do
-    file = 'db/soil_application_unit.csv'
-
-    CSV.foreach(file, headers: true) do |row|
-      unit = SoilApplicationUnit.find_by(name: row['name']) ||
-             SoilApplicationUnit.new
-      unit.attributes = row.to_hash
-      unit.save!
-    end
-  end
-
   desc 'Import Current Et data from csv file'
   task update_et: :environment do
     update_et = Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station')

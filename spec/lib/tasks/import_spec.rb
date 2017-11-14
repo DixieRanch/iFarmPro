@@ -24,17 +24,6 @@ describe 'app lib tasks import.rake' do
     Rake::Task.define_task(:environment)
   end
 
-  it 'should load soils_classes table with data from db/soil_class.csv' do
-    Rake::Task['import:soil_class'].invoke
-    file = 'db/soil_class.csv'
-
-    CSV.foreach(file, headers: true) do |row|
-      et = SoilClass.find_by(name: row['name'])
-      row[1] = BigDecimal(row[1]) unless row[1].nil?
-      expect(et.attributes).to include row.to_hash
-    end
-  end
-
   it 'loads db/soil_application_unit.csv' do
     Rake::Task['import:soil_application_unit'].invoke
     file = 'db/soil_application_unit.csv'

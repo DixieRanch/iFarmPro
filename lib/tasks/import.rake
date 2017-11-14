@@ -2,7 +2,6 @@ require 'csv'
 require 'tasks/update_et'
 
 namespace :import do
-
   desc 'Import Current Et data from csv file'
   task update_et: :environment do
     update_et = Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station')

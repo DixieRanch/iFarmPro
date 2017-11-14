@@ -4,6 +4,7 @@ require 'rspec/rails'
 require 'capybara/poltergeist'
 require 'shoulda/matchers'
 require 'capybara/email/rspec'
+require 'webmock/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

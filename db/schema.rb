@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< ee408dbfe265009d92ac423a9e5783bcc972198b
 ActiveRecord::Schema.define(version: 20180109204150) do
+=======
+ActiveRecord::Schema.define(version: 20171113230516) do
+>>>>>>> Add migrations to make UserInvitation a child object of company
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +103,7 @@ ActiveRecord::Schema.define(version: 20180109204150) do
   add_index "fields", ["company_id"], name: "index_fields_on_company_id", using: :btree
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
   add_index "fields", ["soil_class_id"], name: "index_fields_on_soil_class_id", using: :btree
+<<<<<<< ee408dbfe265009d92ac423a9e5783bcc972198b
 
   create_table "irrigation_wells", force: :cascade do |t|
     t.string   "name"
@@ -134,6 +139,43 @@ ActiveRecord::Schema.define(version: 20180109204150) do
 
   add_index "kcs", ["doy"], name: "index_kcs_on_doy", using: :btree
 
+=======
+
+  create_table "irrigation_wells", force: :cascade do |t|
+    t.string   "name"
+    t.string   "pod_code"
+    t.integer  "farm_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "company_id"
+  end
+
+  add_index "irrigation_wells", ["company_id"], name: "index_irrigation_wells_on_company_id", using: :btree
+  add_index "irrigation_wells", ["farm_id"], name: "index_irrigation_wells_on_farm_id", using: :btree
+
+  create_table "irrigations", force: :cascade do |t|
+    t.datetime "time"
+    t.integer  "field_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "farm_id"
+  end
+
+  add_index "irrigations", ["company_id"], name: "index_irrigations_on_company_id", using: :btree
+  add_index "irrigations", ["farm_id"], name: "index_irrigations_on_farm_id", using: :btree
+  add_index "irrigations", ["field_id"], name: "index_irrigations_on_field_id", using: :btree
+
+  create_table "kcs", force: :cascade do |t|
+    t.integer  "doy"
+    t.decimal  "pecan"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "kcs", ["doy"], name: "index_kcs_on_doy", using: :btree
+
+>>>>>>> Add migrations to make UserInvitation a child object of company
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"
     t.integer  "irrigation_well_id"
@@ -202,8 +244,11 @@ ActiveRecord::Schema.define(version: 20180109204150) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
+<<<<<<< ee408dbfe265009d92ac423a9e5783bcc972198b
     t.string   "invitation_digest"
     t.datetime "invitation_sent_at"
+=======
+>>>>>>> Add migrations to make UserInvitation a child object of company
   end
 
   create_table "users", force: :cascade do |t|

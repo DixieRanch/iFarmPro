@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'UserInvitations' do
+<<<<<<< 07b7e09bea8eb72a4d182a839a3f7a8c1f7bc3f2
 <<<<<<< 1a769090a3bf0830502328c33ef42eeb83d8f2c0
 <<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 <<<<<<< 492c9c9b8312d6276992559b1ec68fb78b5b6677
@@ -134,6 +135,12 @@ end
 =======
 <<<<<<< a860b4062addc0fb9c6ea4df7786bf6a22e1fe02
 >>>>>>> Add failing test for user invitation email
+=======
+<<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
+<<<<<<< a860b4062addc0fb9c6ea4df7786bf6a22e1fe02
+=======
+>>>>>>> Add link in header for user invitation
+>>>>>>> Add link in header for user invitation
   context 'users dropdown' do
     it 'has invitation link' do
       user = create(:user)
@@ -142,6 +149,10 @@ end
       expect(page).to have_link "Invite User"
     end
   end
+<<<<<<< 07b7e09bea8eb72a4d182a839a3f7a8c1f7bc3f2
+>>>>>>> Add link in header for user invitation
+=======
+<<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
 >>>>>>> Add link in header for user invitation
   
   describe 'inviting new user' do
@@ -153,22 +164,30 @@ end
       fill_in 'Email', with: 'newUser@example.com'
 
 =======
+=======
+>>>>>>> Add link in header for user invitation
   
-  describe 'Email' do
-    
-    it 'sends invitation' do
+  describe 'inviting new user' do
+    xit 'sends invitation email' do
       user = create(:user)
       sign_in user
       visit new_user_path
-      
+
       fill_in 'Email', with: 'newUser@example.com'
+<<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
       
 >>>>>>> Add failing test for user invitation email
+=======
+
+>>>>>>> Add link in header for user invitation
       expect do
         click_button 'Save'
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
+<<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
 <<<<<<< a860b4062addc0fb9c6ea4df7786bf6a22e1fe02
+=======
+>>>>>>> Add link in header for user invitation
 
     xit 'creates invitation object' do
       user = create(:user)
@@ -181,6 +200,7 @@ end
         click_button 'Save'
       end.to change(UserInvitation, :count).by(1)
     end
+<<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
   end
 end
 <<<<<<< 1a769090a3bf0830502328c33ef42eeb83d8f2c0
@@ -193,4 +213,11 @@ end
   end
 end
 >>>>>>> Add failing test for user invitation email
+<<<<<<< 07b7e09bea8eb72a4d182a839a3f7a8c1f7bc3f2
 >>>>>>> Add failing test for user invitation email
+=======
+=======
+  end
+end
+>>>>>>> Add link in header for user invitation
+>>>>>>> Add link in header for user invitation

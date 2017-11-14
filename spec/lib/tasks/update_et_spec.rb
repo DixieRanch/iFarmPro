@@ -45,6 +45,20 @@ describe Tasks::UpdateEt do
     end
   end
 
+  describe '#parse(page)' do
+    it 'returns an array of ET hashes' do
+      stub_request(:get, url).to_return(response_file)
+      page = Mechanize.new.get(url)
+
+      array = Tasks::UpdateEt.new(url).parse(page)
+
+      expect(array[0][:eth]).to eq '0.27'
+      expect(array[0][:doy]).to eq 176
+      expect(array[5][:eth]).to eq '0.23'
+      expect(array[5][:doy]).to eq 181
+    end
+  end
+
   private
 
   def form_file

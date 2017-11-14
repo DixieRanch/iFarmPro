@@ -11,7 +11,7 @@ describe Tasks::UpdateEt do
   end
 
   describe '#pad(weather_station)' do
-    it 'sets CurrentET for next 185 days to nil' do
+    it 'sets CurrentET for next 185 days to nil', :slow do
       weather_station = create(:weather_station)
       station_symbol = weather_station.db_col.to_sym
       update_et = Tasks::UpdateEt.new(url)
@@ -71,7 +71,7 @@ describe Tasks::UpdateEt do
   end
 
   describe '#fetch_parse_update_pad_table' do
-    it 'downloads, updates, and pads CurrentEt' do
+    it 'downloads, updates, and pads CurrentEt', :slow do
       weather_station = create(:weather_station)
       station_symbol = weather_station.db_col.to_sym
       update_et = Tasks::UpdateEt.new(url_prefix)

@@ -142,11 +142,22 @@ end
 >>>>>>> Add link in header for user invitation
 >>>>>>> Add link in header for user invitation
   context 'users dropdown' do
-    it 'has invitation link' do
-      user = create(:user)
-      sign_in user
+    context 'invitation link' do
+      it 'does exist' do
+        user = create(:user)
+        sign_in user
 
-      expect(page).to have_link 'Invite User'
+        expect(page).to have_link 'Invite User'
+      end
+      
+      it 'redirects to invitation form' do
+        user = create(:user)
+        sign_in user
+        
+        click_link 'Invite User'
+        
+        expect(page).to have_title full_title 'Invite User'
+      end
     end
   end
 <<<<<<< 6d268003e283b453e98cbad19a49773368bcb9b7

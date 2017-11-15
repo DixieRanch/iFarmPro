@@ -1,4 +1,5 @@
 class UserInvitationsController < ApplicationController
+<<<<<<< 7a044c75975761ed3e0e097605244ae23bf614df
   skip_before_action :signed_in_user, only: [:edit]
 
   def new
@@ -36,3 +37,8 @@ class UserInvitationsController < ApplicationController
     params.require(:user_invitation).permit([:email])
   end
 end
+=======
+  def new
+  end
+end
+>>>>>>> Add basic file structure for new user invitations

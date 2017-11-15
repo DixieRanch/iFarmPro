@@ -62,8 +62,12 @@ Ifarm::Application.routes.draw do
                                   constraints: { id: /[^\/]+/ }
   resources :password_resets, only: [:show, :new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
+<<<<<<< 7a044c75975761ed3e0e097605244ae23bf614df
   resources :user_invitations, only: [:new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
+=======
+  resources :user_invitations, only: [:new]
+>>>>>>> Add basic file structure for new user invitations
 
   root to: 'static_pages#home'
 

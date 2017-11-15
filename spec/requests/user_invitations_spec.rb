@@ -145,16 +145,23 @@ end
     it 'has invitation link' do
       user = create(:user)
       sign_in user
-      
-      expect(page).to have_link "Invite User"
+
+      expect(page).to have_link 'Invite User'
     end
   end
+<<<<<<< 6d268003e283b453e98cbad19a49773368bcb9b7
 <<<<<<< 07b7e09bea8eb72a4d182a839a3f7a8c1f7bc3f2
 >>>>>>> Add link in header for user invitation
 =======
+=======
+<<<<<<< 2b529f10db9209777388b86e990510fe975122d0
+>>>>>>> Rubocop cleanup to user_invitations_spec
 <<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
 >>>>>>> Add link in header for user invitation
   
+=======
+
+>>>>>>> Rubocop cleanup to user_invitations_spec
   describe 'inviting new user' do
     xit 'sends invitation email' do
       user = create(:user)

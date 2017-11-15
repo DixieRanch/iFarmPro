@@ -13,7 +13,7 @@
 
 require 'rails_helper'
 
-describe WeatherStation, :slow do
+describe WeatherStation do
   valid_attributes = { name: 'Fabian Garcia',
                        db_col: 'fabian_garcia',
                        id_code: 'nmcc-da-1' }
@@ -56,7 +56,7 @@ describe WeatherStation, :slow do
     # NMSU Fabian Garcia data for 2015: 07-01: 0.29; 07-02: 0.27
     let(:start_date) { '2015-07-01' }
     let(:end_date)   { '2015-07-02' }
-    let(:page)       { station.fetch(start_date, end_date) }
+    # let(:page)       { station.fetch(start_date, end_date) }
     let(:array)      { station.parse(page) }
 
     it 'should build a URL for the data page' do
@@ -66,25 +66,50 @@ describe WeatherStation, :slow do
     end
 
     it 'should fetch a webpage' do
+      station = build_stubbed(:weather_station)
+      stub_request(:get,  station.url).to_return(form_file)
+      stub_request(:post, station.url).to_return(response_file)
+
+      page = station.fetch('2017-06-25', '2017-06-30')
+
       expect(page.content_type).to match 'text/html'
     end
 
     it 'should create an array from page data' do
-      expect(array).to eq [{ date: '2015-07-01'.to_date, eth: 0.29 },
-                           { date: '2015-07-02'.to_date, eth: 0.31 }]
+      station = build_stubbed(:weather_station)
+      stub_request(:get,  station.url).to_return(form_file)
+      stub_request(:post, station.url).to_return(response_file)
+      page = station.fetch('2017-06-25', '2017-06-30')
+
+      array = station.parse(page)
+
+      expect(array).to eq [{ date: '2017-06-25'.to_date, eth: 0.27 },
+                           { date: '2017-06-26'.to_date, eth: 0.25 },
+                           { date: '2017-06-27'.to_date, eth: 0.28 },
+                           { date: '2017-06-28'.to_date, eth: 0.3 },
+                           { date: '2017-06-29'.to_date, eth: 0.3 },
+                           { date: '2017-06-30'.to_date, eth: 0.23 }]
     end
 
     it 'should update DailyEts from website data' do
-      station.save
+      station = create(:weather_station)
+      array   = [{ date: '2017-06-25'.to_date, eth: 0.27 },
+                 { date: '2017-06-26'.to_date, eth: 0.25 }]
+
       expect { station.store(array) }.to change { DailyEt.count }.by(2)
-      expect(station.daily_ets.find_by(date: '2015-07-01').eth).to eq 0.29
-      expect(station.daily_ets.find_by(date: '2015-07-02').eth).to eq 0.31
+
+      expect(station.daily_ets.find_by(date: '2017-06-25').eth).to eq 0.27
+      expect(station.daily_ets.find_by(date: '2017-06-26').eth).to eq 0.25
     end
 
     it 'should update the last 30 days of Et data' do
-      station.save
-      expect { station.update_daily_et }.to change { DailyEt.count }.by(30)
-      expect(station.daily_ets.last.date).to eq Date.yesterday
+      # This test is broken -> Model needs refactoring to test messages sent
+      station = create(:weather_station)
+      stub_request(:get,  station.url).to_return(form_file)
+      stub_request(:post, station.url).to_return(response_file)
+
+      expect { station.update_daily_et }.to change { DailyEt.count }.by(6)
+      expect(station.daily_ets.last.date).to eq '2017-06-30'.to_date
     end
   end
 
@@ -110,7 +135,7 @@ describe WeatherStation, :slow do
     end
   end
 
-  describe 'load_history', :slow do
+  describe 'load_history' do
     # This test is so slow, that it is commented out until needed.
 
     # it "should load a weather_staion past et history into DailyEts" do
@@ -126,5 +151,15 @@ describe WeatherStation, :slow do
     #   too_old = 21.years.ago.to_date
     #   expect(station.daily_ets.find_by(date: too_old)).to be_nil
     # end
+  end
+
+  private
+
+  def form_file
+    File.new('./spec/fixtures/weather_request_page.html')
+  end
+
+  def response_file
+    File.new('./spec/fixtures/weather_response_page.html')
   end
 end

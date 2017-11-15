@@ -27,7 +27,7 @@ describe 'SoilApplication' do
                                     href: edit_soil_application_path(soil_app)
     end
 
-    context 'with 31 applications', slow: true do
+    context 'with 31 applications' do
       let(:app_table) { 'table#application_table tbody tr' }
       let(:pagination_link) { "//*[@class='pagination']//a[text()='2']" }
 
@@ -39,7 +39,7 @@ describe 'SoilApplication' do
         visit soil_applications_path
       end
 
-      it 'has pagination links' do
+      it 'has pagination links', :slow do
         expect(page).to have_selector app_table, count: 30
         find(pagination_link).click
         expect(page).to have_selector 'em.current', text: 2

@@ -11,12 +11,9 @@
 require 'rails_helper'
 
 describe Company do
-  valid_attributes = { name: 'Big Old Farm' }
-  let(:company) { Company.new(valid_attributes) }
+  valid_attributes = { name: 'Some company' }
 
-  subject { company }
-
-  it { should be_valid }
+  it { expect(Company.new(valid_attributes)).to be_valid }
 
   describe 'attributes' do
     it { should have_db_column :name }

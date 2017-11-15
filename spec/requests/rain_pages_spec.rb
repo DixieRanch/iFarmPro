@@ -51,7 +51,7 @@ describe 'Rain' do
         expect(page).to have_button('Save')
       end
 
-      context 'with 31 rains', slow: true do
+      context 'with 31 rains' do
         before do
           Company.current_id = user.company.id
           31.times do |i|
@@ -60,7 +60,7 @@ describe 'Rain' do
           visit rains_path
         end
 
-        it 'has pagination links' do
+        it 'has pagination links', :slow do
           expect(page).to have_selector 'table#rain_table tbody tr', count: 30
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)

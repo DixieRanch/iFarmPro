@@ -9,7 +9,7 @@ describe 'Irrigation' do
   end
 
   describe 'index page' do
-    describe 'previous irrigations list', slow: true do
+    describe 'previous irrigations list' do
       let!(:irrigation) { create(:irrigation) }
       let!(:new_irrigation) do
         create(:irrigation, time: irrigation.time + 1.day)
@@ -22,7 +22,7 @@ describe 'Irrigation' do
         visit irrigations_path
       end
 
-      it 'has the correct elements' do
+      it 'has the correct elements', :slow do
         expect(page).to have_selector 'title', text: full_title('Irrigations')
         expect(page).to have_selector 'h1', text: 'Current Irrigations'
         expect(page).to have_selector 'td', text: field_name
@@ -43,7 +43,7 @@ describe 'Irrigation' do
           visit irrigations_path
         end
 
-        it 'has pagination links' do
+        it 'has pagination links', :slow do
           find("//*[@class='pagination']//a[text()='2']").click
           expect(page.status_code).to eq(200)
         end
@@ -109,7 +109,7 @@ describe 'Irrigation' do
       visit edit_irrigation_path(irrigation)
     end
 
-    context 'with valid data', slow: true do
+    context 'with valid data' do
       it 'updates the irrigation and displays success' do
         fill_in 'irrigation_time', with: time
         select('This-One', from: 'irrigation_field_id')

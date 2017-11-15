@@ -9,11 +9,23 @@ module Tasks
       @url = url
     end
 
+    def pad(weather_station)
+      185.times do
+        if @doy < 366
+          @doy += 1
+        else
+          @doy = 1
+        end
+        current_et = CurrentEt.find_by(doy: @doy)
+        current_et[weather_station.db_col] = nil
+        current_et.save!
+      end
+    end
+
     def fetch(weather_station, start_date, end_date)
       # get weather page
       agent = Mechanize.new
-      agent.get("#{@url}/#{weather_station}/request/gdd/et/data")
-
+      agent.get("#{@url}/#{weather_station}/request/gdd/et/data/")
       # edit start and end date
       agent.page.forms[0]['start_date'] = start_date
       agent.page.forms[0]['end_date'] = end_date
@@ -36,19 +48,6 @@ module Tasks
         @doy = row[:doy]
         current_et = CurrentEt.find_by(doy: @doy)
         current_et[weather_station.db_col] = row[:eth]
-        current_et.save!
-      end
-    end
-
-    def pad(weather_station)
-      185.times do
-        if @doy < 366
-          @doy += 1
-        else
-          @doy = 1
-        end
-        current_et = CurrentEt.find_by(doy: @doy)
-        current_et[weather_station.db_col] = nil
         current_et.save!
       end
     end

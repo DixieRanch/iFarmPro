@@ -18,7 +18,7 @@ describe Farm do
   it 'is valid' do
     set_tenant_company
     weather_station = build_stubbed :weather_station
-    
+
     expect(weather_station.farms.build(valid_attributes)).to be_valid
   end
 
@@ -59,6 +59,7 @@ describe Farm do
     it { should accept_nested_attributes_for :blocks }
     it { should accept_nested_attributes_for :irrigation_wells }
     it { should belong_to :weather_station }
+    it { should have_many :rains }
 
     it 'should return blocks ordered by name' do
       farm = create :farm

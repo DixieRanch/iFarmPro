@@ -15,32 +15,27 @@ require 'rails_helper'
 
 describe Rain do
   valid_attributes = { date: '5/1/2013', amount: 0.35 }
-  let(:company) { build_stubbed(:company) }
-  let(:farm) { build_stubbed(:farm) }
-  let(:rain) { farm.rains.build(valid_attributes) }
-  let(:rain_new) { Rain.new }
 
-  before { Company.current_id = company.id }
+  it 'is valid' do
+    set_tenant_company
 
-  subject { rain }
-
-  it { should be_valid }
+    expect(build_stubbed(:farm).rains.build(valid_attributes)).to be_valid
+  end
 
   it 'should have a valid factory' do
-    factory = build(:rain)
-    expect(factory).to be_valid
+    expect(build_stubbed(:rain)).to be_valid
   end
 
   describe 'tenant security' do
-    it 'should have only the current company\'s data' do
-      rain.save
-      wrong_company = create(:company)
-      Company.current_id = wrong_company.id
-      wrong_data = create(:rain)
-      expect(wrong_data).to be_valid
-      Company.current_id = company.id
-      expect(Rain.all).not_to include(wrong_data)
-      expect(Rain.all).to include(rain)
+    it "should have only the current company's data" do
+      set_tenant_company
+      other_companys_data = create :rain
+
+      set_tenant_company
+      this_companys_data = create :rain
+
+      expect(Rain.all).to include this_companys_data
+      expect(Rain.all).not_to include other_companys_data
     end
   end
 
@@ -51,13 +46,13 @@ describe Rain do
     it { should have_db_column :company_id }
 
     it 'formatted date' do
-      rain.date = '4/1'
-      current_year = Time.zone.now.year
-      expect(rain.formatted_date).to eq "April 1, #{current_year}"
+      rain = Rain.new date: '4/1'
+
+      expect(rain.formatted_date).to eq "April 1, #{Time.zone.now.year}"
     end
 
     it 'empty date' do
-      expect(rain_new.formatted_date).to eq nil
+      expect(Rain.new.formatted_date).to eq nil
     end
   end
 

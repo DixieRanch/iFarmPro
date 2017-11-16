@@ -18,8 +18,6 @@ require 'rails_helper'
 describe Field do
   valid_attributes = { name: '1', soil_class_id: 1 }
 
-  after { Company.current_id = nil }
-
   it 'is valid' do
     set_tenant_company
 

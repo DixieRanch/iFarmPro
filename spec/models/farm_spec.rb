@@ -62,6 +62,7 @@ describe Farm do
     it { should have_many :rains }
 
     it 'should return blocks ordered by name' do
+      set_tenant_company
       farm = create :farm
       second = farm.blocks.create name: 'Inbtween'
       third  = farm.blocks.create name: 'Last'
@@ -71,6 +72,7 @@ describe Farm do
     end
 
     it 'should return irrigation_wells ordered by name' do
+      set_tenant_company
       farm = create :farm
       second = farm.irrigation_wells.create name: 'Inbetween'
       third  = farm.irrigation_wells.create name: 'Last'

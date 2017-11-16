@@ -57,6 +57,7 @@ describe Block do
     it { should accept_nested_attributes_for :fields }
 
     it 'should return fields ordered by name' do
+      set_tenant_company
       block = create :block
       second = block.fields.create(name: 'Inbtween', soil_class_id: 1)
       third  = block.fields.create(name: 'Last', soil_class_id: 1)

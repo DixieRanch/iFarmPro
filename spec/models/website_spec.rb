@@ -18,15 +18,10 @@ RSpec.describe Website, type: :model do
     url:  'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/'
   }
 
-  let(:site) { Website.new(valid_attributes) }
-
-  subject { site }
-
-  it { should be_valid }
+  it { expect(Website.new(valid_attributes)).to be_valid }
 
   it 'should have a valid factory' do
-    site = build(:website)
-    expect(site).to be_valid
+    expect(build_stubbed(:website)).to be_valid
   end
 
   context 'validations' do

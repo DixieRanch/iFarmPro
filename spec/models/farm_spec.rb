@@ -15,7 +15,12 @@ require 'rails_helper'
 describe Farm do
   valid_attributes = { name: 'Example Farm' }
 
-  it { expect(Company.new(valid_attributes)).to be_valid }
+  it 'is valid' do
+    set_tenant_company
+    weather_station = build_stubbed :weather_station
+    
+    expect(weather_station.farms.build(valid_attributes)).to be_valid
+  end
 
   it 'should have a valid factory' do
     set_tenant_company

@@ -9,7 +9,7 @@ scope group: :red_green_refactor
 
 # This group allows to skip running RuboCop when RSpec failed.
 group :red_green_refactor, halt_on_fail: true do
-  guard :rspec, cmd: 'spring rspec --tag ~slow',
+  guard :rspec, cmd: 'spring rspec --tag ~slow --tag ~js',
                 all_after_pass: false,
                 failed_mode: :keep do
     watch(%r{^spec/.+_spec\.rb$})

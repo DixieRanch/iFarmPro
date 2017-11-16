@@ -85,7 +85,7 @@ describe 'Irrigation' do
         end
       end
 
-      it 'has js for adding meter readings', js: true, slow: true do
+      it 'has js for adding meter readings', js: true do
         create(:irrigation_well)
         init_meter_count = MeterReading.count
         visit irrigations_path

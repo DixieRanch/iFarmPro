@@ -79,7 +79,7 @@ describe 'ApplicationPages' do
   end
 
   describe 'New User signup' do
-    it 'goes from initial setup to irrigation schedule', js: true, slow: true do
+    it 'goes from initial setup to irrigation schedule', js: true do
       sign_up_new_user
 
       expect(page).to have_title 'Add Farm'

@@ -18,6 +18,8 @@ require 'rails_helper'
 describe Field do
   valid_attributes = { name: '1', soil_class_id: 1 }
 
+  it_behaves_like 'a tenant model'
+
   it 'is valid' do
     set_tenant_company
 
@@ -28,19 +30,6 @@ describe Field do
     set_tenant_company
 
     expect(build_stubbed(:field)).to be_valid
-  end
-
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      set_tenant_company
-      other_companys_data = create :field
-
-      set_tenant_company
-      this_companys_data = create :field
-
-      expect(Field.all).to include this_companys_data
-      expect(Field.all).not_to include other_companys_data
-    end
   end
 
   describe 'attributes' do

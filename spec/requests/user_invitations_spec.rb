@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 describe 'UserInvitations' do
+<<<<<<< 4e8e6bbdd5235a0c0194a432d744a0c54af4ed9e
 <<<<<<< ff5f42399d58afee8c1a7a40ef6868604f5687b4
 <<<<<<< a860b4062addc0fb9c6ea4df7786bf6a22e1fe02
 =======
 >>>>>>> Add link in header for user invitation
   context 'users dropdown' do
+=======
+  describe 'users dropdown' do
+>>>>>>> Add form to submit email for invitations then redirect to schedule
     context 'invitation link' do
       it 'does exist' do
         user = create(:user)
@@ -13,13 +17,13 @@ describe 'UserInvitations' do
 
         expect(page).to have_link 'Invite User'
       end
-      
+
       it 'redirects to invitation form' do
         user = create(:user)
         sign_in user
-        
+
         click_link 'Invite User'
-        
+
         expect(page).to have_title full_title 'Invite User'
       end
     end
@@ -29,8 +33,23 @@ describe 'UserInvitations' do
   
 =======
 
+<<<<<<< 4e8e6bbdd5235a0c0194a432d744a0c54af4ed9e
 >>>>>>> Rubocop cleanup to user_invitations_spec
   describe 'inviting new user' do
+=======
+  describe 'when inviting new user' do
+    it 'redirects to schedule' do
+      user = create(:user)
+      sign_in user
+      click_link 'Invite User'
+      fill_in 'Email', with: 'newUser@example.com'
+      
+      click_button 'Send Invitation'
+      
+      expect(page).to have_title full_title 'Schedule'
+    end
+    
+>>>>>>> Add form to submit email for invitations then redirect to schedule
     xit 'sends invitation email' do
       user = create(:user)
       sign_in user

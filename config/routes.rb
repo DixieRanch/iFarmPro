@@ -62,12 +62,16 @@ Ifarm::Application.routes.draw do
                                   constraints: { id: /[^\/]+/ }
   resources :password_resets, only: [:show, :new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
+<<<<<<< cfefa529eda5b5f0f7de192cdefd7b86cfdfe062
 <<<<<<< 7a044c75975761ed3e0e097605244ae23bf614df
   resources :user_invitations, only: [:new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
 =======
   resources :user_invitations, only: [:new]
 >>>>>>> Add basic file structure for new user invitations
+=======
+  resources :user_invitations, only: [:new, :create]
+>>>>>>> Add form to submit email for invitations then redirect to schedule
 
   root to: 'static_pages#home'
 

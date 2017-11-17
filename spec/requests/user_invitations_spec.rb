@@ -189,13 +189,28 @@ end
       sign_in user
       click_link 'Invite User'
       fill_in 'Email', with: 'newUser@example.com'
-      
+
       click_button 'Send Invitation'
-      
+
       expect(page).to have_title full_title 'Schedule'
     end
+<<<<<<< 4178bfb756b00ea44e97a1dcdc655f187c02ea78
     
 >>>>>>> Add form to submit email for invitations then redirect to schedule
+=======
+
+    it 'displays a message' do
+      user = create(:user)
+      sign_in user
+      click_link 'Invite User'
+      fill_in 'Email', with: 'newUser@example.com'
+
+      click_button 'Send Invitation'
+
+      expect(page).to have_css('div.alert.alert-success', text: 'Invitation')
+    end
+
+>>>>>>> Add flash message upon successful form submission
     xit 'sends invitation email' do
       user = create(:user)
       sign_in user

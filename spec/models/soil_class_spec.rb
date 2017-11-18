@@ -15,14 +15,10 @@ describe SoilClass, :not_a_tenant_model do
   valid_attributes = { name: 'Sandy Loam',
                        aw:    8.4 }
 
-  let(:soil_class) { SoilClass.new(valid_attributes) }
-
-  subject { soil_class }
-
-  it { should be_valid }
+  it { expect(SoilClass.new(valid_attributes)).to be_valid }
 
   it 'should have a valid Factory' do
-    expect(FactoryGirl.build(:soil_class)).to be_valid
+    expect(build(:soil_class)).to be_valid
   end
 
   describe 'attribute' do

@@ -27,19 +27,6 @@ describe Block do
     expect(build_stubbed(:block)).to be_valid
   end
 
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      set_tenant_company
-      other_companys_data = create :block
-
-      set_tenant_company
-      this_companys_data = create :block
-
-      expect(Block.all).to include this_companys_data
-      expect(Block.all).not_to include other_companys_data
-    end
-  end
-
   describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :farm }

@@ -26,19 +26,6 @@ describe Rain do
     expect(build_stubbed(:rain)).to be_valid
   end
 
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      set_tenant_company
-      other_companys_data = create :rain
-
-      set_tenant_company
-      this_companys_data = create :rain
-
-      expect(Rain.all).to include this_companys_data
-      expect(Rain.all).not_to include other_companys_data
-    end
-  end
-
   describe 'attribute' do
     it { should have_db_column :date }
     it { should have_db_column :amount }

@@ -18,8 +18,6 @@ require 'rails_helper'
 describe Field do
   valid_attributes = { name: '1', soil_class_id: 1 }
 
-  it_behaves_like 'a tenant model'
-
   it 'is valid' do
     set_tenant_company
 

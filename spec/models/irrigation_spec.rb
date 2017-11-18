@@ -32,21 +32,6 @@ describe Irrigation do
     expect(factory).to be_valid
   end
 
-  describe 'security' do
-    it "should have only the current company's data" do
-      irrigation.save
-      wrong_company = FactoryGirl.build_stubbed(:company)
-      Company.current_id = wrong_company.id
-      wrong_data = FactoryGirl.create(:irrigation)
-      expect(wrong_data).to be_valid
-      expect(Irrigation.all).to include(wrong_data)
-      expect(Irrigation.all).not_to include(irrigation)
-      Company.current_id = company.id
-      expect(Irrigation.all).not_to include(wrong_data)
-      expect(Irrigation.all).to include(irrigation)
-    end
-  end
-
   describe 'attribute' do
     it { should have_db_column :time }
     it { should have_db_column :field_id }

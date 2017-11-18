@@ -28,19 +28,6 @@ describe Farm do
     expect(build_stubbed(:farm)).to be_valid
   end
 
-  describe 'tenant security' do
-    it "has only the current company's data" do
-      set_tenant_company
-      other_companys_data = create :farm
-
-      set_tenant_company
-      this_companys_data = create :farm
-
-      expect(Farm.all).to include this_companys_data
-      expect(Farm.all).not_to include other_companys_data
-    end
-  end
-
   describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :company_id }

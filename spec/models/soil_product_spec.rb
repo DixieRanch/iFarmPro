@@ -31,19 +31,6 @@ describe SoilProduct do
     expect(factory).to be_valid
   end
 
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      wrong_company = FactoryGirl.create(:company)
-      Company.current_id = wrong_company.id
-      child = SoilProduct.create(valid_attributes)
-      expect(child).to be_valid
-      Company.current_id = company.id
-      product.save
-      expect(SoilProduct.all).not_to include(child)
-      expect(SoilProduct.all).to include(product)
-    end
-  end
-
   describe 'attribute' do
     it { should have_db_column :name }
     it { should have_db_column :company_id }

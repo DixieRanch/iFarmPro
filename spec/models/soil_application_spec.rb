@@ -36,18 +36,6 @@ describe SoilApplication do
     expect(factory).to be_valid
   end
 
-  describe 'security' do
-    it "has only the current company's data" do
-      application.save
-      wrong_company = create(:company)
-      Company.current_id = wrong_company.id
-      wrong_data = create(:soil_application)
-      expect(wrong_data).to be_valid
-      expect(SoilApplication.all).not_to include(application)
-      expect(SoilApplication.all).to include(wrong_data)
-    end
-  end
-
   describe 'attributes' do
     it { should have_db_column :company_id }
     it { should have_db_column :field_id }

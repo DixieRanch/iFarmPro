@@ -19,25 +19,14 @@ describe IrrigationWell do
   it 'is valid ' do
     set_tenant_company
     farm = build_stubbed :farm
+
     expect(farm.irrigation_wells.build(valid_attributes)).to be_valid
   end
 
   it 'should have a valid factory' do
     set_tenant_company
+
     expect(build_stubbed(:irrigation_well)).to be_valid
-  end
-
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      set_tenant_company
-      other_companys_data = create :irrigation_well
-
-      set_tenant_company
-      this_companys_data = create :irrigation_well
-
-      expect(IrrigationWell.all).to include this_companys_data
-      expect(IrrigationWell.all).not_to include other_companys_data
-    end
   end
 
   describe 'attributes' do

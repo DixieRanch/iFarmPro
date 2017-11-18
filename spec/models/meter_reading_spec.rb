@@ -37,19 +37,6 @@ describe MeterReading do
     expect(factory).to be_valid
   end
 
-  describe 'security' do
-    it "should have only the current company's data" do
-      meter_reading.save
-      wrong_company = FactoryGirl.create(:company)
-      Company.current_id = wrong_company.id
-      wrong_data = FactoryGirl.create(:meter_reading)
-      expect(wrong_data).to be_valid
-      Company.current_id = company.id
-      expect(MeterReading.all).not_to include(wrong_data)
-      expect(MeterReading.all).to include(meter_reading)
-    end
-  end
-
   describe 'attributes' do
     it { should have_db_column :start }
     it { should have_db_column :stop }

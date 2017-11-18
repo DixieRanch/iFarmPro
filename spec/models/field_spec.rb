@@ -56,8 +56,9 @@ describe Field do
 
   describe 'relationships' do
     it { should belong_to :block }
-    it { should have_many :irrigations }
     it { should belong_to :soil_class }
+    it { should have_many :irrigations }
+    it { should have_many :soil_applications }
   end
 
   describe '#name_with_block' do

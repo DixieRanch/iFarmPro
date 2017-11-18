@@ -10,7 +10,7 @@
 
 require 'rails_helper'
 
-describe Company do
+describe Company, :not_a_tenant_model do
   valid_attributes = { name: 'Some company' }
 
   it { expect(Company.new(valid_attributes)).to be_valid }

@@ -16,7 +16,7 @@
 
 require 'rails_helper'
 
-describe User do
+describe User, :not_a_tenant_model do
   valid_attributes = { email: 'user@example.com',
                        password: 'foobar',
                        password_confirmation: 'foobar' }

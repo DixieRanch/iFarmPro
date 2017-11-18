@@ -11,7 +11,7 @@
 
 require 'rails_helper'
 
-describe SoilClass do
+describe SoilClass, :not_a_tenant_model do
   valid_attributes = { name: 'Sandy Loam',
                        aw:    8.4 }
 

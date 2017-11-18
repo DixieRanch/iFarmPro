@@ -13,7 +13,7 @@
 
 require 'rails_helper'
 
-describe WeatherStation do
+describe WeatherStation, :not_a_tenant_model do
   valid_attributes = { name: 'Fabian Garcia',
                        db_col: 'fabian_garcia',
                        id_code: 'nmcc-da-1' }

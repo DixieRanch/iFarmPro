@@ -12,7 +12,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Website, type: :model do
+RSpec.describe Website, :not_a_tenant_model do
   valid_attributes = {
     name: 'NMSU',
     url:  'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/'

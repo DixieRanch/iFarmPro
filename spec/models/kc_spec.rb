@@ -11,7 +11,7 @@
 
 require 'rails_helper'
 
-describe Kc do
+describe Kc, :not_a_tenant_model do
   let(:kc) { Kc.new }
 
   subject { kc }

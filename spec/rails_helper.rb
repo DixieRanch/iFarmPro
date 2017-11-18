@@ -88,6 +88,7 @@ RSpec.configure do |config|
   config.before(:each) { reset_email }
 
   # Reset tenant security after each speck
+  config.include_context 'a tenant model', type: :model
   config.after(:each) { Company.current_id = nil }
 end
 

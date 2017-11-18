@@ -11,7 +11,7 @@
 
 require 'rails_helper'
 
-describe CurrentEt do
+describe CurrentEt, :not_a_tenant_model do
   let(:current_et) { CurrentEt.new }
 
   subject { current_et }

@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Report do
+describe Report, :not_a_tenant_model do
 end

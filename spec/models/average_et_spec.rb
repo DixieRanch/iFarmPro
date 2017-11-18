@@ -12,7 +12,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AverageEt, type: :model do
+RSpec.describe AverageEt, :not_a_tenant_model do
   valid_attributes = { doy: 1,
                        eth: 0.35 }
   let(:wx_station) { build_stubbed(:weather_station) }

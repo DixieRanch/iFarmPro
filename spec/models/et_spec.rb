@@ -11,7 +11,7 @@
 
 require 'rails_helper'
 
-describe Et do
+describe Et, :not_a_tenant_model do
   let(:et) { Et.new }
 
   subject { et }

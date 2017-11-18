@@ -11,7 +11,7 @@
 
 require 'rails_helper'
 
-describe SoilApplicationUnit do
+describe SoilApplicationUnit, :not_a_tenant_model do
   valid_attributes = { name:   'Gal',
                        density: 11 }
 

@@ -18,19 +18,9 @@ describe WeatherStation, :not_a_tenant_model do
                        db_col: 'fabian_garcia',
                        id_code: 'nmcc-da-1' }
 
-  # website_attributes = {
-  #   name:       'NMSU',
-  #   url:        'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/',
-  #   url_suffix: '/request/gdd/et/data/'
-  # }
-
-  # let(:website) { Website.create(website_attributes) }
-  # let(:station) { website.weather_stations.build(valid_attributes) }
-
-  # subject { station }
-
   it 'is valid' do
     website = build_stubbed :website
+
     expect(website.weather_stations.build(valid_attributes)).to be_valid
   end
 

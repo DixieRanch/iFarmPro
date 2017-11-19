@@ -17,18 +17,17 @@ require 'rails_helper'
 
 describe SoilProduct do
   valid_attributes = { name: 'UAN' }
-  let(:company) { build_stubbed(:company) }
-  let(:product) { SoilProduct.new(valid_attributes) }
 
-  subject { product }
+  it 'is valid with valid_attributes' do
+    set_tenant_company
 
-  before { Company.current_id = company.id }
-
-  it { should be_valid }
+    expect(SoilProduct.new(valid_attributes)).to be_valid
+  end
 
   it 'has a valid factory' do
-    factory = FactoryGirl.build(:soil_product)
-    expect(factory).to be_valid
+    set_tenant_company
+
+    expect(build_stubbed(:soil_product)).to be_valid
   end
 
   describe 'attribute' do

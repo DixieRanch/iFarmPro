@@ -24,8 +24,7 @@ describe User, :not_a_tenant_model do
   it { expect(User.new(valid_attributes)).to be_valid }
 
   it 'should have a valid factory' do
-    factory = FactoryGirl.build(:user)
-    expect(factory).to be_valid
+    expect(build_stubbed(:user)).to be_valid
   end
 
   describe 'attributes' do

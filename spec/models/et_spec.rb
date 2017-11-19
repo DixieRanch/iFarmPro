@@ -12,10 +12,6 @@
 require 'rails_helper'
 
 describe Et, :not_a_tenant_model do
-  let(:et) { Et.new }
-
-  subject { et }
-
   describe 'attributes' do
     it { should have_db_column :doy }
     it { should have_db_column :fabian_garcia }

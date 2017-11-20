@@ -15,39 +15,17 @@
 require 'rails_helper'
 
 describe MeterReading do
-  let(:company) { build_stubbed(:company) }
-  let(:irrigation) { build_stubbed(:irrigation) }
-  let(:well) { build_stubbed(:irrigation_well) }
+  valid_attributes = { start: 112233,
+                       stop: 223344,
+                       irrigation_well_id: 1 }
 
-  let(:meter_reading) { irrigation.meter_readings.build(@valid_attributes) }
-
-  before do
-    Company.current_id = company.id
-    @valid_attributes = { start: 112233,
-                          stop: 223344,
-                          irrigation_well_id: well.id }
+  it 'is valid wtih valid_attributes' do
+    irrigation = build_stubbed :irrigation
+    expect(irrigation.meter_readings.new(valid_attributes)).to be_valid
   end
-
-  subject { meter_reading }
-
-  it { should be_valid }
 
   it 'should have a valid factory' do
-    factory = FactoryGirl.build(:meter_reading)
-    expect(factory).to be_valid
-  end
-
-  describe 'security' do
-    it "should have only the current company's data" do
-      meter_reading.save
-      wrong_company = FactoryGirl.create(:company)
-      Company.current_id = wrong_company.id
-      wrong_data = FactoryGirl.create(:meter_reading)
-      expect(wrong_data).to be_valid
-      Company.current_id = company.id
-      expect(MeterReading.all).not_to include(wrong_data)
-      expect(MeterReading.all).to include(meter_reading)
-    end
+    expect(build_stubbed(:meter_reading)).to be_valid
   end
 
   describe 'attributes' do

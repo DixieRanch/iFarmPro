@@ -12,19 +12,18 @@
 
 require 'rails_helper'
 
-RSpec.describe AverageEt, type: :model do
+RSpec.describe AverageEt, :not_a_tenant_model do
   valid_attributes = { doy: 1,
                        eth: 0.35 }
-  let(:wx_station) { build_stubbed(:weather_station) }
-  let(:avg_et)     { wx_station.average_ets.new(valid_attributes) }
 
-  subject { avg_et }
+  it 'is valid with valid_attributes' do
+    weather_station = build_stubbed :weather_station
 
-  it { should be_valid }
+    expect(weather_station.average_ets.new(valid_attributes)).to be_valid
+  end
 
   it 'should have a valid factory' do
-    factory = build(:average_et)
-    expect(factory).to be_valid
+    expect(build_stubbed(:average_et)).to be_valid
   end
 
   describe 'validations' do

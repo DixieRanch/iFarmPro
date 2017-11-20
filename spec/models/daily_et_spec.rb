@@ -12,20 +12,18 @@
 
 require 'rails_helper'
 
-RSpec.describe DailyEt, type: :model do
+RSpec.describe DailyEt, :not_a_tenant_model do
   valid_attributes = { date: '5/7/2013',
                        eth:   0.27 }
 
-  let(:wx_station) { create(:weather_station) }
-  let(:daily_et) { wx_station.daily_ets.build(valid_attributes) }
+  it 'is valid with valid_attributes' do
+    weather_station = build_stubbed :weather_station
 
-  subject { daily_et }
-
-  it { should be_valid }
+    expect(weather_station.daily_ets.new(valid_attributes)).to be_valid
+  end
 
   it 'should have a valid factory' do
-    factory = FactoryGirl.build(:daily_et)
-    expect(factory).to be_valid
+    expect(build_stubbed(:daily_et)).to be_valid
   end
 
   describe 'attributes' do

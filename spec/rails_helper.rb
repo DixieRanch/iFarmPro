@@ -86,6 +86,10 @@ RSpec.configure do |config|
 
   # Reset delivered email before each spec
   config.before(:each) { reset_email }
+
+  # Reset tenant security after each speck
+  config.include_context 'a tenant model', type: :model
+  config.after(:each) { Company.current_id = nil }
 end
 
 Capybara.configure do |config|

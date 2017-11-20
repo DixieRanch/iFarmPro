@@ -13,30 +13,19 @@
 
 require 'rails_helper'
 
-describe WeatherStation do
+describe WeatherStation, :not_a_tenant_model do
   valid_attributes = { name: 'Fabian Garcia',
                        db_col: 'fabian_garcia',
                        id_code: 'nmcc-da-1' }
 
-  website_attributes = {
-    name:       'NMSU',
-    url:        'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/',
-    url_suffix: '/request/gdd/et/data/'
-  }
+  it 'is valid' do
+    website = build_stubbed :website
 
-  let(:website) { Website.create(website_attributes) }
-  let(:station) { website.weather_stations.build(valid_attributes) }
-
-  subject { station }
-
-  it { should be_valid }
-
-  it 'should have a valid factory' do
-    station = build(:weather_station)
-    expect(station).to be_valid
+    expect(website.weather_stations.build(valid_attributes)).to be_valid
   end
 
-  describe 'unvalidated attributes' do
+  it 'should have a valid factory' do
+    expect(build_stubbed(:weather_station)).to be_valid
   end
 
   describe 'validations' do
@@ -53,15 +42,11 @@ describe WeatherStation do
   end
 
   describe 'methods to update_daily_et' do
-    # NMSU Fabian Garcia data for 2015: 07-01: 0.29; 07-02: 0.27
-    let(:start_date) { '2015-07-01' }
-    let(:end_date)   { '2015-07-02' }
-    # let(:page)       { station.fetch(start_date, end_date) }
-    let(:array)      { station.parse(page) }
-
     it 'should build a URL for the data page' do
-      url = station.url
       correct_url = 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+
+      url = build_stubbed(:website).weather_stations.build(valid_attributes).url
+
       expect(url).to eq correct_url
     end
 
@@ -104,7 +89,7 @@ describe WeatherStation do
 
     it 'should update the last 30 days of Et data' do
       # This test is broken -> Model needs refactoring to test messages sent
-      station = create(:weather_station)
+      station = create :weather_station
       stub_request(:get,  station.url).to_return(form_file)
       stub_request(:post, station.url).to_return(response_file)
 
@@ -114,23 +99,27 @@ describe WeatherStation do
   end
 
   describe 'methods to update_avg_et' do
-    before :each do
-      # create daily_ets with doy: 2 avg of 0.23, & doy: 3 avg of 0.27
-      station.save
+    it 'should store average et by day of year in AverageEts' do
+      station = create :weather_station
       station.daily_ets.create(date: '2014-01-02', eth: 0.21)
       station.daily_ets.create(date: '2015-01-02', eth: 0.25)
       station.daily_ets.create(date: '2013-01-03', eth: 0.25)
       station.daily_ets.create(date: '2015-01-03', eth: 0.29)
-    end
 
-    it 'should store average et by day of year in AverageEts' do
       station.update_average_et
+
       expect(station.average_ets.find_by(doy: 2).eth).to eq 0.23
       expect(station.average_ets.find_by(doy: 3).eth).to eq 0.27
     end
 
     it 'should create an hash of average Et by day of year' do
+      station = create :weather_station
+      station.daily_ets.create(date: '2014-01-02', eth: 0.21)
+      station.daily_ets.create(date: '2015-01-02', eth: 0.25)
+      station.daily_ets.create(date: '2013-01-03', eth: 0.25)
+      station.daily_ets.create(date: '2015-01-03', eth: 0.29)
       correct_hash = { 2 => 0.23, 3 => 0.27 }
+
       expect(station.doy_average_et_hash).to eq correct_hash
     end
   end

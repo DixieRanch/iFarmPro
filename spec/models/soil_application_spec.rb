@@ -16,36 +16,21 @@
 require 'rails_helper'
 
 describe SoilApplication do
-  let(:company) { build_stubbed(:company) }
-  let(:field) { build_stubbed(:field) }
-  let(:product) { build_stubbed(:soil_product) }
-  let(:application) { field.soil_applications.build(@valid_attributes) }
+  valid_attributes = { quantity: 150,
+                       date: '01/01/2014',
+                       soil_product_id: 1,
+                       soil_application_unit_id: 1 }
 
-  subject { application }
+  it 'is valid' do
+    field = build_stubbed(:field)
 
-  before do
-    Company.current_id = company.id
-    @valid_attributes = { quantity: 150, soil_product_id: product.id,
-                          date: '01/01/2014', soil_application_unit_id: 1 }
+    expect(field.soil_applications.new(valid_attributes)).to be_valid
   end
-
-  it { should be_valid }
 
   it 'has a valid factory' do
-    factory = build(:soil_application)
-    expect(factory).to be_valid
-  end
+    set_tenant_company
 
-  describe 'security' do
-    it "has only the current company's data" do
-      application.save
-      wrong_company = create(:company)
-      Company.current_id = wrong_company.id
-      wrong_data = create(:soil_application)
-      expect(wrong_data).to be_valid
-      expect(SoilApplication.all).not_to include(application)
-      expect(SoilApplication.all).to include(wrong_data)
-    end
+    expect(build_stubbed(:soil_application)).to be_valid
   end
 
   describe 'attributes' do
@@ -67,14 +52,15 @@ describe SoilApplication do
   describe 'method' do
     describe 'formatted_date' do
       it 'reutrns nil when nil' do
-        application.date = ''
-        expect(application.formatted_date).to eq nil
+        soil_application = SoilApplication.new
+
+        expect(soil_application.formatted_date).to eq nil
       end
 
       it 'returns date formatted as date' do
-        application.date = '1/8'
-        year = Time.zone.now.year
-        expect(application.formatted_date).to eq "January 8, #{year}"
+        soil_application = SoilApplication.new(date: '1/8/2017')
+
+        expect(soil_application.formatted_date).to eq 'January 8, 2017'
       end
     end
   end

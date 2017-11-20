@@ -14,62 +14,43 @@ require 'rails_helper'
 
 describe Block do
   valid_attributes = { name: '1' }
-  let(:company) { build_stubbed(:company) }
-  let(:farm) { build_stubbed(:farm) }
-  let(:block) { farm.blocks.new(valid_attributes) }
 
-  before do
-    Company.current_id = company.id
+  it 'is valid' do
+    set_tenant_company
+
+    expect(build_stubbed(:farm).blocks.new(valid_attributes)).to be_valid
   end
-
-  subject { block }
-
-  it { should be_valid }
 
   it 'should have a valid factory' do
-    factory = FactoryGirl.build(:block)
-    expect(factory).to be_valid
-  end
+    set_tenant_company
 
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      wrong_company = FactoryGirl.build_stubbed(:company)
-      Company.current_id = wrong_company.id
-      parent = FactoryGirl.build_stubbed(:farm)
-      expect(parent).to be_valid
-      child = parent.blocks.create(valid_attributes)
-      expect(child).to be_valid
-      Company.current_id = company.id
-      block.save
-      expect(Block.all).not_to include(child)
-      expect(Block.all).to include(block)
-    end
-  end
-
-  describe 'unvalidated attributes' do
+    expect(build_stubbed(:block)).to be_valid
   end
 
   describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :farm }
     it { should validate_presence_of :company_id }
-    it {
-      should validate_uniqueness_of(:name).case_insensitive
-                                          .scoped_to :farm_id
-    }
     it { should validate_length_of(:name).is_at_most 8 }
+    it 'has a unique name scoped to farm' do
+      block = build_stubbed(:farm).blocks.new(valid_attributes)
+
+      expect(block).to validate_uniqueness_of(:name).case_insensitive
+                                                    .scoped_to :farm_id
+    end
   end
 
   describe 'association' do
     it { should accept_nested_attributes_for :fields }
 
     it 'should return fields ordered by name' do
-      block.save
+      set_tenant_company
+      block = create :block
       second = block.fields.create(name: 'Inbtween', soil_class_id: 1)
-      third = block.fields.create(name: 'Last', soil_class_id: 1)
-      first = block.fields.create(name: 'First', soil_class_id: 1)
-      correct_order = [first, second, third]
-      expect(block.fields.to_a).to eq correct_order
+      third  = block.fields.create(name: 'Last', soil_class_id: 1)
+      first  = block.fields.create(name: 'First', soil_class_id: 1)
+
+      expect(block.fields.to_a).to eq [first, second, third]
     end
   end
 end

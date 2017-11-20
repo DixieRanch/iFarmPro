@@ -15,32 +15,17 @@ require 'rails_helper'
 describe Farm do
   valid_attributes = { name: 'Example Farm' }
 
-  let(:company)         { build_stubbed(:company) }
-  let(:weather_station) { create(:weather_station) }
-  let(:farm)            { weather_station.farms.new(valid_attributes) }
+  it 'is valid' do
+    set_tenant_company
+    weather_station = build_stubbed :weather_station
 
-  subject { farm }
-
-  before { Company.current_id = company.id }
-
-  it { should be_valid }
-
-  it 'should have a valid factory' do
-    farm = FactoryGirl.build(:farm)
-    expect(farm).to be_valid
+    expect(weather_station.farms.build(valid_attributes)).to be_valid
   end
 
-  describe 'tenant security' do
-    it "should have only the current company's data" do
-      wrong_company = FactoryGirl.create(:company)
-      Company.current_id = wrong_company.id
-      child = weather_station.farms.create(valid_attributes)
-      expect(child).to be_valid
-      Company.current_id = company.id
-      farm.save
-      expect(Farm.all).not_to include(child)
-      expect(Farm.all).to include(farm)
-    end
+  it 'should have a valid factory' do
+    set_tenant_company
+
+    expect(build_stubbed(:farm)).to be_valid
   end
 
   describe 'attributes' do
@@ -50,34 +35,37 @@ describe Farm do
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:name) }
+    it { should validate_presence_of :name }
     it { should validate_uniqueness_of(:name).scoped_to(:company_id) }
     it { should validate_length_of(:name).is_at_most(50) }
-    it { should validate_presence_of(:company_id) }
-    it { should validate_presence_of(:weather_station) }
+    it { should validate_presence_of :company_id }
+    it { should validate_presence_of :weather_station }
   end
 
   describe 'associations' do
     it { should accept_nested_attributes_for :blocks }
     it { should accept_nested_attributes_for :irrigation_wells }
     it { should belong_to :weather_station }
+    it { should have_many :rains }
 
     it 'should return blocks ordered by name' do
-      farm.save
-      second = farm.blocks.create(name: 'Inbtween')
-      third = farm.blocks.create(name: 'Last')
-      first = farm.blocks.create(name: 'First')
-      correct_order = [first, second, third]
-      expect(farm.blocks.to_a).to eq correct_order
+      set_tenant_company
+      farm = create :farm
+      second = farm.blocks.create name: 'Inbtween'
+      third  = farm.blocks.create name: 'Last'
+      first  = farm.blocks.create name: 'First'
+
+      expect(farm.blocks.to_a).to eq [first, second, third]
     end
 
     it 'should return irrigation_wells ordered by name' do
-      farm.save
-      second = farm.irrigation_wells.create(name: 'Inbetween')
-      third = farm.irrigation_wells.create(name: 'Last')
-      first = farm.irrigation_wells.create(name: 'First')
-      correct_order = [first, second, third]
-      expect(farm.irrigation_wells.to_a).to eq correct_order
+      set_tenant_company
+      farm = create :farm
+      second = farm.irrigation_wells.create name: 'Inbetween'
+      third  = farm.irrigation_wells.create name: 'Last'
+      first  = farm.irrigation_wells.create name: 'First'
+
+      expect(farm.irrigation_wells.to_a).to eq [first, second, third]
     end
   end
 end

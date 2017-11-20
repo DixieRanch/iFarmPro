@@ -37,3 +37,7 @@ def submit_signin_form_for(user)
   fill_in 'Password', with: user.password
   click_button 'Sign in'
 end
+
+def set_tenant_company
+  Company.current_id = build_stubbed(:company).id
+end

@@ -11,11 +11,7 @@
 
 require 'rails_helper'
 
-describe Kc do
-  let(:kc) { Kc.new }
-
-  subject { kc }
-
+describe Kc, :not_a_tenant_model do
   describe 'attributes' do
     it { should have_db_column :doy }
     it { should have_db_column :pecan }

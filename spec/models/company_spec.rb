@@ -10,10 +10,14 @@
 
 require 'rails_helper'
 
-describe Company do
+describe Company, :not_a_tenant_model do
   valid_attributes = { name: 'Some company' }
 
   it { expect(Company.new(valid_attributes)).to be_valid }
+
+  it 'has a valid factory' do
+    expect(build_stubbed(:company)).to be_valid
+  end
 
   describe 'attributes' do
     it { should have_db_column :name }

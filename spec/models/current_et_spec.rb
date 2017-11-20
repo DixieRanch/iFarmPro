@@ -11,21 +11,21 @@
 
 require 'rails_helper'
 
-describe CurrentEt do
-  let(:current_et) { CurrentEt.new }
+describe CurrentEt, :not_a_tenant_model do
+  valid_attributes = { fabian_garcia: 0.23 }
 
-  subject { current_et }
+  it { expect(CurrentEt.new(valid_attributes)).to be_valid }
 
   describe 'attributes' do
     it { should have_db_column :doy }
     it { should have_db_column :fabian_garcia }
   end
 
-  context 'when updating et' do
-    it "doesn't save et with a 0.0 value" do
-      expect(current_et).to be_valid
-      current_et.fabian_garcia = 0.0
-      expect(current_et.save).to be false
-    end
+  describe 'validates' do
+    it { should validate_numericality_of(:fabian_garcia).allow_nil }
+  end
+
+  it 'is invalid with 0.0 value for et' do
+    expect(CurrentEt.new(fabian_garcia: 0.0)).to be_invalid
   end
 end

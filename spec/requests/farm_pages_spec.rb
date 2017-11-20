@@ -70,7 +70,7 @@ describe 'Farm' do
       end.to change(Farm, :count).by(1)
     end
 
-    it 'has js to add form fields', js: true, slow: true do
+    it 'has js to add form fields', js: true do
       Company.current_id = user.company.id
       init_well_count = IrrigationWell.count
       init_block_count = Block.count

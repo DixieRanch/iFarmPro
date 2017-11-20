@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+<<<<<<< 6e55af07c97f9d40cd3f1c4386d5865b9376e890
 <<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 describe UserInvitation, :not_a_tenant_model do
   describe 'associations' do
@@ -101,12 +102,33 @@ describe UserInvitation, :not_a_tenant_model do
       end
 =======
 describe UserInvitation do
+=======
+describe UserInvitation, :not_a_tenant_model do
+>>>>>>> Add email validations to UserInvitation
   describe 'associations' do
     it 'respond to company' do
       invitation = UserInvitation.new
 
       expect(invitation).to respond_to :company
 >>>>>>> Add link in header for user invitation
+    end
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of(:email) }
+
+    it 'should validate email format' do
+      valid_email = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+      invalid_email = %w[user@foo,com user_at_foo.org example.user@foo.
+                         foo@bar_baz.com foo@bar+baz.com]
+
+      valid_email.each do |email|
+        expect(UserInvitation.new).to allow_value(email).for(:email)
+      end
+
+      invalid_email.each do |email|
+        expect(UserInvitation.new).not_to allow_value(email).for(:email)
+      end
     end
   end
 end

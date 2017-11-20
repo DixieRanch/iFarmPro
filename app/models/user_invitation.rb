@@ -1,13 +1,17 @@
 class UserInvitation < ActiveRecord::Base
   belongs_to :company
+<<<<<<< 6e55af07c97f9d40cd3f1c4386d5865b9376e890
 <<<<<<< 4758e59549eaaeba3177098b8ebac53797e7e52d
 
   attr_accessor :invitation_token
+=======
+>>>>>>> Add email validations to UserInvitation
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :email, presence: true,
                     format: { with: VALID_EMAIL_REGEX }
+<<<<<<< 6e55af07c97f9d40cd3f1c4386d5865b9376e890
 
   validate :unique_email
 
@@ -54,4 +58,6 @@ class UserInvitation < ActiveRecord::Base
   end
 =======
 >>>>>>> Add link in header for user invitation
+=======
+>>>>>>> Add email validations to UserInvitation
 end

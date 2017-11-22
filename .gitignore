@@ -25,6 +25,9 @@
 # Ignore Spring files.
 /spring/*.pid
 
+# Ignore Guardfile to allow personalization
+Guardfile
+
 # # bundler state
 # /.bundle
 # /vendor/bundle/

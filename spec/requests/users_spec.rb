@@ -1,51 +1,51 @@
 require 'rails_helper'
 
-describe 'UserPages' do
-  subject { page }
-
-  describe 'new' do
-    let(:user) { create(:user) }
-    let(:attr) { attributes_for(:user) }
-    before do
-      sign_in user
-      visit new_user_path
-    end
-
+describe 'Users' do
+  describe 'new user form' do
     context 'with invalid information' do
-      before do
-        fill_in 'Email', with: ''
-        fill_in 'Password', with: ''
-        fill_in 'Confirmation', with: ''
-      end
+      it 'does not create a user' do
+        sign_in create(:user)
+        visit new_user_path
 
-      it 'should not create a user' do
-        expect  do
+        expect do
           click_button 'Save'
         end.not_to change(User, :count)
       end
 
-      it 'should display error messages' do
+      it 'displays error messages' do
+        sign_in create(:user)
+        visit new_user_path
+
         click_button 'Save'
+
         expect(page).to have_css '.alert-danger'
       end
     end
 
     context 'with valid information' do
-      before do
-        fill_in 'Email', with: attr[:email]
-        fill_in 'Password', with: attr[:password]
-        fill_in 'Confirmation', with: attr[:password]
-      end
-
       it 'should create a new user' do
+        sign_in create(:user)
+        visit new_user_path
+
+        fill_in 'Email',        with: 'Valid@email.com'
+        fill_in 'Password',     with: 'valid_password'
+        fill_in 'Confirmation', with: 'valid_password'
+
         expect do
           click_button 'Save'
         end.to change(User, :count).by(1)
       end
 
       it 'should create a user for the correct company with success' do
+        sign_in user = create(:user)
+        visit new_user_path
+
+        fill_in 'Email',        with: 'Valid@email.com'
+        fill_in 'Password',     with: 'valid_password'
+        fill_in 'Confirmation', with: 'valid_password'
         click_button 'Save'
-        new_user = User.find_by(email: attr[:email])
+
+        new_user = User.find_by(email: 'Valid@email.com')
         expect(new_user.company_id).to eq user.company_id
         expect(page).to have_css '.alert-success'
       end
@@ -54,8 +54,7 @@ describe 'UserPages' do
 
   describe 'change password link' do
     it 'renders password reset email sent page' do
-      user = create(:user)
-      sign_in user
+      sign_in create(:user)
 
       click_link 'Change Password'
 
@@ -63,12 +62,10 @@ describe 'UserPages' do
     end
 
     it 'sends password reset email to current user' do
-      user = create(:user)
-      sign_in user
+      sign_in user = create(:user)
 
       click_link 'Change Password'
 
-      last_email = ActionMailer::Base.deliveries.last
       expect(last_email.to).to eq [user.email]
       expect(last_email.subject).to include 'password reset'
     end

@@ -2,11 +2,7 @@ require 'rails_helper'
 
 describe UserInvitation, :not_a_tenant_model do
   describe 'associations' do
-    it 'respond to company' do
-      invitation = UserInvitation.new
-
-      expect(invitation).to respond_to :company
-    end
+    it { should belong_to :company }
   end
 
   describe 'validations' do

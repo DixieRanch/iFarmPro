@@ -1,39 +1,49 @@
 require 'rails_helper'
 
-describe 'ApplicationPages' do
-  let(:user) { create(:user) }
-  subject { page }
-
-  before do
-    visit root_path
-  end
-
+describe 'Application' do
   describe 'sidebar' do
     context 'when not signed in' do
-      it { should_not have_css '.sidebar-nav' }
+      it 'is not displayed' do
+        visit root_path
+
+        expect(page).not_to have_css '.sidebar-nav'
+      end
     end
 
     context 'when signed in' do
-      before do
-        sign_in(user)
-        @farm = Farm.first
-      end
-
       it 'should have the correct sidebar elements and links' do
-        expect(page).to have_css('#sidebar', text: @farm.name)
+        sign_in(create(:user))
+        farm_name = Farm.first.name
+        visit root_path
+
+        expect(page).to have_css('#sidebar', text: farm_name)
+
         click_link 'Farms'
+
         expect(page).to have_selector 'title', text: full_title('Farms')
+
         click_link 'Irrigations'
+
         expect(page).to have_selector 'title', text: full_title('Irrigations')
+
         click_link 'Rain'
+
         expect(page).to have_selector 'title', text: full_title('Rain')
+
         click_link 'Soil Products'
+
         expect(page).to have_title full_title('Soil Products')
+
         click_link 'Soil Applications'
+
         expect(page).to have_title full_title 'Soil Applications'
+
         click_link 'Schedule'
+
         expect(page).to have_selector 'title', text: full_title('Schedule')
+
         click_link 'Nutrition'
+
         expect(page).to have_title full_title 'Nutrition'
       end
     end
@@ -43,43 +53,52 @@ describe 'ApplicationPages' do
     context 'when signed out' do
       it 'should have the correct links' do
         visit root_path
+
         click_link 'Help'
-        should have_selector 'title', text: full_title('Help')
+
+        expect(page).to have_selector 'title', text: full_title('Help')
+
         click_link 'Sign in'
-        should have_selector 'title', text: full_title('Sign in')
-        # click_link "About"
-        # should have_selector 'title', text: full_title('About')
-        # click_link "Contact"
-        # should have_selector 'title', text: full_title('Contact')
+
+        expect(page).to have_selector 'title', text: full_title('Sign in')
+
         click_link 'iFarmPro'
-        should have_selector 'title', text: full_title('')
+
+        expect(page).to have_selector 'title', text: full_title('')
+
         click_link 'Sign up now!'
-        should have_selector 'title', text: full_title('Sign up')
+
+        expect(page).to have_selector 'title', text: full_title('Sign up')
       end
     end
 
     context 'when signed in' do
       it 'should have the correct links' do
-        sign_in(user)
+        sign_in(create(:user))
+
         click_link 'Help'
-        should have_selector 'title', text: full_title('Help')
+
+        expect(page).to have_selector 'title', text: full_title('Help')
         expect(page).not_to have_link 'Company'
+
         click_link 'Add User'
-        should have_selector 'title', text: full_title('Add User')
-        # click_link "About"
-        # should have_selector 'title', text: full_title('About')
-        # click_link "Contact"
-        # should have_selector 'title', text: full_title('Contact')
+
+        expect(page).to have_selector 'title', text: full_title('Add User')
+
         click_link 'iFarmPro'
-        should have_title full_title 'Schedule'
+
+        expect(page).to have_title full_title 'Schedule'
+
         click_link 'Sign out'
-        should have_selector 'title', text: full_title('')
+
+        expect(page).to have_selector 'title', text: full_title('')
       end
     end
   end
 
   describe 'New User signup' do
     it 'goes from initial setup to irrigation schedule', js: true do
+      visit root_path
       sign_up_new_user
 
       expect(page).to have_title 'Add Farm'
@@ -105,6 +124,7 @@ describe 'ApplicationPages' do
     end
 
     it 'redirects to farm setup until complete' do
+      visit root_path
       sign_up_new_user
 
       click_link 'Irrigations'

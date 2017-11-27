@@ -1,113 +1,116 @@
 require 'rails_helper'
 
-describe 'SoilApplication' do
-  let(:user) { create(:user) }
-
-  before do
-    sign_in(user)
-  end
-
-  describe 'page' do
+describe 'SoilApplications' do
+  describe 'list' do
     it 'has correct elements' do
+      sign_in create(:user)
+
       visit soil_applications_path
+
       expect(page).to have_title full_title 'Soil Applications'
       expect(page).to have_selector 'h1', text: 'Current Applications'
     end
-  end
 
-  describe 'current applications list' do
-    it 'displays soil app fields' do
-      soil_app = create(:soil_application)
+    it 'displays soil applications' do
+      sign_in create(:user)
+      field = create(:field, name: '2', block: create(:block, name: 'B'))
+      product  = create(:soil_product, name: 'Some Fertilizer')
+      soil_app = create(:soil_application, date: '2017-07-01',
+                                           quantity: 200,
+                                           field: field,
+                                           soil_product: product)
+
       visit soil_applications_path
-      expect(page).to have_selector 'td', text: soil_app.formatted_date
-      expect(page).to have_selector 'td', text: soil_app.field.name_with_block
-      expect(page).to have_selector 'td', text: soil_app.soil_product.name
-      expect(page).to have_selector 'td', text: soil_app.quantity
+
+      expect(page).to have_selector 'td', text: 'July 1, 2017'
+      expect(page).to have_selector 'td', text: 'B-2'
+      expect(page).to have_selector 'td', text: 'Some Fertilizer'
+      expect(page).to have_selector 'td', text: '200'
       expect(page).to have_link     'edit',
                                     href: edit_soil_application_path(soil_app)
     end
 
     context 'with 31 applications' do
-      let(:app_table) { 'table#application_table tbody tr' }
-      let(:pagination_link) { "//*[@class='pagination']//a[text()='2']" }
-
-      before do
-        Company.current_id = user.company.id
-        31.times do |_i|
-          create(:soil_application)
+      it 'has pagination links' do
+        sign_in_new create(:user)
+        field = create(:field)
+        product = create(:soil_product)
+        units = create(:soil_application_unit)
+        31.times do
+          create(:soil_application, field: field,
+                                    soil_product: product,
+                                    soil_application_unit: units)
         end
-        visit soil_applications_path
-      end
 
-      it 'has pagination links', :slow do
-        expect(page).to have_selector app_table, count: 30
-        find(pagination_link).click
+        visit soil_applications_path
+
+        expect(page).to have_selector 'tbody tr', count: 30
+
+        click_link '2'
+
+        expect(page).to have_selector 'tbody tr', count: 1
         expect(page).to have_selector 'em.current', text: 2
       end
     end
   end
 
-  describe 'new application form' do
-    before do
-      create(:field, name: '1', block: create(:block, name: '1'))
-      create(:soil_product, name: '32-0-0-0')
-      create(:soil_application_unit)
-      visit soil_applications_path
-    end
-
+  describe 'form' do
     context 'with invalid data' do
-      before do
-        click_button 'Save'
-      end
-
       it 'renders Soil App page with error' do
+        sign_in create(:user)
+        visit soil_applications_path
+
+        click_button 'Save'
+
         expect(page).to have_title full_title 'Soil Applications'
         expect(page).to have_css '.alert-danger'
       end
     end
 
     context 'with valid data' do
-      before do
-        select '1-1', from: 'soil_application_field_id'
-        fill_in 'Date', with: '4/1'
-        select '32-0-0-0', from: 'soil_application_soil_product_id'
-        fill_in 'Quantity', with: 15
-        select 'Gal', from: 'soil_application_soil_application_unit_id'
-        click_button 'Save'
-      end
-
       it 'displays the new record with success' do
-        expect(page).to have_selector 'td', text: '1-1'
-        year = Time.zone.now.year
-        expect(page).to have_selector 'td', text: "April 1, #{year}"
+        sign_in create(:user)
+        create(:soil_product)
+        create(:soil_application_unit)
+        visit soil_applications_path
+
+        fill_in 'Date',     with: '2017-4-1'
+        fill_in 'Quantity', with: 123
+        click_button 'Save'
+
+        expect(page).to have_selector 'td', text: 'April 1, 2017'
+        expect(page).to have_selector 'td', text: '123'
         expect(page).to have_css '.alert-success'
       end
     end
   end
 
   describe 'edit page' do
-    before do
-      create(:soil_application)
-      create(:field, name: 'One', block: create(:block, name: 'This'))
-      visit soil_applications_path
-      click_link 'edit'
-    end
-
     context 'with invalid data' do
       it 'has error message' do
+        sign_in_new create(:user)
+        create :soil_application
+        visit soil_applications_path
+
         fill_in 'Quantity', with: ''
         click_button 'Save'
+
         expect(page).to have_css '.alert-danger'
       end
     end
 
     context 'with valid data' do
       it 'updates soil application with success' do
-        fill_in 'Date', with: '1/4'
+        sign_in_new create(:user)
+        create(:field, name: 'One', block: create(:block, name: 'This'))
+        visit edit_soil_application_path(create(:soil_application))
+
+        fill_in 'Date', with: '1/4/2017'
         select('This-One', from: 'soil_application_field_id')
         click_button 'Save'
-        year = Time.zone.now.year
-        expect(page).to have_selector 'td', text: "January 4, #{year}"
+
+        expect(page).to have_selector 'td', text: 'January 4, 2017'
+        expect(page).to have_selector 'td', text: 'This-One'
         expect(page).to have_css '.alert-success'
       end
     end

@@ -21,7 +21,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "User_#{n}@Example.com" }
     password 'foobar'
-    password_confirmation 'foobar'
+    password_confirmation { password }
     activated true
     company
   end

@@ -1,52 +1,40 @@
 require 'rails_helper'
 
 describe 'StaticPages' do
-  subject { page }
+  describe 'Home' do
+    it 'has the correct page elements' do
+      visit root_path
 
-  shared_examples_for 'all static pages' do
-    it 'has correct headings' do
-      expect(page).to have_selector('h1', text: heading)
-      expect(page).to have_title full_title(page_title)
+      expect(page).to have_selector('h1', text: 'iFarmPro')
+      expect(page).to have_title full_title('')
+      expect(page).not_to have_selector('title', text: '| Home')
     end
   end
 
-  describe 'Home page' do
-    before { visit root_path }
-    let(:heading) { 'iFarmPro' }
-    let(:page_title) { '' }
+  describe 'Help' do
+    it 'has the correct page elements' do
+      visit help_path
 
-    it_should_behave_like 'all static pages'
-    it { should_not have_selector('title', text: '| Home') }
-  end
-
-  describe 'Help page' do
-    before { visit help_path }
-    let(:heading) { 'Help' }
-    let(:page_title) { 'Help' }
-
-    it_should_behave_like 'all static pages'
-
-    context 'links to walkthrough pages' do
-      it 'redirects to setup walkthrough' do
-        click_link 'Getting Started'
-        expect(page).to have_title full_title(page_title)
-      end
+      expect(page).to have_selector('h1', text: 'Help')
+      expect(page).to have_title full_title('Help')
     end
   end
 
-  describe 'About page' do
-    before { visit about_path }
-    let(:heading) { 'About iFarmPro' }
-    let(:page_title) { 'About' }
+  describe 'About' do
+    it 'has the correct page elements' do
+      visit about_path
 
-    it_should_behave_like 'all static pages'
+      expect(page).to have_selector('h1', text: 'About iFarmPro')
+      expect(page).to have_title full_title('About')
+    end
   end
 
-  describe 'Contact page' do
-    before { visit contact_path }
-    let(:heading) { 'Contact iFarmPro' }
-    let(:page_title) { 'Contact' }
+  describe 'Contact' do
+    it 'has the correct page elements' do
+      visit contact_path
 
-    it_should_behave_like 'all static pages'
+      expect(page).to have_selector('h1', text: 'Contact iFarmPro')
+      expect(page).to have_title full_title('Contact')
+    end
   end
 end

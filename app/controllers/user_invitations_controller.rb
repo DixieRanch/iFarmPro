@@ -4,7 +4,8 @@ class UserInvitationsController < ApplicationController
   end
 
   def create
-    @invitation = UserInvitation.new
+    @invitation = UserInvitation.new(invitation_params)
+    puts params
 
     if @invitation.save
       flash[:success] = 'Invitation has been sent'
@@ -12,5 +13,11 @@ class UserInvitationsController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  private
+
+  def invitation_params
+    params.require(:user_invitation).permit([:email])
   end
 end

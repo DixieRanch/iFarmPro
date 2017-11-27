@@ -7,6 +7,7 @@ class UserInvitationsController < ApplicationController
   end
 
   def create
+<<<<<<< 4fc6b24b6291815c9cd018918c1fbc4f29f73e66
 <<<<<<< cfefa529eda5b5f0f7de192cdefd7b86cfdfe062
     @invitation = UserInvitation.new(invitation_params)
 
@@ -15,6 +16,10 @@ class UserInvitationsController < ApplicationController
       flash[:success] = 'Invitation has been sent'
 =======
     @invitation = UserInvitation.new
+=======
+    @invitation = UserInvitation.new(invitation_params)
+    puts params
+>>>>>>> Add params to user_invitations_controller for creating invitations
 
     if @invitation.save
 <<<<<<< 0ab80bd4f3405d84a8fb2ed0cdf0f3fe0b818afa
@@ -27,6 +32,7 @@ class UserInvitationsController < ApplicationController
       render 'new'
     end
   end
+<<<<<<< 4fc6b24b6291815c9cd018918c1fbc4f29f73e66
 <<<<<<< cfefa529eda5b5f0f7de192cdefd7b86cfdfe062
 
   def edit
@@ -41,12 +47,15 @@ class UserInvitationsController < ApplicationController
 
     render 'edit'
   end
+=======
+>>>>>>> Add params to user_invitations_controller for creating invitations
 
   private
 
   def invitation_params
     params.require(:user_invitation).permit([:email])
   end
+<<<<<<< 4fc6b24b6291815c9cd018918c1fbc4f29f73e66
 end
 =======
   def new
@@ -54,5 +63,7 @@ end
 end
 >>>>>>> Add basic file structure for new user invitations
 =======
+=======
+>>>>>>> Add params to user_invitations_controller for creating invitations
 end
 >>>>>>> Add form to submit email for invitations then redirect to schedule

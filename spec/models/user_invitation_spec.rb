@@ -5,6 +5,7 @@ require 'rails_helper'
 describe UserInvitation, :not_a_tenant_model do
   describe 'associations' do
     it { should belong_to :company }
+<<<<<<< 316c042601f254a72c5308a91ee850f0f4da6f83
   end
 
   describe 'validations' do
@@ -112,6 +113,8 @@ describe UserInvitation, :not_a_tenant_model do
       expect(invitation).to respond_to :company
 >>>>>>> Add link in header for user invitation
     end
+=======
+>>>>>>> Simplify UserInvitation associations test when testing it belongs to a company.
   end
 
   describe 'validations' do

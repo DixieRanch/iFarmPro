@@ -11,6 +11,7 @@ class UserInvitation < ActiveRecord::Base
 
   validates :email, presence: true,
                     format: { with: VALID_EMAIL_REGEX }
+<<<<<<< 514d7a64f4922a568459ce36ddb7b7e1327cfd75
 <<<<<<< 6e55af07c97f9d40cd3f1c4386d5865b9376e890
 
   validate :unique_email
@@ -60,4 +61,10 @@ class UserInvitation < ActiveRecord::Base
 >>>>>>> Add link in header for user invitation
 =======
 >>>>>>> Add email validations to UserInvitation
+=======
+
+  def send_invitation_email
+    UserMailer.invitation(self).deliver_now
+  end
+>>>>>>> Add invitation email delivery method to user_invitation model
 end

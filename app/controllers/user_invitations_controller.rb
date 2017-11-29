@@ -18,8 +18,11 @@ class UserInvitationsController < ApplicationController
     @invitation = UserInvitation.new
 =======
     @invitation = UserInvitation.new(invitation_params)
+<<<<<<< debd56ad73c7525acc7896b091e42821718f7627
     puts params
 >>>>>>> Add params to user_invitations_controller for creating invitations
+=======
+>>>>>>> Remove puts statement from user_invitations controller
 
     if @invitation.save
 <<<<<<< 0ab80bd4f3405d84a8fb2ed0cdf0f3fe0b818afa

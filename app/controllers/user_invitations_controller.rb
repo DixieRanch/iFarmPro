@@ -5,7 +5,6 @@ class UserInvitationsController < ApplicationController
 
   def create
     @invitation = UserInvitation.new(invitation_params)
-    puts params
 
     if @invitation.save
       flash[:success] = 'Invitation has been sent'

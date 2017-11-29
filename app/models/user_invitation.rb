@@ -7,6 +7,8 @@ class UserInvitation < ActiveRecord::Base
 =======
 >>>>>>> Add email validations to UserInvitation
 
+  attr_accessor :invitation_token
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :email, presence: true,
@@ -63,8 +65,33 @@ class UserInvitation < ActiveRecord::Base
 >>>>>>> Add email validations to UserInvitation
 =======
 
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def self.digest(string)
+    cost = if ActiveModel::SecurePassword.min_cost
+             BCrypt::Engine::MIN_COST
+           else
+             BCrypt::Engine.cost
+           end
+
+    BCrypt::Password.create(string, cost: cost)
+  end
+
   def send_invitation_email
+    create_invitation_digest
     UserMailer.invitation(self).deliver_now
   end
+<<<<<<< 82011c504e3e52e4ed318e5f36afe4078ab7b1ca
 >>>>>>> Add invitation email delivery method to user_invitation model
+=======
+
+  private
+
+  def create_invitation_digest
+    self.invitation_token  = UserInvitation.new_token
+    self.invitation_digest = UserInvitation.digest(invitation_token)
+  end
+>>>>>>> Add token/digest for user_invitation
 end

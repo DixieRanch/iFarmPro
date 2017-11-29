@@ -22,4 +22,16 @@ describe UserInvitation, :not_a_tenant_model do
       end
     end
   end
+
+  describe '#send_invitation_email' do
+    it 'sends invitation message to UserMailer' do
+      invitation = UserInvitation.new(email: 'newUser@example.com')
+      email = double('UserMailer.invitation')
+
+      expect(UserMailer).to receive(:invitation).with(invitation) { email }
+      expect(email).to receive(:deliver_now)
+
+      invitation.send_invitation_email
+    end
+  end
 end

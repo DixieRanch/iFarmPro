@@ -33,5 +33,14 @@ describe UserInvitation, :not_a_tenant_model do
 
       invitation.send_invitation_email
     end
+
+    it 'creates a token which encrypts to a digest' do
+      invitation = UserInvitation.new(email: 'newUser@example.com')
+
+      invitation.send_invitation_email
+      digest = BCrypt::Password.new(invitation.invitation_digest)
+
+      expect(digest.is_password?(invitation.invitation_token)).to be true
+    end
   end
 end

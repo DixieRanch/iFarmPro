@@ -22,4 +22,7 @@ class UserMailer < ApplicationMailer
     mail to: user.email,
          subject: 'iFarmPro password reset'
   end
+
+  def invitation(user)
+  end
 end

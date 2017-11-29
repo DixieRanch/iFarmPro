@@ -5,4 +5,8 @@ class UserInvitation < ActiveRecord::Base
 
   validates :email, presence: true,
                     format: { with: VALID_EMAIL_REGEX }
+
+  def send_invitation_email
+    UserMailer.invitation(self).deliver_now
+  end
 end

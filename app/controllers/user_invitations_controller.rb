@@ -1,4 +1,6 @@
 class UserInvitationsController < ApplicationController
+  skip_before_action :signed_in_user, only: [:edit]
+
   def new
     @invitation = UserInvitation.new
   end
@@ -13,6 +15,9 @@ class UserInvitationsController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def edit
   end
 
   private

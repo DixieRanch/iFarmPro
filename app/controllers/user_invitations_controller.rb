@@ -7,6 +7,7 @@ class UserInvitationsController < ApplicationController
     @invitation = UserInvitation.new(invitation_params)
 
     if @invitation.save
+      @invitation.send_invitation_email
       flash[:success] = 'Invitation has been sent'
       redirect_to root_path
     else

@@ -34,7 +34,7 @@ describe 'UserInvitations' do
       expect(page).to have_css('div.alert.alert-success', text: 'sent')
     end
 
-    xit 'sends invitation email' do
+    it 'sends invitation email' do
       user = create(:user)
       sign_in user
       visit new_user_invitation_path

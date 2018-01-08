@@ -24,5 +24,7 @@ class UserMailer < ApplicationMailer
   end
 
   def invitation(user)
+    mail to: user.email,
+         subject: 'iFarmPro invitation'
   end
 end

@@ -58,4 +58,19 @@ describe 'UserInvitations' do
       end.to change(UserInvitation, :count).by(1)
     end
   end
+
+  context 'when clicking signup link in email' do
+    it 'redirects to password setup page' do
+      user = create(:user)
+      sign_in user
+      visit new_user_invitation_path
+      fill_in 'Email', with: 'newUser@example.com'
+      click_button 'Send Invitation'
+      open_email('newUser@example.com')
+
+      current_email.click_link 'Finish Signup'
+
+      expect(page).to have_title full_title 'Finish Signup'
+    end
+  end
 end

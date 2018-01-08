@@ -55,6 +55,7 @@ describe 'UserInvitations' do
       expect(page).to have_css('div.alert.alert-success', text: 'sent')
     end
 
+<<<<<<< 278158dee96358fd10462c603a27b11a65eba5d7
 <<<<<<< c883329a46ccbd2e7c6b5e17b55cb39b418ba96c
     it 'sends invitation email' do
       user = create(:user)
@@ -190,6 +191,9 @@ end
 =======
 >>>>>>> Add tests to untested controller actions (flash message & redirect).
     xit 'sends invitation email' do
+=======
+    it 'sends invitation email' do
+>>>>>>> Add email sending functionality to user invitations
       user = create(:user)
       sign_in user
       visit new_user_invitation_path

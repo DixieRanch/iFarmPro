@@ -24,11 +24,14 @@ class UserMailer < ApplicationMailer
   end
 
   def invitation(user)
+<<<<<<< 278158dee96358fd10462c603a27b11a65eba5d7
     @message = "Hello, #{user.email}.  This email is to allow you to finish " \
                'setting up your account for iFarmPro irrigation management. ' \
                'Click the link to finish signing up, and then you will have ' \
                "full access to your company's irrigation schedule."
     @user = user
+=======
+>>>>>>> Add email sending functionality to user invitations
     mail to: user.email,
          subject: 'iFarmPro invitation'
   end

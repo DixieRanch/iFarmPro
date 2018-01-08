@@ -25,9 +25,13 @@ class UserInvitationsController < ApplicationController
 >>>>>>> Remove puts statement from user_invitations controller
 
     if @invitation.save
+<<<<<<< 278158dee96358fd10462c603a27b11a65eba5d7
 <<<<<<< 0ab80bd4f3405d84a8fb2ed0cdf0f3fe0b818afa
 >>>>>>> Add form to submit email for invitations then redirect to schedule
 =======
+=======
+      @invitation.send_invitation_email
+>>>>>>> Add email sending functionality to user invitations
       flash[:success] = 'Invitation has been sent'
 >>>>>>> Add flash message upon successful form submission
       redirect_to root_path

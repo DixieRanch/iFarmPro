@@ -16,5 +16,10 @@ class UserMailerPreview < ActionMailer::Preview
 
   def last_email
     UserMailer.deliveries.last
+
+  def invitation
+    user = UserInvitation.first
+    user.send_invitation_email
+    UserMailer.invitation(user)
   end
 end

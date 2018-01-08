@@ -46,15 +46,15 @@ describe 'UserInvitations' do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
-    xit 'creates invitation object' do
+    it 'creates invitation object' do
       user = create(:user)
       sign_in user
-      visit new_user_path
+      visit new_user_invitation_path
 
       fill_in 'Email', with: 'newUser@example.com'
 
       expect do
-        click_button 'Save'
+        click_button 'Send Invitation'
       end.to change(UserInvitation, :count).by(1)
     end
   end

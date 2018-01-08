@@ -28,6 +28,7 @@ describe 'UserInvitations' do
   end
 
   describe 'inviting new user' do
+<<<<<<< c883329a46ccbd2e7c6b5e17b55cb39b418ba96c
     it 'ensures invited email is not already a user' do
       user = create(:user)
       sign_in user
@@ -40,6 +41,8 @@ describe 'UserInvitations' do
       expect(page).to have_css('div.alert.alert-danger')
     end
 
+=======
+>>>>>>> Add tests to untested controller actions (flash message & redirect).
     it 'redirects to root path' do
       user = create(:user)
       sign_in user
@@ -52,6 +55,7 @@ describe 'UserInvitations' do
       expect(page).to have_css('div.alert.alert-success', text: 'sent')
     end
 
+<<<<<<< c883329a46ccbd2e7c6b5e17b55cb39b418ba96c
     it 'sends invitation email' do
       user = create(:user)
       sign_in user
@@ -183,15 +187,17 @@ end
 >>>>>>> resolve merge issues within user_invitations_spec
 
   describe 'inviting new user' do
+=======
+>>>>>>> Add tests to untested controller actions (flash message & redirect).
     xit 'sends invitation email' do
       user = create(:user)
       sign_in user
-      visit new_user_path
+      visit new_user_invitation_path
 
       fill_in 'Email', with: 'newUser@example.com'
 
       expect do
-        click_button 'Save'
+        click_button 'Send Invitation'
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 

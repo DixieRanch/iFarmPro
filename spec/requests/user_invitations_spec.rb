@@ -22,15 +22,27 @@ describe 'UserInvitations' do
   end
 
   describe 'inviting new user' do
+    it 'redirects to root path' do
+      user = create(:user)
+      sign_in user
+      visit new_user_invitation_path
+
+      fill_in 'Email', with: 'newUser@example.com'
+      click_button 'Send Invitation'
+
+      expect(page).to have_title full_title 'Schedule'
+      expect(page).to have_css('div.alert.alert-success', text: 'sent')
+    end
+
     xit 'sends invitation email' do
       user = create(:user)
       sign_in user
-      visit new_user_path
+      visit new_user_invitation_path
 
       fill_in 'Email', with: 'newUser@example.com'
 
       expect do
-        click_button 'Save'
+        click_button 'Send Invitation'
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 

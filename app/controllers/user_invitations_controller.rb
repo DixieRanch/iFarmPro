@@ -1,5 +1,8 @@
 class UserInvitationsController < ApplicationController
+<<<<<<< 6e6a2735e781d96d3fd4e8e6bd1631672ad42367
 <<<<<<< 7a044c75975761ed3e0e097605244ae23bf614df
+=======
+>>>>>>> Add email link to form for completing invitation signup
   skip_before_action :signed_in_user, only: [:edit]
 
   def new
@@ -56,6 +59,9 @@ class UserInvitationsController < ApplicationController
   end
 =======
 >>>>>>> Add params to user_invitations_controller for creating invitations
+
+  def edit
+  end
 
   private
 

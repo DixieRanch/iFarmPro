@@ -97,6 +97,7 @@ describe 'UserInvitations' do
       expect(page).to have_title full_title 'Finish Signup'
     end
   end
+<<<<<<< 6e6a2735e781d96d3fd4e8e6bd1631672ad42367
 
   context 'when setting password' do
     context 'with expired time stamp' do
@@ -243,5 +244,7 @@ end
 >>>>>>> Add link in header for user invitation
 =======
   end
+=======
+>>>>>>> Add email link to form for completing invitation signup
 end
 >>>>>>> resolve merge issues within user_invitations_spec

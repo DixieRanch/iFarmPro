@@ -70,6 +70,7 @@ describe 'UserInvitations' do
     end
 
     it 'creates invitation object' do
+<<<<<<< bc513cb5c10ce9ccd710becb245b5c576f264b3a
       user = create(:user)
       sign_in user
       visit new_user_invitation_path
@@ -206,14 +207,16 @@ end
     end
 
     xit 'creates invitation object' do
+=======
+>>>>>>> Add test that new UserInvitation object is created after filling out the invitation form.
       user = create(:user)
       sign_in user
-      visit new_user_path
+      visit new_user_invitation_path
 
       fill_in 'Email', with: 'newUser@example.com'
 
       expect do
-        click_button 'Save'
+        click_button 'Send Invitation'
       end.to change(UserInvitation, :count).by(1)
     end
 <<<<<<< 84a0048ff6f4b662458f387269bf6cf48390ad1d

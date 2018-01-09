@@ -22,6 +22,18 @@ describe 'UserInvitations' do
   end
 
   describe 'inviting new user' do
+    it 'ensures invited email is not already a user' do
+      user = create(:user)
+      sign_in user
+      visit new_user_invitation_path
+
+      fill_in 'Email', with: user.email
+      click_button 'Send Invitation'
+
+      expect(page).to have_title full_title 'Invite User'
+      expect(page).to have_css('div.alert.alert-danger')
+    end
+
     it 'redirects to root path' do
       user = create(:user)
       sign_in user

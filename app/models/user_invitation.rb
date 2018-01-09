@@ -35,10 +35,15 @@ class UserInvitation < ActiveRecord::Base
     UserMailer.invitation(self).deliver_now
   end
 
+  def invitation_expired?
+    invitation_sent_at < 7.days.ago
+  end
+
   private
 
   def create_invitation_digest
     self.invitation_token  = UserInvitation.new_token
     self.invitation_digest = UserInvitation.digest(invitation_token)
+    self.invitation_sent_at = Time.zone.now
   end
 end

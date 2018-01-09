@@ -50,5 +50,29 @@ describe UserInvitation, :not_a_tenant_model do
 
       expect(digest.is_password?(invitation.invitation_token)).to be true
     end
+
+    it 'persists invitation data' do
+      invitation = UserInvitation.new(email: 'newUser@example.com')
+
+      expect do
+        invitation.send_invitation_email
+      end.to((change { invitation.invitation_token })
+         .and(change { invitation.invitation_digest })
+         .and(change { invitation.invitation_sent_at }))
+    end
+  end
+
+  describe '#invitation_expired?' do
+    it 'is true with expired invitation_token' do
+      invitation = UserInvitation.new(invitation_sent_at: 10080.minutes.ago)
+
+      expect(invitation.invitation_expired?).to be true
+    end
+
+    it 'is false with unexpired invitation_token' do
+      invitation = UserInvitation.new(invitation_sent_at: 10079.minutes.ago)
+
+      expect(invitation.invitation_expired?).to be false
+    end
   end
 end

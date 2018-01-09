@@ -24,6 +24,7 @@ Rails/FindBy:
     - 'app/**/*'
   Exclude:
     - 'app/models/user.rb'
+    - 'app/models/user_invitation.rb'
   
 Style/Documentation:
   Enabled: false

@@ -8,6 +8,14 @@ class UserInvitation < ActiveRecord::Base
   validates :email, presence: true,
                     format: { with: VALID_EMAIL_REGEX }
 
+  validate :unique_email
+
+  def unique_email
+    errors.add(:email, 'is already being used') if User.where(
+      email: email
+    ).exists?
+  end
+
   def self.new_token
     SecureRandom.urlsafe_base64
   end

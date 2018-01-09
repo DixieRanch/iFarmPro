@@ -11,7 +11,7 @@ class UserInvitation < ActiveRecord::Base
   validate :unique_email
 
   def unique_email
-    errors.add(:email, 'is already being used') if User.where(
+    errors.add(:email, 'This email already belongs to a user.') if User.where(
       email: email
     ).exists?
   end

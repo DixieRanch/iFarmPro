@@ -99,6 +99,10 @@ class UserInvitation < ActiveRecord::Base
     invitation_sent_at < 7.days.ago
   end
 
+  def self.with_email(email)
+    where('lower(email) = ?', email.downcase).first
+  end
+
   private
 
   def create_invitation_digest

@@ -187,4 +187,18 @@ describe UserInvitation, :not_a_tenant_model do
       expect(invitation.invitation_expired?).to be false
     end
   end
+
+  describe '#with_email' do
+    context 'with matching email' do
+      it 'finds first matching invitation' do
+        invitation = UserInvitation.new(email: 'newUser@example.com')
+        invitation.save
+        email = invitation.email
+
+        found_invitation = UserInvitation.with_email(email)
+
+        expect(found_invitation).to eq invitation
+      end
+    end
+  end
 end

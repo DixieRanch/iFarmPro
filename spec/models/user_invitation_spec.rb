@@ -21,6 +21,14 @@ describe UserInvitation, :not_a_tenant_model do
         expect(UserInvitation.new).not_to allow_value(email).for(:email)
       end
     end
+
+    it 'should validate uniqueness within User database' do
+      user = create(:user)
+
+      expect(user).to allow_value(user.email).for(:email)
+      expect(UserInvitation.new).to allow_value('any@email.willdo').for(:email)
+      expect(UserInvitation.new).not_to allow_value(user.email).for(:email)
+    end
   end
 
   describe '#send_invitation_email' do

@@ -95,11 +95,16 @@ class UserInvitation < ActiveRecord::Base
 >>>>>>> Add invitation email delivery method to user_invitation model
 =======
 
+  def invitation_expired?
+    invitation_sent_at < 7.days.ago
+  end
+
   private
 
   def create_invitation_digest
     self.invitation_token  = UserInvitation.new_token
     self.invitation_digest = UserInvitation.digest(invitation_token)
+    self.invitation_sent_at = Time.zone.now
   end
 >>>>>>> Add token/digest for user_invitation
 end

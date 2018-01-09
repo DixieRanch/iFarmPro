@@ -100,7 +100,7 @@ class UserInvitation < ActiveRecord::Base
   end
 
   def self.with_email(email)
-    where('lower(email) = ?', email.downcase).first
+    where('lower(email) = ?', email.downcase).first || NullInvitation.new
   end
 
   private

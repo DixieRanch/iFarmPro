@@ -200,5 +200,16 @@ describe UserInvitation, :not_a_tenant_model do
         expect(found_invitation).to eq invitation
       end
     end
+
+    context 'with no matching email' do
+      it 'creates null invitation' do
+        invitation = NullInvitation.new
+        email = 'any@email.willdo'
+
+        found_invitation = UserInvitation.with_email(email)
+
+        expect(found_invitation.class).to eq invitation.class
+      end
+    end
   end
 end

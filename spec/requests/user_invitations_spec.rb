@@ -28,7 +28,10 @@ describe 'UserInvitations' do
   end
 
   describe 'inviting new user' do
+<<<<<<< 33f952a4b10ddc48a7f817b0eeda9c6df41c87a5
 <<<<<<< c883329a46ccbd2e7c6b5e17b55cb39b418ba96c
+=======
+>>>>>>> Add integration test for when an invited email is already a user.
     it 'ensures invited email is not already a user' do
       user = create(:user)
       sign_in user
@@ -41,8 +44,11 @@ describe 'UserInvitations' do
       expect(page).to have_css('div.alert.alert-danger')
     end
 
+<<<<<<< 33f952a4b10ddc48a7f817b0eeda9c6df41c87a5
 =======
 >>>>>>> Add tests to untested controller actions (flash message & redirect).
+=======
+>>>>>>> Add integration test for when an invited email is already a user.
     it 'redirects to root path' do
       user = create(:user)
       sign_in user

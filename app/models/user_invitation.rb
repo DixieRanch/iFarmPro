@@ -109,6 +109,7 @@ class UserInvitation < ActiveRecord::Base
     self.invitation_token  = UserInvitation.new_token
     self.invitation_digest = UserInvitation.digest(invitation_token)
     self.invitation_sent_at = Time.zone.now
+    update_attributes(invitation_sent_at: invitation_sent_at)
   end
 >>>>>>> Add token/digest for user_invitation
 end

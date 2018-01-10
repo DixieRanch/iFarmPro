@@ -103,7 +103,10 @@ describe 'UserInvitations' do
       expect(page).to have_title full_title 'Finish Signup'
     end
   end
+<<<<<<< 1a8b355eff77c2d9be30f852d11abbb654669aa9
 <<<<<<< 6e6a2735e781d96d3fd4e8e6bd1631672ad42367
+=======
+>>>>>>> Add expired invitation handling to user_invitations.
 
   context 'when setting password' do
     context 'with expired time stamp' do
@@ -144,6 +147,7 @@ describe 'UserInvitations' do
       end
     end
   end
+<<<<<<< 1a8b355eff77c2d9be30f852d11abbb654669aa9
 end
 =======
 =======
@@ -252,5 +256,7 @@ end
   end
 =======
 >>>>>>> Add email link to form for completing invitation signup
+=======
+>>>>>>> Add expired invitation handling to user_invitations.
 end
 >>>>>>> resolve merge issues within user_invitations_spec

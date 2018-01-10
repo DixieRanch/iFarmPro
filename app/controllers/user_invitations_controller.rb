@@ -61,6 +61,16 @@ class UserInvitationsController < ApplicationController
 >>>>>>> Add params to user_invitations_controller for creating invitations
 
   def edit
+    @invitation = UserInvitation.with_email(params[:email])
+
+    return unless @invitation.invitation_expired?
+    redirect_to root_path
+  end
+
+  def update
+    @invitation = UserInvitation.with_email(params[:user_invitation][:email])
+
+    render 'edit'
   end
 
   private

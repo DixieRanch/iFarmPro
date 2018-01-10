@@ -62,7 +62,8 @@ Ifarm::Application.routes.draw do
                                   constraints: { id: /[^\/]+/ }
   resources :password_resets, only: [:show, :new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
-  resources :user_invitations, only: [:new, :create, :edit]
+  resources :user_invitations, only: [:new, :create, :edit, :update],
+                              constraints: { id: /[^\/]+/ }
 
   root to: 'static_pages#home'
 

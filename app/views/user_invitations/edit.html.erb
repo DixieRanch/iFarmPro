@@ -1,1 +1,23 @@
 <% provide :title, 'Finish Signup' %>
+
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Set your password</h1></div>
+    <div class="panel-body">
+      
+      
+      <%= simple_form_for @invitation,
+                          url: user_invitation_path(params[:id]),
+                          html: {class: 'form-horizontal'},
+                          wrapper: :horizontal_form do |f| %>
+        
+        <%= f.input :email, as: :hidden, 
+                    input_html: { value: @invitation.email } %>
+      
+        <%= f.input :password %>
+        <%= f.input :password_confirmation, label: 'Confirmation' %>
+        <%= f.submit 'Finish Signup', class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

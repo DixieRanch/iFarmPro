@@ -85,4 +85,44 @@ describe 'UserInvitations' do
       expect(page).to have_title full_title 'Finish Signup'
     end
   end
+
+  context 'when setting password' do
+    context 'with expired time stamp' do
+      it 'redirects to home page after clicking email link' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        open_email('newUser@example.com')
+        invitation = UserInvitation.with_email('newUser@example.com')
+        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+
+        current_email.click_link 'Finish Signup'
+
+        expect(current_path).to eq '/'
+      end
+
+      it 'does not set the password' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        invitation = UserInvitation.with_email('newUser@example.com')
+        invitation_token = UserInvitation.new_token
+        invitation.invitation_digest = UserInvitation.digest(invitation_token)
+        visit edit_user_invitation_path(invitation_token,
+                                        email: invitation.email)
+        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+
+        fill_in 'Password',     with: 'password'
+        fill_in 'Confirmation', with: 'password'
+
+        expect do
+          click_button 'Finish Signup'
+        end.not_to change(User, :count)
+      end
+    end
+  end
 end

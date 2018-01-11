@@ -13,6 +13,8 @@
         
         <%= f.input :email, as: :hidden, 
                     input_html: { value: @invitation.email } %>
+        <%= f.input :company_id, as: :hidden,
+                    input_html: { value: @invitation.company_id } %>
       
         <%= f.input :password %>
         <%= f.input :password_confirmation, label: 'Confirmation' %>

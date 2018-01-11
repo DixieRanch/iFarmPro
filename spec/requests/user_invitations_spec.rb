@@ -146,6 +146,41 @@ describe 'UserInvitations' do
         end.not_to change(User, :count)
       end
     end
+
+    context 'with valid email, token, and password' do
+      it 'redirects to schedule' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        open_email('newUser@example.com')
+        current_email.click_link 'Finish Signup'
+
+        fill_in 'Password',     with: 'password'
+        fill_in 'Confirmation', with: 'password'
+        click_button 'Finish Signup'
+
+        expect(page).to have_title full_title 'Schedule'
+      end
+
+      it 'creates a new user' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        open_email('newUser@example.com')
+        current_email.click_link 'Finish Signup'
+
+        fill_in 'Password',     with: 'password'
+        fill_in 'Confirmation', with: 'password'
+
+        expect do
+          click_button 'Finish Signup'
+        end.to change(User, :count).by(1)
+      end
+    end
   end
 <<<<<<< 1a8b355eff77c2d9be30f852d11abbb654669aa9
 end

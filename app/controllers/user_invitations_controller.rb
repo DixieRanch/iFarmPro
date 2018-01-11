@@ -1,9 +1,13 @@
 class UserInvitationsController < ApplicationController
+<<<<<<< 49274829cdd56c14699a2393c550a68ed3d185a0
 <<<<<<< 6e6a2735e781d96d3fd4e8e6bd1631672ad42367
 <<<<<<< 7a044c75975761ed3e0e097605244ae23bf614df
 =======
 >>>>>>> Add email link to form for completing invitation signup
   skip_before_action :signed_in_user, only: [:edit]
+=======
+  skip_before_action :signed_in_user, only: [:edit, :update]
+>>>>>>> Add user creation functionality bounded by the company.
 
   def new
     @invitation = UserInvitation.new
@@ -70,13 +74,38 @@ class UserInvitationsController < ApplicationController
   def update
     @invitation = UserInvitation.with_email(params[:user_invitation][:email])
 
-    render 'edit'
+    if @invitation.invitation_expired?
+      redirect_to root_path
+
+    elsif params[:user_invitation][:password].present? # &&
+      # @invitation.update(invitation_params)
+      @user = User.new(user_params)
+      @user.company_id = @invitation.company_id
+      @user.save
+      @user.activate
+      sign_in(@user)
+
+    else
+      render 'edit'
+    end
   end
 
   private
 
   def invitation_params
-    params.require(:user_invitation).permit([:email])
+    params.require(:user_invitation).permit(permitted_params)
+  end
+
+  def permitted_params
+    [:email, :company_id]
+  end
+
+  def user_params
+    params.require(:user_invitation).permit(user_permitted_params)
+  end
+
+  def user_permitted_params
+    [:email, :password, :password_confirmation, :company_id]
   end
 <<<<<<< 4fc6b24b6291815c9cd018918c1fbc4f29f73e66
 end

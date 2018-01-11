@@ -100,4 +100,28 @@ describe UserInvitation, :not_a_tenant_model do
       end
     end
   end
+
+  describe '#authenticated?', :focus do
+    it 'returns true if given token matches digest' do
+      invitation = UserInvitation.new(email: 'newUser@example.com')
+      invitation.send_invitation_email
+      token = invitation.invitation_token
+
+      expect(invitation.authenticated?('invitation', token)).to be true
+    end
+
+    it 'returns false if token mismatches digest' do
+      invitation = UserInvitation.new
+
+      expect(invitation.authenticated?('invitation', 'bad token')).to be false
+    end
+
+    it 'returns false if digest is nil' do
+      invitation = UserInvitation.new
+      token = invitation.invitation_token
+      invitation.invitation_digest = nil
+
+      expect(invitation.authenticated?('invitation', token)).to be false
+    end
+  end
 end

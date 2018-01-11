@@ -13,4 +13,8 @@ class UserMailerPreview < ActionMailer::Preview
     user.send_password_reset_email
     UserMailer.password_reset(user)
   end
+
+  def last_email
+    UserMailer.deliveries.last
+  end
 end

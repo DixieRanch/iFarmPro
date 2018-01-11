@@ -77,8 +77,7 @@ class UserInvitationsController < ApplicationController
     if @invitation.invitation_expired?
       redirect_to root_path
 
-    elsif params[:user_invitation][:password].present? # &&
-      # @invitation.update(invitation_params)
+    elsif params[:user_invitation][:password].present?
       @user = User.new(user_params)
       @user.company_id = @invitation.company_id
       @user.save

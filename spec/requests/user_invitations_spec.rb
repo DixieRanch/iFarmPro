@@ -158,6 +158,22 @@ describe 'UserInvitations' do
           click_button 'Finish Signup'
         end.to change(User, :count).by(1)
       end
+
+      it 'activates the new user' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        open_email('newUser@example.com')
+        current_email.click_link 'Finish Signup'
+
+        fill_in 'Password',     with: 'password'
+        fill_in 'Confirmation', with: 'password'
+        click_button 'Finish Signup'
+
+        expect(User.last.activated?).to be true
+      end
     end
   end
 end

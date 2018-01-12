@@ -199,6 +199,18 @@ describe 'UserInvitations' do
       end
     end
 
+    context 'with valid email, and bad token', :focus do
+      it 'redirects to home page' do
+        invitation = UserInvitation.new(email: 'newUser@example.com')
+        invitation.send_invitation_email
+        visit edit_user_invitation_path('bad token', email: invitation.email)
+
+        click_button 'Finish Signup'
+
+        expect(current_path).to eq '/'
+      end
+    end
+
     context 'with valid email, token, and password' do
       it 'redirects to schedule' do
         user = create(:user)

@@ -76,7 +76,10 @@ class UserInvitationsController < ApplicationController
   def update
     @invitation = UserInvitation.with_email(params[:user_invitation][:email])
 
-    if @invitation.invitation_expired?
+    if !@invitation.authenticated?(:invitation, params[:id])
+      redirect_to root_path
+
+    elsif @invitation.invitation_expired?
       redirect_to root_path
       flash[:danger] = 'Your invitation has expired.  Request
                       a new one from your company.'

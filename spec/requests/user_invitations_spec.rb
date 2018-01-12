@@ -123,6 +123,39 @@ describe 'UserInvitations' do
           click_button 'Finish Signup'
         end.not_to change(User, :count)
       end
+
+      it 'has expired flash message after clicking email link' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        open_email('newUser@example.com')
+        invitation = UserInvitation.with_email('newUser@example.com')
+        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+
+        current_email.click_link 'Finish Signup'
+
+        expect(page).to have_css('div.alert.alert-danger', text: 'expired')
+      end
+
+      it 'has expired flash message after directly accessing link' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        invitation = UserInvitation.with_email('newUser@example.com')
+        invitation_token = UserInvitation.new_token
+        invitation.invitation_digest = UserInvitation.digest(invitation_token)
+        visit edit_user_invitation_path(invitation_token,
+                                        email: invitation.email)
+        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+
+        click_button 'Finish Signup'
+
+        expect(page).to have_css('div.alert.alert-danger', text: 'expired')
+      end
     end
 
     context 'with uninvited email' do
@@ -133,6 +166,14 @@ describe 'UserInvitations' do
                                         company_id: 1)
 
         expect(current_path).to eq '/'
+      end
+
+      it 'has expired flash message' do
+        invitation_token = UserInvitation.new_token
+        visit edit_user_invitation_path(invitation_token,
+                                        email: 'wrong@email.com')
+
+        expect(page).to have_css('div.alert.alert-danger', text: 'expired')
       end
     end
 

@@ -177,7 +177,7 @@ describe 'UserInvitations' do
       end
     end
 
-    context 'with valid email, and bad token', :focus do
+    context 'with valid email, and bad token' do
       it 'redirects to home page' do
         invitation = UserInvitation.new(email: 'newUser@example.com')
         invitation.send_invitation_email
@@ -196,6 +196,30 @@ describe 'UserInvitations' do
         click_button 'Finish Signup'
 
         expect(page).to have_css('div.alert.alert-danger', text: 'expired')
+      end
+    end
+
+    context 'with valid email and token, but bad password', :focus do
+      it 'renders edit form' do
+        invitation = UserInvitation.new(email: 'newUser@example.com')
+        invitation.send_invitation_email
+        visit edit_user_invitation_path(invitation.invitation_token,
+                                        email: invitation.email)
+
+        click_button 'Finish Signup'
+
+        expect(page).to have_title full_title 'Finish Signup'
+      end
+      
+      it 'does not create new user' do
+        invitation = UserInvitation.new(email: 'newUser@example.com')
+        invitation.send_invitation_email
+        visit edit_user_invitation_path(invitation.invitation_token,
+                                        email: invitation.email)
+
+        expect do
+          click_button 'Finish Signup'
+        end.not_to change(User, :count)
       end
     end
 

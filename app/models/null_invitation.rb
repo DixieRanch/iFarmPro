@@ -9,7 +9,7 @@ class NullInvitation
   def invitation_expired?
     true
   end
-  
-  def authenticated?(_,_)
+
+  def authenticated?(_, _)
   end
 end

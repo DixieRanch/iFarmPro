@@ -12,9 +12,14 @@ class UserInvitation < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :email, presence: true,
+<<<<<<< 20f7fe3d10b0df4b1e933cc4c94cd30da49067f9
                     format: { with: VALID_EMAIL_REGEX }
 <<<<<<< 514d7a64f4922a568459ce36ddb7b7e1327cfd75
 <<<<<<< 6e55af07c97f9d40cd3f1c4386d5865b9376e890
+=======
+                    format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false }
+>>>>>>> Add uniqueness validations for UserInvitation objects.
 
   validate :unique_email
 

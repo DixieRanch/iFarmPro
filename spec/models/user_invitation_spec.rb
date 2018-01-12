@@ -213,7 +213,7 @@ describe UserInvitation, :not_a_tenant_model do
     end
   end
 
-  describe '#authenticated?', :focus do
+  describe '#authenticated?' do
     it 'returns true if given token matches digest' do
       invitation = UserInvitation.new(email: 'newUser@example.com')
       invitation.send_invitation_email

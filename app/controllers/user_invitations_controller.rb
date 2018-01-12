@@ -83,6 +83,7 @@ class UserInvitationsController < ApplicationController
       @user.save
       @user.activate
       sign_in(@user)
+      flash[:success] = 'Welcome to iFarmPro!'
 
     else
       render 'edit'

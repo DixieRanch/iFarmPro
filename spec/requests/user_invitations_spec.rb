@@ -207,6 +207,22 @@ describe 'UserInvitations' do
 
         expect(User.last.activated?).to be true
       end
+
+      it 'has welcome flash message' do
+        user = create(:user)
+        sign_in user
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        open_email('newUser@example.com')
+        current_email.click_link 'Finish Signup'
+
+        fill_in 'Password',     with: 'password'
+        fill_in 'Confirmation', with: 'password'
+        click_button 'Finish Signup'
+
+        expect(page).to have_css('div.alert.alert-success', text: 'Welcome')
+      end
     end
   end
 <<<<<<< 1a8b355eff77c2d9be30f852d11abbb654669aa9

@@ -78,11 +78,13 @@ class UserInvitationsController < ApplicationController
 
     if !@invitation.authenticated?(:invitation, params[:id])
       redirect_to root_path
+      flash[:danger] = 'Your invitation has expired.  Request
+                        a new one from your company.'
 
     elsif @invitation.invitation_expired?
       redirect_to root_path
       flash[:danger] = 'Your invitation has expired.  Request
-                      a new one from your company.'
+                        a new one from your company.'
 
     elsif params[:user_invitation][:password].present?
       @user = User.new(user_params)

@@ -209,6 +209,16 @@ describe 'UserInvitations' do
 
         expect(current_path).to eq '/'
       end
+
+      it 'has expired flash message' do
+        invitation = UserInvitation.new(email: 'newUser@example.com')
+        invitation.send_invitation_email
+        visit edit_user_invitation_path('bad token', email: invitation.email)
+
+        click_button 'Finish Signup'
+
+        expect(page).to have_css('div.alert.alert-danger', text: 'expired')
+      end
     end
 
     context 'with valid email, token, and password' do

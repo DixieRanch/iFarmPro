@@ -50,7 +50,7 @@ class UserInvitation < ActiveRecord::Base
   def self.with_email(email)
     where('lower(email) = ?', email.downcase).first || NullInvitation.new
   end
-  
+
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?

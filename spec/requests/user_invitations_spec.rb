@@ -147,6 +147,17 @@ describe 'UserInvitations' do
       end
     end
 
+    context 'with uninvited email' do
+      it 'redirects to home page' do
+        invitation_token = UserInvitation.new_token
+        visit edit_user_invitation_path(invitation_token,
+                                        email: 'wrong@email.com',
+                                        company_id: 1)
+
+        expect(current_path).to eq '/'
+      end
+    end
+
     context 'with valid email, token, and password' do
       it 'redirects to schedule' do
         user = create(:user)

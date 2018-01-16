@@ -83,6 +83,18 @@ describe 'UserInvitations' do
           invitation.reload
         end.to raise_error ActiveRecord::RecordNotFound
       end
+
+      it 'creates new invitation', :focus do
+        old = UserInvitation.create(email: 'NewUser@example.com')
+        sign_in create(:user)
+
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'NewUser@example.com'
+        click_button 'Send Invitation'
+        invitation = UserInvitation.with_email('NewUser@example.com')
+
+        expect(old.id).not_to eq invitation.id
+      end
     end
   end
 

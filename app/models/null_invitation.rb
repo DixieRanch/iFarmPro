@@ -12,4 +12,7 @@ class NullInvitation
 
   def authenticated?(_, _)
   end
+  
+  def destroy
+  end
 end

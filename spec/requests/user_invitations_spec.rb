@@ -69,6 +69,21 @@ describe 'UserInvitations' do
         click_button 'Send Invitation'
       end.to change(UserInvitation, :count).by(1)
     end
+
+    context 'when email has been invited before and is not a user' do
+      it 'deletes old invitation' do
+        invitation = UserInvitation.create(email: 'NewUser@example.com')
+        sign_in create(:user)
+
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'NewUser@example.com'
+        click_button 'Send Invitation'
+
+        expect do
+          invitation.reload
+        end.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
   end
 
   context 'when clicking signup link in email' do
@@ -199,7 +214,7 @@ describe 'UserInvitations' do
       end
     end
 
-    context 'with valid email and token, but bad password', :focus do
+    context 'with valid email and token, but bad password' do
       it 'renders edit form' do
         invitation = UserInvitation.new(email: 'newUser@example.com')
         invitation.send_invitation_email
@@ -210,7 +225,7 @@ describe 'UserInvitations' do
 
         expect(page).to have_title full_title 'Finish Signup'
       end
-      
+
       it 'does not create new user' do
         invitation = UserInvitation.new(email: 'newUser@example.com')
         invitation.send_invitation_email

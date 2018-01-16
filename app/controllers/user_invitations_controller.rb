@@ -12,7 +12,10 @@ class UserInvitationsController < ApplicationController
       @invitation.send_invitation_email
       flash[:success] = 'Invitation has been sent'
       redirect_to root_path
+
     else
+      invitation = UserInvitation.with_email(@invitation.email)
+      invitation.destroy
       render 'new'
     end
   end

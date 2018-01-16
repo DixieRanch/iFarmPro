@@ -16,7 +16,10 @@ class UserInvitationsController < ApplicationController
     else
       invitation = UserInvitation.with_email(@invitation.email)
       invitation.destroy
-      @invitation.send_invitation_email if @invitation.save
+      if @invitation.save
+        @invitation.send_invitation_email
+        flash[:success] = 'Invitation has been sent'
+      end
       render 'new'
     end
   end

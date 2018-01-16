@@ -147,15 +147,15 @@ describe 'UserInvitations' do
 
         expect(page).to have_css('div.alert.alert-success', text: 'sent')
       end
-      
+
       it 'redirects to schedule' do
         UserInvitation.create(email: 'NewUser@example.com')
         sign_in create(:user)
-        
+
         visit new_user_invitation_path
         fill_in 'Email', with: 'NewUser@example.com'
         click_button 'Send Invitation'
-        
+
         expect(page).to have_title full_title 'Schedule'
       end
     end
@@ -293,7 +293,7 @@ describe 'UserInvitations' do
       end
     end
 
-    context 'with valid email and token, but bad password' do
+    context 'with valid email and token, but blank password' do
       it 'renders edit form' do
         invitation = UserInvitation.new(email: 'newUser@example.com')
         invitation.send_invitation_email

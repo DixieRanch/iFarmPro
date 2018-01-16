@@ -52,10 +52,13 @@ class UserInvitationsController < ApplicationController
     elsif params[:user_invitation][:password].present?
       @user = User.new(user_params)
       @user.company_id = @invitation.company_id
-      @user.save
-      @user.activate
-      sign_in(@user)
-      flash[:success] = 'Welcome to iFarmPro!'
+      if @user.save
+        @user.activate
+        sign_in(@user)
+        flash[:success] = 'Welcome to iFarmPro!'
+      else
+        render 'edit'
+      end
 
     else
       render 'edit'

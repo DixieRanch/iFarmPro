@@ -46,6 +46,8 @@ class UserInvitationsController < ApplicationController
     else
       invitation = UserInvitation.with_email(@invitation.email)
       invitation.destroy
+      if @invitation.save
+      end
       render 'new'
     end
   end

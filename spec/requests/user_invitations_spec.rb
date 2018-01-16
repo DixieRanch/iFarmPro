@@ -84,7 +84,7 @@ describe 'UserInvitations' do
         end.to raise_error ActiveRecord::RecordNotFound
       end
 
-      it 'creates new invitation', :focus do
+      it 'creates new invitation' do
         old = UserInvitation.create(email: 'NewUser@example.com')
         sign_in create(:user)
 
@@ -94,6 +94,29 @@ describe 'UserInvitations' do
         invitation = UserInvitation.with_email('NewUser@example.com')
 
         expect(old.id).not_to eq invitation.id
+      end
+
+      it 'creates new token and digest' do
+        old = UserInvitation.create(email: 'NewUser@example.com')
+        sign_in create(:user)
+
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'NewUser@example.com'
+        click_button 'Send Invitation'
+        invitation = UserInvitation.with_email('NewUser@example.com')
+
+        expect(old.invitation_digest).not_to eq invitation.invitation_digest
+      end
+
+      it 'sends new invitation email' do
+        UserInvitation.create(email: 'NewUser@example.com')
+        sign_in create(:user)
+
+        expect do
+          visit new_user_invitation_path
+          fill_in 'Email', with: 'NewUser@example.com'
+          click_button 'Send Invitation'
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
   end

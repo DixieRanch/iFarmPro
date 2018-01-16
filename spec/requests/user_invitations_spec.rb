@@ -136,6 +136,17 @@ describe 'UserInvitations' do
           click_button 'Send Invitation'
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
+
+      it 'displays success flash message' do
+        UserInvitation.create(email: 'NewUser@example.com')
+        sign_in create(:user)
+
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'NewUser@example.com'
+        click_button 'Send Invitation'
+
+        expect(page).to have_css('div.alert.alert-success', text: 'sent')
+      end
     end
   end
 

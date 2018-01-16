@@ -293,27 +293,57 @@ describe 'UserInvitations' do
       end
     end
 
-    context 'with valid email and token, but blank password' do
-      it 'renders edit form' do
-        invitation = UserInvitation.new(email: 'newUser@example.com')
-        invitation.send_invitation_email
-        visit edit_user_invitation_path(invitation.invitation_token,
-                                        email: invitation.email)
+    context 'with valid email and token,' do
+      context 'but blank password' do
+        it 'renders edit form' do
+          invitation = UserInvitation.new(email: 'newUser@example.com')
+          invitation.send_invitation_email
+          visit edit_user_invitation_path(invitation.invitation_token,
+                                          email: invitation.email)
 
-        click_button 'Finish Signup'
+          click_button 'Finish Signup'
 
-        expect(page).to have_title full_title 'Finish Signup'
+          expect(page).to have_title full_title 'Finish Signup'
+        end
+
+        it 'does not create new user' do
+          invitation = UserInvitation.new(email: 'newUser@example.com')
+          invitation.send_invitation_email
+          visit edit_user_invitation_path(invitation.invitation_token,
+                                          email: invitation.email)
+
+          expect do
+            click_button 'Finish Signup'
+          end.not_to change(User, :count)
+        end
       end
 
-      it 'does not create new user' do
-        invitation = UserInvitation.new(email: 'newUser@example.com')
-        invitation.send_invitation_email
-        visit edit_user_invitation_path(invitation.invitation_token,
-                                        email: invitation.email)
-
-        expect do
+      context 'but too short password' do
+        it 'renders edit form' do
+          invitation = UserInvitation.new(email: 'newUser@example.com')
+          invitation.send_invitation_email
+          
+          visit edit_user_invitation_path(invitation.invitation_token,
+                                          email: invitation.email)
+          fill_in 'Password',     with: 'bad'
+          fill_in 'Confirmation', with: 'bad'
           click_button 'Finish Signup'
-        end.not_to change(User, :count)
+
+          expect(page).to have_title full_title 'Finish Signup'
+        end
+
+        it 'does not create new user' do
+          invitation = UserInvitation.new(email: 'newUser@example.com')
+          invitation.send_invitation_email
+          visit edit_user_invitation_path(invitation.invitation_token,
+                                          email: invitation.email)
+
+          expect do
+            fill_in 'Password',     with: 'bad'
+            fill_in 'Confirmation', with: 'bad'
+            click_button 'Finish Signup'
+          end.not_to change(User, :count)
+        end
       end
     end
 

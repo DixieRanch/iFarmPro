@@ -13,13 +13,16 @@ class UserInvitationsController < ApplicationController
       flash[:success] = 'Invitation has been sent'
       redirect_to root_path
 
-    else
+    elsif !User.where(email: @invitation.email).exists?
       invitation = UserInvitation.with_email(@invitation.email)
       invitation.destroy
       if @invitation.save
         @invitation.send_invitation_email
         flash[:success] = 'Invitation has been sent'
+        redirect_to root_path
       end
+
+    else
       render 'new'
     end
   end

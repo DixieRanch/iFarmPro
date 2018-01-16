@@ -42,7 +42,10 @@ class UserInvitationsController < ApplicationController
       flash[:success] = 'Invitation has been sent'
 >>>>>>> Add flash message upon successful form submission
       redirect_to root_path
+
     else
+      invitation = UserInvitation.with_email(@invitation.email)
+      invitation.destroy
       render 'new'
     end
   end

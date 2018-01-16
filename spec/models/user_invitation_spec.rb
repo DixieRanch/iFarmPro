@@ -120,7 +120,8 @@ describe UserInvitation, :not_a_tenant_model do
   describe 'validations' do
     it { should validate_presence_of(:email) }
     it {
-      expect(UserInvitation.new(email: 'newUser@example.com')).to validate_uniqueness_of(:email).case_insensitive
+      expect(UserInvitation.new(email: 'newUser@example.com'))
+        .to validate_uniqueness_of(:email).case_insensitive
     }
 
     it 'should validate email format' do

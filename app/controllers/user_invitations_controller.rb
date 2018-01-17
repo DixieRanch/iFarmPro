@@ -1,5 +1,6 @@
 class UserInvitationsController < ApplicationController
   skip_before_action :signed_in_user, only: [:edit, :update]
+  before_action :find_record, only: [:update]
 
   def new
     @invitation = UserInvitation.new
@@ -31,30 +32,12 @@ class UserInvitationsController < ApplicationController
   end
 
   def update
-    @invitation = UserInvitation.with_email(params[:user_invitation][:email])
-
     if !@invitation.authenticated?(:invitation, params[:id])
-      redirect_to root_path
-      flash[:danger] = 'Your invitation has expired.  Request
-                        a new one from your company.'
-
+      handle_expired
     elsif @invitation.invitation_expired?
-      redirect_to root_path
-      flash[:danger] = 'Your invitation has expired.  Request
-                        a new one from your company.'
-
+      handle_expired
     elsif params[:user_invitation][:password].present?
-      @user = User.new(user_params)
-      @user.company_id = @invitation.company_id
-      if @user.save
-        @user.activate
-        sign_in(@user)
-        flash[:success] = 'Welcome to iFarmPro!'
-        @invitation.destroy
-      else
-        render 'edit'
-      end
-
+      setup_user
     else
       render 'edit'
     end
@@ -62,10 +45,37 @@ class UserInvitationsController < ApplicationController
 
   private
 
+  def find_record
+    @invitation = UserInvitation.with_email(params[:user_invitation][:email])
+  end
+
   def send_invitation
     @invitation.send_invitation_email
     flash[:success] = 'Invitation has been sent'
     redirect_to root_path
+  end
+
+  def handle_expired
+    redirect_to root_path
+    flash[:danger] = 'Your invitation has expired.  Request
+                      a new one from your company.'
+  end
+
+  def complete_signup
+    @user.activate
+    sign_in(@user)
+    flash[:success] = 'Welcome to iFarmPro!'
+    @invitation.destroy
+  end
+
+  def setup_user
+    @user = User.new(user_params)
+    @user.company_id = @invitation.company_id
+    if @user.save
+      complete_signup
+    else
+      render 'edit'
+    end
   end
 
   def invitation_params

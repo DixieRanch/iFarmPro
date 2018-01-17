@@ -9,18 +9,12 @@ class UserInvitationsController < ApplicationController
     @invitation = UserInvitation.new(invitation_params)
 
     if @invitation.save
-      @invitation.send_invitation_email
-      flash[:success] = 'Invitation has been sent'
-      redirect_to root_path
+      send_invitation
 
     elsif !User.where(email: @invitation.email).exists?
       invitation = UserInvitation.with_email(@invitation.email)
       invitation.destroy
-      if @invitation.save
-        @invitation.send_invitation_email
-        flash[:success] = 'Invitation has been sent'
-        redirect_to root_path
-      end
+      send_invitation if @invitation.save
 
     else
       render 'new'
@@ -67,6 +61,12 @@ class UserInvitationsController < ApplicationController
   end
 
   private
+
+  def send_invitation
+    @invitation.send_invitation_email
+    flash[:success] = 'Invitation has been sent'
+    redirect_to root_path
+  end
 
   def invitation_params
     params.require(:user_invitation).permit(permitted_params)

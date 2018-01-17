@@ -412,6 +412,21 @@ describe 'UserInvitations' do
 
         expect(page).to have_css('div.alert.alert-success', text: 'Welcome')
       end
+      
+      it 'deletes invitation' do
+        sign_in create(:user)
+        visit new_user_invitation_path
+        fill_in 'Email', with: 'newUser@example.com'
+        click_button 'Send Invitation'
+        
+        expect do
+          open_email('newUser@example.com')
+          current_email.click_link 'Finish Signup'
+          fill_in 'Password',     with: 'password'
+          fill_in 'Confirmation', with: 'password'
+          click_button 'Finish Signup'
+        end.to change(UserInvitation, :count).by(-1)
+      end
     end
   end
 <<<<<<< 1a8b355eff77c2d9be30f852d11abbb654669aa9

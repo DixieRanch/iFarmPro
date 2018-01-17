@@ -103,6 +103,7 @@ class UserInvitationsController < ApplicationController
         @user.activate
         sign_in(@user)
         flash[:success] = 'Welcome to iFarmPro!'
+        @invitation.destroy
       else
         render 'edit'
       end

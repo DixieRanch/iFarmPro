@@ -27,6 +27,7 @@ describe Company, :not_a_tenant_model do
       it { should have_many :users }
       it { should accept_nested_attributes_for :users }
       it { should have_many :farms }
+      it { should have_many :user_invitations }
     end
   end
 

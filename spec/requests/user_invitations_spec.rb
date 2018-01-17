@@ -300,7 +300,7 @@ describe 'UserInvitations' do
         it 'renders edit form' do
           invitation = UserInvitation.new(email: 'newUser@example.com')
           invitation.send_invitation_email
-          
+
           visit edit_user_invitation_path(invitation.invitation_token,
                                           email: invitation.email)
           fill_in 'Password',     with: 'bad'

@@ -7,7 +7,11 @@ class UserInvitationsController < ApplicationController
   skip_before_action :signed_in_user, only: [:edit]
 =======
   skip_before_action :signed_in_user, only: [:edit, :update]
+<<<<<<< 3612cb86f7148dda6e6ed58e30937cdf46e3b4bf
 >>>>>>> Add user creation functionality bounded by the company.
+=======
+  before_action :find_record, only: [:update]
+>>>>>>> Refactor user_invitations_controller update method.
 
   def new
     @invitation = UserInvitation.new
@@ -69,6 +73,7 @@ class UserInvitationsController < ApplicationController
   end
 
   def update
+<<<<<<< 3612cb86f7148dda6e6ed58e30937cdf46e3b4bf
     @invitation = UserInvitation.with_email(params[:user_invitation][:email])
 
     render 'edit'
@@ -86,28 +91,14 @@ class UserInvitationsController < ApplicationController
   def update
     @invitation = UserInvitation.with_email(params[:user_invitation][:email])
 
+=======
+>>>>>>> Refactor user_invitations_controller update method.
     if !@invitation.authenticated?(:invitation, params[:id])
-      redirect_to root_path
-      flash[:danger] = 'Your invitation has expired.  Request
-                        a new one from your company.'
-
+      handle_expired
     elsif @invitation.invitation_expired?
-      redirect_to root_path
-      flash[:danger] = 'Your invitation has expired.  Request
-                        a new one from your company.'
-
+      handle_expired
     elsif params[:user_invitation][:password].present?
-      @user = User.new(user_params)
-      @user.company_id = @invitation.company_id
-      if @user.save
-        @user.activate
-        sign_in(@user)
-        flash[:success] = 'Welcome to iFarmPro!'
-        @invitation.destroy
-      else
-        render 'edit'
-      end
-
+      setup_user
     else
       render 'edit'
     end
@@ -115,10 +106,37 @@ class UserInvitationsController < ApplicationController
 
   private
 
+  def find_record
+    @invitation = UserInvitation.with_email(params[:user_invitation][:email])
+  end
+
   def send_invitation
     @invitation.send_invitation_email
     flash[:success] = 'Invitation has been sent'
     redirect_to root_path
+  end
+
+  def handle_expired
+    redirect_to root_path
+    flash[:danger] = 'Your invitation has expired.  Request
+                      a new one from your company.'
+  end
+
+  def complete_signup
+    @user.activate
+    sign_in(@user)
+    flash[:success] = 'Welcome to iFarmPro!'
+    @invitation.destroy
+  end
+
+  def setup_user
+    @user = User.new(user_params)
+    @user.company_id = @invitation.company_id
+    if @user.save
+      complete_signup
+    else
+      render 'edit'
+    end
   end
 
   def invitation_params

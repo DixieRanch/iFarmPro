@@ -41,6 +41,6 @@ class CompaniesController < ApplicationController
   end
 
   def users_attributes
-    { users_attributes: [:email, :password, :password_confirmation, :id] }
+    { users_attributes: [:email, :password, :password_confirmation] }
   end
 end

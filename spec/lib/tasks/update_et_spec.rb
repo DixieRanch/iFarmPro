@@ -37,7 +37,7 @@ describe Tasks::UpdateEt do
       weather_station_code = create(:weather_station).id_code
       update_et = Tasks::UpdateEt.new(url_prefix)
       stub_request(:get,  url).to_return(form_file)
-      stub_request(:post, url).to_return(response_file)
+      stub_request(:post, post_url).to_return(response_file)
 
       page = update_et.fetch(weather_station_code, '2017-06-25', '2017-06-30')
 
@@ -80,7 +80,7 @@ describe Tasks::UpdateEt do
                  .update_attributes(station_symbol => 0.05)
       end
       stub_request(:get,  url).to_return(form_file)
-      stub_request(:post, url).to_return(response_file)
+      stub_request(:post, post_url).to_return(response_file)
 
       update_et.fetch_parse_update_pad_table
 
@@ -104,10 +104,14 @@ describe Tasks::UpdateEt do
   end
 
   def url
-    'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+    'https://weather.nmsu.edu/ziamet/request/station/nmcc-da-1/etref/gdd/data/'
   end
 
   def url_prefix
-    'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station'
+    'https://weather.nmsu.edu/ziamet/request/station'
+  end
+
+  def post_url
+    'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
   end
 end

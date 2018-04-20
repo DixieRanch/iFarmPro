@@ -17,7 +17,7 @@ describe 'app lib tasks import.rake' do
   it 'updates CurrentEt with Rake task' do
     create(:weather_station)
     stub_request(:get,  weather_url).to_return(form_file)
-    stub_request(:post, weather_url).to_return(response_file)
+    stub_request(:post, weather_post_url).to_return(response_file)
     CurrentEt.find_by(doy: 176).update_attributes(fabian_garcia: nil)
     CurrentEt.find_by(doy: 182).update_attributes(fabian_garcia: 0.15)
     CurrentEt.find_by(doy: 360).update_attributes(fabian_garcia: 0.20)
@@ -40,6 +40,10 @@ describe 'app lib tasks import.rake' do
   end
 
   def weather_url
-    'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
+    'https://weather.nmsu.edu/ziamet/request/station//nmcc-da-1/etref/gdd/data/'
+  end
+
+  def weather_post_url
+    'https://weather.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
   end
 end

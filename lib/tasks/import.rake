@@ -37,15 +37,15 @@ namespace :import do
 
   desc 'Import Current Et data from csv file'
   task update_et: :environment do
-    update_et = Tasks::UpdateEt.new('http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station')
+    update_et = Tasks::UpdateEt.new('https://weather.nmsu.edu/ziamet/request/station/')
     update_et.fetch_parse_update_pad_table
   end
 
   desc 'Add initial weather station'
   task initial_weather_station: :environment do
     attr = { name:       'NMSU',
-             url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/',
-             url_suffix: '/request/gdd/et/data/' }
+             url: 'https://weather.nmsu.edu/ziamet/request/station/',
+             url_suffix: '/etref/gdd/data/' }
 
     wx_attr = { name:    'Fabian Garcia Research Center',
                 id_code: 'nmcc-da-1',

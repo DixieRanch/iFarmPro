@@ -14,6 +14,12 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.password_reset(user)
   end
 
+  def invitation
+    user = UserInvitation.first
+    user.send_invitation_email
+    UserMailer.invitation(user)
+  end
+
   def last_email
     UserMailer.deliveries.last
   end

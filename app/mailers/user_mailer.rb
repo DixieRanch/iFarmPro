@@ -22,4 +22,14 @@ class UserMailer < ApplicationMailer
     mail to: user.email,
          subject: 'iFarmPro password reset'
   end
+
+  def invitation(user)
+    @message = "Hello, #{user.email}.  This email is to allow you to finish " \
+               'setting up your account for iFarmPro irrigation management. ' \
+               'Click the link to finish signing up, and then you will have ' \
+               "full access to your company's irrigation schedule."
+    @user = user
+    mail to: user.email,
+         subject: 'iFarmPro invitation'
+  end
 end

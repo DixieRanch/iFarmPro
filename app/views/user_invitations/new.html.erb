@@ -1,0 +1,17 @@
+<% provide :title, 'Invite User' %>
+<div class="row">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Invite New User</h1></div>
+    <div class="panel-body">
+      <%= simple_form_for(@invitation) do |f| %>
+        <%= f.error_notification %>
+        <fieldset>
+          <%= f.input :company_id, as: :hidden, 
+                      input_html: { value: Company.current_id } %>
+          
+          <%= f.input :email %>
+        </fieldset>
+        <%= f.submit "Send Invitation", class: "btn btn-large btn-primary" %>
+      <% end %>
+    </div>
+  </div>

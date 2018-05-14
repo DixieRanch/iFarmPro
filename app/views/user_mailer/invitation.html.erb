@@ -5,9 +5,4 @@
 </p>
 
 <%= link_to 'Finish Signup', edit_user_invitation_url( @user.invitation_token,
-<<<<<<< e0ed0cf6240700170d04e91c5c27a2e417307b35
-                                               email: @user.email,
-                                               company_id: @user.company_id) %>
-=======
                                                email: @user.email) %>
->>>>>>> Remove potential security issue from invitation email links due to extraneous company_id params.

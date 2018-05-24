@@ -69,10 +69,20 @@ describe SoilApplication do
 
       it 'has SoilApplication elements' do
         set_tenant_company
-        create :soil_application
+        product = create(:soil_product, name: "Roundup")
+        create(:soil_application, soil_product: product)
 
         expect(SoilApplication.next_applications.first)
           .to be_kind_of(SoilApplication)
+      end
+      
+      it 'only has elements that are herbicide applications' do
+        set_tenant_company
+        product = create(:soil_product, name: "Roundup")
+        herbicide = create(:soil_application, soil_product: product)
+        fertilizer = create(:soil_application)
+        
+        expect(SoilApplication.next_applications).not_to include(fertilizer)
       end
     end
   end

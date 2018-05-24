@@ -19,6 +19,10 @@ class SoilApplication < ActiveRecord::Base
   belongs_to :soil_application_unit
 
   default_scope { where company_id: Company.current_id }
+  scope :herbicide, lambda {
+    ids = SoilProduct.where('lower(name) like ?', '%round%').ids
+    SoilApplication.where(soil_product_id: ids)
+  }
 
   validates :soil_product_id, presence: true
   validates :quantity, numericality: true
@@ -36,8 +40,13 @@ class SoilApplication < ActiveRecord::Base
   end
 
   def self.next_applications
-    applications = SoilApplication.all
-    applications.each do |application|
+    current_applications.each do |application|
+    end
+  end
+
+  private_class_method def self.current_applications
+    Field.includes(:soil_applications).map do |field|
+      field.soil_applications.herbicide.order('date').last
     end
   end
 end

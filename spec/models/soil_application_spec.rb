@@ -84,6 +84,14 @@ describe SoilApplication do
 
         expect(SoilApplication.next_applications).not_to include(fertilizer)
       end
+
+      it 'has a SoilApplication element when given nil input' do
+        set_tenant_company
+        create :field
+
+        expect(SoilApplication.next_applications.first)
+          .to be_kind_of(SoilApplication)
+      end
     end
   end
 end

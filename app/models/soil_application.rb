@@ -46,7 +46,17 @@ class SoilApplication < ActiveRecord::Base
 
   private_class_method def self.current_applications
     Field.includes(:soil_applications).map do |field|
-      field.soil_applications.herbicide.order('date').last
+      last_application(field) || default_application(field)
     end
+  end
+  
+  private_class_method def self.last_application(field)
+    field.soil_applications.herbicide.order('date').last
+  end
+  
+  private_class_method def self.default_application(field)
+    field.soil_applications.new(
+      date: Time.zone.local(Time.zone.now.year) - 184.days
+    )
   end
 end

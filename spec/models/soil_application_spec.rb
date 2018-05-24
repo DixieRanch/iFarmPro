@@ -63,5 +63,9 @@ describe SoilApplication do
         expect(soil_application.formatted_date).to eq 'January 8, 2017'
       end
     end
+    
+    describe '::next_applications' do
+      it { expect(SoilApplication.next_applications).to be_kind_of(Array) }
+    end
   end
 end

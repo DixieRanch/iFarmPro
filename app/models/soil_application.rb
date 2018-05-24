@@ -34,4 +34,10 @@ class SoilApplication < ActiveRecord::Base
   rescue TypeError, ArgumentError
     self[:date] = value
   end
+
+  def self.next_applications
+    applications = SoilApplication.all
+    applications.each do |application|
+    end
+  end
 end

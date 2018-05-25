@@ -93,5 +93,15 @@ describe SoilApplication do
           .to be_kind_of(SoilApplication)
       end
     end
+
+    describe '#next_application_date' do
+      it 'should return a date' do
+        set_tenant_company
+        application = create(:soil_application)
+        create(:irrigation, field: application.field)
+
+        expect(application.next_application_date).to be_kind_of(Date)
+      end
+    end
   end
 end

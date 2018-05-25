@@ -45,7 +45,7 @@ class SoilApplication < ActiveRecord::Base
   end
 
   def next_application_date
-    date
+    date + 60.days
   end
 
   private_class_method def self.current_applications

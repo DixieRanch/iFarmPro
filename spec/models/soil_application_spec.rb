@@ -102,6 +102,17 @@ describe SoilApplication do
 
         expect(application.next_application_date).to be_kind_of(Date)
       end
+
+      context 'when next irrigation is 62 days away or less' do
+        it 'should return 60 days since last application' do
+          set_tenant_company
+          application = create(:soil_application)
+          create(:irrigation, field: application.field, time: 1.year.ago)
+
+          expect(application.next_application_date)
+            .to eq application.date + 60.days
+        end
+      end
     end
   end
 end

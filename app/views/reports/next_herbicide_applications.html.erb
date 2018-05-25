@@ -2,5 +2,25 @@
 <div class="row col-md-8">
   <div class="panel panel-primary">
     <div class="panel-heading"><h1>Spray Schedule</h1></div>
+    <div class="panel-body">
+      <table id="spray_schedule" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Next Application</th>
+            <th>Last Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @report.each do |application| %>
+            <tr>
+              <td><%= application.field.name_with_block %></td>
+              <td><%= application.next_application.to_s(:long) %></td>
+              <td><%= application.date.to_s(:long) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

@@ -14,5 +14,6 @@ class Report < ActiveRecord::Base
   end
   
   def self.next_herbicide_applications
+    SoilApplication.next_applications.sort_by(&:next_application)
   end
 end

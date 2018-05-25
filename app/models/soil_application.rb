@@ -14,6 +14,8 @@
 #
 
 class SoilApplication < ActiveRecord::Base
+  attr_accessor :next_application
+
   belongs_to :field
   belongs_to :soil_product
   belongs_to :soil_application_unit
@@ -41,6 +43,7 @@ class SoilApplication < ActiveRecord::Base
 
   def self.next_applications
     current_applications.each do |application|
+      application.next_application = application.next_application_date
     end
   end
 

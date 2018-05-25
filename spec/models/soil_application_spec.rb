@@ -113,6 +113,18 @@ describe SoilApplication do
             .to eq application.date + 60.days
         end
       end
+
+      context 'when next irrigation is more than 62 days after application' do
+        it 'should return 2 days before irrigation' do
+          set_tenant_company
+          application = create(:soil_application)
+          irrigation = create(:irrigation, field: application.field,
+                                           time: application.date + 60.days)
+
+          expect(application.next_application_date)
+            .to eq irrigation.next_irrigation_date - 2.days
+        end
+      end
     end
   end
 end

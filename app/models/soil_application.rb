@@ -45,7 +45,10 @@ class SoilApplication < ActiveRecord::Base
   end
 
   def next_application_date
-    date + 60.days
+    app_date = date + 60.days
+    irr = field.irrigations.last
+    irr_date = irr.next_irrigation_date - 2.days
+    [app_date, irr_date].max
   end
 
   private_class_method def self.current_applications

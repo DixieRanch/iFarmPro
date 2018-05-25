@@ -70,7 +70,8 @@ describe SoilApplication do
       it 'has SoilApplication elements' do
         set_tenant_company
         product = create(:soil_product, name: 'Roundup')
-        create(:soil_application, soil_product: product)
+        application = create(:soil_application, soil_product: product)
+        create(:irrigation, field: application.field)
 
         expect(SoilApplication.next_applications.first)
           .to be_kind_of(SoilApplication)
@@ -81,13 +82,16 @@ describe SoilApplication do
         product = create(:soil_product, name: 'Roundup')
         herbicide = create(:soil_application, soil_product: product)
         fertilizer = create(:soil_application)
+        create(:irrigation, field: herbicide.field)
+        create(:irrigation, field: fertilizer.field)
 
         expect(SoilApplication.next_applications).not_to include(fertilizer)
       end
 
       it 'has a SoilApplication element when given nil input' do
         set_tenant_company
-        create :field
+        field = create :field
+        create(:irrigation, field: field)
 
         expect(SoilApplication.next_applications.first)
           .to be_kind_of(SoilApplication)

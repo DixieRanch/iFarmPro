@@ -12,4 +12,7 @@ class Report < ActiveRecord::Base
   def self.fertilizer
     Field.all.sort_by(&:name_with_block)
   end
+  
+  def self.next_herbicide_applications
+  end
 end

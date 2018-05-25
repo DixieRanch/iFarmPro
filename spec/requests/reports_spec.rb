@@ -67,13 +67,15 @@ describe 'ReportPages' do
       end
     end
   end
-  
+
   context 'for Next Herbicide Applications' do
     it 'has correct elements' do
-      sign_in create(:user)
-      
+      sign_in_new create(:user)
+      field = create(:field)
+      create(:irrigation, field: field)
+
       visit report_path(:next_herbicide_applications)
-      
+
       expect(page).to have_title full_title('Spray Schedule')
       expect(page).to have_selector 'h1', text: 'Spray Schedule'
     end

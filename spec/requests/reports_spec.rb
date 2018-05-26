@@ -67,4 +67,34 @@ describe 'ReportPages' do
       end
     end
   end
+
+  context 'for Next Herbicide Applications' do
+    it 'has correct elements' do
+      sign_in_new create(:user)
+      field = create(:field)
+      create(:irrigation, field: field)
+
+      visit report_path(:next_herbicide_applications)
+
+      expect(page).to have_title full_title('Spray Schedule')
+      expect(page).to have_selector 'h1', text: 'Spray Schedule'
+    end
+
+    context 'with data' do
+      it 'displays spray report' do
+        sign_in_new create(:user)
+        field = create(:field, name: '2', block: create(:block, name: 'B'))
+        create(:soil_application,
+               field: field, date: '2017-07-01',
+               soil_product: create(:soil_product, name: 'Roundup'))
+        create(:irrigation, field: field, time: '2017-07-01 13:00')
+
+        visit report_path(:next_herbicide_applications)
+
+        expect(page).to have_selector 'td', text: 'B-2'
+        expect(page).to have_selector 'td', text: 'August 30, 2017'
+        expect(page).to have_selector 'td', text: 'July 1, 2017'
+      end
+    end
+  end
 end

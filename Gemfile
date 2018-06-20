@@ -12,7 +12,7 @@ gem 'rails',                  '4.2.10'
 gem 'sass',                   '3.4.22'
 gem 'sass-rails',             '5.0.7'
 gem 'simple_form',            '3.5.0'
-gem 'sprockets',              '3.7.1'
+gem 'sprockets',              '3.7.2'
 gem 'uglifier',               '3.0.0'
 gem 'will_paginate',          '3.1.6'
 

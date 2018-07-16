@@ -38,7 +38,7 @@ describe 'Application' do
 
         expect(page).to have_title full_title 'Soil Applications'
 
-        click_link 'Schedule'
+        click_link 'Irrigation Schedule'
 
         expect(page).to have_selector 'title', text: full_title('Schedule')
 

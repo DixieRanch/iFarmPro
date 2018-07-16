@@ -91,10 +91,6 @@ describe 'Application' do
         expect(page).to have_selector 'title', text: full_title('Help')
         expect(page).not_to have_link 'Company'
 
-        click_link 'Add User'
-
-        expect(page).to have_selector 'title', text: full_title('Add User')
-
         click_link 'iFarmPro'
 
         expect(page).to have_title full_title 'Schedule'

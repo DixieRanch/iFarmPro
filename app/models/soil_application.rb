@@ -22,7 +22,7 @@ class SoilApplication < ActiveRecord::Base
 
   default_scope { where company_id: Company.current_id }
   scope :herbicide, lambda {
-    ids = SoilProduct.where('lower(name) like ?', '%round%').ids
+    ids = SoilProduct.where('lower(name) like ?', '%prowl%').ids
     SoilApplication.where(soil_product_id: ids)
   }
 

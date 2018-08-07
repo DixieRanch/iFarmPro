@@ -80,15 +80,20 @@ describe SoilApplication do
       it 'only has elements that are Prowl, or Pindar applications' do
         set_tenant_company
         prowl = create(:soil_product, name: 'Prowl')
+        pindar = create(:soil_product, name: 'Pindar')
         prowl_application = create(:soil_application, soil_product: prowl)
+        pindar_application = create(:soil_application, soil_product: pindar)
         fertilizer_application = create(:soil_application)
         create(:irrigation, field: prowl_application.field)
+        create(:irrigation, field: pindar_application.field)
         create(:irrigation, field: fertilizer_application.field)
 
         expect(SoilApplication.next_applications)
           .not_to include(fertilizer_application)
         expect(SoilApplication.next_applications)
           .to include(prowl_application)
+        expect(SoilApplication.next_applications)
+          .to include(pindar_application)
       end
 
       it 'has a SoilApplication element when given nil input' do

@@ -32,8 +32,7 @@ class Irrigation < ActiveRecord::Base
 
   def self.next_irrigations
     current_irrigations.each do |irrigation|
-      irrigation.next_irrigation =
-        irrigation.next_irrigation_date
+      irrigation.next_irrigation = irrigation.next_irrigation_date
     end
   end
 

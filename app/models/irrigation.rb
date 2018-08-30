@@ -59,12 +59,6 @@ class Irrigation < ActiveRecord::Base
     field.irrigations.order('time').last
   end
 
-  private_class_method def self.default_irrigation(field)
-    field.irrigations.new(
-      time: Time.zone.local(Time.zone.now.year) - 184.days
-    )
-  end
-
   def current_et
     @current_et ||= CurrentEt.order('doy')
   end

@@ -56,7 +56,7 @@ class Irrigation < ActiveRecord::Base
   end
 
   private_class_method def self.last_irrigation(field)
-    field.irrigations.order('time').last
+    field.irrigations.order('time').last || NullIrrigation.new(field)
   end
 
   def current_et

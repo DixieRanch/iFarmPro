@@ -32,8 +32,7 @@ class Irrigation < ActiveRecord::Base
 
   def self.next_irrigations
     current_irrigations.each do |irrigation|
-      irrigation.next_irrigation =
-        irrigation.next_irrigation_date
+      irrigation.next_irrigation = irrigation.next_irrigation_date
     end
   end
 
@@ -57,13 +56,7 @@ class Irrigation < ActiveRecord::Base
   end
 
   private_class_method def self.last_irrigation(field)
-    field.irrigations.order('time').last
-  end
-
-  private_class_method def self.default_irrigation(field)
-    field.irrigations.new(
-      time: Time.zone.local(Time.zone.now.year) - 184.days
-    )
+    field.irrigations.order('time').last || NullIrrigation.new(field)
   end
 
   def current_et

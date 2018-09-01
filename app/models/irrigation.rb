@@ -55,7 +55,7 @@ class Irrigation < ActiveRecord::Base
 
   private_class_method def self.current_irrigations
     Field.includes(:irrigations).map do |field|
-      last_irrigation(field) || default_irrigation(field)
+      last_irrigation(field)
     end
   end
 

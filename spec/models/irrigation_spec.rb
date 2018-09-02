@@ -57,6 +57,30 @@ describe Irrigation do
     end
   end
 
+  describe '::last' do
+    context 'when field has multiple irrigations' do
+      it 'returns irrigation with the most recent date' do
+        set_tenant_company
+        field = create :field
+        last_irrigation = create(:irrigation, time: 1.month.ago, field: field)
+        create(:irrigation, time: 3.months.ago, field: field)
+
+        expect(Irrigation.last_for(field)).to eq last_irrigation
+      end
+    end
+
+    context 'when field has no irrigations' do
+      it 'returns irrigation with date July 1st, previous year' do
+        set_tenant_company
+        field = create :field
+
+        expect(Irrigation.last_for(field).time).to eq(
+          Time.zone.local((Time.zone.now.year - 1), 7, 1)
+        )
+      end
+    end
+  end
+
   describe '::next_irrigations' do
     it { expect(Irrigation.next_irrigations).to be_kind_of(Array) }
 

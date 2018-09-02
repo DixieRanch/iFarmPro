@@ -70,8 +70,7 @@ describe SoilApplication do
       it 'has SoilApplication elements' do
         set_tenant_company
         product = create(:soil_product, name: 'Roundup')
-        application = create(:soil_application, soil_product: product)
-        create(:irrigation, field: application.field)
+        create(:soil_application, soil_product: product)
 
         expect(SoilApplication.next_applications.first)
           .to be_kind_of(SoilApplication)
@@ -84,9 +83,6 @@ describe SoilApplication do
         prowl_application = create(:soil_application, soil_product: prowl)
         pindar_application = create(:soil_application, soil_product: pindar)
         fertilizer_application = create(:soil_application)
-        create(:irrigation, field: prowl_application.field)
-        create(:irrigation, field: pindar_application.field)
-        create(:irrigation, field: fertilizer_application.field)
 
         expect(SoilApplication.next_applications)
           .not_to include(fertilizer_application)
@@ -98,8 +94,7 @@ describe SoilApplication do
 
       it 'has a SoilApplication element when given nil input' do
         set_tenant_company
-        field = create :field
-        create(:irrigation, field: field)
+        create :field
 
         expect(SoilApplication.next_applications.first)
           .to be_kind_of(SoilApplication)
@@ -110,7 +105,6 @@ describe SoilApplication do
       it 'should return a date' do
         set_tenant_company
         application = create(:soil_application)
-        create(:irrigation, field: application.field)
 
         expect(application.next_application_date).to be_kind_of(Date)
       end
@@ -119,7 +113,6 @@ describe SoilApplication do
         it 'should return 60 days since last application' do
           set_tenant_company
           application = create(:soil_application)
-          create(:irrigation, field: application.field, time: 1.year.ago)
 
           expect(application.next_application_date)
             .to eq application.date + 60.days

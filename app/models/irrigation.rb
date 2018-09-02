@@ -30,6 +30,10 @@ class Irrigation < ActiveRecord::Base
     time.strftime('%B %-d, %Y %R') if time
   end
 
+  def self.last_for(field)
+    field.irrigations.order('time').last || NullIrrigation.new(field)
+  end
+
   def self.next_irrigations
     current_irrigations.each do |irrigation|
       irrigation.next_irrigation = irrigation.next_irrigation_date
@@ -51,12 +55,8 @@ class Irrigation < ActiveRecord::Base
 
   private_class_method def self.current_irrigations
     Field.includes(:irrigations).map do |field|
-      last_irrigation(field) || default_irrigation(field)
+      last_for(field)
     end
-  end
-
-  private_class_method def self.last_irrigation(field)
-    field.irrigations.order('time').last || NullIrrigation.new(field)
   end
 
   def current_et

@@ -86,7 +86,7 @@ describe 'ReportPages' do
         field = create(:field, name: '2', block: create(:block, name: 'B'))
         create(:soil_application,
                field: field, date: '2017-07-01',
-               soil_product: create(:soil_product, name: 'Roundup'))
+               soil_product: create(:soil_product, name: 'Pindar'))
         create(:irrigation, field: field, time: '2017-07-01 13:00')
 
         visit report_path(:next_herbicide_applications)

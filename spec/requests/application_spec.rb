@@ -95,6 +95,8 @@ describe 'Application' do
 
         expect(page).to have_title full_title 'Schedule'
 
+        expect(page).to have_link 'Invite User'
+
         click_link 'Sign out'
 
         expect(page).to have_selector 'title', text: full_title('')

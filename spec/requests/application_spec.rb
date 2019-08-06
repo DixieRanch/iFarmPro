@@ -68,6 +68,8 @@ describe 'Application' do
 
         expect(page).to have_selector 'title', text: full_title('Help')
 
+        expect(page).to_not have_link 'Invite User'
+
         click_link 'Sign in'
 
         expect(page).to have_selector 'title', text: full_title('Sign in')

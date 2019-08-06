@@ -3,6 +3,31 @@ require 'tasks/update_et'
 
 namespace :import do
   desc 'Import ETo data from csv file'
+
+  task soil_class: :environment do
+    file = 'db/soil_class.csv'
+
+    CSV.foreach(file, headers: true) do |row|
+      soil_class = SoilClass.find_by(name: row['name']) || SoilClass.new
+      soil_class.attributes = row.to_hash
+      soil_class.save!
+    end
+  end
+
+  desc 'Import Soil Application Unit data from csv file'
+  task soil_application_unit: :environment do
+    file = 'db/soil_application_unit.csv'
+
+    CSV.foreach(file, headers: true) do |row|
+      unit = SoilApplicationUnit.find_by(name: row['name']) ||
+             SoilApplicationUnit.new
+      unit.attributes = row.to_hash
+      unit.save!
+    end
+  end
+
+  desc 'Import Current Et data from csv file'
+
   task et: :environment do
     file = 'db/et0.csv'
 

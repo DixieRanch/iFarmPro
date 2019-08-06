@@ -68,8 +68,6 @@ describe 'Application' do
 
         expect(page).to have_selector 'title', text: full_title('Help')
 
-        expect(page).to_not have_link 'Invite User'
-
         click_link 'Sign in'
 
         expect(page).to have_selector 'title', text: full_title('Sign in')
@@ -81,6 +79,8 @@ describe 'Application' do
         click_link 'Sign up now!'
 
         expect(page).to have_selector 'title', text: full_title('Sign up')
+
+        expect(page).to_not have_link(nil, href: '/user_invitations/new')
       end
     end
 
@@ -97,7 +97,8 @@ describe 'Application' do
 
         expect(page).to have_title full_title 'Schedule'
 
-        expect(page).to have_link 'Invite User'
+        find("a[href='/user_invitations/new']").click
+        expect(page).to have_title full_title 'Invite User'
 
         click_link 'Sign out'
 

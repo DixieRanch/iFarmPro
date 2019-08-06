@@ -79,6 +79,8 @@ describe 'Application' do
         click_link 'Sign up now!'
 
         expect(page).to have_selector 'title', text: full_title('Sign up')
+
+        expect(page).to_not have_link(nil, href: '/user_invitations/new')
       end
     end
 
@@ -94,6 +96,9 @@ describe 'Application' do
         click_link 'iFarmPro'
 
         expect(page).to have_title full_title 'Schedule'
+
+        find("a[href='/user_invitations/new']").click
+        expect(page).to have_title full_title 'Invite User'
 
         click_link 'Sign out'
 

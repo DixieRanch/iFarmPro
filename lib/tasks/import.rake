@@ -26,7 +26,7 @@ namespace :import do
     end
   end
 
-  # desc 'Import Current Et data from csv file'
+  desc 'Import Current Et data from csv file'
 
   task et: :environment do
     file = 'db/et0.csv'

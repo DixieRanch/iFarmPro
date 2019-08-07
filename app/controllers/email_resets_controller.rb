@@ -1,7 +1,7 @@
 class EmailResetsController < ApplicationController
-  #   def show
-  #     @email = params[:id]
-  #   end
+  
+  def show
+  end
 
   def new
   end

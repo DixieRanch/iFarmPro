@@ -10,7 +10,7 @@
                           url: new_email_reset_path,
                           html: {class: 'form-horizontal'},
                           wrapper: :horizontal_form do |f| %>
-        <%= f.input :text, label: 'New Email' %>
+        <%= f.input :email, label: 'New Email' %>
         <%= f.submit 'Submit Email', class: "btn btn-lg btn-primary" %>
       <% end %>
     </div>

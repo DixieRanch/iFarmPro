@@ -106,4 +106,7 @@ FactoryGirl.define do
     density 11
     initialize_with { SoilApplicationUnit.find_or_create_by name: name }
   end
+
+  factory :box do
+  end
 end

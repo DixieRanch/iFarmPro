@@ -9,6 +9,12 @@ describe Box do
     expect(Box.new(valid_attributes)).to be_valid
   end
 
+  it 'has a valid factory' do
+    set_tenant_company
+
+    expect(build_stubbed(:box)).to be_valid
+  end
+
   describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :empty_weight }

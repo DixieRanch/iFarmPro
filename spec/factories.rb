@@ -108,5 +108,6 @@ FactoryGirl.define do
   end
 
   factory :box do
+    name '001'
   end
 end

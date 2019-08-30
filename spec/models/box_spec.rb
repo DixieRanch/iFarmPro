@@ -2,10 +2,8 @@ require 'rails_helper'
 
 describe Box do
   describe 'attributes' do
-    it { should have_db_column :box_id }
+    it { should have_db_column :name }
     it { should have_db_column :empty_weight }
     it { should have_db_column :company_id }
-    it { should have_db_index :box_id }
-    it { should have_db_index :company_id }
   end
 end

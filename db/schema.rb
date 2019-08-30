@@ -39,15 +39,12 @@ ActiveRecord::Schema.define(version: 20190823164910) do
   add_index "blocks", ["farm_id"], name: "index_blocks_on_farm_id", using: :btree
 
   create_table "boxes", force: :cascade do |t|
-    t.integer  "box_id"
+    t.string   "name"
     t.integer  "empty_weight"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "boxes", ["box_id"], name: "index_boxes_on_box_id", using: :btree
-  add_index "boxes", ["company_id"], name: "index_boxes_on_company_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"

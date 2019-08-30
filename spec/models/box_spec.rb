@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 describe Box do
+  valid_attributes = { name: '001', empty_weight: 200 }
+
+  it 'is valid' do
+    set_tenant_company
+
+    expect(Box.new(valid_attributes)).to be_valid
+  end
+
   describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :empty_weight }

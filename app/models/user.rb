@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
-  before_create :send_activation_email
+  after_create :send_activation_email
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -64,7 +64,6 @@ class User < ActiveRecord::Base
   def send_activation_email
     create_activation_digest
     UserMailer.account_activation(self).deliver_now
-    update_attributes(activation_digest: activation_digest) unless new_record?
   end
 
   def send_password_reset_email
@@ -76,6 +75,14 @@ class User < ActiveRecord::Base
     password_reset_sent_at < 2.hours.ago
   end
 
+  def activation_digest
+    email_digest
+  end
+
+  def activation_digest=(arg)
+    self.email_digest = arg
+  end
+
   private
 
   def create_remember_token
@@ -83,8 +90,8 @@ class User < ActiveRecord::Base
   end
 
   def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
+    self.activation_token = User.new_token
+    EmailDigestCreator.call(self, activation_token)
   end
 
   def create_password_reset_digest

@@ -27,8 +27,7 @@ describe Box do
     it { should validate_length_of(:name).is_at_most 10 }
     it {
       should validate_numericality_of(:empty_weight).allow_nil
-        .is_greater_than(150)
-                                                    .is_less_than(300)
+        .is_greater_than(150).is_less_than(300)
     }
     it { should validate_presence_of :company_id }
   end

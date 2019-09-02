@@ -21,4 +21,13 @@ describe EmailDigestCreator, :not_a_tenant_model do
 
     expect(BCrypt::Password.new(digest).is_password?(token)).to be true
   end
+  
+  it 'can be executed from the class call method' do
+    user = User.find(create(:user).id)
+    token = SecureRandom.urlsafe_base64
+    
+    EmailDigestCreator.call(user, token)
+    
+    expect(user.email_digest).not_to be_nil
+  end
 end

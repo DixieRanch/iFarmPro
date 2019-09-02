@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Box do
-  valid_attributes = { name: '001', empty_weight: 200 }
+  valid_attributes = { name: '001' }
 
   it 'is valid' do
     set_tenant_company

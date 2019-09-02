@@ -52,7 +52,6 @@ class User < ActiveRecord::Base
 
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
-    return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -77,10 +76,6 @@ class User < ActiveRecord::Base
 
   def activation_digest
     email_digest
-  end
-
-  def activation_digest=(arg)
-    self.email_digest = arg
   end
 
   def activation_digest?

@@ -122,14 +122,6 @@ describe User, :not_a_tenant_model do
 
       expect(user.authenticated?('activation', 'wrong token')).to be false
     end
-
-    it 'returns false if digest is nil' do
-      user = create(:user)
-      token = user.activation_token
-      user.activation_digest = nil
-
-      expect(user.authenticated?('activation', token)).to be false
-    end
   end
 
   describe '.activate' do

@@ -1,6 +1,20 @@
 require 'rails_helper'
 
 describe FreezerLocation do
+  valid_attributes = { name: 'Freezer' }
+
+  it 'is valid' do
+    set_tenant_company
+
+    expect(build_stubbed(:farm).blocks.new(valid_attributes)).to be_valid
+  end
+
+  it 'has a valid factory' do
+    set_tenant_company
+
+    expect(build_stubbed(:freezer_location)).to be_valid
+  end
+
   describe 'attributes' do
     it { should have_db_column :name }
     it { should have_db_column :farm_id }

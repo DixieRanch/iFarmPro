@@ -83,6 +83,10 @@ class User < ActiveRecord::Base
     self.email_digest = arg
   end
 
+  def password_reset_digest
+    email_digest
+  end
+
   private
 
   def create_remember_token
@@ -95,10 +99,9 @@ class User < ActiveRecord::Base
   end
 
   def create_password_reset_digest
-    self.password_reset_token  = User.new_token
-    self.password_reset_digest = User.digest(password_reset_token)
+    self.password_reset_token = User.new_token
+    EmailDigestCreator.call(self, password_reset_token)
     self.password_reset_sent_at = Time.zone.now
-    update_attributes(password_reset_digest: password_reset_digest,
-                      password_reset_sent_at: password_reset_sent_at)
+    update_attributes(password_reset_sent_at: password_reset_sent_at)
   end
 end

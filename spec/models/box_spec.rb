@@ -12,6 +12,7 @@ describe Box do
   it 'has a valid factory' do
     set_tenant_company
 
+    create(:box)
     expect(build_stubbed(:box)).to be_valid
   end
 

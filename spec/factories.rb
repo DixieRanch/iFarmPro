@@ -108,6 +108,6 @@ FactoryGirl.define do
   end
 
   factory :box do
-    name '001'
+    sequence(:name) { |n| "Box #{n}" }
   end
 end

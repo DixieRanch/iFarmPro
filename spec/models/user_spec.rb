@@ -217,9 +217,9 @@ describe User, :not_a_tenant_model do
 
     it 'creates a token that encrypts to digest' do
       user = User.create(valid_attributes)
-      
+
       user.send_password_reset_email
-      
+
       digest = BCrypt::Password.new(user.password_reset_digest)
       expect(digest.is_password?(user.password_reset_token)).to be true
     end

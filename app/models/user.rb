@@ -83,6 +83,10 @@ class User < ActiveRecord::Base
     self.email_digest = arg
   end
 
+  def activation_digest?
+    email_digest?
+  end
+
   def password_reset_digest
     email_digest
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109204150) do
+ActiveRecord::Schema.define(version: 20190902130955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,14 @@ ActiveRecord::Schema.define(version: 20180109204150) do
   add_index "fields", ["company_id"], name: "index_fields_on_company_id", using: :btree
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
   add_index "fields", ["soil_class_id"], name: "index_fields_on_soil_class_id", using: :btree
+
+  create_table "freezer_locations", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "farm_id"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "irrigation_wells", force: :cascade do |t|
     t.string   "name"

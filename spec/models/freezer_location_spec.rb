@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe FreezerLocation do
-  valid_attributes = { name: 'Freezer' }
+  valid_attributes = { name: 'A-10' }
 
   it 'is valid' do
     set_tenant_company

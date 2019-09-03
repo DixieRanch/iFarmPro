@@ -107,6 +107,11 @@ FactoryGirl.define do
     initialize_with { SoilApplicationUnit.find_or_create_by name: name }
   end
 
+  factory :freezer_location do
+    sequence(:name) { |n| "A-#{n}" }
+    farm
+  end
+
   factory :box do
     sequence(:name) { |n| "Box #{n}" }
   end

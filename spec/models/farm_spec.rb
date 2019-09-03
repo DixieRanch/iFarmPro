@@ -47,6 +47,7 @@ describe Farm do
     it { should accept_nested_attributes_for :irrigation_wells }
     it { should belong_to :weather_station }
     it { should have_many :rains }
+    it { should have_many :freezer_locations }
 
     it 'should return blocks ordered by name' do
       set_tenant_company

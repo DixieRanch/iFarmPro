@@ -110,6 +110,7 @@ FactoryGirl.define do
   factory :freezer_location do
     name 'A-10'
     farm
+  end
 
   factory :box do
     sequence(:name) { |n| "Box #{n}" }

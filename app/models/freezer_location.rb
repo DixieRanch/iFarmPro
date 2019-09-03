@@ -3,7 +3,9 @@ class FreezerLocation < ActiveRecord::Base
 
   belongs_to :farm
 
-  validates :name, presence: true
+  validates :name, presence: true,
+                   length: { maximum: 10 },
+                   uniqueness: { scope: :farm_id, case_sensitive: false }
   validates :farm_id, presence: true
   validates :company_id, presence: true
 end

@@ -24,7 +24,14 @@ describe FreezerLocation do
 
   describe 'validations' do
     it { should validate_presence_of :name }
+    it { should validate_length_of(:name).is_at_most 10 }
     it { should validate_presence_of :farm_id }
     it { should validate_presence_of :company_id }
+    it 'has a unique name scoped to farm' do
+      location = build_stubbed(:farm).freezer_locations.new valid_attributes
+
+      expect(location).to validate_uniqueness_of(:name).case_insensitive
+                                                       .scoped_to :farm_id
+    end
   end
 end

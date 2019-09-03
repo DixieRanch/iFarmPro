@@ -36,4 +36,8 @@ describe FreezerLocation do
                                                        .scoped_to :farm_id
     end
   end
+
+  describe 'associations' do
+    it { should belong_to :farm }
+  end
 end

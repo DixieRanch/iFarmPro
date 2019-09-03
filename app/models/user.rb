@@ -74,6 +74,9 @@ class User < ActiveRecord::Base
     password_reset_sent_at < 2.hours.ago
   end
 
+  # Temporary accessors to presurve api during refactor.
+  # These will be removed to fully implement emial_digest
+  # in following refactor steps.
   def activation_digest
     email_digest
   end
@@ -85,6 +88,7 @@ class User < ActiveRecord::Base
   def password_reset_digest
     email_digest
   end
+  # end of temporary methods
 
   private
 

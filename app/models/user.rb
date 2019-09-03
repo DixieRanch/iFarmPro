@@ -78,13 +78,6 @@ class User < ActiveRecord::Base
   # These will be removed to fully implement emial_digest
   # in following refactor steps.
 
-  def activation_digest?
-    ActiveSupport::Deprecation.warn(
-      'activation_digest? has been changed to email_digest?, use it instead'
-    )
-    email_digest?
-  end
-
   def password_reset_digest
     # ActiveSupport::Deprecation.warn(
     #   'password_reset_digest has been changed to email_digest, use it instead'

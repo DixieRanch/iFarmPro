@@ -13,7 +13,9 @@ describe FreezerLocation do
   it 'has a valid factory' do
     set_tenant_company
 
-    expect(build_stubbed(:freezer_location)).to be_valid
+    location = create(:freezer_location)
+    expect(build_stubbed(:freezer_location, farm_id: location.farm_id))
+      .to be_valid
   end
 
   describe 'attributes' do

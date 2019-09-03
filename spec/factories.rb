@@ -108,7 +108,7 @@ FactoryGirl.define do
   end
 
   factory :freezer_location do
-    name 'A-10'
+    sequence(:name) { |n| "A-#{n}" }
     farm
   end
 

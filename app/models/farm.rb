@@ -19,6 +19,7 @@ class Farm < ActiveRecord::Base
   has_many :irrigation_wells, -> { order :name },
            dependent: :restrict_with_error
   has_many :rains, dependent: :restrict_with_error
+  has_many :freezer_locations, dependent: :restrict_with_error
   belongs_to :weather_station
   accepts_nested_attributes_for :blocks
   accepts_nested_attributes_for :irrigation_wells

@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       self.current_user = user
       redirect_back_or root_path
     else
-      user.send_activation_email unless user.activation_digest?
+      user.send_activation_email unless user.email_digest?
       redirect_to account_activation_path(user.email)
     end
   end

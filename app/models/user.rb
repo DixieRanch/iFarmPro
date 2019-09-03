@@ -92,9 +92,9 @@ class User < ActiveRecord::Base
   end
 
   def password_reset_digest
-    ActiveSupport::Deprecation.warn(
-      'password_reset_digest has been changed to email_digest, use it instead'
-    )
+    # ActiveSupport::Deprecation.warn(
+    #   'password_reset_digest has been changed to email_digest, use it instead'
+    # )
     email_digest
   end
   # end of temporary methods

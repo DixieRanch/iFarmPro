@@ -76,7 +76,7 @@ describe User, :not_a_tenant_model do
   end
 
   describe 'callbacks' do
-    context 'before create' do
+    context 'after create' do
       it 'sends account activation email' do
         expect do
           create(:user)
@@ -122,14 +122,6 @@ describe User, :not_a_tenant_model do
 
       expect(user.authenticated?('activation', 'wrong token')).to be false
     end
-
-    it 'returns false if digest is nil' do
-      user = create(:user)
-      token = user.activation_token
-      user.activation_digest = nil
-
-      expect(user.authenticated?('activation', token)).to be false
-    end
   end
 
   describe '.activate' do
@@ -166,7 +158,7 @@ describe User, :not_a_tenant_model do
       user = User.new(valid_attributes)
 
       expect do
-        user.send_activation_email
+        user.save
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       digest = BCrypt::Password.new(user.activation_digest)
@@ -182,14 +174,6 @@ describe User, :not_a_tenant_model do
       new_digest = user.activation_digest
 
       expect(new_digest).not_to eq old_digest
-    end
-
-    it "doesn't save the user if it hasn't been created yet" do
-      user = User.new(valid_attributes)
-
-      user.send_activation_email
-
-      expect(user.new_record?).to be true
     end
   end
 
@@ -224,7 +208,7 @@ describe User, :not_a_tenant_model do
     end
 
     it 'creates a token that encrypts to digest' do
-      user = User.new(valid_attributes)
+      user = User.create(valid_attributes)
 
       user.send_password_reset_email
 

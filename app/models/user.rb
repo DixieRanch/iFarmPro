@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   before_save :create_remember_token
 
-  before_create :send_activation_email
+  after_create :send_activation_email
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -52,7 +52,6 @@ class User < ActiveRecord::Base
 
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
-    return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -64,7 +63,6 @@ class User < ActiveRecord::Base
   def send_activation_email
     create_activation_digest
     UserMailer.account_activation(self).deliver_now
-    update_attributes(activation_digest: activation_digest) unless new_record?
   end
 
   def send_password_reset_email
@@ -76,6 +74,22 @@ class User < ActiveRecord::Base
     password_reset_sent_at < 2.hours.ago
   end
 
+  # Temporary accessors to presurve api during refactor.
+  # These will be removed to fully implement emial_digest
+  # in following refactor steps.
+  def activation_digest
+    email_digest
+  end
+
+  def activation_digest?
+    email_digest?
+  end
+
+  def password_reset_digest
+    email_digest
+  end
+  # end of temporary methods
+
   private
 
   def create_remember_token
@@ -83,15 +97,14 @@ class User < ActiveRecord::Base
   end
 
   def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
+    self.activation_token = User.new_token
+    EmailDigestCreator.call(self, activation_token)
   end
 
   def create_password_reset_digest
-    self.password_reset_token  = User.new_token
-    self.password_reset_digest = User.digest(password_reset_token)
+    self.password_reset_token = User.new_token
+    EmailDigestCreator.call(self, password_reset_token)
     self.password_reset_sent_at = Time.zone.now
-    update_attributes(password_reset_digest: password_reset_digest,
-                      password_reset_sent_at: password_reset_sent_at)
+    update_attributes(password_reset_sent_at: password_reset_sent_at)
   end
 end

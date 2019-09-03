@@ -6,6 +6,10 @@ class EmailDigestCreator
 
   attr_reader :user, :token
 
+  def self.call(*args)
+    EmailDigestCreator.new(*args).call
+  end
+
   def call
     save_email_digest_to_user
   end

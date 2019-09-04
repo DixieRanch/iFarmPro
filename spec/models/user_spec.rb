@@ -114,13 +114,13 @@ describe User, :not_a_tenant_model do
       user = create(:user)
       token = user.activation_token
 
-      expect(user.authenticated?('activation', token)).to be true
+      expect(user.authenticated?('email', token)).to be true
     end
 
     it 'returns false if given the wrong token' do
       user = create(:user)
 
-      expect(user.authenticated?('activation', 'wrong token')).to be false
+      expect(user.authenticated?('email', 'wrong token')).to be false
     end
   end
 
@@ -161,17 +161,17 @@ describe User, :not_a_tenant_model do
         user.save
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      digest = BCrypt::Password.new(user.activation_digest)
+      digest = BCrypt::Password.new(user.email_digest)
       expect(digest.is_password?(user.activation_token)).to be true
     end
 
     it 'updates activation_digest when resending activation email' do
       user = create(:user)
-      old_digest = user.activation_digest
+      old_digest = user.email_digest
 
       user.send_activation_email
       user.reload
-      new_digest = user.activation_digest
+      new_digest = user.email_digest
 
       expect(new_digest).not_to eq old_digest
     end
@@ -203,7 +203,7 @@ describe User, :not_a_tenant_model do
         user.send_password_reset_email
         user.reload
       end.to((change { user.password_reset_token })
-         .and(change { user.password_reset_digest })
+         .and(change { user.email_digest })
          .and(change { user.password_reset_sent_at }))
     end
 
@@ -212,7 +212,7 @@ describe User, :not_a_tenant_model do
 
       user.send_password_reset_email
 
-      digest = BCrypt::Password.new(user.password_reset_digest)
+      digest = BCrypt::Password.new(user.email_digest)
       expect(digest.is_password?(user.password_reset_token)).to be true
     end
 
@@ -223,7 +223,7 @@ describe User, :not_a_tenant_model do
 
         expect do
           user.send_password_reset_email
-        end.to(change { user.password_reset_digest })
+        end.to(change { user.email_digest })
       end
     end
   end

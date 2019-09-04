@@ -15,7 +15,7 @@ class AccountActivationsController < ApplicationController
 
   def edit
     user = User.with_email(params[:email])
-    if user.authenticated?(:activation, params[:id])
+    if user.authenticated?(:email, params[:id])
       user.activate
       sign_in(user)
       flash[:success] = 'Account Activated!'

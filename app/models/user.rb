@@ -74,25 +74,6 @@ class User < ActiveRecord::Base
     password_reset_sent_at < 2.hours.ago
   end
 
-  # Temporary accessors to presurve api during refactor.
-  # These will be removed to fully implement emial_digest
-  # in following refactor steps.
-  def activation_digest
-    # ActiveSupport::Deprecation.warn(
-    #   'activation_digest has been changed to email_digest, use it instead'
-    # )
-    email_digest
-  end
-
-  def activation_digest?
-    # ActiveSupport::Deprecation.warn(
-    #   'activation_digest? has been changed to email_digest?, use it instead'
-    # )
-    email_digest?
-  end
-
-  # end of temporary methods
-
   private
 
   def create_remember_token

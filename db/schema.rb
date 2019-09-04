@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 20190904190647) do
     t.integer  "company_id"
     t.boolean  "activated",               default: false
     t.datetime "activated_at"
-    t.datetime "password_reset_sent_at"
+    t.datetime "email_digest_created_at"
     t.string   "email_digest"
     t.string   "email_digest_created_at"
   end

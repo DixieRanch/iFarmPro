@@ -91,4 +91,7 @@ class User < ActiveRecord::Base
     self.password_reset_sent_at = Time.zone.now
     update_attributes(password_reset_sent_at: password_reset_sent_at)
   end
+
+  def create_email_digest
+  end
 end

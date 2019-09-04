@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   belongs_to :company
 
-  attr_accessor :activation_token, :password_reset_token
+  attr_accessor :activation_token, :email_token
 
   before_save :create_remember_token
 
@@ -74,6 +74,15 @@ class User < ActiveRecord::Base
     password_reset_sent_at < 2.hours.ago
   end
 
+  # temporary method to preserve api
+  # will be removed during later refactor
+  def password_reset_token
+    ActiveSupport::Deprecation.warn(
+      'password_reset_token has been changed to email_token'
+    )
+    email_token
+  end
+
   private
 
   def create_remember_token
@@ -86,8 +95,8 @@ class User < ActiveRecord::Base
   end
 
   def create_password_reset_digest
-    self.password_reset_token = User.new_token
-    EmailDigestCreator.call(self, password_reset_token)
+    self.email_token = User.new_token
+    EmailDigestCreator.call(self, email_token)
     self.password_reset_sent_at = Time.zone.now
     update_attributes(password_reset_sent_at: password_reset_sent_at)
   end

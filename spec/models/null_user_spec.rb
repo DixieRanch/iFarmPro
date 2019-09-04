@@ -5,7 +5,7 @@ describe NullUser, :not_a_tenant_model do
     it 'returns datetime midnight 1/1/1900' do
       user = NullUser.new
 
-      time = user.password_reset_sent_at
+      time = user.email_digest_created_at
 
       expect(time).to be < 2.hours.ago
     end

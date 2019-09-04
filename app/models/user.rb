@@ -77,7 +77,6 @@ class User < ActiveRecord::Base
   # Temporary accessors to presurve api during refactor.
   # These will be removed to fully implement emial_digest
   # in following refactor steps.
-<<<<<<< HEAD
   def activation_digest
     # ActiveSupport::Deprecation.warn(
     #   'activation_digest has been changed to email_digest, use it instead'
@@ -92,15 +91,6 @@ class User < ActiveRecord::Base
     email_digest?
   end
 
-=======
-
-  def password_reset_digest
-    # ActiveSupport::Deprecation.warn(
-    #   'password_reset_digest has been changed to email_digest, use it instead'
-    # )
-    email_digest
-  end
->>>>>>> 9849b8b2fe1402507c2e0ef95ebbb7e4e3138c64
   # end of temporary methods
 
   private

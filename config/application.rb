@@ -7,11 +7,7 @@ require 'action_mailer/railtie'
 # require "active_resource/railtie"
 require 'sprockets/railtie'
 # require "rails/test_unit/railtie"
-<<<<<<< HEAD
-=======
-ActiveSupport::Deprecation.debug = true
 
->>>>>>> 9849b8b2fe1402507c2e0ef95ebbb7e4e3138c64
 Bundler.require(:default, Rails.env)
 
 module Ifarm

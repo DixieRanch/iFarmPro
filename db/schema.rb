@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190904190647) do
+ActiveRecord::Schema.define(version: 20190904205907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,7 +215,6 @@ ActiveRecord::Schema.define(version: 20190904190647) do
     t.integer  "company_id"
     t.boolean  "activated",               default: false
     t.datetime "activated_at"
-    t.datetime "email_digest_created_at"
     t.string   "email_digest"
     t.string   "email_digest_created_at"
   end

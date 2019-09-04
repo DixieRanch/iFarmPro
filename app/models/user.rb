@@ -74,15 +74,6 @@ class User < ActiveRecord::Base
     password_reset_sent_at < 2.hours.ago
   end
 
-  # temporary method to preserve api
-  # will be removed during later refactor
-  def password_reset_token
-    ActiveSupport::Deprecation.warn(
-      'password_reset_token has been changed to email_token'
-    )
-    email_token
-  end
-
   private
 
   def create_remember_token

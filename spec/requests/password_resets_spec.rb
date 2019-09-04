@@ -139,7 +139,7 @@ RSpec.describe 'PasswordResets', type: :request do
       it 'does not reset the password' do
         user = create :user
         user.send_password_reset_email
-        visit edit_password_reset_path(user.password_reset_token,
+        visit edit_password_reset_path(user.email_token,
                                        email: user.email)
         user.update_attributes(password_reset_sent_at: 3.hours.ago)
 
@@ -194,7 +194,7 @@ RSpec.describe 'PasswordResets', type: :request do
       it 'does not reset the password' do
         user = create :user
         user.send_password_reset_email
-        visit edit_password_reset_path(user.password_reset_token,
+        visit edit_password_reset_path(user.email_token,
                                        email: user.email)
 
         expect do
@@ -206,7 +206,7 @@ RSpec.describe 'PasswordResets', type: :request do
       it 'redirects to password reset form' do
         user = create :user
         user.send_password_reset_email
-        visit edit_password_reset_path(user.password_reset_token,
+        visit edit_password_reset_path(user.email_token,
                                        email: user.email)
 
         click_button 'Reset Your Password'
@@ -219,7 +219,7 @@ RSpec.describe 'PasswordResets', type: :request do
       it 'persists new password' do
         user = create :user
         user.send_password_reset_email
-        visit edit_password_reset_path(user.password_reset_token,
+        visit edit_password_reset_path(user.email_token,
                                        email: user.email)
 
         fill_in 'Password',     with: 'new_password'
@@ -234,7 +234,7 @@ RSpec.describe 'PasswordResets', type: :request do
       it 'signs in user after reset' do
         user = create :user
         user.send_password_reset_email
-        visit edit_password_reset_path(user.password_reset_token,
+        visit edit_password_reset_path(user.email_token,
                                        email: user.email)
 
         fill_in 'Password',     with: 'new_password'

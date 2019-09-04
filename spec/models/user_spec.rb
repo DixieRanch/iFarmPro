@@ -202,7 +202,7 @@ describe User, :not_a_tenant_model do
       expect do
         user.send_password_reset_email
         user.reload
-      end.to((change { user.password_reset_token })
+      end.to((change { user.email_token })
          .and(change { user.email_digest })
          .and(change { user.password_reset_sent_at }))
     end
@@ -213,7 +213,7 @@ describe User, :not_a_tenant_model do
       user.send_password_reset_email
 
       digest = BCrypt::Password.new(user.email_digest)
-      expect(digest.is_password?(user.password_reset_token)).to be true
+      expect(digest.is_password?(user.email_token)).to be true
     end
 
     context 'when requesting new password reset' do

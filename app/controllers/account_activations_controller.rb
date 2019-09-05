@@ -15,9 +15,7 @@ class AccountActivationsController < ApplicationController
 
   def edit
     user = User.with_email(params[:email])
-    if user.authenticated?(:email, params[:id]) && user.activated? == true
-      redirect_to signin_path
-    elsif user.authenticated?(:email, params[:id])
+    if user.authenticated?(:email, params[:id]) && user.activated? != true
       user.activate
       sign_in(user)
       flash[:success] = 'Account Activated!'

@@ -9,7 +9,8 @@ describe 'AccountActivations' do
         open_email(user.email)
         current_email.click_link 'Activate'
 
-        expect(page).to have_title full_title 'Sign in'
+        expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')
+        expect(page).to have_title full_title 'Request Account Activation'
       end
     end
 

@@ -19,7 +19,7 @@ describe 'AccountActivations' do
         user = create :user, activated: false
 
         expect do
-          visit edit_account_activation_path(user.activation_token,
+          visit edit_account_activation_path(user.email_token,
                                              email: user.email)
           user.reload
         end.to change { user.activated }.to(true)
@@ -28,7 +28,7 @@ describe 'AccountActivations' do
       it 'signs in user' do
         user = create :user, activated: false
 
-        visit edit_account_activation_path(user.activation_token,
+        visit edit_account_activation_path(user.email_token,
                                            email: user.email)
 
         expect(page).to have_link('Sign out')
@@ -44,7 +44,7 @@ describe 'AccountActivations' do
         create(:field)
         Company.current_id = nil
 
-        visit edit_account_activation_path(user.activation_token,
+        visit edit_account_activation_path(user.email_token,
                                            email: user.email)
 
         expect(page).to have_title full_title 'Schedule'
@@ -56,14 +56,14 @@ describe 'AccountActivations' do
         user = create :user, activated: false
 
         expect do
-          visit edit_account_activation_path(user.activation_token,
+          visit edit_account_activation_path(user.email_token,
                                              email: 'wrong@example.com')
           user.reload
         end.not_to change { user.activated }.from(false)
       end
 
       it 'renders account activation request page' do
-        visit edit_account_activation_path(create(:user).activation_token,
+        visit edit_account_activation_path(create(:user).email_token,
                                            email: 'wrong@example.com')
 
         expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')

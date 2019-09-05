@@ -57,12 +57,12 @@ class User < ActiveRecord::Base
   end
 
   def send_activation_email
-    create_activation_digest
+    create_email_digest
     UserMailer.account_activation(self).deliver_now
   end
 
   def send_password_reset_email
-    create_password_reset_digest
+    create_email_digest
     UserMailer.password_reset(self).deliver_now
   end
 
@@ -76,12 +76,7 @@ class User < ActiveRecord::Base
     self.remember_token = SecureRandom.urlsafe_base64
   end
 
-  def create_activation_digest
-    self.email_token = SecureRandom.urlsafe_base64
-    EmailDigestCreator.call(self, email_token)
-  end
-
-  def create_password_reset_digest
+  def create_email_digest
     self.email_token = SecureRandom.urlsafe_base64
     EmailDigestCreator.call(self, email_token)
     update_attributes(email_digest_created_at: Time.zone.now)

@@ -90,7 +90,4 @@ class User < ActiveRecord::Base
     EmailDigestCreator.call(self, email_token)
     update_attributes(email_digest_created_at: Time.zone.now)
   end
-
-  def create_email_digest
-  end
 end

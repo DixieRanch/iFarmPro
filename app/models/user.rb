@@ -81,12 +81,12 @@ class User < ActiveRecord::Base
   end
 
   def create_activation_digest
-    self.email_token = User.new_token
+    self.email_token = SecureRandom.urlsafe_base64
     EmailDigestCreator.call(self, email_token)
   end
 
   def create_password_reset_digest
-    self.email_token = User.new_token
+    self.email_token = SecureRandom.urlsafe_base64
     EmailDigestCreator.call(self, email_token)
     update_attributes(email_digest_created_at: Time.zone.now)
   end

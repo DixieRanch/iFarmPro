@@ -112,7 +112,7 @@ describe User, :not_a_tenant_model do
   describe '.authenticated?' do
     it 'returns true if given token matches digest' do
       user = create(:user)
-      token = user.activation_token
+      token = user.email_token
 
       expect(user.authenticated?('email', token)).to be true
     end
@@ -162,7 +162,7 @@ describe User, :not_a_tenant_model do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       digest = BCrypt::Password.new(user.email_digest)
-      expect(digest.is_password?(user.activation_token)).to be true
+      expect(digest.is_password?(user.email_token)).to be true
     end
 
     it 'updates activation_digest when resending activation email' do

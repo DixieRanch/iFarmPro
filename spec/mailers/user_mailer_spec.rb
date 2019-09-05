@@ -20,7 +20,7 @@ RSpec.describe UserMailer, type: :mailer do
       expect(last_email).to have_selector 'h1', text: 'Welcome to iFarmPro!'
       expect(last_email).to have_link 'Activate',
                                       href: edit_account_activation_url(
-                                        user.activation_token,
+                                        user.email_token,
                                         email: user.email
                                       )
       expect(last_email.body.encoded).to have_selector 'p', text: user.email

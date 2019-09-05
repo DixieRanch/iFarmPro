@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   belongs_to :company
 
-  attr_accessor :activation_token, :email_token
+  attr_accessor :email_token
 
   before_save :create_remember_token
 
@@ -81,8 +81,8 @@ class User < ActiveRecord::Base
   end
 
   def create_activation_digest
-    self.activation_token = User.new_token
-    EmailDigestCreator.call(self, activation_token)
+    self.email_token = User.new_token
+    EmailDigestCreator.call(self, email_token)
   end
 
   def create_password_reset_digest

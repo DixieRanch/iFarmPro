@@ -76,17 +76,6 @@ class User < ActiveRecord::Base
     self.remember_token = SecureRandom.urlsafe_base64
   end
 
-  def create_activation_digest
-    self.email_token = SecureRandom.urlsafe_base64
-    EmailDigestCreator.call(self, email_token)
-  end
-
-  def create_password_reset_digest
-    self.email_token = SecureRandom.urlsafe_base64
-    EmailDigestCreator.call(self, email_token)
-    update_attributes(email_digest_created_at: Time.zone.now)
-  end
-
   def create_email_digest
     self.email_token = SecureRandom.urlsafe_base64
     EmailDigestCreator.call(self, email_token)

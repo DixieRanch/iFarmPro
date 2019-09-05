@@ -87,17 +87,6 @@ describe User, :not_a_tenant_model do
 
   # Methods
 
-  describe '::new_token' do
-    it 'returns a random token' do
-      token = User.new_token
-      another_token = User.new_token
-
-      expect(token.class).to eq String
-      expect(token.length).to eq 22
-      expect(another_token).not_to eq token
-    end
-  end
-
   describe '::digest' do
     it 'returns hash digest of a given string' do
       digest = User.digest('random string')

@@ -87,17 +87,6 @@ describe User, :not_a_tenant_model do
 
   # Methods
 
-  describe '::new_token' do
-    it 'returns a random token' do
-      token = User.new_token
-      another_token = User.new_token
-
-      expect(token.class).to eq String
-      expect(token.length).to eq 22
-      expect(another_token).not_to eq token
-    end
-  end
-
   describe '::digest' do
     it 'returns hash digest of a given string' do
       digest = User.digest('random string')
@@ -112,7 +101,7 @@ describe User, :not_a_tenant_model do
   describe '.authenticated?' do
     it 'returns true if given token matches digest' do
       user = create(:user)
-      token = user.activation_token
+      token = user.email_token
 
       expect(user.authenticated?('email', token)).to be true
     end
@@ -162,7 +151,7 @@ describe User, :not_a_tenant_model do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       digest = BCrypt::Password.new(user.email_digest)
-      expect(digest.is_password?(user.activation_token)).to be true
+      expect(digest.is_password?(user.email_token)).to be true
     end
 
     it 'updates activation_digest when resending activation email' do

@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   belongs_to :company
 
-  attr_accessor :activation_token, :email_token
+  attr_accessor :email_token
 
   before_save :create_remember_token
 
@@ -31,10 +31,6 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, allow_nil: true
-
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
@@ -81,12 +77,12 @@ class User < ActiveRecord::Base
   end
 
   def create_activation_digest
-    self.activation_token = User.new_token
-    EmailDigestCreator.call(self, activation_token)
+    self.email_token = SecureRandom.urlsafe_base64
+    EmailDigestCreator.call(self, email_token)
   end
 
   def create_password_reset_digest
-    self.email_token = User.new_token
+    self.email_token = SecureRandom.urlsafe_base64
     EmailDigestCreator.call(self, email_token)
     update_attributes(email_digest_created_at: Time.zone.now)
   end

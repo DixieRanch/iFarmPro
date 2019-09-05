@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   end
 
   def password_reset_expired?
-    password_reset_sent_at < 2.hours.ago
+    email_digest_created_at < 2.hours.ago
   end
 
   private
@@ -88,8 +88,7 @@ class User < ActiveRecord::Base
   def create_password_reset_digest
     self.email_token = User.new_token
     EmailDigestCreator.call(self, email_token)
-    self.password_reset_sent_at = Time.zone.now
-    update_attributes(password_reset_sent_at: password_reset_sent_at)
+    update_attributes(email_digest_created_at: Time.zone.now)
   end
 
   def create_email_digest

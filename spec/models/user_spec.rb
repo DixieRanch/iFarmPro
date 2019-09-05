@@ -204,7 +204,7 @@ describe User, :not_a_tenant_model do
         user.reload
       end.to((change { user.email_token })
          .and(change { user.email_digest })
-         .and(change { user.password_reset_sent_at }))
+         .and(change { user.email_digest_created_at }))
     end
 
     it 'creates a token that encrypts to digest' do
@@ -230,13 +230,13 @@ describe User, :not_a_tenant_model do
 
   describe '#password_reset_expired?' do
     it 'is true with expired password_reset_token' do
-      user = User.new(password_reset_sent_at: 121.minutes.ago)
+      user = User.new(email_digest_created_at: 121.minutes.ago)
 
       expect(user.password_reset_expired?).to be true
     end
 
     it 'is false with unexpired password_reset_token' do
-      user = User.new(password_reset_sent_at: 119.minutes.ago)
+      user = User.new(email_digest_created_at: 119.minutes.ago)
 
       expect(user.password_reset_expired?).to be false
     end

@@ -8,7 +8,7 @@ class NullUser
   def authenticated?(_, _)
   end
 
-  def password_reset_sent_at
+  def email_digest_created_at
     Time.zone.local(1900)
   end
 

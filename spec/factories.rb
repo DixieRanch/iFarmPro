@@ -115,4 +115,7 @@ FactoryGirl.define do
   factory :box do
     sequence(:name) { |n| "Box #{n}" }
   end
+
+  factory :shipment do
+  end
 end

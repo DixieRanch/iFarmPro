@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'AccountActivations' do
   context 'after clicking link in email' do
     context 'when user is already activated' do
-      it 'redirects to the signin page' do
+      it 'redirects to the account activation request page' do
         user = create :user, activated: true
 
         open_email(user.email)

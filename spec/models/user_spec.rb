@@ -34,6 +34,7 @@ describe User, :not_a_tenant_model do
     it { should have_db_column(:company_id) }
     it { should have_db_column(:activated) }
     it { should have_db_column(:activated_at) }
+    it { should have_db_column(:email_digest) }
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
   end
@@ -75,7 +76,7 @@ describe User, :not_a_tenant_model do
   end
 
   describe 'callbacks' do
-    context 'before create' do
+    context 'after create' do
       it 'sends account activation email' do
         expect do
           create(:user)
@@ -85,17 +86,6 @@ describe User, :not_a_tenant_model do
   end
 
   # Methods
-
-  describe '::new_token' do
-    it 'returns a random token' do
-      token = User.new_token
-      another_token = User.new_token
-
-      expect(token.class).to eq String
-      expect(token.length).to eq 22
-      expect(another_token).not_to eq token
-    end
-  end
 
   describe '::digest' do
     it 'returns hash digest of a given string' do
@@ -111,23 +101,15 @@ describe User, :not_a_tenant_model do
   describe '.authenticated?' do
     it 'returns true if given token matches digest' do
       user = create(:user)
-      token = user.activation_token
+      token = user.email_token
 
-      expect(user.authenticated?('activation', token)).to be true
+      expect(user.authenticated?('email', token)).to be true
     end
 
     it 'returns false if given the wrong token' do
       user = create(:user)
 
-      expect(user.authenticated?('activation', 'wrong token')).to be false
-    end
-
-    it 'returns false if digest is nil' do
-      user = create(:user)
-      token = user.activation_token
-      user.activation_digest = nil
-
-      expect(user.authenticated?('activation', token)).to be false
+      expect(user.authenticated?('email', 'wrong token')).to be false
     end
   end
 
@@ -165,30 +147,22 @@ describe User, :not_a_tenant_model do
       user = User.new(valid_attributes)
 
       expect do
-        user.send_activation_email
+        user.save
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      digest = BCrypt::Password.new(user.activation_digest)
-      expect(digest.is_password?(user.activation_token)).to be true
+      digest = BCrypt::Password.new(user.email_digest)
+      expect(digest.is_password?(user.email_token)).to be true
     end
 
     it 'updates activation_digest when resending activation email' do
       user = create(:user)
-      old_digest = user.activation_digest
+      old_digest = user.email_digest
 
       user.send_activation_email
       user.reload
-      new_digest = user.activation_digest
+      new_digest = user.email_digest
 
       expect(new_digest).not_to eq old_digest
-    end
-
-    it "doesn't save the user if it hasn't been created yet" do
-      user = User.new(valid_attributes)
-
-      user.send_activation_email
-
-      expect(user.new_record?).to be true
     end
   end
 
@@ -217,18 +191,18 @@ describe User, :not_a_tenant_model do
       expect do
         user.send_password_reset_email
         user.reload
-      end.to((change { user.password_reset_token })
-         .and(change { user.password_reset_digest })
-         .and(change { user.password_reset_sent_at }))
+      end.to((change { user.email_token })
+         .and(change { user.email_digest })
+         .and(change { user.email_digest_created_at }))
     end
 
     it 'creates a token that encrypts to digest' do
-      user = User.new(valid_attributes)
+      user = User.create(valid_attributes)
 
       user.send_password_reset_email
 
-      digest = BCrypt::Password.new(user.password_reset_digest)
-      expect(digest.is_password?(user.password_reset_token)).to be true
+      digest = BCrypt::Password.new(user.email_digest)
+      expect(digest.is_password?(user.email_token)).to be true
     end
 
     context 'when requesting new password reset' do
@@ -238,20 +212,20 @@ describe User, :not_a_tenant_model do
 
         expect do
           user.send_password_reset_email
-        end.to(change { user.password_reset_digest })
+        end.to(change { user.email_digest })
       end
     end
   end
 
   describe '#password_reset_expired?' do
     it 'is true with expired password_reset_token' do
-      user = User.new(password_reset_sent_at: 121.minutes.ago)
+      user = User.new(email_digest_created_at: 121.minutes.ago)
 
       expect(user.password_reset_expired?).to be true
     end
 
     it 'is false with unexpired password_reset_token' do
-      user = User.new(password_reset_sent_at: 119.minutes.ago)
+      user = User.new(email_digest_created_at: 119.minutes.ago)
 
       expect(user.password_reset_expired?).to be false
     end

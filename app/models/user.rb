@@ -19,11 +19,11 @@ class User < ActiveRecord::Base
 
   belongs_to :company
 
-  attr_accessor :activation_token, :password_reset_token
+  attr_accessor :email_token
 
   before_save :create_remember_token
 
-  before_create :send_activation_email
+  after_create :send_activation_email
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -31,10 +31,6 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, allow_nil: true
-
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
@@ -52,7 +48,6 @@ class User < ActiveRecord::Base
 
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
-    return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -62,18 +57,17 @@ class User < ActiveRecord::Base
   end
 
   def send_activation_email
-    create_activation_digest
+    create_email_digest
     UserMailer.account_activation(self).deliver_now
-    update_attributes(activation_digest: activation_digest) unless new_record?
   end
 
   def send_password_reset_email
-    create_password_reset_digest
+    create_email_digest
     UserMailer.password_reset(self).deliver_now
   end
 
   def password_reset_expired?
-    password_reset_sent_at < 2.hours.ago
+    email_digest_created_at < 2.hours.ago
   end
 
   private
@@ -82,16 +76,9 @@ class User < ActiveRecord::Base
     self.remember_token = SecureRandom.urlsafe_base64
   end
 
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
-
-  def create_password_reset_digest
-    self.password_reset_token  = User.new_token
-    self.password_reset_digest = User.digest(password_reset_token)
-    self.password_reset_sent_at = Time.zone.now
-    update_attributes(password_reset_digest: password_reset_digest,
-                      password_reset_sent_at: password_reset_sent_at)
+  def create_email_digest
+    self.email_token = SecureRandom.urlsafe_base64
+    EmailDigestCreator.call(self, email_token)
+    update_attributes(email_digest_created_at: Time.zone.now)
   end
 end

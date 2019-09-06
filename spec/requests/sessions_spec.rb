@@ -52,8 +52,9 @@ describe 'Authentication' do
 
     context 'when activation email not sent' do
       it 'sends email' do
+        User.skip_callback(:create, :after, :send_activation_email)
         user = create(:user, activated: false)
-        user.update_attributes(activation_digest: nil)
+        User.set_callback(:create, :after, :send_activation_email)
         visit signin_path
 
         fill_in 'Email',    with: user.email

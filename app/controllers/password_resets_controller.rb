@@ -17,7 +17,7 @@ class PasswordResetsController < ApplicationController
 
   def edit
     @user = User.with_email(params[:email])
-    @user.activate if @user.authenticated?(:password_reset, params[:id])
+    @user.activate if @user.authenticated?(:email, params[:id])
 
     return unless @user.password_reset_expired?
     flash[:danger] = 'Expired Password Reset link!  Request a new one.'
@@ -27,7 +27,7 @@ class PasswordResetsController < ApplicationController
   def update
     @user = User.with_email(params[:user][:email])
 
-    if !@user.authenticated?(:password_reset, params[:id])
+    if !@user.authenticated?(:email, params[:id])
       redirect_to password_reset_path(@user.email)
     elsif @user.password_reset_expired?
       flash[:danger] = 'Expired Password Reset!  Request a new one.'

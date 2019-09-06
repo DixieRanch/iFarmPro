@@ -2,6 +2,18 @@ require 'rails_helper'
 
 describe 'AccountActivations' do
   context 'after clicking link in email' do
+    context 'when user is already activated' do
+      it 'redirects to the account activation request page' do
+        user = create :user, activated: true
+
+        open_email(user.email)
+        current_email.click_link 'Activate'
+
+        expect(page).to have_css('div.alert.alert-danger', text: 'Invalid')
+        expect(page).to have_title full_title 'Request Account Activation'
+      end
+    end
+
     it 'activates user' do
       user = create :user, activated: false
       open_email(user.email)

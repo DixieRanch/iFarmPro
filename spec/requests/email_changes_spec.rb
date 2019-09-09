@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe 'EmailChanges', type: :request do
-  context 'account dropdown' do
-    context 'change email link' do
-      it 'has correct link' do
-        user = create(:user)
-        sign_in user
+  describe 'email change link' do
+    context 'when user is logged in' do
+      it 'account dropdown has change email link' do
+        sign_in(create(:user))
 
         expect(page).to have_link 'Change Email'
       end
+    end
 
-      it 'redirects to email change form' do
-        user = create(:user)
-        sign_in user
+    context 'when clicking Change Email link' do
+      it 'redirects to change email page' do
+        sign_in(create(:user))
 
         click_link 'Change Email'
 

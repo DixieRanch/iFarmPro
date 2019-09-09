@@ -20,4 +20,14 @@ RSpec.describe 'EmailChanges', type: :request do
       end
     end
   end
+
+  describe 'submit new email form' do
+    it 'has a submit button' do
+      sign_in(create(:user))
+
+      click_link 'Change Email'
+
+      expect(page).to have_button 'Submit Email'
+    end
+  end
 end

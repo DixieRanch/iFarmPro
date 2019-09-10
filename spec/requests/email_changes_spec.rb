@@ -19,5 +19,11 @@ RSpec.describe 'EmailChanges', type: :request do
         expect(page).to have_title full_title 'Change Email'
       end
     end
+
+    context 'with logged out user' do
+      it 'is not present' do
+        expect(page).not_to have_link 'Change Email'
+      end
+    end
   end
 end

@@ -29,5 +29,13 @@ RSpec.describe 'EmailChanges', type: :request do
 
       expect(page).to have_button 'Submit Email'
     end
+
+    it 'has email text field' do
+      sign_in(create(:user))
+
+      click_link 'Change Email'
+
+      expect(page).to have_field('New Email')
+    end
   end
 end

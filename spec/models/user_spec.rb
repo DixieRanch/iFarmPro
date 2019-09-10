@@ -35,6 +35,7 @@ describe User, :not_a_tenant_model do
     it { should have_db_column(:activated) }
     it { should have_db_column(:activated_at) }
     it { should have_db_column(:email_digest) }
+    it { should have_db_column(:new_email) }
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
   end

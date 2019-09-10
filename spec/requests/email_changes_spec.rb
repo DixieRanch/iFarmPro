@@ -21,21 +21,20 @@ RSpec.describe 'EmailChanges', type: :request do
     end
   end
 
-  describe 'submit new email form' do
-    it 'has a submit button' do
-      sign_in(create(:user))
+  describe 'new email form' do
+    context 'when submiting new email' do
+      it 'updates new_email attribute' do
+        user = create(:user)
+        sign_in(user)
 
-      click_link 'Change Email'
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
 
-      expect(page).to have_button 'Submit Email'
-    end
+        user.reload
 
-    it 'has email text field' do
-      sign_in(create(:user))
-
-      click_link 'Change Email'
-
-      expect(page).to have_field('New Email')
+        expect(user.new_email).to eq 'new@email.com'
+      end
     end
   end
 end

@@ -30,10 +30,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true,
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-   validates :new_email, 
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false },
-                    allow_nil: true
+  validates :new_email, format: { with: VALID_EMAIL_REGEX },
+                        uniqueness: { case_sensitive: false },
+                        allow_nil: true
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   def self.digest(string)

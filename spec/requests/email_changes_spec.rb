@@ -36,7 +36,7 @@ RSpec.describe 'EmailChanges', type: :request do
         expect(user.new_email).to eq 'new@email.com'
       end
     end
-    
+
     context 'when submitting non email' do
       it 'does not update new_email attribute' do
         user = create(:user)
@@ -46,9 +46,8 @@ RSpec.describe 'EmailChanges', type: :request do
         fill_in('New Email', with: 'notanemail.com')
         click_button('Submit Email')
         user.reload
-        
+
         expect(user.new_email).to be_nil
-        
       end
     end
   end

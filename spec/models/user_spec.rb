@@ -50,6 +50,10 @@ describe User, :not_a_tenant_model do
       expect(User.new(valid_attributes)).to validate_uniqueness_of(:email)
         .case_insensitive
     }
+    it {
+      expect(User.new(valid_attributes)).to validate_uniqueness_of(:new_email)
+        .case_insensitive
+    }
     it { should validate_length_of(:password).is_at_least(6) }
     it { should validate_confirmation_of(:password) }
 
@@ -64,6 +68,20 @@ describe User, :not_a_tenant_model do
 
       invalid_email.each do |email|
         expect(User.new).not_to allow_value(email).for(:email)
+      end
+    end
+
+    it 'should validate format of new_email' do
+      valid_email = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+      invalid_email = %w[user@foo,com user_at_foo.org example.user@foo.
+                         foo@bar_baz.com foo@bar+baz.com]
+
+      valid_email.each do |email|
+        expect(User.new).to allow_value(email).for(:new_email)
+      end
+
+      invalid_email.each do |email|
+        expect(User.new).not_to allow_value(email).for(:new_email)
       end
     end
 

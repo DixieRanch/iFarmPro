@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :new_email, format: { with: VALID_EMAIL_REGEX },
-                        uniqueness: { case_sensitive: false },
+                        uniqueness: { scope: :email, case_sensitive: false },
                         allow_nil: true
   validates :password, length: { minimum: 6 }, allow_nil: true
 

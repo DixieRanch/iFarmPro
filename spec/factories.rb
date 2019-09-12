@@ -117,5 +117,8 @@ FactoryGirl.define do
   end
 
   factory :shipment do
+    name '2018-001'
+    date Time.zone.today
+    destination 'Sheller'
   end
 end

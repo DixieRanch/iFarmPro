@@ -32,4 +32,14 @@ class UserMailer < ApplicationMailer
     mail to: user.email,
          subject: 'iFarmPro invitation'
   end
+
+  def new_email_verification(user)
+    @message = "Hello, #{user.new_email}.  This email is to allow you to " \
+               'verify your new email address for iFarmPro irrigation ' \
+               'management. Click the link below to verify this email '\
+               'address. This link will expire after two(2) hours'
+    @user = user
+    mail to: user.new_email,
+         subject: 'iFarmPro new email verification'
+  end
 end

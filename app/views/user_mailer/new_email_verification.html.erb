@@ -1,0 +1,8 @@
+<h1>New Email Verification</h1>
+
+<p>
+  <%= @message %>
+</p>
+
+<%= link_to "Verify New Email", edit_email_change_url( @user.email_token,
+                                                     email: @user.new_email) %>

@@ -32,7 +32,6 @@ RSpec.describe 'EmailChanges', type: :request do
         click_button('Submit Email')
 
         user.reload
-
         expect(user.new_email).to eq 'new@email.com'
       end
     end
@@ -47,7 +46,38 @@ RSpec.describe 'EmailChanges', type: :request do
         click_button('Submit Email')
         user.reload
 
+        puts user.new_email
         expect(user.new_email).to be_nil
+      end
+    end
+  end
+
+  describe 'new email address verification email' do
+    context 'with invalid address' do
+      it 'does not send email' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'notanemail.com')
+
+        expect do
+          click_button('Submit Email')
+        end.not_to(change { ActionMailer::Base.deliveries.count })
+      end
+    end
+
+    context 'with valid address' do
+      it 'sends email' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+
+        expect do
+          click_button('Submit Email')
+        end.to(change { ActionMailer::Base.deliveries.count }.by(1))
       end
     end
   end

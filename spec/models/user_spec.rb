@@ -52,7 +52,7 @@ describe User, :not_a_tenant_model do
     }
     it {
       expect(User.new(valid_attributes)).to validate_uniqueness_of(:new_email)
-        .case_insensitive.scoped_to :email
+        .case_insensitive
     }
     it { should validate_length_of(:password).is_at_least(6) }
     it { should validate_confirmation_of(:password) }

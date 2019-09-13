@@ -3,7 +3,8 @@ class EmailChangesController < ApplicationController
   end
 
   def create
-    if current_user.save
+    current_user.new_email = params[:email_changes][:new_email]
+    if current_user.valid?
       current_user.update_attributes(
         new_email: params[:email_changes][:new_email]
       )

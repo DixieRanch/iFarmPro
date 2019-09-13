@@ -10,6 +10,7 @@ class EmailChangesController < ApplicationController
       )
       render 'show'
     else
+
       flash[:danger] = 'Invalid Email Address'
       render 'new'
     end

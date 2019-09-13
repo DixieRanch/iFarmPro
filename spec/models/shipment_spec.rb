@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe Shipment do
-  valid_attributes = {name: '2018-001',
-                      date: '1/1/2018',
-                      destination: 'Sheller'}
+  valid_attributes = { name: '2018-001',
+                       date: '1/1/2018',
+                       destination: 'Sheller' }
 
   it 'is valid' do
     set_tenant_company
@@ -28,8 +28,10 @@ describe Shipment do
   describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_length_of(:name).is_at_most 20 }
-    it { should validate_uniqueness_of(:name).case_insensitive
-                                             .scoped_to :company_id }
+    it {
+      should validate_uniqueness_of(:name).case_insensitive
+                                          .scoped_to :company_id
+    }
     it { should validate_presence_of(:date).with_message(/must be a date/) }
     it { should validate_presence_of :destination }
     it { should validate_length_of(:destination).is_at_most 50 }

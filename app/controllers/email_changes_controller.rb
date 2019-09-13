@@ -7,11 +7,11 @@ class EmailChangesController < ApplicationController
   end
 
   def create
-    current_user.update_attributes(
-      new_email: params[:email_changes][:new_email]
-    )
-    if current_user.save
-      current_user.send_new_email_verification
+    current_user.new_email = params[:email_changes][:new_email]
+    if current_user.valid?
+      current_user.update_attributes(
+        new_email: params[:email_changes][:new_email]
+      )
       render 'show'
     else
       current_user.update_attributes(

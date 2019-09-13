@@ -16,14 +16,14 @@ RSpec.describe 'EmailChanges', type: :request do
 
         click_link 'Change Email'
 
-        expect(page).to have_title full_title 'Change Email'
+        expect(page).to have_title full_title 'Request Email Change'
       end
     end
   end
 
   describe 'new email form' do
     context 'when submiting new email' do
-      it 'updates new_email attribute' do
+      it 'redirects to email sent show page' do
         user = create(:user)
         sign_in(user)
 
@@ -31,23 +31,22 @@ RSpec.describe 'EmailChanges', type: :request do
         fill_in('New Email', with: 'new@email.com')
         click_button('Submit Email')
 
-        user.reload
-        expect(user.new_email).to eq 'new@email.com'
+        expect(page). to have_title full_title 'Change Email, Email Sent'
       end
     end
 
-    context 'when submitting non email' do
-      it 'does not update new_email attribute' do
+    context 'when submitting an invalid email' do
+      it 'Renders new email form page with danger flash' do
         user = create(:user)
         sign_in(user)
 
         click_link 'Change Email'
         fill_in('New Email', with: 'notanemail.com')
         click_button('Submit Email')
-        user.reload
 
-        puts user.new_email
-        expect(user.new_email).to be_nil
+        expect(page).to have_title full_title 'Request Email Change'
+        expect(page).to have_css('div.alert.alert-danger',
+                                 text: 'Invalid Email Address')
       end
     end
   end

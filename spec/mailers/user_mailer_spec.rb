@@ -64,11 +64,11 @@ RSpec.describe UserMailer, type: :mailer do
       expect(last_email.to).to eq([user.new_email])
       expect(last_email.from).to eq(['noreply@ifarmpro.com'])
     end
-    
+
     it 'renders the body' do
       user = create :user
       user.new_email = 'new@email.com'
-      
+
       user.send_new_email_verification
 
       expect(last_email).to have_selector 'p', text: 'verify your new email'

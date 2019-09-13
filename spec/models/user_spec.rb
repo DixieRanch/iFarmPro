@@ -240,11 +240,11 @@ describe User, :not_a_tenant_model do
     it 'sends new email verification email' do
       user = create(:user)
       user.new_email = 'new@email.com'
-      
+
       expect do
         user.send_new_email_verification
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end 
+    end
   end
 
   describe '#password_reset_expired?' do

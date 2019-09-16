@@ -1,4 +1,4 @@
-<%provide :title, "Change Email"%>
+<%provide :title, "Request Email Change"%>
 
 <div class="col-xs-10 col-md-8">
   <div class="panel panel-primary">
@@ -6,10 +6,11 @@
     <div class="panel-body">
       
       
-      <%= simple_form_for :email_resets, 
+      <%= simple_form_for :email_changes, 
                           url: email_changes_path,
                           html: {class: 'form-horizontal'},
                           wrapper: :horizontal_form do |f| %>
+        <%= f.input :new_email, label: 'New Email' %>
         <%= f.submit 'Submit Email', class: "btn btn-lg btn-primary" %>
       <% end %>
     </div>

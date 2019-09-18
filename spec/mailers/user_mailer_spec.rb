@@ -55,7 +55,7 @@ RSpec.describe UserMailer, type: :mailer do
 
   describe 'new_email_verification' do
     it 'renders the headers' do
-      user = create(:user)
+      user = create :user
       user.new_email = 'new@email.com'
 
       user.send_new_email_verification

@@ -34,6 +34,11 @@ class UserMailer < ApplicationMailer
   end
 
   def new_email_verification(user)
+    @message = "Hello, #{user.new_email}. Click the link below to verify " \
+               'your new email at iFarmPro. This link will stop working after' \
+               'two(2) hours. If you did not request to change your iFarmPro ' \
+               'email, then please discard this email.'
+    @user = user
     mail to: user.new_email,
          subject: 'iFarmPro new email verification'
   end

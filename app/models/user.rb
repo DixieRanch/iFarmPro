@@ -73,6 +73,11 @@ class User < ActiveRecord::Base
     email_digest_created_at < 2.hours.ago
   end
 
+  def send_new_email_verification
+    create_email_digest
+    UserMailer.new_email_verification(self).deliver_now
+  end
+
   private
 
   def create_remember_token

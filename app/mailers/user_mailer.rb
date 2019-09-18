@@ -32,4 +32,9 @@ class UserMailer < ApplicationMailer
     mail to: user.email,
          subject: 'iFarmPro invitation'
   end
+
+  def new_email_verification(user)
+    mail to: user.new_email,
+         subject: 'iFarmPro new email verification'
+  end
 end

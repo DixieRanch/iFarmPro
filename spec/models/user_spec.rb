@@ -240,10 +240,11 @@ describe User, :not_a_tenant_model do
     it 'sends new_email message to UserMailer' do
       user = User.new(valid_attributes)
       user.new_email = 'new@email.com'
-      new_email = double('UserMailer.new_email_verification')
+      email = double('UserMailer.new_email_verification')
 
-      expect(UserMailer).to receive(:new_email_verification).with(user) { new_email }
-      expect(new_email).to receive(:deliver_now)
+      expect(UserMailer).to receive(:new_email_verification)
+        .with(user) { email }
+      expect(email).to receive(:deliver_now)
 
       user.send_new_email_verification
     end

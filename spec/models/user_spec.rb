@@ -237,13 +237,15 @@ describe User, :not_a_tenant_model do
   end
 
   describe '#send_new_email_verification' do
-    it 'sends new email verification email' do
-      user = create(:user)
+    it 'sends new_email message to UserMailer' do
+      user = User.new(valid_attributes)
       user.new_email = 'new@email.com'
+      new_email = double('UserMailer.new_email_verification')
 
-      expect do
-        user.send_new_email_verification
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect(UserMailer).to receive(:new_email_verification).with(user) { new_email }
+      expect(new_email).to receive(:deliver_now)
+
+      user.send_new_email_verification
     end
   end
 

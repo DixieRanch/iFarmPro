@@ -39,8 +39,7 @@ RSpec.describe 'EmailChanges', type: :request do
         user = create(:user)
         sign_in(user)
 
-        # click_link 'Change Email'
-        visit new_email_change_path
+        click_link 'Change Email'
         fill_in('New Email', with: 'new@email.com')
         click_button('Submit Email')
         expect(page).to have_title full_title 'Change Email, Email Sent'
@@ -83,7 +82,7 @@ RSpec.describe 'EmailChanges', type: :request do
       end
     end
 
-    context 'with nil email' do
+    context 'with blank email' do
       it 'Renders new email form page with correct title' do
         user = create(:user)
         sign_in(user)
@@ -126,8 +125,6 @@ RSpec.describe 'EmailChanges', type: :request do
         click_link 'Change Email'
         fill_in('New Email', with: 'new@email.com')
 
-        user.reload
-
         expect do
           click_button('Submit Email')
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -154,9 +151,7 @@ RSpec.describe 'EmailChanges', type: :request do
         expect(last_email.subject).to include 'new email verification'
       end
     end
-  end
 
-  describe 'new email address verification email' do
     context 'with invalid address' do
       it 'does not send email' do
         user = create(:user)
@@ -168,20 +163,6 @@ RSpec.describe 'EmailChanges', type: :request do
         expect do
           click_button('Submit Email')
         end.not_to(change { ActionMailer::Base.deliveries.count })
-      end
-    end
-
-    context 'with valid address' do
-      it 'sends email' do
-        user = create(:user)
-        sign_in(user)
-
-        click_link 'Change Email'
-        fill_in('New Email', with: 'new@email.com')
-
-        expect do
-          click_button('Submit Email')
-        end.to(change { ActionMailer::Base.deliveries.count }.by(1))
       end
     end
   end

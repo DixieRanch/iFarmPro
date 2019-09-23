@@ -23,6 +23,18 @@ RSpec.describe 'EmailChanges', type: :request do
 
   describe 'new email form' do
     context 'when submiting new email' do
+      it 'persists new_email to user'  do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+
+        expect(user.new_email).to eq 'new@email.com'
+      end
+
       it 'redirects to email sent show page' do
         user = create(:user)
         sign_in(user)
@@ -31,10 +43,21 @@ RSpec.describe 'EmailChanges', type: :request do
         fill_in('New Email', with: 'new@email.com')
         click_button('Submit Email')
 
-        expect(page). to have_title full_title 'Change Email, Email Sent'
+        expect(page).to have_title full_title 'Change Email, Email Sent'
       end
 
-      it 'persists new_email to user' do
+      it 'sends an email' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+
+        expect do
+          click_button('Submit Email')
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+      it 'sends verification email to the correct address' do
         user = create(:user)
         sign_in(user)
 
@@ -42,14 +65,23 @@ RSpec.describe 'EmailChanges', type: :request do
         fill_in('New Email', with: 'new@email.com')
         click_button('Submit Email')
 
-        user.reload
+        expect(last_email.to).to eq ['new@email.com']
+      end
 
-        expect(user.new_email).to eq 'new@email.com'
+      it 'sends email with correct subject' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+
+        expect(last_email.subject).to include 'new email verification'
       end
     end
 
     context 'when submitting an invalid email' do
-      it 'renders new email form page' do
+      it 'Renders new email form page with correct title' do
         user = create(:user)
         sign_in(user)
 
@@ -60,7 +92,7 @@ RSpec.describe 'EmailChanges', type: :request do
         expect(page).to have_title full_title 'Request Email Change'
       end
 
-      it 'flashes danger message' do
+      it 'shows a danger flash message for Invalid Email' do
         user = create(:user)
         sign_in(user)
 
@@ -72,7 +104,7 @@ RSpec.describe 'EmailChanges', type: :request do
                                  text: 'Invalid Email Address')
       end
 
-      it 'does not persist new_email to user' do
+      it 'indicates field with error' do
         user = create(:user)
         sign_in(user)
 
@@ -80,9 +112,52 @@ RSpec.describe 'EmailChanges', type: :request do
         fill_in('New Email', with: 'notanemail.com')
         click_button('Submit Email')
 
-        user.reload
+        expect(page).to have_css('div.has-error')
+      end
 
-        expect(user.new_email).to be_nil
+      it 'does not send email' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'notanemail.com')
+
+        expect do
+          click_button('Submit Email')
+        end.not_to(change { ActionMailer::Base.deliveries.count })
+      end
+    end
+
+    context 'with blank email' do
+      it 'Renders new email form page with correct title' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        click_button('Submit Email')
+
+        expect(page).to have_title full_title 'Request Email Change'
+      end
+
+      it 'shows a danger flash message for Invalid Email' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        click_button('Submit Email')
+
+        expect(page).to have_css('div.alert.alert-danger',
+                                 text: 'Invalid Email Address')
+      end
+
+      it 'indicates field with error' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        click_button('Submit Email')
+
+        expect(page).to have_css('div.has-error')
       end
     end
 

@@ -236,6 +236,20 @@ describe User, :not_a_tenant_model do
     end
   end
 
+  describe '#send_new_email_verification' do
+    it 'sends new_email message to UserMailer' do
+      user = User.new(valid_attributes)
+      user.new_email = 'new@email.com'
+      email = double('UserMailer.new_email_verification')
+
+      expect(UserMailer).to receive(:new_email_verification)
+        .with(user) { email }
+      expect(email).to receive(:deliver_now)
+
+      user.send_new_email_verification
+    end
+  end
+
   describe '#password_reset_expired?' do
     it 'is true with expired password_reset_token' do
       user = User.new(email_digest_created_at: 121.minutes.ago)

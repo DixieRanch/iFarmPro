@@ -5,13 +5,15 @@
     <div class="panel-heading"><h1>Change Email</h1></div>
     <div class="panel-body">
       
-      
-      <%= simple_form_for :email_changes, 
-                          url: email_changes_path,
-                          html: {class: 'form-horizontal'},
-                          wrapper: :horizontal_form do |f| %>
-        <%= f.input :new_email, label: 'New Email' %>
-        <%= f.submit 'Submit Email', class: "btn btn-lg btn-primary" %>
+      <%= simple_form_for @user, url: email_changes_path,
+                                 html: {class: 'form-inline'} do |f| %>
+        <%= f.error_notification %>
+        <fieldset>
+          <%= f.input :new_email,
+                      label: 'New Email',
+                      wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+        </fieldset>
+        <%= f.button :submit, 'Submit Email', class: 'btn-primary' %>
       <% end %>
     </div>
   </div>

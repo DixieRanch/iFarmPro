@@ -52,4 +52,32 @@ RSpec.describe UserMailer, type: :mailer do
                                       )
     end
   end
+
+  describe 'new_email_verification' do
+    it 'renders the headers' do
+      user = create :user
+      user.new_email = 'new@email.com'
+
+      user.send_new_email_verification
+
+      expect(last_email.subject).to eq('iFarmPro new email verification')
+      expect(last_email.to).to eq([user.new_email])
+      expect(last_email.from).to eq(['noreply@ifarmpro.com'])
+    end
+
+    it 'renders the body' do
+      user = create :user
+      user.new_email = 'new@email.com'
+
+      user.send_new_email_verification
+
+      expect(last_email).to have_selector 'p', text: 'verify your new email'
+      expect(last_email.body.encoded).to have_selector 'p', text: user.new_email
+      expect(last_email).to have_link 'Verify New Email',
+                                      href: edit_email_change_url(
+                                        user.email_token,
+                                        email: user.new_email
+                                      )
+    end
+  end
 end

@@ -73,7 +73,7 @@ Ifarm::Application.routes.draw do
                                   constraints: { id: /[^\/]+/ }
   resources :password_resets, only: [:show, :new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
-  resources :email_changes, only: [:index, :new, :show, :create, :edit],
+  resources :email_changes, only: [:new, :show, :create, :edit],
                               constraints: { id: /[^\/]+/ }
   resources :user_invitations, only: [:new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }

@@ -167,24 +167,4 @@ RSpec.describe 'EmailChanges', type: :request do
       end
     end
   end
-
-  describe 'new_email verification email' do
-    context 'when clicking verification link' do
-      it 'renders current email verification email sent page' do
-        user = create(:user)
-        sign_in(user)
-
-        click_link 'Change Email'
-        fill_in('New Email', with: 'new@email.com')
-        click_button('Submit Email')
-        user.reload
-        open_email(user.new_email)
-        current_email.click_link 'Verify New Email'
-
-        expect(page).to have_title(
-          full_title('Change Email, Confirm Current Email')
-        )
-      end
-    end
-  end
 end

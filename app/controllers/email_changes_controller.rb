@@ -1,4 +1,6 @@
 class EmailChangesController < ApplicationController
+  skip_before_action :signed_in_user, only: [:index]
+
   def new
     @user = User.new
   end

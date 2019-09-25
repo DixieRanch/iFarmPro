@@ -74,8 +74,8 @@ RSpec.describe UserMailer, type: :mailer do
       expect(last_email).to have_selector 'p', text: 'verify your new email'
       expect(last_email.body.encoded).to have_selector 'p', text: user.new_email
       expect(last_email).to have_link 'Verify New Email',
-                                      href: edit_email_change_url(
-                                        user.email_token,
+                                      href: email_changes_url(
+                                        token: user.email_token,
                                         email: user.new_email
                                       )
     end

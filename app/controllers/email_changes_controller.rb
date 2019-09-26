@@ -2,13 +2,14 @@ class EmailChangesController < ApplicationController
   skip_before_action :signed_in_user, only: [:index]
 
   def index
-    @user = User.with_email(params[:email])
-    if @user.authenticated?(:email, params[:id])
+    @user = User.with_new_email(params[:email])
+    if @user.authenticated?(:email, params[:token])
       render 'index'
     else
       redirect_to root_path
     end
   end
+
   def new
     @user = User.new
   end
@@ -18,7 +19,7 @@ class EmailChangesController < ApplicationController
     assign_new_email_attribute_to(@user)
     send_new_email_verification_or_display_form_errors_for(@user)
   end
-  
+
   private
 
   def assign_new_email_attribute_to(user)

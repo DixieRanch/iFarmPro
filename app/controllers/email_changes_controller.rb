@@ -4,6 +4,7 @@ class EmailChangesController < ApplicationController
   def index
     @user = User.with_new_email(params[:email])
     if @user.authenticated?(:email, params[:token])
+      @user.send_current_email_verification
       render 'index'
     else
       redirect_to root_path
@@ -18,6 +19,9 @@ class EmailChangesController < ApplicationController
     @user = current_user
     assign_new_email_attribute_to(@user)
     send_new_email_verification_or_display_form_errors_for(@user)
+  end
+
+  def edit
   end
 
   private

@@ -249,20 +249,20 @@ describe User, :not_a_tenant_model do
       user.send_new_email_verification
     end
   end
-  
+
   describe '#send_current_email_verification' do
     it ' sends current email message to UserMailer' do
       user = User.new(valid_attributes)
       email = double('UserMailer.currenet_email_verification')
-      
+
       expect(UserMailer).to receive(:current_email_verification)
-       .with(user) {email}
+        .with(user) { email }
       expect(email).to receive(:deliver_now)
-      
+
       user.send_current_email_verification
     end
   end
-  
+
   describe '#password_reset_expired?' do
     it 'is true with expired password_reset_token' do
       user = User.new(email_digest_created_at: 121.minutes.ago)

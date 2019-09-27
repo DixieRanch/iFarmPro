@@ -184,7 +184,8 @@ RSpec.describe 'EmailChanges', type: :request do
     end
     context 'with invalid email and token' do
       it 'renders the home page' do
-        visit email_changes_path('wrong_token', email: 'hacker@email.com')
+        visit email_changes_path(token: 'wrong_token',
+                                 email: 'hacker@email.com')
 
         expect(page).to have_css 'h1', text: 'Welcome to iFarmPro'
       end

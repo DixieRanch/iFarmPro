@@ -253,7 +253,7 @@ describe User, :not_a_tenant_model do
   describe '#send_current_email_verification' do
     it ' sends current email message to UserMailer' do
       user = User.new(valid_attributes)
-      email = double('UserMailer.currenet_email_verification')
+      email = double('UserMailer.current_email_verification')
 
       expect(UserMailer).to receive(:current_email_verification)
         .with(user) { email }

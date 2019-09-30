@@ -101,7 +101,6 @@ RSpec.describe UserMailer, type: :mailer do
       expect(last_email).to have_link 'Verify Current Email',
                                       href: edit_email_change_url(
                                         token: user.email_token,
-                                        email: user.email,
                                         id: user.email
                                       )
     end

@@ -299,7 +299,7 @@ describe User, :not_a_tenant_model do
         user = create(:user)
         user.new_email = 'NeW@Email.com'
         user.save
-        found_user = User.with_new_email('new@email.com')
+        found_user = User.with_new_email('nEw@eMaIl.COM')
 
         expect(found_user).to eq user
       end

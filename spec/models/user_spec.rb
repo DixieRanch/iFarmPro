@@ -307,6 +307,15 @@ describe User, :not_a_tenant_model do
 
         expect(found_user).to be_a(NullUser)
       end
+
+      it 'returns the user with mixed case email' do
+        user = create(:user)
+        user.new_email = 'NeW@Email.com'
+        user.save
+        found_user = User.with_new_email('nEw@eMaIl.COM')
+
+        expect(found_user).to eq user
+      end
     end
   end
 end

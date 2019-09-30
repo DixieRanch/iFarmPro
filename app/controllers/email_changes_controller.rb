@@ -1,5 +1,5 @@
 class EmailChangesController < ApplicationController
-  skip_before_action :signed_in_user, only: [:index]
+  skip_before_action :signed_in_user, only: [:index, :edit]
 
   def index
     @user = User.with_new_email(params[:email])
@@ -22,6 +22,18 @@ class EmailChangesController < ApplicationController
   end
 
   def edit
+    @user = User.with_email(params[:email])
+    if @user.authenticated?(:email, params[:token])
+      update
+    else
+      redirect_to root_path
+    end
+  end
+
+  def update
+    @user = User.with_email(params[:email])
+    @user.update_attributes(email: @user.new_email)
+    @user.update_attributes(new_email: nil)
   end
 
   private

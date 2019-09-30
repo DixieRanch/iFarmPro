@@ -219,4 +219,46 @@ RSpec.describe 'EmailChanges', type: :request do
       end
     end
   end
+  describe 'current_email email authentication' do
+    context 'with invalid email and token' do
+      it 'renders the home page' do
+        visit edit_email_change_path(token: 'Wrong_token',
+                                     email: 'hacker@email.com',
+                                     id: 'hacker@email.com')
+        expect(page).to have_css 'h1', text: 'Welcome to iFarmPro'
+      end
+    end
+    context 'with valid email and token' do
+      it 'updates current email' do
+        user = create(:user)
+        sign_in user
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+        open_email(user.new_email)
+        current_email.click_link 'Verify New Email'
+        open_email(user.email)
+        current_email.click_link 'Verify Current Email'
+        user.reload
+        expect(user.email).to eq 'new@email.com'
+      end
+      it 'sets new_email to nil' do
+        user = create(:user)
+        sign_in user
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+        open_email(user.new_email)
+        current_email.click_link 'Verify New Email'
+        open_email(user.email)
+        current_email.click_link 'Verify Current Email'
+        user.reload
+        expect(user.new_email).to eq nil
+      end
+    end
+  end
 end

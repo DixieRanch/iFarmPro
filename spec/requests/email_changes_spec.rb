@@ -167,9 +167,9 @@ RSpec.describe 'EmailChanges', type: :request do
       end
     end
   end
-  describe 'new email verification email' do
-    context 'when clicking Verify New Email link' do
-      it 'renders the current email verification email sent page' do
+  describe 'new_email email authentication' do
+    context 'with valid email and token' do
+      it 'renders the email sent index page' do
         user = create(:user)
         sign_in(user)
 
@@ -180,6 +180,14 @@ RSpec.describe 'EmailChanges', type: :request do
         open_email(user.new_email)
         current_email.click_link 'Verify New Email'
         expect(page).to have_title full_title 'Confirm Current Email'
+      end
+    end
+    context 'with invalid email and token' do
+      it 'renders the home page' do
+        visit email_changes_path(token: 'wrong_token',
+                                 email: 'hacker@email.com')
+
+        expect(page).to have_css 'h1', text: 'Welcome to iFarmPro'
       end
     end
   end

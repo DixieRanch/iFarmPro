@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
     where('lower(email) = ?', email.downcase).first || NullUser.new
   end
 
+  def self.with_new_email(new_email)
+    where('lower(new_email) = ?', new_email.downcase).first || NullUser.new
+  end
+
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     BCrypt::Password.new(digest).is_password?(token)

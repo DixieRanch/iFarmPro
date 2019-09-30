@@ -279,5 +279,30 @@ describe User, :not_a_tenant_model do
 
       expect(found_user).to be_a(NullUser)
     end
+    describe '#find_by_new_email' do
+      it 'returns the user when the user exists' do
+        user = create(:user)
+        user.new_email = 'new@email.com'
+        user.save
+        found_user = User.with_new_email(user.new_email)
+
+        expect(found_user).to eq user
+      end
+
+      it 'returns the NullUser when user does not exist' do
+        found_user = User.with_new_email('Notauser@example.com')
+
+        expect(found_user).to be_a(NullUser)
+      end
+
+      it 'returns the user with mixed case email' do
+        user = create(:user)
+        user.new_email = 'NeW@Email.com'
+        user.save
+        found_user = User.with_new_email('nEw@eMaIl.COM')
+
+        expect(found_user).to eq user
+      end
+    end
   end
 end

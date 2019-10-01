@@ -82,6 +82,11 @@ class User < ActiveRecord::Base
     UserMailer.new_email_verification(self).deliver_now
   end
 
+  def send_current_email_verification
+    create_email_digest
+    UserMailer.current_email_verification(self).deliver_now
+  end
+
   private
 
   def create_remember_token

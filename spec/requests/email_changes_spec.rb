@@ -181,6 +181,34 @@ RSpec.describe 'EmailChanges', type: :request do
         current_email.click_link 'Verify New Email'
         expect(page).to have_title full_title 'Confirm Current Email'
       end
+
+      it 'sends an email' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+        open_email(user.new_email)
+
+        expect do
+          current_email.click_link 'Verify New Email'
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+      it 'sends verification email to the correct address' do
+        user = create(:user)
+        sign_in(user)
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+        open_email(user.new_email)
+        current_email.click_link 'Verify New Email'
+
+        expect(last_email.to).to eq [user.email]
+      end
     end
     context 'with invalid email and token' do
       it 'renders the home page' do

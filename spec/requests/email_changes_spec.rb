@@ -269,6 +269,41 @@ RSpec.describe 'EmailChanges', type: :request do
 
         expect(user.new_email).to eq nil
       end
+
+      it 'renders schedule page' do
+        user = create(:user)
+        sign_in user
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+        open_email(user.new_email)
+        current_email.click_link 'Verify New Email'
+        open_email(user.email)
+        current_email.click_link 'Verify Current Email'
+        user.reload
+
+        expect(page).to have_title full_title 'Schedule'
+      end
+
+      it 'flashes a success message' do
+        user = create(:user)
+        sign_in user
+
+        click_link 'Change Email'
+        fill_in('New Email', with: 'new@email.com')
+        click_button('Submit Email')
+        user.reload
+        open_email(user.new_email)
+        current_email.click_link 'Verify New Email'
+        open_email(user.email)
+        current_email.click_link 'Verify Current Email'
+        user.reload
+
+        expect(page).to have_css('div.alert.alert-success',
+                                 text: 'Your email has been updated.')
+      end
     end
   end
 end

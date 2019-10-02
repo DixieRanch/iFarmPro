@@ -24,16 +24,10 @@ class EmailChangesController < ApplicationController
   def edit
     @user = User.with_email(params[:email])
     if @user.authenticated?(:email, params[:token])
-      update
+      update_email_and_sign_in_user
     else
       redirect_to root_path
     end
-  end
-
-  def update
-    @user = User.with_email(params[:email])
-    @user.update_attributes(email: @user.new_email)
-    @user.update_attributes(new_email: nil)
   end
 
   private
@@ -52,5 +46,13 @@ class EmailChangesController < ApplicationController
       render 'email_changes/new'
     end
     User.set_callback(:save, :before, :create_remember_token)
+  end
+
+  def update_email_and_sign_in_user
+    @user = User.with_email(params[:email])
+    @user.update_attributes(email: @user.new_email)
+    @user.update_attributes(new_email: nil)
+    flash[:success] = 'Your email has been updated.'
+    sign_in(@user)
   end
 end

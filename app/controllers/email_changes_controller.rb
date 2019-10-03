@@ -2,9 +2,9 @@ class EmailChangesController < ApplicationController
   skip_before_action :signed_in_user, only: [:index, :edit]
 
   def index
-    @user = User.with_new_email(params[:email])
-    if @user.authenticated?(:email, params[:token])
-      @user.send_current_email_verification
+    user = User.with_new_email(params[:email])
+    if user.authenticated?(:email, params[:token])
+      user.send_current_email_verification
       render 'index'
     else
       redirect_to root_path
@@ -22,8 +22,8 @@ class EmailChangesController < ApplicationController
   end
 
   def edit
-    @user = User.with_email(params[:email])
-    if @user.authenticated?(:email, params[:token])
+    user = User.with_email(params[:email])
+    if user.authenticated?(:email, params[:token])
       update_email_and_sign_in_user
     else
       redirect_to root_path
@@ -49,9 +49,9 @@ class EmailChangesController < ApplicationController
   end
 
   def update_email_and_sign_in_user
-    @user = User.with_email(params[:email])
-    @user.update_attributes(email: @user.new_email, new_email: nil)
+    user = User.with_email(params[:email])
+    user.update_attributes(email: user.new_email, new_email: nil)
     flash[:success] = 'Your email has been updated.'
-    sign_in(@user)
+    sign_in(user)
   end
 end

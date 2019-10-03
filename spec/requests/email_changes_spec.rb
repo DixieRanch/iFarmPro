@@ -44,6 +44,7 @@ RSpec.describe 'EmailChanges', type: :request do
         click_button('Submit Email')
 
         expect(page).to have_title full_title 'Change Email, Email Sent'
+        expect(page).to have_selector 'strong', text: 'new@email.com'
       end
 
       it 'sends an email' do

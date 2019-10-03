@@ -50,8 +50,7 @@ class EmailChangesController < ApplicationController
 
   def update_email_and_sign_in_user
     @user = User.with_email(params[:email])
-    @user.update_attributes(email: @user.new_email)
-    @user.update_attributes(new_email: nil)
+    @user.update_attributes(email: @user.new_email, new_email: nil)
     flash[:success] = 'Your email has been updated.'
     sign_in(@user)
   end

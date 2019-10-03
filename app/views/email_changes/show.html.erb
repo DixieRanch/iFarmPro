@@ -1,1 +1,38 @@
 <%provide :title, "Change Email, Email Sent"%>
+
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1>We sent you an email to confirm your new email address!</h1>
+    </div>
+    <div class="panel-body">
+    	<h3>
+    	  <em>
+    	    We sent an email to <strong><%= @new_email %></strong> to verify
+    	    that you control the new email.
+        </em>
+      </h3>
+      <p>
+      </p>
+      <h4>
+        In this email you will find a link that, 
+        <strong><em><u>when clicked</u></em></strong>, 
+        will verify your new email address. Once you have verified your new
+        email address you will be asked to verify that you have control of your
+        curretn emai so we cn be sure your account is secure.
+      </h4>
+    	<h4>
+    	  <strong>
+    	    PLEASE check your junk/spam folder before requesting a new email, as 
+    	    it is very common to have email delivery problems because of automated
+    	    filters.
+        </strong>
+      </h4>
+    	<p>
+    	  If for some reason you did not receive the password reset email, feel 
+    	  free to request a new email 
+    	  <%= link_to 'HERE!', new_password_reset_path %>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,10 @@
 class EmailChangesController < ApplicationController
   skip_before_action :signed_in_user, only: [:index, :edit]
 
+  def show
+    @new_email = params[:id]
+  end
+
   def index
     user = User.with_new_email(params[:email])
     if user.authenticated?(:email, params[:token])

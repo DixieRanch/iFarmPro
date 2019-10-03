@@ -44,7 +44,7 @@ class UserMailer < ApplicationMailer
   end
 
   def current_email_verification(user)
-    @message = 'STOP. If you did not request to change your iFarmPro email ' \
+    @message = 'STOP! If you did not request to change your iFarmPro email ' \
                "or you have not yet verified #{user.new_email}. DO NOT click " \
                'the link below. Delete this email and contact iFarmPro. If' \
                'you requested an email change at iFarmPro, click the link ' \

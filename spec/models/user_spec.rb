@@ -248,18 +248,42 @@ describe User, :not_a_tenant_model do
 
       user.send_new_email_verification
     end
+
+    it 'creates a new email_digest' do
+      user = User.new(valid_attributes)
+      user.new_email = 'new@email.com'
+
+      old_digest = user.email_digest
+      user.send_new_email_verification
+      user.reload
+      new_digest = user.email_digest
+
+      expect(new_digest).not_to eq old_digest
+    end
   end
 
   describe '#send_current_email_verification' do
     it ' sends current email message to UserMailer' do
       user = User.new(valid_attributes)
-      email = double('UserMailer.currenet_email_verification')
+      email = double('UserMailer.current_email_verification')
 
       expect(UserMailer).to receive(:current_email_verification)
         .with(user) { email }
       expect(email).to receive(:deliver_now)
 
       user.send_current_email_verification
+    end
+
+    it 'creates a new email_digest' do
+      user = User.new(valid_attributes)
+      user.new_email = 'new@email.com'
+
+      old_digest = user.email_digest
+      user.send_current_email_verification
+      user.reload
+      new_digest = user.email_digest
+
+      expect(new_digest).not_to eq old_digest
     end
   end
 

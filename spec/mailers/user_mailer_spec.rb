@@ -96,13 +96,18 @@ RSpec.describe UserMailer, type: :mailer do
 
       user.send_current_email_verification
 
-      expect(last_email).to have_selector 'p', text: 'STOP. If you did not'
+      expect(last_email).to have_selector 'p', text: 'STOP! If you did not'
       expect(last_email.body.encoded).to have_selector 'p', text: user.new_email
       expect(last_email).to have_link 'Verify Current Email',
                                       href: edit_email_change_url(
+<<<<<<< HEAD
                                         'Current Email Verification',
                                         email: user.email,
                                         token: user.email_token
+=======
+                                        token: user.email_token,
+                                        id: user.email
+>>>>>>> e37d8c9cc96116f0bcf205d1d28c781e81b3d26d
                                       )
     end
   end

@@ -52,4 +52,58 @@ RSpec.describe UserMailer, type: :mailer do
                                       )
     end
   end
+
+  describe 'new_email_verification' do
+    it 'renders the headers' do
+      user = create :user
+      user.new_email = 'new@email.com'
+
+      user.send_new_email_verification
+
+      expect(last_email.subject).to eq('iFarmPro new email verification')
+      expect(last_email.to).to eq([user.new_email])
+      expect(last_email.from).to eq(['noreply@ifarmpro.com'])
+    end
+
+    it 'renders the body' do
+      user = create :user
+      user.new_email = 'new@email.com'
+
+      user.send_new_email_verification
+
+      expect(last_email).to have_selector 'p', text: 'verify your new email'
+      expect(last_email.body.encoded).to have_selector 'p', text: user.new_email
+      expect(last_email).to have_link 'Verify New Email',
+                                      href: email_changes_url(
+                                        token: user.email_token,
+                                        email: user.new_email
+                                      )
+    end
+  end
+
+  describe 'current_email_verification' do
+    it 'renders the headers' do
+      user = create :user
+      user.send_current_email_verification
+
+      expect(last_email.subject).to eq('iFarmPro current email verification')
+      expect(last_email.to).to eq([user.email])
+      expect(last_email.from).to eq(['noreply@ifarmpro.com'])
+    end
+
+    it 'renders the body' do
+      user = create :user
+
+      user.send_current_email_verification
+
+      expect(last_email).to have_selector 'p', text: 'STOP! If you did not'
+      expect(last_email.body.encoded).to have_selector 'p', text: user.new_email
+      expect(last_email).to have_link 'Verify Current Email',
+                                      href: edit_email_change_url(
+                                        'Current Email Verification',
+                                        email: user.email,
+                                        token: user.email_token
+                                      )
+    end
+  end
 end

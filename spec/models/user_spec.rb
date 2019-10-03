@@ -35,6 +35,7 @@ describe User, :not_a_tenant_model do
     it { should have_db_column(:activated) }
     it { should have_db_column(:activated_at) }
     it { should have_db_column(:email_digest) }
+    it { should have_db_column(:new_email) }
     it { should respond_to(:password) }
     it { should respond_to(:password_confirmation) }
   end
@@ -47,6 +48,10 @@ describe User, :not_a_tenant_model do
     it { should validate_presence_of(:email) }
     it {
       expect(User.new(valid_attributes)).to validate_uniqueness_of(:email)
+        .case_insensitive
+    }
+    it {
+      expect(User.new(valid_attributes)).to validate_uniqueness_of(:new_email)
         .case_insensitive
     }
     it { should validate_length_of(:password).is_at_least(6) }
@@ -63,6 +68,20 @@ describe User, :not_a_tenant_model do
 
       invalid_email.each do |email|
         expect(User.new).not_to allow_value(email).for(:email)
+      end
+    end
+
+    it 'should validate format of new_email' do
+      valid_email = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+      invalid_email = %w[user@foo,com user_at_foo.org example.user@foo.
+                         foo@bar_baz.com foo@bar+baz.com]
+
+      valid_email.each do |email|
+        expect(User.new).to allow_value(email).for(:new_email)
+      end
+
+      invalid_email.each do |email|
+        expect(User.new).not_to allow_value(email).for(:new_email)
       end
     end
 
@@ -217,6 +236,57 @@ describe User, :not_a_tenant_model do
     end
   end
 
+  describe '#send_new_email_verification' do
+    it 'sends new_email message to UserMailer' do
+      user = User.new(valid_attributes)
+      user.new_email = 'new@email.com'
+      email = double('UserMailer.new_email_verification')
+
+      expect(UserMailer).to receive(:new_email_verification)
+        .with(user) { email }
+      expect(email).to receive(:deliver_now)
+
+      user.send_new_email_verification
+    end
+
+    it 'creates a new email_digest' do
+      user = User.new(valid_attributes)
+      user.new_email = 'new@email.com'
+
+      old_digest = user.email_digest
+      user.send_new_email_verification
+      user.reload
+      new_digest = user.email_digest
+
+      expect(new_digest).not_to eq old_digest
+    end
+  end
+
+  describe '#send_current_email_verification' do
+    it ' sends current email message to UserMailer' do
+      user = User.new(valid_attributes)
+      email = double('UserMailer.current_email_verification')
+
+      expect(UserMailer).to receive(:current_email_verification)
+        .with(user) { email }
+      expect(email).to receive(:deliver_now)
+
+      user.send_current_email_verification
+    end
+
+    it 'creates a new email_digest' do
+      user = User.new(valid_attributes)
+      user.new_email = 'new@email.com'
+
+      old_digest = user.email_digest
+      user.send_current_email_verification
+      user.reload
+      new_digest = user.email_digest
+
+      expect(new_digest).not_to eq old_digest
+    end
+  end
+
   describe '#password_reset_expired?' do
     it 'is true with expired password_reset_token' do
       user = User.new(email_digest_created_at: 121.minutes.ago)
@@ -245,6 +315,31 @@ describe User, :not_a_tenant_model do
       found_user = User.with_email('NoUser@example.com')
 
       expect(found_user).to be_a(NullUser)
+    end
+    describe '#find_by_new_email' do
+      it 'returns the user when the user exists' do
+        user = create(:user)
+        user.new_email = 'new@email.com'
+        user.save
+        found_user = User.with_new_email(user.new_email)
+
+        expect(found_user).to eq user
+      end
+
+      it 'returns the NullUser when user does not exist' do
+        found_user = User.with_new_email('Notauser@example.com')
+
+        expect(found_user).to be_a(NullUser)
+      end
+
+      it 'returns the user with mixed case email' do
+        user = create(:user)
+        user.new_email = 'NeW@Email.com'
+        user.save
+        found_user = User.with_new_email('nEw@eMaIl.COM')
+
+        expect(found_user).to eq user
+      end
     end
   end
 end

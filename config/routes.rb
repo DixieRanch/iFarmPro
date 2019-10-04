@@ -73,19 +73,20 @@ Ifarm::Application.routes.draw do
                                   constraints: { id: /[^\/]+/ }
   resources :password_resets, only: [:show, :new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
-  resources :email_resets, only: [:new, :show, :create]
+  resources :email_changes, only: [:index, :new, :show, :create, :edit],
+                              constraints: { id: /[^\/]+/ }
   resources :user_invitations, only: [:new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
 
   root to: 'static_pages#home'
 
-  get '/signup',  to: 'companies#new'
-  get '/signin',  to: 'sessions#new'
+  get '/signup',    to: 'companies#new'
+  get '/signin',    to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
-  get '/help',    to: 'static_pages#help'
-  get '/contact', to: 'static_pages#contact'
-  get '/about',   to: 'static_pages#about'
+  get '/help',      to: 'static_pages#help'
+  get '/contact',   to: 'static_pages#contact'
+  get '/about',     to: 'static_pages#about'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

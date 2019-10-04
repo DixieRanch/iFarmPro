@@ -1,0 +1,20 @@
+<%provide :title, "Request Email Change"%>
+
+<div class="col-xs-10 col-md-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h1>Change Email</h1></div>
+    <div class="panel-body">
+      
+      <%= simple_form_for @user, url: email_changes_path,
+                                 html: {class: 'form-inline'} do |f| %>
+        <%= f.error_notification %>
+        <fieldset>
+          <%= f.input :new_email,
+                      label: 'New Email',
+                      wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+        </fieldset>
+        <%= f.button :submit, 'Submit Email', class: 'btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<p>
+  <%= @message %>
+</p>
+
+<%= link_to 'Verify Current Email', edit_email_change_url( 
+                                                   'Current Email Verification',
+                                                   email: @user.email, 
+                                                   token: @user.email_token ) %>

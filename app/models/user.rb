@@ -30,6 +30,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true,
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
+  validates :new_email, format: { with: VALID_EMAIL_REGEX },
+                        uniqueness: { case_sensitive: false },
+                        allow_nil: true
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   def self.digest(string)
@@ -44,6 +47,10 @@ class User < ActiveRecord::Base
 
   def self.with_email(email)
     where('lower(email) = ?', email.downcase).first || NullUser.new
+  end
+
+  def self.with_new_email(new_email)
+    where('lower(new_email) = ?', new_email.downcase).first || NullUser.new
   end
 
   def authenticated?(attribute, token)
@@ -68,6 +75,16 @@ class User < ActiveRecord::Base
 
   def password_reset_expired?
     email_digest_created_at < 2.hours.ago
+  end
+
+  def send_new_email_verification
+    create_email_digest
+    UserMailer.new_email_verification(self).deliver_now
+  end
+
+  def send_current_email_verification
+    create_email_digest
+    UserMailer.current_email_verification(self).deliver_now
   end
 
   private

@@ -115,4 +115,10 @@ FactoryGirl.define do
   factory :box do
     sequence(:name) { |n| "Box #{n}" }
   end
+
+  factory :shipment do
+    name '2018-001'
+    date Time.zone.today
+    destination 'Sheller'
+  end
 end

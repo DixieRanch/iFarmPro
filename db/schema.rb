@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20190910194109) do
   end
 
   add_index "kcs", ["doy"], name: "index_kcs_on_doy", using: :btree
-
+  
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"
     t.integer  "irrigation_well_id"
@@ -168,6 +168,15 @@ ActiveRecord::Schema.define(version: 20190910194109) do
     t.date     "date"
     t.decimal  "amount"
     t.integer  "farm_id"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shipments", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "date"
+    t.string   "destination"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"

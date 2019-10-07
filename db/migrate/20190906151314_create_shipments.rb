@@ -4,7 +4,6 @@ class CreateShipments < ActiveRecord::Migration
       t.string :name
       t.datetime :date
       t.string :destination
-      t.integer :farm_id
       t.integer :company_id
       
       t.timestamps

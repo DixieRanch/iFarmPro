@@ -150,17 +150,6 @@ ActiveRecord::Schema.define(version: 20190919151205) do
 
   add_index "kcs", ["doy"], name: "index_kcs_on_doy", using: :btree
 
-  create_table "loads", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "shipment_date"
-    t.string   "destination"
-    t.integer  "freezer_location_id"
-    t.integer  "farm_id"
-    t.integer  "company_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "lots", force: :cascade do |t|
     t.string   "name"
     t.integer  "full_weight"

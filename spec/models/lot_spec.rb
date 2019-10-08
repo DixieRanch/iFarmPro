@@ -36,5 +36,6 @@ describe Lot do
     it { should validate_presence_of :box_id }
     it { should validate_presence_of :freezer_location_id }
     it { should validate_presence_of :block_id }
+    it { should validate_numericality_of(:field_id).only_integer.allow_nil }
   end
 end

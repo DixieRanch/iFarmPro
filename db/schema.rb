@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 20190919151205) do
     t.string   "name"
     t.datetime "date"
     t.string   "destination"
-    t.integer  "farm_id"
+
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -266,6 +266,7 @@ ActiveRecord::Schema.define(version: 20190919151205) do
     t.datetime "activated_at"
     t.string   "email_digest"
     t.string   "email_digest_created_at"
+    t.string   "new_email"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

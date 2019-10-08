@@ -100,8 +100,8 @@ describe 'Application' do
         find("a[href='/user_invitations/new']").click
         expect(page).to have_title full_title 'Invite User'
 
-        find("a[href='/email_resets/new']").click
-        expect(page).to have_title full_title 'Change Email'
+        find("a[href='/email_changes/new']").click
+        expect(page).to have_title full_title 'Request Email Change'
 
         click_link 'Sign out'
 

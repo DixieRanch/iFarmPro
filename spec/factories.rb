@@ -122,5 +122,10 @@ FactoryGirl.define do
     box_id 1
     freezer_location_id 1
     block_id 1
+    
+  factory :shipment do
+    name '2018-001'
+    date Time.zone.today
+    destination 'Sheller'
   end
 end

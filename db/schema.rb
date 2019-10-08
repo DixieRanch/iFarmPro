@@ -189,7 +189,6 @@ ActiveRecord::Schema.define(version: 20190919151205) do
     t.string   "name"
     t.datetime "date"
     t.string   "destination"
-
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"

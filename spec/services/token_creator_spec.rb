@@ -8,10 +8,12 @@ describe TokenCreator, :not_a_tenant_model do
     expect(token).not_to eq token_regex
   end
 
-  it 'creates a unique token' do
-    token1 = TokenCreator.call
-    token2 = TokenCreator.call
+  context 'when called consecutively' do
+    it 'creates a unique token' do
+      token1 = TokenCreator.call
+      token2 = TokenCreator.call
 
-    expect(token1).not_to eq token2
+      expect(token1).not_to eq token2
+    end
   end
 end

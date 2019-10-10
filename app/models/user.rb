@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def create_email_digest
-    self.email_token = SecureRandom.urlsafe_base64
+    self.email_token = TokenCreator.call
     EmailDigestCreator.call(self, email_token)
     update_attributes(email_digest_created_at: Time.zone.now)
   end

@@ -5,7 +5,7 @@ describe TokenCreator, :not_a_tenant_model do
     token = TokenCreator.call
     token_regex = /\S{22}/
 
-    expect(token).not_to eq token_regex
+    expect(token).to match token_regex
   end
 
   context 'when called consecutively' do

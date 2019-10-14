@@ -13,7 +13,7 @@
 require 'rails_helper'
 
 describe Block do
-  valid_attributes = { name: '1' }
+  valid_attributes = { name: 'a' }
 
   it 'is valid' do
     set_tenant_company
@@ -32,7 +32,7 @@ describe Block do
     it { should validate_presence_of :farm }
     it { should validate_presence_of :company_id }
     it { should validate_length_of(:name).is_at_most 8 }
-    it 'has a unique name scoped to farm' do
+    it 'has a unique case insensitive name scoped to farm' do
       block = build_stubbed(:farm).blocks.new(valid_attributes)
 
       expect(block).to validate_uniqueness_of(:name).case_insensitive

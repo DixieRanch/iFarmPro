@@ -8,5 +8,4 @@ class Lot < ActiveRecord::Base
   validates :box_id, presence: true
   validates :freezer_location_id, presence: true
   validates :block_id, presence: true
-  validates :field_id, numericality: { only_integer: true, allow_nil: true }
 end

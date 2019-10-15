@@ -162,14 +162,10 @@ describe User, :not_a_tenant_model do
   end
 
   describe '.send_activation_email' do
-    it 'sends account activation email when user is created' do
-      user = User.new(valid_attributes)
-
-      expect do
-        user.save
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
-
+    it 'creates email_digest' do
+      user = create(:user)
       digest = BCrypt::Password.new(user.email_digest)
+
       expect(digest.is_password?(user.email_token)).to be true
     end
 

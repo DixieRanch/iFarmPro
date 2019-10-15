@@ -18,7 +18,7 @@ class Block < ActiveRecord::Base
   accepts_nested_attributes_for :fields
 
   validates :name,       presence: true,
-                         uniqueness: { scope: :farm_id },
+                         uniqueness: { case_sensitive: false, scope: :farm_id },
                          length: { maximum: 8 }
   validates :company_id, presence: true
   # validates_presence_of :farm

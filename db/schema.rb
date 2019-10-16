@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190910194109) do
+ActiveRecord::Schema.define(version: 20190919151205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(version: 20190910194109) do
 
   add_index "blocks", ["company_id"], name: "index_blocks_on_company_id", using: :btree
   add_index "blocks", ["farm_id"], name: "index_blocks_on_farm_id", using: :btree
+
+  create_table "boxes", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "empty_weight"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -100,6 +108,14 @@ ActiveRecord::Schema.define(version: 20190910194109) do
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
   add_index "fields", ["soil_class_id"], name: "index_fields_on_soil_class_id", using: :btree
 
+  create_table "freezer_locations", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "farm_id"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "irrigation_wells", force: :cascade do |t|
     t.string   "name"
     t.string   "pod_code"
@@ -134,6 +150,18 @@ ActiveRecord::Schema.define(version: 20190910194109) do
 
   add_index "kcs", ["doy"], name: "index_kcs_on_doy", using: :btree
 
+  create_table "lots", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "full_weight"
+    t.integer  "company_id"
+    t.integer  "box_id"
+    t.integer  "freezer_location_id"
+    t.integer  "block_id"
+    t.integer  "field_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"
     t.integer  "irrigation_well_id"
@@ -152,6 +180,15 @@ ActiveRecord::Schema.define(version: 20190910194109) do
     t.date     "date"
     t.decimal  "amount"
     t.integer  "farm_id"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shipments", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "date"
+    t.string   "destination"
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"

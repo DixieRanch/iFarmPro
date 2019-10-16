@@ -106,4 +106,27 @@ FactoryGirl.define do
     density 11
     initialize_with { SoilApplicationUnit.find_or_create_by name: name }
   end
+
+  factory :freezer_location do
+    sequence(:name) { |n| "A-#{n}" }
+    farm
+  end
+
+  factory :box do
+    sequence(:name) { |n| "Box #{n}" }
+  end
+
+  factory :lot do
+    name '2018-001'
+    full_weight 2000
+    box_id 1
+    freezer_location_id 1
+    block_id 1
+  end
+
+  factory :shipment do
+    name '2018-001'
+    date Time.zone.today
+    destination 'Sheller'
+  end
 end

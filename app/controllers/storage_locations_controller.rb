@@ -1,5 +1,5 @@
 class StorageLocationsController < ApplicationController
-  def new
+  def index
     @storage_location = FreezerLocation.new
   end
 end

@@ -77,7 +77,7 @@ Ifarm::Application.routes.draw do
                               constraints: { id: /[^\/]+/ }
   resources :user_invitations, only: [:new, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
-  resources :storage_locations, only: [:new]
+  resources :storage_locations, only: [:index]
 
   root to: 'static_pages#home'
 

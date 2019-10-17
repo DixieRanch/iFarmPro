@@ -1,0 +1,10 @@
+<%= simple_form_for @storage_location, url: storage_locations_path,
+                           html: {class: 'form-inline'} do |f| %>
+  <%= f.error_notification %>
+  <fieldset>
+    <%= f.input :name,
+                label: 'Location Name',
+                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+  </fieldset>
+  <!--<%= f.button :submit, 'Save', class: 'btn-primary' %>-->
+<% end %>

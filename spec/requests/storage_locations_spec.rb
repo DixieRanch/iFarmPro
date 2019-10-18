@@ -89,5 +89,19 @@ RSpec.describe 'StorageLocations', type: :request do
 
       expect(page).to have_selector 'td', text: 'location1'
     end
+
+    context 'with 51 locations' do
+      it 'has pagination links' do
+        sign_in(create(:user))
+        visit root_path
+        click_link 'Storage Locations'
+        51.times do |l|
+          fill_in('Location Name', with: 'location' + l.to_s)
+          click_button 'Save Location'
+        end
+
+        expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
+      end
+    end
   end
 end

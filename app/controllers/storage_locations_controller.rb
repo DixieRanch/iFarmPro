@@ -28,6 +28,6 @@ class StorageLocationsController < ApplicationController
   end
 
   def locations_list
-    FreezerLocation.page(params[:page]).order('')
+    FreezerLocation.page(params[:page]).order('name ASC')
   end
 end

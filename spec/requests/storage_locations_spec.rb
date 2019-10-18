@@ -32,7 +32,7 @@ RSpec.describe 'StorageLocations', type: :request do
     end
 
     context 'when submitting a blank location name' do
-      xit 'renders storage locations index page with correct title' do
+      it 'renders storage locations index page with correct title' do
         sign_in(create(:user))
         visit root_path
         click_link 'Storage Locations'
@@ -42,7 +42,7 @@ RSpec.describe 'StorageLocations', type: :request do
         expect(page).to have_title full_title 'Storage Locations'
       end
 
-      xit 'shows a danger flash message for Invalid Name' do
+      it 'shows a danger flash message for Invalid Name' do
         sign_in(create(:user))
         visit root_path
         click_link 'Storage Locations'
@@ -67,6 +67,27 @@ RSpec.describe 'StorageLocations', type: :request do
           Company.current_id = user.company_id
         end.to(change { FreezerLocation.count }.by(1))
       end
+    end
+  end
+
+  describe 'locations list' do
+    it 'has list title' do
+      sign_in(create(:user))
+      visit root_path
+      click_link 'Storage Locations'
+
+      expect(page).to have_selector 'h1', text: 'Locations'
+    end
+
+    it 'has location' do
+      sign_in(create(:user))
+      visit root_path
+      click_link 'Storage Locations'
+
+      fill_in('Location Name', with: 'location1')
+      click_button 'Save Location'
+
+      expect(page).to have_selector 'td', text: 'location1'
     end
   end
 end

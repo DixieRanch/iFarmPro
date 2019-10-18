@@ -1,0 +1,18 @@
+<table id='storage_locations' class='table table-striped'>
+    <thead>
+        <h1>Locations</h1>
+        
+        <tr>
+            <th>Location Name</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <% @storage_locations.each_with_index do |location, l| %>
+        <tr>
+            <td id="name<%=l%>"><%= location.name %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+<%= will_paginate @storage_locations %>

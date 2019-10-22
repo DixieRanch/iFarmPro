@@ -5,11 +5,12 @@ class FreezerLocationsController < ApplicationController
   end
 
   def create
-    farm = current_farm
-    @freezer_location = farm.freezer_locations.new(freezer_location_params)
+    @freezer_location =
+      current_farm.freezer_locations.new(freezer_location_params)
     @freezer_locations = locations_list
 
     if @freezer_location.save
+      flash[:success] = 'Location successfully created.'
       redirect_to freezer_locations_path
     else
       render :index

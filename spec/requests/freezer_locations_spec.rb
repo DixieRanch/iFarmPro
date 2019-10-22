@@ -61,6 +61,16 @@ RSpec.describe 'FreezerLocations', type: :request do
           Company.current_id = user.company_id
         end.to(change { FreezerLocation.count }.by(1))
       end
+
+      it 'flashes success message' do
+        sign_in(create(:user))
+        visit freezer_locations_path
+        fill_in('Location Name', with: 'location1')
+
+        click_button 'Save Location'
+
+        expect(page).to have_css '.alert-success'
+      end
     end
   end
 
@@ -73,22 +83,19 @@ RSpec.describe 'FreezerLocations', type: :request do
     end
 
     it 'has created locations' do
-      sign_in(create(:user))
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      create(:freezer_location, name: 'location1', farm: farm)
+      create(:freezer_location, name: 'location2', farm: farm)
       visit freezer_locations_path
-
-      fill_in('Location Name', with: 'location1')
-      click_button 'Save Location'
-
-      fill_in('Location Name', with: 'location2')
-      click_button 'Save Location'
 
       expect(page).to have_selector 'td', text: 'location1'
       expect(page).to have_selector 'td', text: 'location2'
     end
 
-    it 'has edit buttons' do
-      sign_in(create(:user))
-      farm = create(:farm)
+    it 'has edit links' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
       location1 = create(:freezer_location, name: 'location1', farm: farm)
       visit freezer_locations_path
 
@@ -96,12 +103,12 @@ RSpec.describe 'FreezerLocations', type: :request do
                                 href: edit_freezer_location_path(location1)
     end
 
-    context 'with 51 locations' do
+    context 'with 31 locations' do
       it 'has pagination links' do
-        sign_in(create(:user))
-        farm = create(:farm)
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
 
-        51.times do |l|
+        31.times do |l|
           create(:freezer_location, name: 'location' + l.to_s, farm: farm)
         end
         visit freezer_locations_path
@@ -111,11 +118,11 @@ RSpec.describe 'FreezerLocations', type: :request do
     end
   end
 
-  describe 'edit button' do
+  describe 'edit link' do
     context 'when clicked' do
       it 'renders the storage locations page' do
-        sign_in(create(:user))
-        farm = create(:farm)
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
         create(:freezer_location, name: 'location1', farm: farm)
         visit freezer_locations_path
 
@@ -129,8 +136,8 @@ RSpec.describe 'FreezerLocations', type: :request do
   describe 'edit form' do
     context 'with valid input' do
       it 'updates location data' do
-        sign_in(create(:user))
-        farm = create(:farm)
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
         create(:freezer_location, name: 'location1', farm: farm)
         visit freezer_locations_path
         click_link 'edit'
@@ -139,11 +146,12 @@ RSpec.describe 'FreezerLocations', type: :request do
         click_button 'Save Location'
 
         expect(page).to have_selector 'td', text: 'location2'
+        expect(page).to_not have_selector 'td', text: 'location1'
       end
 
       it 'flashes success message' do
-        sign_in(create(:user))
-        farm = create(:farm)
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
         create(:freezer_location, name: 'location1', farm: farm)
         visit freezer_locations_path
         click_link 'edit'
@@ -157,8 +165,8 @@ RSpec.describe 'FreezerLocations', type: :request do
 
     context 'with invalid input' do
       it 'indicates field with error' do
-        sign_in(create(:user))
-        farm = create(:farm)
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
         create(:freezer_location, name: 'location1', farm: farm)
         visit freezer_locations_path
         click_link 'edit'

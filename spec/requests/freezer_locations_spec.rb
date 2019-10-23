@@ -5,7 +5,6 @@ RSpec.describe 'FreezerLocations', type: :request do
     context 'when clicked' do
       it 'redirects to storage locations page' do
         sign_in(create(:user))
-        visit root_path
 
         click_link 'Storage Locations'
 
@@ -24,7 +23,6 @@ RSpec.describe 'FreezerLocations', type: :request do
     it 'has a submit button' do
       sign_in(create(:user))
       visit freezer_locations_path
-      fill_in('Location Name', with: 'location1')
 
       click_button('Save Location')
     end

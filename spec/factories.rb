@@ -116,6 +116,14 @@ FactoryGirl.define do
     sequence(:name) { |n| "Box #{n}" }
   end
 
+  factory :lot do
+    name '2018-001'
+    full_weight 2000
+    box_id 1
+    freezer_location_id 1
+    block_id 1
+  end
+
   factory :shipment do
     name '2018-001'
     date Time.zone.today

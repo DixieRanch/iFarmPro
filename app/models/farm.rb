@@ -25,7 +25,7 @@ class Farm < ActiveRecord::Base
   accepts_nested_attributes_for :irrigation_wells
 
   validates :name, presence: true,
-                   uniqueness: { scope: :company_id },
+                   uniqueness: { scope: :company_id, case_sensitive: false },
                    length: { maximum: 50 }
   validates :company_id, presence: true
   validates :weather_station, presence: true

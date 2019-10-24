@@ -90,11 +90,11 @@ class User < ActiveRecord::Base
   private
 
   def create_remember_token
-    self.remember_token = SecureRandom.urlsafe_base64
+    self.remember_token = TokenCreator.call
   end
 
   def create_email_digest
-    self.email_token = SecureRandom.urlsafe_base64
+    self.email_token = TokenCreator.call
     EmailDigestCreator.call(self, email_token)
     update_attributes(email_digest_created_at: Time.zone.now)
   end

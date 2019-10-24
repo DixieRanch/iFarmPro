@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190910194109) do
+ActiveRecord::Schema.define(version: 20190919151205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,7 +149,19 @@ ActiveRecord::Schema.define(version: 20190910194109) do
   end
 
   add_index "kcs", ["doy"], name: "index_kcs_on_doy", using: :btree
-  
+
+  create_table "lots", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "full_weight"
+    t.integer  "company_id"
+    t.integer  "box_id"
+    t.integer  "freezer_location_id"
+    t.integer  "block_id"
+    t.integer  "field_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"
     t.integer  "irrigation_well_id"

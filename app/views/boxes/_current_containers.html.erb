@@ -1,0 +1,18 @@
+<table id="irrigation_table" class="table table-striped">
+  <thead>
+    <caption><h1>Current Containers</h1></caption>
+    <tr>
+      <th>Box</th>
+      <th>Empty Weight</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @containers.each_with_index do |container, i| %>
+      <tr>
+        <td id="name<%=i%>"><%= container.name %></td>
+        <td id="weight<%=i%>"><%= container.empty_weight %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

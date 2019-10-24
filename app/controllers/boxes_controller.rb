@@ -1,4 +1,5 @@
 class BoxesController < ApplicationController
-  def new
+  def index
+    @containers = Box.page(params[:page]).order('name DESC')
   end
 end

@@ -53,5 +53,20 @@ RSpec.describe 'Boxes' do
 
       expect(page).to have_selector 'td', text: '200'
     end
+
+    context 'with 31 containers' do
+      it 'has pagination links' do
+        user = create :user
+        sign_in user
+        31.times do |n|
+          create(:box, name: n, empty_weight: 200)
+        end
+
+        visit boxes_path
+
+        find("//*[@class='pagination']//a[text()='2']").click
+        expect(page.status_code).to eq(200)
+      end
+    end
   end
 end

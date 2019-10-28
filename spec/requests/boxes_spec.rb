@@ -68,5 +68,19 @@ RSpec.describe 'Boxes' do
         expect(page.status_code).to eq(200)
       end
     end
+    
+    describe 'form' do
+      context 'with invalid data' do
+        it 'renders container page with errors' do
+          sign_in create(:user)
+          visit boxes_path
+          
+          click_button 'Save'
+          
+          expect(page).to have_title full_title('Containers')
+          expect(page).to have_css '.alert-danger'
+        end
+      end
+    end
   end
 end

@@ -153,4 +153,37 @@ RSpec.describe 'Boxes' do
       end
     end
   end
+
+  describe 'edit form' do
+    context 'with valid data' do
+      it 'updates box information' do
+        sign_in create(:user)
+        create(:box, name: '001', empty_weight: 200)
+        visit boxes_path
+        click_link 'edit'
+
+        fill_in 'Name', with: '2019-002'
+        fill_in 'Empty Weight', with: '210'
+        click_button 'Save Container'
+
+        expect(page).to have_selector 'td', text: '2019-002'
+        expect(page).to have_selector 'td', text: '210'
+        expect(page).to_not have_selector 'td', text: '001'
+        expect(page).to_not have_selector 'td', text: '200'
+      end
+      
+      it 'flashes success message' do
+        sign_in create(:user)
+        create(:box, name: '001', empty_weight: 200)
+        visit boxes_path
+        click_link 'edit'
+
+        fill_in 'Name', with: '2019-002'
+        fill_in 'Empty Weight', with: '210'
+        click_button 'Save Container'
+        
+        expect(page).to have_css '.alert-success'
+      end
+    end
+  end
 end

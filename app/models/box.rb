@@ -1,6 +1,8 @@
 class Box < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
+  belongs_to :company
+
   validates :name,  presence: true,
                     uniqueness: { scope: :company_id },
                     length: { maximum: 10 }

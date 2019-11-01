@@ -17,8 +17,7 @@ class BoxesController < ApplicationController
 
   def edit
     @box = current_company.boxes.find(params[:id])
-    @boxes = Box.page(params[:page]).order('name DESC')
-    render :index
+    render_box_page
   end
 
   def update
@@ -28,7 +27,7 @@ class BoxesController < ApplicationController
       flash[:success] = 'Container successfully updated.'
       redirect_to boxes_path
     else
-      @boxes = Box.page(params[:page]).order('name DESC')
+      render_box_page
     end
   end
 
@@ -40,5 +39,10 @@ class BoxesController < ApplicationController
 
   def permitted_params
     [:name, :empty_weight]
+  end
+
+  def render_box_page
+    @boxes = Box.page(params[:page]).order('name DESC')
+    render :index
   end
 end

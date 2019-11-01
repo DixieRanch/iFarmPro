@@ -193,5 +193,20 @@ RSpec.describe 'Boxes' do
         expect(page).to have_css '.alert-success'
       end
     end
+
+    context 'with invalid data' do
+      it 'renders container page with errors' do
+        sign_in create(:user)
+        create(:box, name: '001', empty_weight: 200)
+        visit boxes_path
+        click_link 'edit'
+
+        fill_in 'Name', with: ''
+        click_button 'Save Container'
+
+        expect(page).to have_title full_title('Containers')
+        expect(page).to have_css('div.has-error')
+      end
+    end
   end
 end

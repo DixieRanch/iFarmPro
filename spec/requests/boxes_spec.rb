@@ -9,6 +9,14 @@ RSpec.describe 'Boxes' do
         expect(page).to have_link 'Containers'
       end
     end
+
+    context 'with signed out user' do
+      it 'is absent' do
+        visit root_path
+
+        expect(page).not_to have_link 'Containers'
+      end
+    end
   end
 
   describe 'list' do

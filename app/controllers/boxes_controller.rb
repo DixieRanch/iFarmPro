@@ -1,12 +1,12 @@
 class BoxesController < ApplicationController
   def index
-    @containers = Box.page(params[:page]).order('name DESC')
+    @boxes = Box.page(params[:page]).order('name DESC')
     @box = Box.new
   end
 
   def create
     @box = current_company.boxes.new(box_params)
-    @containers = Box.page(params[:page]).order('name DESC')
+    @boxes = Box.page(params[:page]).order('name DESC')
     if @box.save
       flash[:success] = 'Container successfully created.'
       redirect_to boxes_path
@@ -17,7 +17,7 @@ class BoxesController < ApplicationController
 
   def edit
     @box = current_company.boxes.find(params[:id])
-    @containers = Box.page(params[:page]).order('name DESC')
+    @boxes = Box.page(params[:page]).order('name DESC')
     render :index
   end
 
@@ -28,7 +28,7 @@ class BoxesController < ApplicationController
       flash[:success] = 'Container successfully updated.'
       redirect_to boxes_path
     else
-      @containers = Box.page(params[:page]).order('name DESC')
+      @boxes = Box.page(params[:page]).order('name DESC')
     end
   end
 

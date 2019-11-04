@@ -68,13 +68,13 @@ describe UserInvitation, :not_a_tenant_model do
 
   describe '#invitation_expired?' do
     it 'is true with expired invitation_token' do
-      invitation = UserInvitation.new(invitation_sent_at: 100140.minutes.ago)
+      invitation = UserInvitation.new(invitation_sent_at: 8.days.ago)
 
       expect(invitation.invitation_expired?).to be true
     end
 
     it 'is false with unexpired invitation_token' do
-      invitation = UserInvitation.new(invitation_sent_at: 10019.minutes.ago)
+      invitation = UserInvitation.new(invitation_sent_at: 6.days.ago)
 
       expect(invitation.invitation_expired?).to be false
     end

@@ -27,15 +27,14 @@ describe 'Application' do
         expect(page).to have_selector 'title', text: full_title('Containers')
 
         click_link 'Storage Locations'
-        
 
         expect(page).to have_selector 'title',
                                       text: full_title('Storage Locations')
 
         click_link 'Lots'
-        
+
         expect(page).to have_selector 'title', text: full_title('Lots')
-        
+
         click_link 'Irrigations'
 
         expect(page).to have_selector 'title', text: full_title('Irrigations')

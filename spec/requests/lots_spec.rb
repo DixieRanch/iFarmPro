@@ -8,6 +8,16 @@ RSpec.describe 'Lots', type: :request do
 
         click_link 'Lots'
       end
+
+      context 'when clicked' do
+        it 'redirects to lots index' do
+          sign_in create(:user)
+
+          click_link 'Lots'
+
+          expect(page).to have_title full_title 'Lots'
+        end
+      end
     end
 
     context 'with signed out user' do

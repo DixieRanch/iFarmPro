@@ -1,0 +1,11 @@
+<%= simple_form_for @box, html: {class: 'form-inline'} do |f| %>
+  <%= f.error_notification %>
+  <fieldset>
+    <%= f.input :name,
+                label: 'Name' %>
+                
+    <%= f.input :empty_weight,
+                label: 'Empty Weight' %>
+  </fieldset>
+  <%= f.button :submit, 'Save Container', class: 'btn-primary' %>
+<% end %>

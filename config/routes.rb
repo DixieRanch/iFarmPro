@@ -79,6 +79,8 @@ Ifarm::Application.routes.draw do
                               constraints: { id: /[^\/]+/ }
   resources :freezer_locations, only: [:index, :create, :edit, :update],
                               constraints: { id: /[^\/]+/ }
+  resources :boxes, only: [:index, :create, :edit, :update],
+                    constraints: { id: /[^\/]+/ }
 
   root to: 'static_pages#home'
 

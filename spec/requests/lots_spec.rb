@@ -9,5 +9,13 @@ RSpec.describe 'Lots', type: :request do
         click_link 'Lots'
       end
     end
+
+    context 'with signed out user' do
+      it 'is absent' do
+        visit root_path
+
+        expect(page).not_to have_link 'Lots'
+      end
+    end
   end
 end

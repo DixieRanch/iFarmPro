@@ -11,7 +11,7 @@ class BoxesController < ApplicationController
       flash[:success] = 'Container successfully created.'
       redirect_to boxes_path
     else
-      render :index
+      render_box_index
     end
   end
 

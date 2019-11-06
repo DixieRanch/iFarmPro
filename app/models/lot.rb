@@ -2,6 +2,7 @@ class Lot < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
   belongs_to :box
+  belongs_to :freezer_location
 
   validates :name, presence: true,
                    length: { maximum: 8 }

@@ -40,5 +40,6 @@ describe Lot do
 
   describe 'association' do
     it { should belong_to :box }
+    it { should belong_to :freezer_location }
   end
 end

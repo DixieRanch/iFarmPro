@@ -28,13 +28,22 @@ RSpec.describe 'Lots', type: :request do
       end
     end
   end
-  
+
   describe 'list' do
-    it 'has list title' do
+    it 'has title' do
       sign_in create(:user)
       visit lots_path
-      
+
       expect(page).to have_selector 'h1', text: 'Lots'
+    end
+
+    it 'has created lots' do
+      sign_in(create(:user))
+      create(:lot, name: '2019-001', full_weight: 800)
+      visit lots_path
+
+      expect(page).to have_selector 'td', text: '2019-001'
+      expect(page).to have_selector 'td', text: '800'
     end
   end
 end

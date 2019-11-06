@@ -42,7 +42,7 @@ RSpec.describe 'Lots', type: :request do
       box = create(:box, name: '002')
       location = create(:freezer_location, name: 'A1')
       create(:lot, name: '2019-001', full_weight: 800, box: box,
-            freezer_location: location)
+                   freezer_location: location)
       visit lots_path
 
       expect(page).to have_selector 'td', text: '2019-001'

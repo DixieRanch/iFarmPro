@@ -120,7 +120,7 @@ FactoryGirl.define do
     name '2018-001'
     full_weight 2000
     box
-    freezer_location_id 1
+    freezer_location
     block_id 1
   end
 

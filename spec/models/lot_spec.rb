@@ -37,4 +37,8 @@ describe Lot do
     it { should validate_presence_of :freezer_location_id }
     it { should validate_presence_of :block_id }
   end
+
+  describe 'association' do
+    it { should belong_to :box }
+  end
 end

@@ -2,6 +2,7 @@ class Box < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
   belongs_to :company
+  has_many   :lots, dependent: :restrict_with_error
 
   validates :name,  presence: true,
                     uniqueness: { scope: :company_id },

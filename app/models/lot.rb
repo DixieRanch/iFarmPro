@@ -1,6 +1,8 @@
 class Lot < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
 
+  belongs_to :box
+
   validates :name, presence: true,
                    length: { maximum: 8 }
   validates :full_weight, numericality: { greater_than: 150 }

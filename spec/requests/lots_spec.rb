@@ -39,11 +39,13 @@ RSpec.describe 'Lots', type: :request do
 
     it 'has created lots' do
       sign_in(create(:user))
-      create(:lot, name: '2019-001', full_weight: 800)
+      box = create(:box, name: '002')
+      create(:lot, name: '2019-001', full_weight: 800, box: box)
       visit lots_path
 
       expect(page).to have_selector 'td', text: '2019-001'
       expect(page).to have_selector 'td', text: '800'
+      expect(page).to have_selector 'td', text: '002'
     end
   end
 end

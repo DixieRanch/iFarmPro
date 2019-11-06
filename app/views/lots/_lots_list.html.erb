@@ -5,6 +5,7 @@
     <tr>
       <th>Lot Name</th>
       <th>Lot Weight</th>
+      <th>Box Name</th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,8 @@
       <td id="name<%=l%>"><%= lot.name %></td>
       
       <td id="full_weight<%=l%>"><%= lot.full_weight %></td>
+      
+      <td id="box_id<%=l%>"><%= lot.box.name %></td>
     </tr>
     <% end %>
   </tbody>

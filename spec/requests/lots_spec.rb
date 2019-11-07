@@ -41,14 +41,16 @@ RSpec.describe 'Lots', type: :request do
       sign_in(create(:user))
       box = create(:box, name: '002')
       location = create(:freezer_location, name: 'A1')
+      block = create(:block, name: 'B')
       create(:lot, name: '2019-001', full_weight: 800, box: box,
-                   freezer_location: location)
+                   freezer_location: location, block: block)
       visit lots_path
 
       expect(page).to have_selector 'td', text: '2019-001'
       expect(page).to have_selector 'td', text: '800'
       expect(page).to have_selector 'td', text: '002'
       expect(page).to have_selector 'td', text: 'A1'
+      expect(page).to have_selector 'td', text: 'B'
     end
   end
 end

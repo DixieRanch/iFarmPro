@@ -7,6 +7,7 @@
       <th>Lot Weight</th>
       <th>Box Name</th>
       <th>Storage Location</th>
+      <th>Block</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +21,8 @@
       
       <td id="freezer_location_id<%=l%>">
         <%= lot.freezer_location.name %></td>
+
+      <td id="block_id<%=l%>"><%= lot.block.name %></td>
     </tr>
     <% end %>
   </tbody>

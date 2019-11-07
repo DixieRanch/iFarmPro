@@ -1,6 +1,6 @@
 class LotsController < ApplicationController
   def index
-    @lots = Lot.all # lots_list
+    @lots = lots_list
   end
 
   private

@@ -63,5 +63,18 @@ RSpec.describe 'Lots', type: :request do
 
       expect(page).to have_link 'edit', href: edit_lot_path(lot)
     end
+
+    context 'with 31 lots' do
+      it 'has pagination links' do
+        sign_in create(:user)
+
+        31.times do |l|
+          create(:lot, name: l.to_s)
+        end
+        visit lots_path
+
+        expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
+      end
+    end
   end
 end

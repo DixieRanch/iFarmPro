@@ -3,6 +3,11 @@ class LotsController < ApplicationController
     @lots = lots_list
   end
 
+  def edit
+    @lots = lots_list
+    render :index
+  end
+
   private
 
   def lots_list

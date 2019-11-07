@@ -55,5 +55,13 @@ RSpec.describe 'Lots', type: :request do
       expect(page).to have_selector 'td', text: 'B'
       expect(page).to have_selector 'td', text: 'C'
     end
+
+    it 'has edit links' do
+      sign_in create(:user)
+      lot = create(:lot)
+      visit lots_path
+
+      expect(page).to have_link 'edit', href: edit_lot_path(lot)
+    end
   end
 end

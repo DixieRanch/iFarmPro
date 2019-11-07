@@ -121,7 +121,7 @@ FactoryGirl.define do
     full_weight 2000
     box
     freezer_location
-    block_id 1
+    block
   end
 
   factory :shipment do

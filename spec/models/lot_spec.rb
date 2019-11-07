@@ -42,5 +42,6 @@ describe Lot do
     it { should belong_to :box }
     it { should belong_to :freezer_location }
     it { should belong_to :block }
+    it { should belong_to :field }
   end
 end

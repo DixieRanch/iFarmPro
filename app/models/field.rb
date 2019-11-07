@@ -20,6 +20,7 @@ class Field < ActiveRecord::Base
   belongs_to :soil_class
   has_many :irrigations, -> { order :time }, dependent: :restrict_with_error
   has_many :soil_applications, dependent: :restrict_with_error
+  has_many :lots, dependent: :restrict_with_error
 
   default_scope { where(company_id: Company.current_id) }
 

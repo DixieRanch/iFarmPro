@@ -4,6 +4,7 @@ class Lot < ActiveRecord::Base
   belongs_to :box
   belongs_to :freezer_location
   belongs_to :block
+  belongs_to :field
 
   validates :name, presence: true,
                    length: { maximum: 8 }

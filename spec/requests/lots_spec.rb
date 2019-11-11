@@ -14,7 +14,6 @@ RSpec.describe 'Lots', type: :request do
           sign_in create(:user)
 
           click_link 'Lots'
-
           expect(page).to have_title full_title 'Lots'
         end
       end
@@ -55,40 +54,21 @@ RSpec.describe 'Lots', type: :request do
       expect(page).to have_selector 'td', text: 'B'
       expect(page).to have_selector 'td', text: 'C'
     end
-
-    it 'has edit links' do
-      sign_in create(:user)
-      lot = create(:lot)
-      visit lots_path
-
-      expect(page).to have_link 'edit', href: edit_lot_path(lot)
-    end
-
-    context 'with 31 lots' do
-      it 'has pagination links' do
-        sign_in create(:user)
-
-        31.times do |l|
-          create(:lot, name: l.to_s)
-        end
-        visit lots_path
-
-        expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
-      end
-    end
   end
 
-  describe 'edit link' do
-    context 'when clicked' do
-      it 'renders the lots page' do
-        sign_in create(:user)
-        create(:lot)
-        visit lots_path
+  describe 'form' do
+    it 'has name text field' do
+      sign_in create(:user)
+      visit lots_path
 
-        click_link 'edit'
+      fill_in('Lot Name', with: '2019-001')
+    end
 
-        expect(page).to have_title full_title 'Lots'
-      end
+    it 'has weight field' do
+      sign_in create(:user)
+      visit lots_path
+
+      fill_in('Full Weight', with: 1000)
     end
   end
 end

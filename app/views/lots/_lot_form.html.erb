@@ -1,0 +1,12 @@
+<%= simple_form_for @lot, html: {class: 'form-inline'} do |f| %>
+
+  <fieldset>
+    <%= f.input :name,
+                label: 'Lot Name',
+                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+    
+    <%= f.input :full_weight,
+                label: 'Full Weight',
+                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+  </fieldset>
+<% end %>

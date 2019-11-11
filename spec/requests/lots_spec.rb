@@ -70,5 +70,13 @@ RSpec.describe 'Lots', type: :request do
 
       fill_in('Full Weight', with: 1000)
     end
+
+    it 'has box dropdown' do
+      sign_in create(:user)
+      create(:box, name: '005')
+      visit lots_path
+
+      select('005', from: 'Box')
+    end
   end
 end

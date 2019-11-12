@@ -54,6 +54,14 @@ RSpec.describe 'Lots', type: :request do
       expect(page).to have_selector 'td', text: 'B'
       expect(page).to have_selector 'td', text: 'C'
     end
+
+    it 'has edit link' do
+      sign_in create(:user)
+      create :lot
+      visit lots_path
+
+      expect(page).to have_link 'edit'
+    end
   end
 
   describe 'form' do
@@ -161,13 +169,13 @@ RSpec.describe 'Lots', type: :request do
 
         expect(page).to have_title full_title 'Lots'
       end
-      
+
       it 'indicates field with error' do
         sign_in(create(:user))
         visit lots_path
-        
+
         click_button 'Save'
-        
+
         expect(page).to have_css('div.has-error')
       end
     end

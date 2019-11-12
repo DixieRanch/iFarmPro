@@ -26,7 +26,11 @@
       <td id="field_id<%=l%>"><%= lot.field.name unless lot.field == nil %></td>
       
       <td>
-        <%= link_to 'edit', edit_lot_path(lot), id:"link_#{l}" %>
+        <%= link_to 'edit', edit_lot_path(lot), 
+                            id:"link_#{l}",
+                            class: 'btn-sm btn-primary',
+                            role: 'button'
+        %>
       </td>
     </tr>
     <% end %>

@@ -78,5 +78,13 @@ RSpec.describe 'Lots', type: :request do
 
       select('005', from: 'Box')
     end
+
+    it 'has freezer location dropdown' do
+      sign_in create(:user)
+      create(:freezer_location, name: 'A5')
+      visit lots_path
+
+      select('A5', from: 'Freezer location')
+    end
   end
 end

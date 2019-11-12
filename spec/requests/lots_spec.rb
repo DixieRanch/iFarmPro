@@ -109,5 +109,67 @@ RSpec.describe 'Lots', type: :request do
 
       click_button 'Save'
     end
+
+    context 'when submitting valid lot data' do
+      it 'adds lot to the database' do
+        sign_in(user = create(:user))
+        create(:box, name: '005')
+        create(:freezer_location, name: 'A5')
+        create(:block, name: '9')
+        create(:field, name: '2')
+        visit lots_path
+
+        fill_in('Lot Name', with: '2019-001')
+        fill_in('Full Weight', with: 1000)
+        select('005', from: 'Box')
+        select('A5', from: 'Freezer location')
+        select('9', from: 'Block')
+        select('2', from: 'Field')
+
+        expect do
+          click_button('Save')
+          Company.current_id = user.company_id
+        end.to(change { Lot.count }.by(1))
+      end
+
+      it 'flashes success message' do
+        sign_in(create(:user))
+        create(:box, name: '005')
+        create(:freezer_location, name: 'A5')
+        create(:block, name: '9')
+        create(:field, name: '2')
+        visit lots_path
+
+        fill_in('Lot Name', with: '2019-001')
+        fill_in('Full Weight', with: 1000)
+        select('005', from: 'Box')
+        select('A5', from: 'Freezer location')
+        select('9', from: 'Block')
+        select('2', from: 'Field')
+        click_button 'Save'
+
+        expect(page).to have_css '.alert-success'
+      end
+    end
+
+    context 'when submitting a blank location name' do
+      it 'renders lots index page with correct title' do
+        sign_in(create(:user))
+        visit lots_path
+
+        click_button('Save')
+
+        expect(page).to have_title full_title 'Lots'
+      end
+      
+      it 'indicates field with error' do
+        sign_in(create(:user))
+        visit lots_path
+        
+        click_button 'Save'
+        
+        expect(page).to have_css('div.has-error')
+      end
+    end
   end
 end

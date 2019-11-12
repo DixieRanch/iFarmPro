@@ -7,7 +7,12 @@ class LotsController < ApplicationController
   def create
     @lot = Lot.new(lot_params)
     @lots = lots_list
-    render :index
+    if @lot.save
+      flash[:success] = 'Lot successfully created'
+      redirect_to lots_path
+    else
+      render :index
+    end
   end
 
   def edit
@@ -26,6 +31,6 @@ class LotsController < ApplicationController
   end
 
   def permitted_params
-    [:name, :full_weight, :box_id, :block_id, :field_id]
+    [:name, :full_weight, :freezer_location_id, :box_id, :block_id, :field_id]
   end
 end

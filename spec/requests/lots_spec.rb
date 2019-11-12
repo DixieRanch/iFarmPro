@@ -86,5 +86,28 @@ RSpec.describe 'Lots', type: :request do
 
       select('A5', from: 'Freezer location')
     end
+
+    it 'has block dropdown' do
+      sign_in create(:user)
+      create(:block, name: '9')
+      visit lots_path
+
+      select('9', from: 'Block')
+    end
+
+    it 'has field dropdown' do
+      sign_in create(:user)
+      create(:field, name: '2')
+      visit lots_path
+
+      select('2', from: 'Field')
+    end
+
+    it 'has submit button' do
+      sign_in create(:user)
+      visit lots_path
+
+      click_button 'Save'
+    end
   end
 end

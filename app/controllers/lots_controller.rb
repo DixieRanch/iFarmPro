@@ -16,6 +16,7 @@ class LotsController < ApplicationController
   end
 
   def edit
+    @lot = Lot.find(params[:id])
     @lots = lots_list
     render :index
   end

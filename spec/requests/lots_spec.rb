@@ -64,6 +64,20 @@ RSpec.describe 'Lots', type: :request do
     end
   end
 
+  describe 'edit link' do
+    context 'when clicked' do
+      it 'renders the lots page' do
+        sign_in create(:user)
+        create(:lot, name: '2019-001')
+        visit lots_path
+
+        click_link 'edit'
+
+        expect(page).to have_title full_title 'Lots'
+      end
+    end
+  end
+
   describe 'form' do
     it 'has name text field' do
       sign_in create(:user)

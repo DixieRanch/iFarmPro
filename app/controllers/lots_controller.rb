@@ -21,6 +21,18 @@ class LotsController < ApplicationController
     render :index
   end
 
+  def update
+    @lot = Lot.find(params[:id])
+
+    if @lot.update(lot_params)
+      flash[:success] = 'Lot successfully updated'
+      redirect_to lots_path
+    else
+      @lots = lots_list
+      render :index
+    end
+  end
+
   private
 
   def lots_list

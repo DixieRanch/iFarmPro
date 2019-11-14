@@ -78,6 +78,49 @@ RSpec.describe 'Lots', type: :request do
     end
   end
 
+  describe 'edit form' do
+    context 'with valid input' do
+      it 'updates lot data' do
+        sign_in create(:user)
+        create(:lot, name: '2019-001')
+        visit lots_path
+        click_link 'edit'
+
+        fill_in('Lot Name', with: '2019-002')
+        click_button 'Save'
+
+        expect(page).to have_selector 'td', text: '2019-002'
+        expect(page).not_to have_selector 'td', text: '2019-001'
+      end
+
+      it 'flashes succcess message' do
+        sign_in create(:user)
+        create(:lot, name: '2019-001')
+        visit lots_path
+        click_link 'edit'
+
+        fill_in('Lot Name', with: '2019-002')
+        click_button 'Save'
+
+        expect(page).to have_css '.alert-success'
+      end
+    end
+
+    context 'with invalid input' do
+      it 'indicates field with error' do
+        sign_in create(:user)
+        create(:lot, name: '2019-001')
+        visit lots_path
+        click_link 'edit'
+
+        fill_in('Lot Name', with: '')
+        click_button 'Save'
+
+        expect(page).to have_css('div.has-error')
+      end
+    end
+  end
+
   describe 'form' do
     it 'has name text field' do
       sign_in create(:user)

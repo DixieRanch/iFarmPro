@@ -18,11 +18,13 @@ class LotsController < ApplicationController
 
   def edit
     @lot = Lot.find(params[:id])
+    find_box_name_for(@lot)
     @lots = lots_list
     render :index
   end
 
   def update
+    find_box_id_for(params[:lot][:box_id])
     @lot = Lot.find(params[:id])
 
     if @lot.update(lot_params)
@@ -52,5 +54,9 @@ class LotsController < ApplicationController
     params[:lot][:box_id] = if Box.find_by(name: box_name)
                               Box.find_by(name: box_name).id
                             end
+  end
+
+  def find_box_name_for(lot)
+    @lot.box_id = Box.find_by(id: lot.box_id).name
   end
 end

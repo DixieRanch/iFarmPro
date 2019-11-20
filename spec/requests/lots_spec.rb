@@ -79,6 +79,16 @@ RSpec.describe 'Lots', type: :request do
   end
 
   describe 'edit form' do
+    it 'displays correct box name' do
+      sign_in create(:user)
+      lot = create(:lot)
+      visit lots_path
+
+      click_link 'edit'
+
+      expect(page).to have_field('Box Name', with: lot.box.name)
+    end
+
     context 'with valid input' do
       it 'updates lot data' do
         sign_in create(:user)
@@ -111,9 +121,23 @@ RSpec.describe 'Lots', type: :request do
         sign_in create(:user)
         create(:lot, name: '2019-001')
         visit lots_path
-        click_link 'edit'
 
+        click_link 'edit'
         fill_in('Lot Name', with: '')
+        click_button 'Save'
+
+        expect(page).to have_css('div.has-error')
+      end
+    end
+
+    context 'with invalid box name' do
+      it 'flashes error' do
+        sign_in(create(:user))
+        create(:lot)
+        visit lots_path
+
+        click_link 'edit'
+        fill_in('Box Name', with: 'No Box')
         click_button 'Save'
 
         expect(page).to have_css('div.has-error')

@@ -5,6 +5,7 @@ class LotsController < ApplicationController
   end
 
   def create
+    find_box_id_for(params[:lot][:box_id])
     @lot = Lot.new(lot_params)
     @lots = lots_list
     if @lot.save
@@ -45,5 +46,11 @@ class LotsController < ApplicationController
 
   def permitted_params
     [:name, :full_weight, :freezer_location_id, :box_id, :block_id, :field_id]
+  end
+
+  def find_box_id_for(box_name)
+    params[:lot][:box_id] = if Box.find_by(name: box_name)
+                              Box.find_by(name: box_name).id
+                            end
   end
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Lots', type: :request do
-  describe 'Lots link' do
+  describe 'link' do
     context 'with signed in user' do
       it 'is present' do
         sign_in create(:user)
@@ -29,7 +29,7 @@ RSpec.describe 'Lots', type: :request do
   end
 
   describe 'list' do
-    it 'has title' do
+    it 'has correct title' do
       sign_in create(:user)
       visit lots_path
 
@@ -136,12 +136,11 @@ RSpec.describe 'Lots', type: :request do
       fill_in('Full Weight', with: 1000)
     end
 
-    it 'has box dropdown' do
+    it 'has box field' do
       sign_in create(:user)
-      create(:box, name: '005')
       visit lots_path
 
-      select('005', from: 'Box')
+      fill_in('Box Name', with: '210')
     end
 
     it 'has freezer location dropdown' do
@@ -179,17 +178,12 @@ RSpec.describe 'Lots', type: :request do
       it 'adds lot to the database' do
         sign_in(user = create(:user))
         create(:box, name: '005')
-        create(:freezer_location, name: 'A5')
-        create(:block, name: '9')
-        create(:field, name: '2')
+        create(:freezer_location)
         visit lots_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
-        select('005', from: 'Box')
-        select('A5', from: 'Freezer location')
-        select('9', from: 'Block')
-        select('2', from: 'Field')
+        fill_in('Box Name', with: '005')
 
         expect do
           click_button('Save')
@@ -200,24 +194,20 @@ RSpec.describe 'Lots', type: :request do
       it 'flashes success message' do
         sign_in(create(:user))
         create(:box, name: '005')
-        create(:freezer_location, name: 'A5')
-        create(:block, name: '9')
-        create(:field, name: '2')
+        create(:freezer_location)
         visit lots_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
-        select('005', from: 'Box')
-        select('A5', from: 'Freezer location')
-        select('9', from: 'Block')
-        select('2', from: 'Field')
+        fill_in('Box Name', with: '005')
+
         click_button 'Save'
 
         expect(page).to have_css '.alert-success'
       end
     end
 
-    context 'when submitting a blank location name' do
+    context 'when submitting a blank form' do
       it 'renders lots index page with correct title' do
         sign_in(create(:user))
         visit lots_path
@@ -231,6 +221,22 @@ RSpec.describe 'Lots', type: :request do
         sign_in(create(:user))
         visit lots_path
 
+        click_button 'Save'
+
+        expect(page).to have_css('div.has-error')
+      end
+    end
+
+    context 'when submitting invalid box name' do
+      it 'flashes error' do
+        sign_in(create(:user))
+        create(:box, name: '005')
+        create(:freezer_location)
+        visit lots_path
+
+        fill_in('Lot Name', with: '2019-001')
+        fill_in('Full Weight', with: 1000)
+        fill_in('Box Name', with: '003')
         click_button 'Save'
 
         expect(page).to have_css('div.has-error')

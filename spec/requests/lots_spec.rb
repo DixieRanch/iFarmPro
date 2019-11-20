@@ -183,12 +183,11 @@ RSpec.describe 'Lots', type: :request do
       select('9', from: 'Block')
     end
 
-    it 'has field dropdown' do
+    it 'has field input' do
       sign_in create(:user)
-      create(:field, name: '2')
       visit lots_path
 
-      select('2', from: 'Field')
+      fill_in('Field', with: '1')
     end
 
     it 'has submit button' do

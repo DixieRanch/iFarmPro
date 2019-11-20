@@ -16,24 +16,19 @@
                   
     <%= f.association :freezer_location,
                       collection: FreezerLocation.all.sort_by(&:name),
-                      lable_method: :name,
+                      label_method: :name,
                       include_blank: false,
-                      wrapper_html: 
-                  {class: 'col-sm-3'} %>   
+                      wrapper_html: {class: 'col-sm-3'} %>   
                   
     <%= f.association :block,
                       collection: Block.all.sort_by(&:name),
-                      lable_method: :name,
+                      label_method: :name,
                       include_blank: false,
-                      wrapper_html: 
-                  {class: 'col-sm-3'} %> 
+                      wrapper_html: {class: 'col-sm-3'} %> 
     
-    <%= f.association :field,
-                      collection: Field.all.sort_by(&:name),
-                      lable_method: :name,
-                      include_blank: false,
-                      wrapper_html: 
-                  {class: 'col-sm-3'} %> 
+    <%= f.input :field,
+                      label: 'Field',
+                      wrapper_html: {class: 'col-xs-3'} %> 
     
   </fieldset>
   

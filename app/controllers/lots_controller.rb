@@ -27,6 +27,7 @@ class LotsController < ApplicationController
 
   def update
     find_box_id_for(params[:lot][:box_id])
+    find_field_id_for(params[:lot][:field_id])
     @lot = Lot.find(params[:id])
 
     if @lot.update(lot_params)

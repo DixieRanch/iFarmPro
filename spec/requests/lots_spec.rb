@@ -114,6 +114,40 @@ RSpec.describe 'Lots', type: :request do
         expect(page).not_to have_selector 'td', text: '2019-001'
       end
 
+      context 'with field' do
+        it 'updates the field to nil' do
+          sign_in(user = create(:user))
+          field = Field.first
+          lot = create(:lot, field: field)
+          visit lots_path
+
+          click_link 'edit'
+          fill_in('Field', with: '')
+
+          expect do
+            click_button('Save')
+            Company.current_id = user.company_id
+            lot.reload
+          end.to(change { lot.field })
+        end
+
+        it 'updates field to new input' do
+          sign_in(user = create(:user))
+          field = Field.first
+          lot = create(:lot)
+          visit lots_path
+
+          click_link 'edit'
+          fill_in('Field', with: field.name)
+
+          expect do
+            click_button('Save')
+            Company.current_id = user.company_id
+            lot.reload
+          end.to(change { lot.field }.to(field))
+        end
+      end
+
       it 'flashes succcess message' do
         sign_in create(:user)
         create(:lot, name: '2019-001')

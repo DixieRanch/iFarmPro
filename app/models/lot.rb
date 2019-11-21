@@ -7,6 +7,7 @@ class Lot < ActiveRecord::Base
   belongs_to :field
 
   validates :name, presence: true,
+                   uniqueness: { scope: :company_id },
                    length: { maximum: 8 }
   validates :full_weight, numericality: { greater_than: 150 }
   validates :company_id, presence: true

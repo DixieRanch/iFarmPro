@@ -15,3 +15,4 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/password_resets_controller.rb'
+    - 'app/controllers/lots_controller.rb'

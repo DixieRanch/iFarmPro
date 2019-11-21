@@ -5,6 +5,7 @@ class LotsController < ApplicationController
   end
 
   def create
+    find_field_id_for(params[:lot][:field])
     find_box_id_for(params[:lot][:box_id])
     @lot = Lot.new(lot_params)
     @lots = lots_list
@@ -58,5 +59,11 @@ class LotsController < ApplicationController
 
   def find_box_name_for(lot)
     @lot.box_id = Box.find_by(id: lot.box_id).name
+  end
+
+  def find_field_id_for(field)
+    params[:lot][:field_id] = if Field.find_by(name: field)
+                                Field.find_by(name: field).id
+                              end
   end
 end

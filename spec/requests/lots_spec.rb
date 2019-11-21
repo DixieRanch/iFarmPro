@@ -228,6 +228,25 @@ RSpec.describe 'Lots', type: :request do
 
         expect(page).to have_css '.alert-success'
       end
+
+      context 'with field' do
+        it 'saves lot with correct field' do
+          sign_in user = create(:user)
+          box = create(:box)
+          create(:freezer_location)
+          field = Field.first
+          visit lots_path
+
+          fill_in('Lot Name', with: '2019-001')
+          fill_in('Full Weight', with: 1000)
+          fill_in('Box Name', with: box.name)
+          fill_in('Field', with: field.name)
+          click_button 'Save'
+
+          Company.current_id = user.company_id
+          expect(Lot.first.field.name).to eq field.name
+        end
+      end
     end
 
     context 'when submitting a blank form' do

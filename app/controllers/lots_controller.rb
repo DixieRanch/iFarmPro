@@ -42,7 +42,7 @@ class LotsController < ApplicationController
   private
 
   def lots_list
-    Lot.page(params[:page]).order('name ASC')
+    Lot.page(params[:page]).order('name DESC')
   end
 
   def lot_params

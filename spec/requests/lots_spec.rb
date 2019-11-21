@@ -89,6 +89,17 @@ RSpec.describe 'Lots', type: :request do
       expect(page).to have_field('Box Name', with: lot.box.name)
     end
 
+    it 'displays correct field name' do
+      sign_in create(:user)
+      field = Field.first
+      lot = create(:lot, field: field)
+      visit lots_path
+
+      click_link 'edit'
+
+      expect(page).to have_field('Field', with: lot.field.name)
+    end
+
     context 'with valid input' do
       it 'updates lot data' do
         sign_in create(:user)

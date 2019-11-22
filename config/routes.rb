@@ -60,8 +60,6 @@
 #
 
 Ifarm::Application.routes.draw do
-  get 'lots/index'
-
   resources :sessions, only: [:new, :create, :destroy]
   resources :companies, only: [:create, :show]
   resources :users, only: [:create]
@@ -83,8 +81,7 @@ Ifarm::Application.routes.draw do
                               constraints: { id: /[^\/]+/ }
   resources :boxes, only: [:index, :create, :edit, :update],
                     constraints: { id: /[^\/]+/ }
-  resources :lots, only: [:index, :create, :edit, :update],
-                    constraints: { id: /[^\/]+/ }
+  resources :lots, only: [:index, :create, :edit, :update]
 
   root to: 'static_pages#home'
 

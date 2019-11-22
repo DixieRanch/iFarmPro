@@ -14,7 +14,7 @@ class Company < ActiveRecord::Base
   has_many :users, dependent: :restrict_with_error
   has_many :farms, dependent: :restrict_with_error
   has_many :user_invitations, dependent: :destroy
-
+  has_many :boxes, dependent: :restrict_with_error
   accepts_nested_attributes_for :users
 
   validates :name, presence: true,

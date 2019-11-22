@@ -1,0 +1,40 @@
+<table id='lots' class='table table-striped'>
+  <thead>
+    <h1>Lots</h1>
+    <tr>
+      <th>Lot Name</th>
+      <th>Lot Weight</th>
+      <th>Box Name</th>
+      <th>Storage Location</th>
+      <th>Block</th>
+      <th>Field</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lots.each_with_index do |lot, l| %>
+    <tr>
+      <td id="name<%=l%>"><%= lot.name %></td>
+      
+      <td id="full_weight<%=l%>"><%= lot.full_weight %></td>
+      
+      <td id="box_id<%=l%>"><%= lot.box.name %></td>
+      
+      <td id="freezer_location_id<%=l%>">
+        <%= lot.freezer_location.name %></td>
+
+      <td id="block_id<%=l%>"><%= lot.block.name %></td>
+
+      <td id="field_id<%=l%>"><%= lot.field.name unless lot.field == nil %></td>
+      
+      <td>
+        <%= link_to 'edit', edit_lot_path(lot), 
+                            id:"link_#{l}",
+                            class: 'btn-sm btn-primary',
+                            role: 'button'
+        %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @lots %>

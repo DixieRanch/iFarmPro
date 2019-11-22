@@ -1,0 +1,36 @@
+<%= simple_form_for @lot, html: {class: 'form-inline'} do |f| %>
+
+  <fieldset>
+    <%= f.input :name,
+                label: 'Lot Name',
+                wrapper_html: {class: 'col-xs-3'} %>
+    
+    <%= f.input :full_weight,
+                label: 'Full Weight',
+                wrapper_html: {class: 'col-xs-3'} %>
+                
+    <%= f.input :box_id,
+                label: 'Box Name',
+                wrapper_html: {class: 'col-xs-3'},
+                error: 'Box not found'%>
+                  
+    <%= f.association :freezer_location,
+                      collection: FreezerLocation.all.sort_by(&:name),
+                      label_method: :name,
+                      include_blank: false,
+                      wrapper_html: {class: 'col-sm-3'} %>   
+                  
+    <%= f.association :block,
+                      collection: Block.all.sort_by(&:name),
+                      label_method: :name,
+                      include_blank: false,
+                      wrapper_html: {class: 'col-sm-3'} %> 
+    
+    <%= f.input :field_id,
+                      label: 'Field',
+                      wrapper_html: {class: 'col-xs-3'} %> 
+    
+  </fieldset>
+  
+  <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>
+<% end %>

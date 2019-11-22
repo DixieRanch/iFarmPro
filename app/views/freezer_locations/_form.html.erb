@@ -1,0 +1,9 @@
+<%= simple_form_for @freezer_location, html: {class: 'form-inline'} do |f| %>
+  <%= f.error_notification %>
+  <fieldset>
+    <%= f.input :name,
+                label: 'Location Name',
+                wrapper_html: {class: 'col-xs-5 col-sm-3 col-md-2'} %>
+  </fieldset>
+  <%= f.button :submit, 'Save Location', class: 'btn-primary' %>
+<% end %>

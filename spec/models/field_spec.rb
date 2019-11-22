@@ -59,6 +59,7 @@ describe Field do
     it { should belong_to :soil_class }
     it { should have_many :irrigations }
     it { should have_many :soil_applications }
+    it { should have_many :lots }
   end
 
   describe '#name_with_block' do

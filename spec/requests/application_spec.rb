@@ -31,6 +31,10 @@ describe 'Application' do
         expect(page).to have_selector 'title',
                                       text: full_title('Storage Locations')
 
+        click_link 'Lots'
+
+        expect(page).to have_selector 'title', text: full_title('Lots')
+
         click_link 'Irrigations'
 
         expect(page).to have_selector 'title', text: full_title('Irrigations')
@@ -54,12 +58,6 @@ describe 'Application' do
         click_link 'Nutrition'
 
         expect(page).to have_title full_title 'Nutrition'
-      end
-
-      it 'should have sidebar link to Spray Schedule' do
-        sign_in_new create(:user)
-        field = create(:field, name: '2', block: create(:block, name: 'B'))
-        create(:irrigation, field: field, time: '2017-07-01 13:00')
 
         click_link 'Spray Schedule'
 

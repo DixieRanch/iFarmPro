@@ -31,10 +31,18 @@ describe Lot do
   describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_length_of(:name).is_at_most 8 }
+    it { should validate_uniqueness_of(:name).scoped_to :company_id }
     it { should validate_numericality_of(:full_weight).is_greater_than(150) }
     it { should validate_presence_of :company_id }
     it { should validate_presence_of :box_id }
     it { should validate_presence_of :freezer_location_id }
     it { should validate_presence_of :block_id }
+  end
+
+  describe 'association' do
+    it { should belong_to :box }
+    it { should belong_to :freezer_location }
+    it { should belong_to :block }
+    it { should belong_to :field }
   end
 end

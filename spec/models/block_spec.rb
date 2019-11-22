@@ -42,6 +42,7 @@ describe Block do
 
   describe 'association' do
     it { should accept_nested_attributes_for :fields }
+    it { should have_many :lots }
 
     it 'should return fields ordered by name' do
       set_tenant_company

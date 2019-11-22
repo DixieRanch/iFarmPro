@@ -39,5 +39,6 @@ describe FreezerLocation do
 
   describe 'associations' do
     it { should belong_to :farm }
+    it { should have_many :lots }
   end
 end

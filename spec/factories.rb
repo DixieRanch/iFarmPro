@@ -119,9 +119,9 @@ FactoryGirl.define do
   factory :lot do
     name '2018-001'
     full_weight 2000
-    box_id 1
-    freezer_location_id 1
-    block_id 1
+    box
+    freezer_location
+    block
   end
 
   factory :shipment do

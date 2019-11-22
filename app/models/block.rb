@@ -16,6 +16,7 @@ class Block < ActiveRecord::Base
   belongs_to :farm # , inverse_of: :blocks
   has_many :fields, -> { order :name }
   accepts_nested_attributes_for :fields
+  has_many :lots, dependent: :restrict_with_error
 
   validates :name,       presence: true,
                          uniqueness: { case_sensitive: false, scope: :farm_id },

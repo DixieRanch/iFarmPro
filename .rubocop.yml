@@ -39,6 +39,9 @@ Style/NumericLiterals:
   MinDigits: 15
   
 Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+  
   ExcludedMethods: 
     - configure
     - context

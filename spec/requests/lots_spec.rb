@@ -146,11 +146,13 @@ RSpec.describe 'Lots', type: :request do
 
         it 'updates field to new input' do
           sign_in(user = create(:user))
-          field = Field.first
+          block = create(:block)
+          field = create(:field, block: block)
           lot = create(:lot)
           visit lots_path
 
           click_link 'edit'
+          select(block.name, from: 'Block')
           fill_in('Field', with: field.name)
 
           expect do
@@ -292,17 +294,21 @@ RSpec.describe 'Lots', type: :request do
           sign_in user = create(:user)
           box = create(:box)
           create(:freezer_location)
-          field = Field.first
+          block_a = create(:block, name: 'A')
+          create(:field, name: '1', block: block_a)
+          block_b = create(:block, name: 'B')
+          field_b = create(:field, name: '1', block: block_b)
           visit lots_path
 
           fill_in('Lot Name', with: '2019-001')
           fill_in('Full Weight', with: 1000)
           fill_in('Box Name', with: box.name)
-          fill_in('Field', with: field.name)
+          select(block_b.name, from: 'Block')
+          fill_in('Field', with: field_b.name)
           click_button 'Save'
 
           Company.current_id = user.company_id
-          expect(Lot.first.field.name).to eq field.name
+          expect(Lot.first.field).to eq field_b
         end
       end
     end

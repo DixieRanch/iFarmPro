@@ -1,5 +1,5 @@
 class LotsController < ApplicationController
-  def index
+  def new
     @lot = Lot.new
     @lots = lots_list
   end
@@ -11,9 +11,9 @@ class LotsController < ApplicationController
     @lots = lots_list
     if @lot.save
       flash[:success] = 'Lot successfully created'
-      redirect_to lots_path
+      redirect_to new_lot_path
     else
-      render :index
+      render :new
     end
   end
 
@@ -22,7 +22,7 @@ class LotsController < ApplicationController
     find_box_name_for(@lot)
     find_field_name_for(@lot)
     @lots = lots_list
-    render :index
+    render :new
   end
 
   def update
@@ -32,10 +32,10 @@ class LotsController < ApplicationController
 
     if @lot.update(lot_params)
       flash[:success] = 'Lot successfully updated'
-      redirect_to lots_path
+      redirect_to new_lot_path
     else
       @lots = lots_list
-      render :index
+      render :new
     end
   end
 

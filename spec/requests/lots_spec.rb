@@ -10,7 +10,7 @@ RSpec.describe 'Lots', type: :request do
       end
 
       context 'when clicked' do
-        it 'redirects to lots index' do
+        it 'redirects to lots new' do
           sign_in create(:user)
 
           click_link 'Lots'
@@ -31,7 +31,7 @@ RSpec.describe 'Lots', type: :request do
   describe 'list' do
     it 'has correct title' do
       sign_in create(:user)
-      visit lots_path
+      visit new_lot_path
 
       expect(page).to have_selector 'h1', text: 'Lots'
     end
@@ -45,7 +45,7 @@ RSpec.describe 'Lots', type: :request do
       create(:lot, name: '2019-001', full_weight: 800, box: box,
                    freezer_location: location, block: block,
                    field: field)
-      visit lots_path
+      visit new_lot_path
 
       expect(page).to have_selector 'td', text: '2019-001'
       expect(page).to have_selector 'td', text: '800'
@@ -58,7 +58,7 @@ RSpec.describe 'Lots', type: :request do
     it 'has edit link' do
       sign_in create(:user)
       create :lot
-      visit lots_path
+      visit new_lot_path
 
       expect(page).to have_link 'edit'
     end
@@ -70,7 +70,7 @@ RSpec.describe 'Lots', type: :request do
         31.times do |l|
           create(:lot, name: 'lot' + l.to_s)
         end
-        visit lots_path
+        visit new_lot_path
 
         expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
       end
@@ -82,7 +82,7 @@ RSpec.describe 'Lots', type: :request do
       it 'renders the lots page' do
         sign_in create(:user)
         create(:lot, name: '2019-001')
-        visit lots_path
+        visit new_lot_path
 
         click_link 'edit'
 
@@ -95,7 +95,7 @@ RSpec.describe 'Lots', type: :request do
     it 'displays correct box name' do
       sign_in create(:user)
       lot = create(:lot)
-      visit lots_path
+      visit new_lot_path
 
       click_link 'edit'
 
@@ -106,7 +106,7 @@ RSpec.describe 'Lots', type: :request do
       sign_in create(:user)
       field = Field.first
       lot = create(:lot, field: field)
-      visit lots_path
+      visit new_lot_path
 
       click_link 'edit'
 
@@ -117,7 +117,7 @@ RSpec.describe 'Lots', type: :request do
       it 'updates lot data' do
         sign_in create(:user)
         create(:lot, name: '2019-001')
-        visit lots_path
+        visit new_lot_path
         click_link 'edit'
 
         fill_in('Lot Name', with: '2019-002')
@@ -132,7 +132,7 @@ RSpec.describe 'Lots', type: :request do
           sign_in(user = create(:user))
           field = Field.first
           lot = create(:lot, field: field)
-          visit lots_path
+          visit new_lot_path
 
           click_link 'edit'
           fill_in('Field', with: '')
@@ -149,7 +149,7 @@ RSpec.describe 'Lots', type: :request do
           block = create(:block)
           field = create(:field, block: block)
           lot = create(:lot)
-          visit lots_path
+          visit new_lot_path
 
           click_link 'edit'
           select(block.name, from: 'Block')
@@ -166,7 +166,7 @@ RSpec.describe 'Lots', type: :request do
       it 'flashes succcess message' do
         sign_in create(:user)
         create(:lot, name: '2019-001')
-        visit lots_path
+        visit new_lot_path
         click_link 'edit'
 
         fill_in('Lot Name', with: '2019-002')
@@ -180,7 +180,7 @@ RSpec.describe 'Lots', type: :request do
       it 'indicates field with error' do
         sign_in create(:user)
         create(:lot, name: '2019-001')
-        visit lots_path
+        visit new_lot_path
 
         click_link 'edit'
         fill_in('Lot Name', with: '')
@@ -194,7 +194,7 @@ RSpec.describe 'Lots', type: :request do
       it 'flashes error' do
         sign_in(create(:user))
         create(:lot)
-        visit lots_path
+        visit new_lot_path
 
         click_link 'edit'
         fill_in('Box Name', with: 'No Box')
@@ -208,21 +208,21 @@ RSpec.describe 'Lots', type: :request do
   describe 'form' do
     it 'has name text field' do
       sign_in create(:user)
-      visit lots_path
+      visit new_lot_path
 
       fill_in('Lot Name', with: '2019-001')
     end
 
     it 'has weight field' do
       sign_in create(:user)
-      visit lots_path
+      visit new_lot_path
 
       fill_in('Full Weight', with: 1000)
     end
 
     it 'has box field' do
       sign_in create(:user)
-      visit lots_path
+      visit new_lot_path
 
       fill_in('Box Name', with: '210')
     end
@@ -230,7 +230,7 @@ RSpec.describe 'Lots', type: :request do
     it 'has freezer location dropdown' do
       sign_in create(:user)
       create(:freezer_location, name: 'A5')
-      visit lots_path
+      visit new_lot_path
 
       select('A5', from: 'Freezer location')
     end
@@ -238,21 +238,21 @@ RSpec.describe 'Lots', type: :request do
     it 'has block dropdown' do
       sign_in create(:user)
       create(:block, name: '9')
-      visit lots_path
+      visit new_lot_path
 
       select('9', from: 'Block')
     end
 
     it 'has field input' do
       sign_in create(:user)
-      visit lots_path
+      visit new_lot_path
 
       fill_in('Field', with: '1')
     end
 
     it 'has submit button' do
       sign_in create(:user)
-      visit lots_path
+      visit new_lot_path
 
       click_button 'Save'
     end
@@ -262,7 +262,7 @@ RSpec.describe 'Lots', type: :request do
         sign_in(user = create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        visit lots_path
+        visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
@@ -278,7 +278,7 @@ RSpec.describe 'Lots', type: :request do
         sign_in(create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        visit lots_path
+        visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
@@ -298,7 +298,7 @@ RSpec.describe 'Lots', type: :request do
           create(:field, name: '1', block: block_a)
           block_b = create(:block, name: 'B')
           field_b = create(:field, name: '1', block: block_b)
-          visit lots_path
+          visit new_lot_path
 
           fill_in('Lot Name', with: '2019-001')
           fill_in('Full Weight', with: 1000)
@@ -316,7 +316,7 @@ RSpec.describe 'Lots', type: :request do
     context 'when submitting a blank form' do
       it 'renders lots index page with correct title' do
         sign_in(create(:user))
-        visit lots_path
+        visit new_lot_path
 
         click_button('Save')
 
@@ -325,7 +325,7 @@ RSpec.describe 'Lots', type: :request do
 
       it 'indicates field with error' do
         sign_in(create(:user))
-        visit lots_path
+        visit new_lot_path
 
         click_button 'Save'
 
@@ -338,7 +338,7 @@ RSpec.describe 'Lots', type: :request do
         sign_in(create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        visit lots_path
+        visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)

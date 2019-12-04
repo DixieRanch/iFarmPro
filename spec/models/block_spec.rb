@@ -24,7 +24,8 @@ describe Block do
   it 'should have a valid factory' do
     set_tenant_company
 
-    expect(build_stubbed(:block)).to be_valid
+    block = create(:block)
+    expect(build_stubbed(:block, farm_id: block.farm_id)).to be_valid
   end
 
   describe 'validations' do

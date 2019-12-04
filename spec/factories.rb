@@ -117,7 +117,7 @@ FactoryGirl.define do
   end
 
   factory :lot do
-    name '2018-001'
+    sequence(:name) { |n| "2018-#{n}" }
     full_weight 2000
     box
     freezer_location

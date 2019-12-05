@@ -15,6 +15,7 @@ describe Lot do
   it 'has a valid factory' do
     set_tenant_company
 
+    create(:lot)
     expect(build_stubbed(:lot)).to be_valid
   end
 

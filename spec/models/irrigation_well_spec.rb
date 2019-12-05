@@ -26,7 +26,8 @@ describe IrrigationWell do
   it 'should have a valid factory' do
     set_tenant_company
 
-    expect(build_stubbed(:irrigation_well)).to be_valid
+    well = create(:irrigation_well)
+    expect(build_stubbed(:irrigation_well, farm_id: well.farm_id)).to be_valid
   end
 
   describe 'attributes' do

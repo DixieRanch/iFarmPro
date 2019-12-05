@@ -25,6 +25,7 @@ describe Farm do
   it 'should have a valid factory' do
     set_tenant_company
 
+    create(:farm)
     expect(build_stubbed(:farm)).to be_valid
   end
 

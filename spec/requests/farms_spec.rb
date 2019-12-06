@@ -82,6 +82,18 @@ describe 'Farm' do
         .and(change { Block.count }.by(1))
         .and(change { Field.count }.by(1)))
     end
+
+    context 'with invalid data' do
+      it 'renders new page with error' do
+        sign_in_new create(:user)
+        visit new_farm_path
+
+        click_button 'Save'
+
+        expect(page).to have_title full_title('Add Farm')
+        expect(page).to have_css '.alert-danger'
+      end
+    end
   end
 
   describe 'edit page' do

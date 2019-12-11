@@ -52,9 +52,9 @@ describe Tasks::UpdateEt do
 
       array = Tasks::UpdateEt.new(url).parse(page)
 
-      expect(array[0][:eth]).to eq '0.27'
+      expect(array[0][:eth]).to eq '0.304'
       expect(array[0][:doy]).to eq 176
-      expect(array[5][:eth]).to eq '0.23'
+      expect(array[5][:eth]).to eq '0.274'
       expect(array[5][:doy]).to eq 181
     end
   end
@@ -85,8 +85,8 @@ describe Tasks::UpdateEt do
       update_et.fetch_parse_update_pad_table
 
       expect(CurrentEt.find_by(doy: 175)[weather_station.db_col]).to eq 0.05
-      expect(CurrentEt.find_by(doy: 176)[weather_station.db_col]).to eq 0.27
-      expect(CurrentEt.find_by(doy: 181)[weather_station.db_col]).to eq 0.23
+      expect(CurrentEt.find_by(doy: 176)[weather_station.db_col]).to eq 0.304
+      expect(CurrentEt.find_by(doy: 181)[weather_station.db_col]).to eq 0.274
       expect(CurrentEt.find_by(doy: 182)[weather_station.db_col]).to be_nil
       expect(CurrentEt.find_by(doy: 366)[weather_station.db_col]).to be_nil
       expect(CurrentEt.find_by(doy: 1)[weather_station.db_col]).to eq 0.05

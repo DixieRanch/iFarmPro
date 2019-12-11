@@ -64,16 +64,16 @@ describe WeatherStation, :not_a_tenant_model do
       station = build_stubbed(:weather_station)
       stub_request(:get,  station.url).to_return(form_file)
       stub_request(:post, station.url).to_return(response_file)
-      page = station.fetch('2017-06-25', '2017-06-30')
+      page = station.fetch('2018-06-25', '2018-06-30')
 
       array = station.parse(page)
 
-      expect(array).to eq [{ date: '2017-06-25'.to_date, eth: 0.27 },
-                           { date: '2017-06-26'.to_date, eth: 0.25 },
-                           { date: '2017-06-27'.to_date, eth: 0.28 },
-                           { date: '2017-06-28'.to_date, eth: 0.3 },
-                           { date: '2017-06-29'.to_date, eth: 0.3 },
-                           { date: '2017-06-30'.to_date, eth: 0.23 }]
+      expect(array).to eq [{ date: '2018-06-25'.to_date, eth: 0.304 },
+                           { date: '2018-06-26'.to_date, eth: 0.342 },
+                           { date: '2018-06-27'.to_date, eth: 0.338 },
+                           { date: '2018-06-28'.to_date, eth: 0.299 },
+                           { date: '2018-06-29'.to_date, eth: 0.264 },
+                           { date: '2018-06-30'.to_date, eth: 0.274 }]
     end
 
     it 'should update DailyEts from website data' do
@@ -94,7 +94,7 @@ describe WeatherStation, :not_a_tenant_model do
       stub_request(:post, station.url).to_return(response_file)
 
       expect { station.update_daily_et }.to change { DailyEt.count }.by(6)
-      expect(station.daily_ets.last.date).to eq '2017-06-30'.to_date
+      expect(station.daily_ets.last.date).to eq '2018-06-30'.to_date
     end
   end
 

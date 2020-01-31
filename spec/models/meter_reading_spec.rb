@@ -25,7 +25,12 @@ describe MeterReading do
   end
 
   it 'should have a valid factory' do
-    expect(build_stubbed(:meter_reading)).to be_valid
+    set_tenant_company
+    saved_reading = create(:meter_reading)
+
+    expect(build_stubbed(:meter_reading,
+                         irrigation_id:
+                         saved_reading.irrigation_id)).to be_valid
   end
 
   describe 'attributes' do

@@ -18,6 +18,8 @@ describe SoilApplicationUnit, :not_a_tenant_model do
   it { expect(SoilApplicationUnit.new(valid_attributes)).to be_valid }
 
   it 'has a valid Factory' do
+    create(:soil_application_unit)
+
     expect(build_stubbed(:soil_application_unit)).to be_valid
   end
 

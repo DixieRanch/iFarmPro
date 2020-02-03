@@ -21,6 +21,8 @@ RSpec.describe Website, :not_a_tenant_model do
   it { expect(Website.new(valid_attributes)).to be_valid }
 
   it 'should have a valid factory' do
+    create(:website)
+
     expect(build_stubbed(:website)).to be_valid
   end
 

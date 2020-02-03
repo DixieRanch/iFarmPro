@@ -45,13 +45,18 @@ describe WeatherStation, :not_a_tenant_model do
     it 'should build a URL for the data page' do
       correct_url = 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/nmcc-da-1/request/gdd/et/data/'
 
-      url = build_stubbed(:website).weather_stations.build(valid_attributes).url
+      url = build_stubbed(
+        :website,
+        url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/'
+      ).weather_stations.build(valid_attributes).url
 
       expect(url).to eq correct_url
     end
 
     it 'should fetch a webpage' do
-      station = build_stubbed(:weather_station)
+      website = create(:website,
+                       url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/')
+      station = build_stubbed(:weather_station, website: website)
       stub_request(:get,  station.url).to_return(form_file)
       stub_request(:post, station.url).to_return(response_file)
 
@@ -61,7 +66,9 @@ describe WeatherStation, :not_a_tenant_model do
     end
 
     it 'should create an array from page data' do
-      station = build_stubbed(:weather_station)
+      website = create(:website,
+                       url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/')
+      station = build_stubbed(:weather_station, website: website)
       stub_request(:get,  station.url).to_return(form_file)
       stub_request(:post, station.url).to_return(response_file)
       page = station.fetch('2018-06-25', '2018-06-30')
@@ -89,7 +96,9 @@ describe WeatherStation, :not_a_tenant_model do
 
     it 'should update the last 30 days of Et data' do
       # This test is broken -> Model needs refactoring to test messages sent
-      station = create :weather_station
+      website = create(:website,
+                       url: 'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/')
+      station = create(:weather_station, website: website)
       stub_request(:get,  station.url).to_return(form_file)
       stub_request(:post, station.url).to_return(response_file)
 

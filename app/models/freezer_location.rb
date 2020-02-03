@@ -9,4 +9,10 @@ class FreezerLocation < ActiveRecord::Base
                    uniqueness: { scope: :farm_id, case_sensitive: false }
   validates :farm_id, presence: true
   validates :company_id, presence: true
+
+  def location_weight
+    lots = Lot.where(freezer_location_id: id)
+    weight = lots.sum(:full_weight)
+    weight
+  end
 end

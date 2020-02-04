@@ -14,4 +14,8 @@ class Lot < ActiveRecord::Base
   validates :box_id, presence: true
   validates :freezer_location_id, presence: true
   validates :block_id, presence: true
+
+  def net_weight
+    full_weight - box.empty_weight
+  end
 end

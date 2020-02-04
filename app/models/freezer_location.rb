@@ -12,7 +12,8 @@ class FreezerLocation < ActiveRecord::Base
 
   def location_weight
     lots = Lot.where(freezer_location_id: id)
-    weight = lots.sum(:full_weight)
-    weight
+    lots_net = lots.map(&:net_weight)
+    location_weight = lots_net.sum
+    location_weight
   end
 end

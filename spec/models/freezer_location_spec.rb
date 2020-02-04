@@ -43,17 +43,21 @@ describe FreezerLocation do
   end
 
   describe 'location weight' do
-    it 'returns the sum of lot weights in a location' do
+    it 'returns the sum of net lot weights in a location' do
       set_tenant_company
       location1 = create(:freezer_location)
       location2 = create(:freezer_location)
+      box1 = create(:box, empty_weight: 200)
+      box2 = create(:box, empty_weight: 200)
+
       lot1 = create(:lot, name: 'lot1', full_weight: 2000,
-                          freezer_location_id: location1.id)
+                          freezer_location_id: location1.id, box_id: box1.id)
       lot2 = create(:lot, name: 'lot2', full_weight: 3000,
-                          freezer_location_id: location1.id)
+                          freezer_location_id: location1.id, box_id: box2.id)
       create(:lot, name: 'seperate', full_weight: 5000,
                    freezer_location_id: location2.id)
-      weight = lot1.full_weight + lot2.full_weight
+      weight = (lot1.full_weight - lot1.box.empty_weight) +
+               (lot2.full_weight - lot2.box.empty_weight)
 
       expect(location1.location_weight). to eq weight
     end

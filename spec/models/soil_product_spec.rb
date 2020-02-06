@@ -27,6 +27,7 @@ describe SoilProduct do
   it 'has a valid factory' do
     set_tenant_company
 
+    create(:soil_product)
     expect(build_stubbed(:soil_product)).to be_valid
   end
 

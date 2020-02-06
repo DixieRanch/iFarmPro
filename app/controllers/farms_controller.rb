@@ -27,7 +27,7 @@ class FarmsController < ApplicationController
 
   def create
     @farm = Farm.new(farm_params)
-    if @farm.save!
+    if @farm.save
       flash[:success] = 'New farm successfully added.'
       redirect_to farms_path
     else

@@ -1,5 +1,16 @@
 <% provide :title, 'Storage Management' %>
-
-<thead>
-  <h1>Location Overview</h1>
-</thead>
+<table id='locations' class='table table-striped'>
+  <thead>
+    <h1>Location Overview</h1>
+    <tr>
+      <th>Location Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @locations.each_with_index do |location, l| %>
+    <tr>
+      <td id="name<%=l%>"><%= location.name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

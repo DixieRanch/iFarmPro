@@ -15,10 +15,20 @@ RSpec.describe 'StorageManagement', type: :request do
 
   describe 'location index' do
     it 'has correct title' do
-      sign_in(create(:user))
+      sign_in create(:user)
       visit storage_management_index_path
 
       expect(page).to have_selector 'h1', text: 'Location Overview'
+    end
+
+    it 'displays saved location names' do
+      sign_in create(:user)
+      location1 = create(:freezer_location)
+      location2 = create(:freezer_location)
+      visit storage_management_index_path
+
+      expect(page).to have_selector 'td', text: location1.name
+      expect(page).to have_selector 'td', text: location2.name
     end
   end
 end

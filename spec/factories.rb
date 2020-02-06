@@ -125,7 +125,7 @@ FactoryGirl.define do
   end
 
   factory :shipment do
-    name '2018-001'
+    sequence(:name) { |n| "2018-#{n}" }
     date Time.zone.today
     destination 'Sheller'
   end

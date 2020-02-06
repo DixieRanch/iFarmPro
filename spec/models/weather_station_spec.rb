@@ -25,7 +25,10 @@ describe WeatherStation, :not_a_tenant_model do
   end
 
   it 'should have a valid factory' do
-    expect(build_stubbed(:weather_station)).to be_valid
+    saved_station = create(:weather_station)
+
+    expect(build_stubbed(:weather_station,
+                         website_id: saved_station.website_id)).to be_valid
   end
 
   describe 'validations' do

@@ -9,6 +9,7 @@
     </tr>
   </thead>
   <tbody>
+    <pre>Total Net Weight: <%= @total_net_weight %></pre>
     <% @locations.each_with_index do |location, l| %>
     <tr>
       <td id="name<%=l%>"><%= location.name %></td>

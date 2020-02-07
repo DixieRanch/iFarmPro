@@ -70,5 +70,21 @@ RSpec.describe 'StorageManagement', type: :request do
 
       expect(page).to have_selector 'td', text: location_lot_count
     end
+
+    it 'displays the total storage weight' do
+      sign_in create(:user)
+      location1 = create(:freezer_location)
+      location2 = create(:freezer_location)
+      box1 = create(:box, empty_weight: 200)
+      box2 = create(:box, empty_weight: 200)
+      create(:lot, full_weight: 3000, freezer_location_id: location1.id,
+                   box_id: box1.id)
+      create(:lot, full_weight: 4000, freezer_location_id: location2.id,
+                   box_id: box2.id)
+      storage_weight = Lot.all.map(&:net_weight).sum
+      visit storage_management_index_path
+
+      expect(page).to have_text storage_weight
+    end
   end
 end

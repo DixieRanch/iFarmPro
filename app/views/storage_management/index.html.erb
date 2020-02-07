@@ -10,6 +10,7 @@
     <% @locations.each_with_index do |location, l| %>
     <tr>
       <td id="name<%=l%>"><%= location.name %></td>
+      <td id="net_weight<%=l%>"><%= location.location_weight %></td>
     </tr>
     <% end %>
   </tbody>

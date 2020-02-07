@@ -30,5 +30,34 @@ RSpec.describe 'StorageManagement', type: :request do
       expect(page).to have_selector 'td', text: location1.name
       expect(page).to have_selector 'td', text: location2.name
     end
+
+    it 'displays location weights' do
+      sign_in create(:user)
+      location1 = create(:freezer_location)
+      location2 = create(:freezer_location)
+      box1 = create(:box, empty_weight: 200)
+      box2 = create(:box, empty_weight: 200)
+      create(:lot, full_weight: 3000, freezer_location_id: location1.id,
+                   box_id: box1.id)
+      create(:lot, full_weight: 4000, freezer_location_id: location2.id,
+                   box_id: box2.id)
+      visit storage_management_index_path
+
+      expect(page).to have_selector 'td', text: location1.location_weight
+      expect(page).to have_selector 'td', text: location2.location_weight
+    end
+
+    context 'with nil box empty_weight' do
+      it 'uses default weight' do
+        sign_in create(:user)
+        location = create(:freezer_location)
+        box = create(:box)
+        create(:lot, full_weight: 3000, freezer_location_id: location.id,
+                     box_id: box.id)
+        visit storage_management_index_path
+
+        expect(page).to have_selector 'td', text: location.location_weight
+      end
+    end
   end
 end

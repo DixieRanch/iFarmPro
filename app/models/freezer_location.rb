@@ -16,4 +16,8 @@ class FreezerLocation < ActiveRecord::Base
     location_weight = lots_net.sum
     location_weight
   end
+
+  def lot_count
+    Lot.where(freezer_location_id: id).count
+  end
 end

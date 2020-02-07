@@ -59,5 +59,16 @@ RSpec.describe 'StorageManagement', type: :request do
         expect(page).to have_selector 'td', text: location.location_weight
       end
     end
+
+    it 'displays the number of lots in the location' do
+      sign_in create(:user)
+      location = create(:freezer_location)
+      create(:lot, freezer_location_id: location.id)
+      create(:lot, freezer_location_id: location.id)
+      location_lot_count = Lot.where(freezer_location_id: location.id).count
+      visit storage_management_index_path
+
+      expect(page).to have_selector 'td', text: location_lot_count
+    end
   end
 end

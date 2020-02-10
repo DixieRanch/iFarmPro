@@ -45,6 +45,6 @@ class FreezerLocationsController < ApplicationController
   end
 
   def locations_list
-    FreezerLocation.page(params[:page]).order('name ASC')
+    FreezerLocation.page(params[:page]).by_name_numerically
   end
 end

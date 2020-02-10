@@ -9,7 +9,8 @@
     </tr>
   </thead>
   <tbody>
-    <pre>Total Net Weight: <%= @total_net_weight %></pre>
+    <h3>Total Net Weight: <%= @total_net_weight %></h3>
+    <h3>Total Lot Count: <%= @total_lot_count %></h3>
     <% @locations.each_with_index do |location, l| %>
     <tr>
       <td id="name<%=l%>"><%= location.name %></td>
@@ -19,3 +20,4 @@
     <% end %>
   </tbody>
 </table>
+<%= will_paginate @locations %>

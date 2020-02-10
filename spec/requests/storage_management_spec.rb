@@ -86,5 +86,18 @@ RSpec.describe 'StorageManagement', type: :request do
 
       expect(page).to have_text storage_weight
     end
+
+    it 'displays the total lots' do
+      sign_in create(:user)
+      location1 = create(:freezer_location)
+      location2 = create(:freezer_location)
+      create(:lot, freezer_location_id: location1.id)
+      create(:lot, freezer_location_id: location1.id)
+      create(:lot, freezer_location_id: location2.id)
+      lot_count = Lot.all.count
+      visit storage_management_index_path
+
+      expect(page).to have_text 'Total Lot Count: ' + lot_count.to_s
+    end
   end
 end

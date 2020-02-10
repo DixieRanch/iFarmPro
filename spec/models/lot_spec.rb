@@ -46,4 +46,26 @@ describe Lot do
     it { should belong_to :block }
     it { should belong_to :field }
   end
+
+  describe 'net_weight' do
+    it 'calculates the net weight of a lot' do
+      set_tenant_company
+      box = create(:box, empty_weight: 200)
+      lot = create(:lot, full_weight: 1000, box_id: box.id)
+      new_weight = lot.full_weight - box.empty_weight
+
+      expect(lot.net_weight).to eq new_weight
+    end
+
+    context 'with nil box empty_weight' do
+      it 'uses default value to calculate net weight of a lot' do
+        set_tenant_company
+        box = create(:box, empty_weight: nil)
+        lot = create(:lot, full_weight: 1000, box_id: box.id)
+        net_weight = lot.full_weight - 200
+
+        expect(lot.net_weight).to eq net_weight
+      end
+    end
+  end
 end

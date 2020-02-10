@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'StorageManagement', type: :request do
   describe 'Storage Management link' do
     context 'when clicked' do
-      it 'redirects to stroage management page' do
+      it 'redirects to storage management page' do
         sign_in(create(:user))
 
         click_link 'Storage Management'

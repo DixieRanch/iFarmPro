@@ -51,7 +51,7 @@ RSpec.describe 'StorageManagement', type: :request do
       it 'uses default weight' do
         sign_in create(:user)
         location = create(:freezer_location)
-        box = create(:box)
+        box = create(:box, empty_weight: nil)
         create(:lot, full_weight: 3000, freezer_location_id: location.id,
                      box_id: box.id)
         visit storage_management_index_path
@@ -87,7 +87,7 @@ RSpec.describe 'StorageManagement', type: :request do
       expect(page).to have_text storage_weight
     end
 
-    it 'displays the total lots' do
+    it 'displays the total lot count' do
       sign_in create(:user)
       location1 = create(:freezer_location)
       location2 = create(:freezer_location)

@@ -11,10 +11,7 @@ class FreezerLocation < ActiveRecord::Base
   validates :company_id, presence: true
 
   def location_weight
-    lots = Lot.where(freezer_location_id: id)
-    lots_net = lots.map(&:net_weight)
-    location_weight = lots_net.sum
-    location_weight
+    Lot.where(freezer_location_id: id).map(&:net_weight).sum
   end
 
   def lot_count

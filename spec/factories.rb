@@ -31,7 +31,7 @@ FactoryGirl.define do
   end
 
   factory :rain do
-    date  { rand(1..100).days.from_now }
+    sequence(:date) { |n| n.days.ago }
     amount 0.75
     farm
   end

@@ -79,4 +79,40 @@ describe FreezerLocation do
       expect(location1.location_weight). to eq weight
     end
   end
+  describe 'sort' do
+    context 'with numerical names' do
+      it 'sorts in assending order' do
+        set_tenant_company
+        location1 = create(:freezer_location, name: '1')
+        location3 = create(:freezer_location, name: '3')
+        location2 = create(:freezer_location, name: '2')
+        correct_order = [location1, location2, location3]
+
+        expect(FreezerLocation.all.order('name ASC').to_a).to eq correct_order
+      end
+    end
+
+    context 'with letter names' do
+      it 'sorts in assending order' do
+        set_tenant_company
+        location1 = create(:freezer_location, name: 'a')
+        location3 = create(:freezer_location, name: 'c')
+        location2 = create(:freezer_location, name: 'b')
+        correct_order = [location1, location2, location3]
+
+        expect(FreezerLocation.all.order('name ASC').to_a).to eq correct_order
+      end
+    end
+    context 'with alpha-numerical names' do
+      it 'sorts in assending order' do
+        set_tenant_company
+        location1 = create(:freezer_location, name: 'a1')
+        location3 = create(:freezer_location, name: 'a10')
+        location2 = create(:freezer_location, name: 'a2')
+        correct_order = [location1, location2, location3]
+
+        expect(FreezerLocation.by_name_numerically.to_a).to eq correct_order
+      end
+    end
+  end
 end

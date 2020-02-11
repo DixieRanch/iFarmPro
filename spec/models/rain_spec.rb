@@ -23,7 +23,10 @@ describe Rain do
   end
 
   it 'should have a valid factory' do
-    expect(build_stubbed(:rain)).to be_valid
+    set_tenant_company
+    saved_rain = create(:rain)
+
+    expect(build_stubbed(:rain, farm_id: saved_rain.farm_id)).to be_valid
   end
 
   describe 'attribute' do

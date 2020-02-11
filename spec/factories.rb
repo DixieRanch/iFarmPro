@@ -31,7 +31,7 @@ FactoryGirl.define do
   end
 
   factory :rain do
-    date Time.zone.today
+    sequence(:date) { |n| n.days.ago }
     amount 0.75
     farm
   end

@@ -14,6 +14,7 @@ describe Shipment do
   it 'has a valid factory' do
     set_tenant_company
 
+    create(:shipment)
     expect(build_stubbed(:shipment)).to be_valid
   end
 

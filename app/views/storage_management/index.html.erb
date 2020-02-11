@@ -1,0 +1,23 @@
+<% provide :title, 'Storage Management' %>
+<table id='locations' class='table table-striped'>
+  <thead>
+    <h1>Location Overview</h1>
+    <tr>
+      <th>Location Name</th>
+      <th>Net Weight</th>
+      <th>Lot Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <h3>Total Net Weight: <%= @total_net_weight %></h3>
+    <h3>Total Lot Count: <%= @total_lot_count %></h3>
+    <% @locations.each_with_index do |location, l| %>
+    <tr>
+      <td id="name<%=l%>"><%= location.name %></td>
+      <td id="net_weight<%=l%>"><%= location.location_weight %></td>
+      <td id="lot_count<%=l%>"><%= location.lot_count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @locations %>

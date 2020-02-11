@@ -4,10 +4,9 @@ FactoryGirl.define do
   end
 
   factory :website do
-    name       'NMSU'
-    url        'http://weather2.nmsu.edu/wx-stn-data/network/nmcc/station/'
+    sequence(:name) { |n| "Website #{n}" }
+    sequence(:url) { |n| "http://url-#{n}.com/" }
     url_suffix '/request/gdd/et/data/'
-    initialize_with { Website.find_or_create_by name: name }
   end
 
   factory :weather_station do
@@ -125,7 +124,7 @@ FactoryGirl.define do
   end
 
   factory :shipment do
-    name '2018-001'
+    sequence(:name) { |n| "2018-#{n}" }
     date Time.zone.today
     destination 'Sheller'
   end

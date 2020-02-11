@@ -74,6 +74,27 @@ RSpec.describe 'Lots', type: :request do
 
         expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
       end
+
+      it 'has 30 lots on the first page' do
+        sign_in create(:user)
+        31.times do |l|
+          create(:lot, name: 'lot' + l.to_s)
+        end
+        visit new_lot_path
+
+        expect(page).to have_selector('td', text: 'lot', count: 30)
+      end
+
+      it 'has one lot on the second page' do
+        sign_in create(:user)
+        31.times do |l|
+          create(:lot, name: 'lot' + l.to_s)
+        end
+        visit new_lot_path
+        click_link 'Next →'
+
+        expect(page).to have_selector('td', text: 'lot', count: 1)
+      end
     end
   end
 

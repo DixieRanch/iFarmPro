@@ -68,4 +68,19 @@ describe Lot do
       end
     end
   end
+
+  describe 'move_to' do
+    context 'with valid destination' do
+      it 'updates the lot location attribute' do
+        set_tenant_company
+        current_location = create(:freezer_location)
+        new_location = create(:freezer_location)
+        lot = create(:lot, freezer_location_id: current_location.id)
+
+        lot.move_to(new_location)
+
+        expect(lot.freezer_location_id).to eq new_location.id
+      end
+    end
+  end
 end

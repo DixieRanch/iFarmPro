@@ -22,4 +22,9 @@ class Lot < ActiveRecord::Base
       full_weight - box.empty_weight
     end
   end
+
+  def move_to(location)
+    self.freezer_location_id = location.id
+    save
+  end
 end

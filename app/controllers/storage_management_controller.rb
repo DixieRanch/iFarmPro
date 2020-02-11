@@ -8,7 +8,7 @@ class StorageManagementController < ApplicationController
   private
 
   def locations_list
-    FreezerLocation.page(params[:page]).order('name ASC')
+    FreezerLocation.page(params[:page]).by_name_numerically
   end
 
   def total_net_weight

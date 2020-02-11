@@ -88,7 +88,7 @@ describe FreezerLocation do
         location2 = create(:freezer_location, name: '2')
         correct_order = [location1, location2, location3]
 
-        expect(FreezerLocation.all.order('name ASC').to_a).to eq correct_order
+        expect(FreezerLocation.by_name_numerically.to_a).to eq correct_order
       end
     end
 
@@ -100,7 +100,7 @@ describe FreezerLocation do
         location2 = create(:freezer_location, name: 'b')
         correct_order = [location1, location2, location3]
 
-        expect(FreezerLocation.all.order('name ASC').to_a).to eq correct_order
+        expect(FreezerLocation.by_name_numerically.to_a).to eq correct_order
       end
     end
     context 'with alpha-numerical names' do

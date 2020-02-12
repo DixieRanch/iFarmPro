@@ -24,7 +24,6 @@ class Lot < ActiveRecord::Base
   end
 
   def move_to(location)
-    self.freezer_location_id = location.id
-    save
+    update(freezer_location_id: location.id)
   end
 end

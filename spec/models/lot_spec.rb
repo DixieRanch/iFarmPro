@@ -78,7 +78,7 @@ describe Lot do
         lot = create(:lot, freezer_location_id: current_location.id)
 
         lot.move_to(new_location)
-
+        lot.reload
         expect(lot.freezer_location_id).to eq new_location.id
       end
     end

@@ -25,4 +25,10 @@ class FreezerLocation < ActiveRecord::Base
   def lot_count
     Lot.where(freezer_location_id: id).count
   end
+
+  def move_all_lots_to(new_location)
+    lots.each do |lot|
+      lot.move_to(new_location)
+    end
+  end
 end

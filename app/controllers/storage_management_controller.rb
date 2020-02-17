@@ -6,6 +6,7 @@ class StorageManagementController < ApplicationController
   end
 
   def edit
+    @location = FreezerLocation.find(params[:id])
   end
 
   private

@@ -123,4 +123,17 @@ RSpec.describe 'StorageManagement', type: :request do
       end
     end
   end
+
+  describe 'Move All Lots form' do
+    it 'has new location text box' do
+      sign_in create(:user)
+      location = create(:freezer_location)
+      location2 = create(:freezer_location)
+      create(:lot, freezer_location: location)
+      visit storage_management_index_path
+      click_link 'Move All Lots'
+
+      fill_in('New Location Name', with: location2.name)
+    end
+  end
 end

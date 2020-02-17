@@ -135,5 +135,15 @@ RSpec.describe 'StorageManagement', type: :request do
 
       fill_in('New Location Name', with: location2.name)
     end
+
+    it 'has move button' do
+      sign_in create(:user)
+      location = create(:freezer_location)
+      create(:lot, freezer_location: location)
+      visit storage_management_index_path
+      click_link 'Move All Lots'
+
+      click_button 'Move'
+    end
   end
 end

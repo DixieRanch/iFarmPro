@@ -121,18 +121,18 @@ describe FreezerLocation do
       set_tenant_company
       original_location = create(:freezer_location)
       new_location = create(:freezer_location)
-      lot1 = create(:lot, freezer_location_id: original_location.id)
-      lot2 = create(:lot, freezer_location_id: original_location.id)
-      lot3 = create(:lot, freezer_location_id: original_location.id)
+      lot1 = create(:lot, freezer_location: original_location)
+      lot2 = create(:lot, freezer_location: original_location)
+      lot3 = create(:lot, freezer_location: original_location)
 
       original_location.move_all_lots_to(new_location)
       lot1.reload
       lot2.reload
       lot3.reload
 
-      expect(lot1.freezer_location_id).to eq new_location.id
-      expect(lot2.freezer_location_id).to eq new_location.id
-      expect(lot3.freezer_location_id).to eq new_location.id
+      expect(lot1.freezer_location).to eq new_location
+      expect(lot2.freezer_location).to eq new_location
+      expect(lot3.freezer_location).to eq new_location
     end
   end
 end

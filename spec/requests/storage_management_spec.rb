@@ -99,5 +99,14 @@ RSpec.describe 'StorageManagement', type: :request do
 
       expect(page).to have_text 'Total Lot Count: ' + lot_count.to_s
     end
+
+    it 'has move all link' do
+      sign_in create(:user)
+      location = create(:freezer_location)
+      create(:lot, freezer_location_id: location.id)
+      visit storage_management_index_path
+
+      expect(page).to have_link 'Move All Lots'
+    end
   end
 end

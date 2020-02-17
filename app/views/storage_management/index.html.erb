@@ -16,6 +16,13 @@
       <td id="name<%=l%>"><%= location.name %></td>
       <td id="net_weight<%=l%>"><%= location.location_weight %></td>
       <td id="lot_count<%=l%>"><%= location.lot_count %></td>
+      <td>
+        <%= link_to 'Move All Lots', edit_storage_management_path(location), 
+                                     id:"link_#{l}",
+                                     class: 'btn-sm btn-primary',
+                                     role: 'button'
+        %>
+      </td>
     </tr>
     <% end %>
   </tbody>

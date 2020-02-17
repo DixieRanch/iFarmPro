@@ -5,6 +5,9 @@ class StorageManagementController < ApplicationController
     @total_lot_count = total_lot_count
   end
 
+  def edit
+  end
+
   private
 
   def locations_list

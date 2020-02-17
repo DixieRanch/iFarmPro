@@ -109,4 +109,18 @@ RSpec.describe 'StorageManagement', type: :request do
       expect(page).to have_link 'Move All Lots'
     end
   end
+
+  describe 'move all lots link' do
+    context 'when clicked' do
+      it 'redirects to the move lots form' do
+        sign_in create(:user)
+        create(:freezer_location)
+        visit storage_management_index_path
+
+        click_link 'Move All Lots'
+
+        expect(page).to have_title full_title 'Move All Lots'
+      end
+    end
+  end
 end

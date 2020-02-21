@@ -3,8 +3,9 @@ class Load
 
   attr_accessor :location, :lots
 
-  def initialize(location = nil)
+  def initialize(location = FreezerLocation.new)
     @location = location
+    @lots = location.lots.all
   end
 
   def self.all

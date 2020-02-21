@@ -16,7 +16,7 @@ class Load
   end
 
   def weight
-    location.location_weight
+    Lot.where(freezer_location_id: location.id).map(&:net_weight).sum
   end
 
   delegate :lot_count, to: :location

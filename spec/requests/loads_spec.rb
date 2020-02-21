@@ -41,10 +41,12 @@ RSpec.describe 'Loads', type: :request do
                    box_id: box1.id)
       create(:lot, full_weight: 4000, freezer_location_id: location2.id,
                    box_id: box2.id)
+      load1 = Load.new(location1)
+      load2 = Load.new(location2)
       visit loads_path
 
-      expect(page).to have_selector 'td', text: location1.location_weight
-      expect(page).to have_selector 'td', text: location2.location_weight
+      expect(page).to have_selector 'td', text: load1.weight
+      expect(page).to have_selector 'td', text: load2.weight
     end
 
     context 'with nil box empty_weight' do
@@ -54,9 +56,10 @@ RSpec.describe 'Loads', type: :request do
         box = create(:box, empty_weight: nil)
         create(:lot, full_weight: 3000, freezer_location_id: location.id,
                      box_id: box.id)
+        load1 = Load.new(location)
         visit loads_path
 
-        expect(page).to have_selector 'td', text: location.location_weight
+        expect(page).to have_selector 'td', text: load1.weight
       end
     end
 

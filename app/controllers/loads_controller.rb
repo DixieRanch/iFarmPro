@@ -1,7 +1,8 @@
+require 'will_paginate/array'
 class LoadsController < ApplicationController
   def index
-    @loads = Load.all
-    @locations = locations_list
+    @loads = Load.all.paginate(page: params[:page], per_page: 30)
+    # @locations = locations_list
     @total_net_weight = total_net_weight
     @total_lot_count = total_lot_count
   end

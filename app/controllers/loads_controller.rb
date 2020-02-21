@@ -1,5 +1,6 @@
 class LoadsController < ApplicationController
   def index
+    @loads = Load.all
     @locations = locations_list
     @total_net_weight = total_net_weight
     @total_lot_count = total_lot_count

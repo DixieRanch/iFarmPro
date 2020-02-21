@@ -14,4 +14,8 @@ class Load
     end
     loads
   end
+
+  def weight
+    location.location_weight
+  end
 end

@@ -24,4 +24,22 @@ describe Load do
       expect(load1.location).to eq location
     end
   end
+
+  describe '.weight' do
+    it 'returns the total net weight of the Load' do
+      set_tenant_company
+      location = create(:freezer_location)
+      box1 = create(:box, empty_weight: 200)
+      box2 = create(:box, empty_weight: 200)
+      lot1 = create(:lot, full_weight: 2000,
+                          freezer_location_id: location.id, box_id: box1.id)
+      lot2 = create(:lot, full_weight: 3000,
+                          freezer_location_id: location.id, box_id: box2.id)
+      load1 = Load.new(location)
+      weight = (lot1.full_weight - lot1.box.empty_weight) +
+               (lot2.full_weight - lot2.box.empty_weight)
+
+      expect(load1.weight).to eq weight
+    end
+  end
 end

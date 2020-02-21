@@ -18,4 +18,6 @@ class Load
   def weight
     location.location_weight
   end
+
+  delegate :lot_count, to: :location
 end

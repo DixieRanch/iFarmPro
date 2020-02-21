@@ -32,14 +32,27 @@ describe Load do
       box1 = create(:box, empty_weight: 200)
       box2 = create(:box, empty_weight: 200)
       lot1 = create(:lot, full_weight: 2000,
-                          freezer_location_id: location.id, box_id: box1.id)
+                          freezer_location: location, box_id: box1.id)
       lot2 = create(:lot, full_weight: 3000,
-                          freezer_location_id: location.id, box_id: box2.id)
+                          freezer_location: location, box_id: box2.id)
       load1 = Load.new(location)
       weight = (lot1.full_weight - lot1.box.empty_weight) +
                (lot2.full_weight - lot2.box.empty_weight)
 
       expect(load1.weight).to eq weight
+    end
+  end
+
+  describe '.lot_count' do
+    it 'returns the total count of lots in a Load' do
+      set_tenant_company
+      location = create(:freezer_location)
+      create(:lot, freezer_location: location)
+      create(:lot, freezer_location: location)
+      lot_count = location.lot_count
+      load1 = Load.new(location)
+
+      expect(load1.lot_count).to eq lot_count
     end
   end
 end

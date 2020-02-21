@@ -43,16 +43,16 @@ describe Load do
     end
   end
 
-  describe '.lot_count' do
+  describe '.lot_total' do
     it 'returns the total count of lots in a Load' do
       set_tenant_company
       location = create(:freezer_location)
       create(:lot, freezer_location: location)
       create(:lot, freezer_location: location)
-      lot_count = location.lot_count
+      lot_count = Lot.all.count
       load1 = Load.new(location)
 
-      expect(load1.lot_count).to eq lot_count
+      expect(load1.lot_total).to eq lot_count
     end
   end
 end

@@ -11,13 +11,13 @@
   <tbody>
     <h3>Total Net Weight: <%= @total_net_weight %></h3>
     <h3>Total Lot Count: <%= @total_lot_count %></h3>
-    <% @loads.each_with_index do |lod, l| %>
+    <% @loads.each_with_index do |ld, l| %>
     <tr>
-      <td id="name<%=l%>"><%= lod.location.name %></td>
-      <td id="net_weight<%=l%>"><%= lod.weight %></td>
-      <td id="lot_count<%=l%>"><%= lod.lot_count %></td>
+      <td id="name<%=l%>"><%= ld.location.name %></td>
+      <td id="net_weight<%=l%>"><%= ld.weight %></td>
+      <td id="lot_count<%=l%>"><%= ld.lot_total %></td>
       <td>
-        <%= link_to 'Move All Lots', edit_load_path(lod.location), 
+        <%= link_to 'Move All Lots', edit_load_path(ld.location), 
                                      id:"link_#{l}",
                                      class: 'btn-sm btn-primary',
                                      role: 'button'

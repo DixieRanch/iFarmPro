@@ -2,8 +2,9 @@ require 'will_paginate/array'
 class LoadsController < ApplicationController
   def index
     @loads = Load.all.paginate(page: params[:page], per_page: 30)
-    @total_net_weight = total_net_weight(@loads)
-    @total_lot_count = total_lot_count(@loads)
+    @totals = totals(@loads)
+    # @total_net_weight = total_net_weight(@loads)
+    # @total_lot_count = total_lot_count(@loads)
   end
 
   def edit
@@ -31,5 +32,16 @@ class LoadsController < ApplicationController
       count += ld.lots.all.count
     end
     count
+  end
+
+  def totals(loads)
+    weight = 0
+    count = 0
+
+    loads.each do |ld|
+      weight += ld.lots.all.map(&:net_weight).sum
+      count += ld.lots.all.count
+    end
+    { weight: weight, count: count }
   end
 end

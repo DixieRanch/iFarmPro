@@ -9,8 +9,8 @@
     </tr>
   </thead>
   <tbody>
-    <h3>Total Net Weight: <%= @total_net_weight %></h3>
-    <h3>Total Lot Count: <%= @total_lot_count %></h3>
+    <h3>Total Net Weight: <%= @totals[:weight] %></h3>
+    <h3>Total Lot Count: <%= @totals[:count] %></h3>
     <% @loads.each_with_index do |ld, l| %>
     <tr>
       <td id="name<%=l%>"><%= ld.location.name %></td>

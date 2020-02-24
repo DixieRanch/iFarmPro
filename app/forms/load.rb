@@ -23,4 +23,10 @@ class Load
   def lot_total
     Lot.where(freezer_location_id: location.id).count
   end
+
+  def move(new_location)
+    lots.each do |lot|
+      lot.move_to(new_location)
+    end
+  end
 end

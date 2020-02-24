@@ -17,10 +17,4 @@ class FreezerLocation < ActiveRecord::Base
                    uniqueness: { scope: :farm_id, case_sensitive: false }
   validates :farm_id, presence: true
   validates :company_id, presence: true
-
-  def move_all_lots_to(new_location)
-    lots.each do |lot|
-      lot.move_to(new_location)
-    end
-  end
 end

@@ -78,24 +78,4 @@ describe FreezerLocation do
       end
     end
   end
-
-  describe 'move-all-lots-to method' do
-    it 'moves all lots in a location to the new location' do
-      set_tenant_company
-      original_location = create(:freezer_location)
-      new_location = create(:freezer_location)
-      lot1 = create(:lot, freezer_location: original_location)
-      lot2 = create(:lot, freezer_location: original_location)
-      lot3 = create(:lot, freezer_location: original_location)
-
-      original_location.move_all_lots_to(new_location)
-      lot1.reload
-      lot2.reload
-      lot3.reload
-
-      expect(lot1.freezer_location).to eq new_location
-      expect(lot2.freezer_location).to eq new_location
-      expect(lot3.freezer_location).to eq new_location
-    end
-  end
 end

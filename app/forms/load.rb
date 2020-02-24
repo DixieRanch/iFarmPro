@@ -10,7 +10,7 @@ class Load
 
   def self.all
     loads = []
-    FreezerLocation.all.each do |loc|
+    FreezerLocation.by_name_numerically.each do |loc|
       loads << Load.new(loc)
     end
     loads

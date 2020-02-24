@@ -111,6 +111,51 @@ RSpec.describe 'Loads', type: :request do
 
       expect(page).to have_link 'Move All Lots'
     end
+
+    context 'with numerical names' do
+      it 'sorts in assending order' do
+        set_tenant_company
+        location1 = create(:freezer_location, name: '1')
+        location3 = create(:freezer_location, name: '10')
+        location2 = create(:freezer_location, name: '2')
+        Load.new(location1)
+        Load.new(location3)
+        Load.new(location2)
+        correct_order = [location1, location2, location3]
+
+        expect(Load.all.map(&:location)).to eq correct_order
+      end
+    end
+
+    context 'with letter names' do
+      it 'sorts in assending order' do
+        set_tenant_company
+        location1 = create(:freezer_location, name: 'a')
+        location3 = create(:freezer_location, name: 'c')
+        location2 = create(:freezer_location, name: 'b')
+        Load.new(location1)
+        Load.new(location3)
+        Load.new(location2)
+        correct_order = [location1, location2, location3]
+
+        expect(Load.all.map(&:location)).to eq correct_order
+      end
+    end
+
+    context 'with alpha-numerical names' do
+      it 'sorts in assending order' do
+        set_tenant_company
+        location1 = create(:freezer_location, name: 'a1')
+        location3 = create(:freezer_location, name: 'a10')
+        location2 = create(:freezer_location, name: 'a2')
+        Load.new(location1)
+        Load.new(location3)
+        Load.new(location2)
+        correct_order = [location1, location2, location3]
+
+        expect(Load.all.map(&:location)).to eq correct_order
+      end
+    end
   end
 
   describe 'move all lots link' do

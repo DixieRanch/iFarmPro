@@ -75,4 +75,24 @@ describe Load do
       expect(lot3.freezer_location).to eq new_location
     end
   end
+
+  describe 'persisted?' do
+    it 'returns true' do
+      set_tenant_company
+      location = create(:freezer_location)
+      load1 = Load.new(location)
+
+      expect(load1.persisted?).to eq true
+    end
+  end
+
+  describe '.id' do
+    it 'returns the load location id' do
+      set_tenant_company
+      location = create(:freezer_location)
+      load1 = Load.new(location)
+
+      expect(load1.id).to eq location.id
+    end
+  end
 end

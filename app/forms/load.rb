@@ -29,4 +29,10 @@ class Load
       lot.move_to(new_location)
     end
   end
+
+  def persisted?
+    true
+  end
+
+  delegate :id, to: :location
 end

@@ -1,9 +1,11 @@
 <% provide :title, 'Move All Lots' %>
 
-<%= simple_form_for @current_location, html: {class: 'form-inline'} do |f| %>
+<%= simple_form_for @load, html: {class: 'form-inline'} do |f| %>
  <fieldset>
- <%= f.input :location,
-              label: 'New Location Name',
+ <%= f.input  :location,
+              collection: @locations,
+              include_blank: false,
+              label: 'New Location',
               wrapper_html: {class: 'col-xs-3'}%>
    
   </fieldset>

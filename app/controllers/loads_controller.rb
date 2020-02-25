@@ -6,11 +6,14 @@ class LoadsController < ApplicationController
   end
 
   def edit
-    @current_location = Load.new(FreezerLocation.find_by(id: params[:id]))
-    # @locations = FreezerLocation.all.by_name_numerically
+    @load = Load.new(FreezerLocation.find_by(id: params[:id]))
+    @locations = FreezerLocation.all.by_name_numerically
   end
 
   def update
+    @load = Load.new(FreezerLocation.find_by(id: params[:id]))
+    new_location = FreezerLocation.find_by(id: params[:load][:location])
+    @load.move(new_location)
     redirect_to loads_path
   end
 

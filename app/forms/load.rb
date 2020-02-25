@@ -2,6 +2,7 @@ class Load
   include ActiveModel::Model
 
   attr_accessor :location, :lots
+  delegate :id, to: :location
 
   def initialize(location = FreezerLocation.new)
     @location = location
@@ -33,6 +34,4 @@ class Load
   def persisted?
     true
   end
-
-  delegate :id, to: :location
 end

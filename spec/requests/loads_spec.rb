@@ -173,7 +173,7 @@ RSpec.describe 'Loads', type: :request do
   end
 
   describe 'Move All Lots form' do
-    it 'has new location text box' do
+    it 'has new location select box' do
       sign_in create(:user)
       location = create(:freezer_location)
       location2 = create(:freezer_location)
@@ -181,17 +181,38 @@ RSpec.describe 'Loads', type: :request do
       visit loads_path
       click_link 'Move All Lots'
 
-      fill_in('New Location Name', with: location2.name)
+      select(location2.name, from: 'New Location')
     end
 
     it 'has move button' do
-      sign_in create(:user)
+      sign_in(user = create(:user))
       location = create(:freezer_location)
       create(:lot, freezer_location: location)
       visit loads_path
+      Company.current_id = user.company.id
       click_link 'Move All Lots'
+      Company.current_id = user.company.id
 
       click_button 'Move'
+    end
+
+    it 'updates the load location' do
+      sign_in(user = create(:user))
+      location = create(:freezer_location)
+      new_location = create(:freezer_location)
+      lot1 = create(:lot, freezer_location: location)
+      lot2 = create(:lot, freezer_location: location)
+      visit loads_path
+
+      click_link 'Move All Lots'
+      select(new_location.name, from: 'New Location')
+      click_button 'Move'
+      Company.current_id = user.company.id
+      lot1.reload
+      lot2.reload
+
+      expect(lot1.freezer_location).to eq new_location
+      expect(lot2.freezer_location).to eq new_location
     end
   end
 end

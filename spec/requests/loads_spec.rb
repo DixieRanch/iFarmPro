@@ -184,14 +184,27 @@ RSpec.describe 'Loads', type: :request do
       select(location2.name, from: 'New Location')
     end
 
-    it 'has move button' do
+    it 'preselects the current location name' do
       sign_in(user = create(:user))
+      create(:freezer_location, name: 'first')
+      location = create(:freezer_location, name: 'second')
+      lot = create(:lot, freezer_location: location)
+      visit edit_load_path(location)
+
+      click_button 'Move'
+      Company.current_id = user.company.id
+      lot.reload
+
+      expect(lot.freezer_location).to eq location
+    end
+
+    it 'has move button' do
+      sign_in(create(:user))
       location = create(:freezer_location)
       create(:lot, freezer_location: location)
       visit loads_path
-      Company.current_id = user.company.id
+
       click_link 'Move All Lots'
-      Company.current_id = user.company.id
 
       click_button 'Move'
     end

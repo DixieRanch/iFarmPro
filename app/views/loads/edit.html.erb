@@ -4,6 +4,7 @@
  <fieldset>
  <%= f.input  :location,
               collection: @locations,
+              selected: @load.id,
               include_blank: false,
               label: 'New Location',
               wrapper_html: {class: 'col-xs-3'}%>

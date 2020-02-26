@@ -35,10 +35,10 @@ describe 'Application' do
 
         expect(page).to have_selector 'title', text: full_title('Lots')
 
-        click_link 'Storage Management'
+        click_link 'Inventory'
 
         expect(page).to have_selector 'title',
-                                      text: full_title('Storage Management')
+                                      text: full_title('Inventory')
 
         click_link 'Irrigations'
 

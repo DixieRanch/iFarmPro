@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'StorageManagement', type: :request do
-  describe 'Storage Management link' do
+  describe 'Inventory link' do
     context 'when clicked' do
-      it 'redirects to storage management page' do
+      it 'redirects to inventory page' do
         sign_in(create(:user))
 
-        click_link 'Storage Management'
+        click_link 'Inventory'
 
-        expect(page).to have_title full_title 'Storage Management'
+        expect(page).to have_title full_title 'Inventory'
       end
     end
   end

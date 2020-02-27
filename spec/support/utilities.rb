@@ -30,7 +30,7 @@ def reset_email
   ActionMailer::Base.deliveries = []
 end
 
-def current_company_for(user)
+def scope_current_company_to(user)
   Company.current_id = user.company.id
 end
 

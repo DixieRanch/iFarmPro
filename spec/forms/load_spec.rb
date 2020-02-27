@@ -52,7 +52,7 @@ describe Load do
       lot_count = Lot.all.count
       load1 = Load.new(location)
 
-      expect(load1.lot_total).to eq lot_count
+      expect(load1.lot_count).to eq lot_count
     end
   end
 

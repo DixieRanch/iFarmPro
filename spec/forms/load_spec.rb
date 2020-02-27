@@ -43,7 +43,7 @@ describe Load do
     end
   end
 
-  describe '.lot_total' do
+  describe '.lot_count' do
     it 'returns the total count of lots in a Load' do
       set_tenant_company
       location = create(:freezer_location)

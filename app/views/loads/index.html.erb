@@ -2,6 +2,8 @@
 <table id='locations' class='table table-striped'>
   <thead>
     <h1>Location Overview</h1>
+    <h3>Total Net Weight: <%= @totals[:weight] %></h3>
+    <h3>Total Lot Count: <%= @totals[:count] %></h3>
     <tr>
       <th>Location Name</th>
       <th>Net Weight</th>
@@ -9,8 +11,6 @@
     </tr>
   </thead>
   <tbody>
-    <h3>Total Net Weight: <%= @totals[:weight] %></h3>
-    <h3>Total Lot Count: <%= @totals[:count] %></h3>
     <% @loads.each_with_index do |ld, l| %>
     <tr>
       <td id="name<%=l%>"><%= ld.location.name %></td>

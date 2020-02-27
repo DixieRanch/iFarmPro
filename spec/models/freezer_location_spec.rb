@@ -42,43 +42,6 @@ describe FreezerLocation do
     it { should have_many :lots }
   end
 
-  describe 'location weight' do
-    it 'returns the sum of net lot weights in a location' do
-      set_tenant_company
-      location1 = create(:freezer_location)
-      box1 = create(:box, empty_weight: 200)
-      box2 = create(:box, empty_weight: 200)
-      lot1 = create(:lot, name: 'lot1', full_weight: 2000,
-                          freezer_location_id: location1.id, box_id: box1.id)
-      lot2 = create(:lot, name: 'lot2', full_weight: 3000,
-                          freezer_location_id: location1.id, box_id: box2.id)
-      weight = (lot1.full_weight - lot1.box.empty_weight) +
-               (lot2.full_weight - lot2.box.empty_weight)
-
-      expect(location1.location_weight). to eq weight
-    end
-
-    it 'returns the weight for only one location' do
-      set_tenant_company
-      location1 = create(:freezer_location)
-      location2 = create(:freezer_location)
-      box1 = create(:box, empty_weight: 200)
-      box2 = create(:box, empty_weight: 200)
-      seperate_box = create(:box, empty_weight: 200)
-
-      lot1 = create(:lot, name: 'lot1', full_weight: 2000,
-                          freezer_location_id: location1.id, box_id: box1.id)
-      lot2 = create(:lot, name: 'lot2', full_weight: 3000,
-                          freezer_location_id: location1.id, box_id: box2.id)
-      create(:lot, name: 'seperate',
-                   freezer_location_id: location2.id,
-                   box_id: seperate_box.id)
-      weight = (lot1.full_weight - lot1.box.empty_weight) +
-               (lot2.full_weight - lot2.box.empty_weight)
-
-      expect(location1.location_weight). to eq weight
-    end
-  end
   describe 'sort' do
     context 'with numerical names' do
       it 'sorts in assending order' do
@@ -113,26 +76,6 @@ describe FreezerLocation do
 
         expect(FreezerLocation.by_name_numerically.to_a).to eq correct_order
       end
-    end
-  end
-
-  describe 'move-all-lots-to method' do
-    it 'moves all lots in a location to the new location' do
-      set_tenant_company
-      original_location = create(:freezer_location)
-      new_location = create(:freezer_location)
-      lot1 = create(:lot, freezer_location: original_location)
-      lot2 = create(:lot, freezer_location: original_location)
-      lot3 = create(:lot, freezer_location: original_location)
-
-      original_location.move_all_lots_to(new_location)
-      lot1.reload
-      lot2.reload
-      lot3.reload
-
-      expect(lot1.freezer_location).to eq new_location
-      expect(lot2.freezer_location).to eq new_location
-      expect(lot3.freezer_location).to eq new_location
     end
   end
 end

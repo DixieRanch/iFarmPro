@@ -1,0 +1,30 @@
+<% provide :title, 'Inventory' %>
+<table id='locations' class='table table-striped'>
+  <thead>
+    <h1>Location Overview</h1>
+    <h3>Total Net Weight: <%= @totals[:weight] %></h3>
+    <h3>Total Lot Count: <%= @totals[:count] %></h3>
+    <tr>
+      <th>Location Name</th>
+      <th>Net Weight</th>
+      <th>Lot Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @loads.each_with_index do |ld, l| %>
+    <tr>
+      <td id="name<%=l%>"><%= ld.location.name %></td>
+      <td id="weight<%=l%>"><%= ld.weight %></td>
+      <td id="lot_count<%=l%>"><%= ld.lot_count %></td>
+      <td>
+        <%= link_to 'Move All Lots', edit_load_path(ld.location), 
+                                     id:"link_#{l}",
+                                     class: 'btn-sm btn-primary',
+                                     role: 'button'
+        %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @loads %>

@@ -19,10 +19,6 @@ class LoadsController < ApplicationController
 
   private
 
-  def locations_list
-    FreezerLocation.page(params[:page]).by_name_numerically
-  end
-
   def totals(loads)
     weight = 0
     count = 0

@@ -13,7 +13,7 @@ class LoadsController < ApplicationController
   def update
     @load = Load.new(FreezerLocation.find_by(id: params[:id]))
     new_location = FreezerLocation.find_by(id: params[:load][:location])
-    @load.move(new_location)
+    @load.move_to(new_location)
     redirect_to loads_path
   end
 

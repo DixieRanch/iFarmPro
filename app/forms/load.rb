@@ -25,7 +25,7 @@ class Load
     lots.all.count
   end
 
-  def move(new_location)
+  def move_to(new_location)
     lots.each do |lot|
       lot.move_to(new_location)
     end

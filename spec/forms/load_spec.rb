@@ -65,7 +65,7 @@ describe Load do
       lot2 = create(:lot, freezer_location: original_location)
       lot3 = create(:lot, freezer_location: original_location)
       load1 = Load.new(original_location)
-      load1.move(new_location)
+      load1.move_to(new_location)
       lot1.reload
       lot2.reload
       lot3.reload

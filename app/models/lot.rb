@@ -5,6 +5,7 @@ class Lot < ActiveRecord::Base
   belongs_to :freezer_location
   belongs_to :block
   belongs_to :field
+  belongs_to :content_class
 
   validates :name, presence: true,
                    uniqueness: { scope: :company_id },

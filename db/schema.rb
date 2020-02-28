@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200226225208) do
+ActiveRecord::Schema.define(version: 20200228220216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,7 +166,10 @@ ActiveRecord::Schema.define(version: 20200226225208) do
     t.integer  "field_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "content_class_id"
   end
+
+  add_index "lots", ["content_class_id"], name: "index_lots_on_content_class_id", using: :btree
 
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"

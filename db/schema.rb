@@ -52,6 +52,12 @@ ActiveRecord::Schema.define(version: 20200226225208) do
     t.datetime "updated_at"
   end
 
+  create_table "content_classes", force: :cascade do |t|
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "current_ets", force: :cascade do |t|
     t.integer  "doy"
     t.decimal  "fabian_garcia"
@@ -160,7 +166,6 @@ ActiveRecord::Schema.define(version: 20200226225208) do
     t.integer  "field_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "contents"
   end
 
   create_table "meter_readings", force: :cascade do |t|

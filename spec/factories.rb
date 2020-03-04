@@ -128,4 +128,9 @@ FactoryGirl.define do
     date Time.zone.today
     destination 'Sheller'
   end
+
+  factory :content_class do
+    grade '#1s'
+    initialize_with { ContentClass.find_or_create_by grade: grade }
+  end
 end

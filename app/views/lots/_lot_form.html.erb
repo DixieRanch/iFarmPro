@@ -30,6 +30,13 @@
                       label: 'Field',
                       wrapper_html: {class: 'col-xs-3'} %> 
     
+    <%= f.association :content_class,
+                      collection: ContentClass.all.sort_by(&:grade),
+                      label: 'Contents',
+                      label_method: :grade,
+                      include_blank: false,
+                      wrapper_html: {class: 'col-sm-3'} %> 
+    
   </fieldset>
   
   <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>

@@ -278,6 +278,14 @@ RSpec.describe 'Lots', type: :request do
       click_button 'Save'
     end
 
+    it 'has contents dropdown' do
+      sign_in create(:user)
+      create(:content_class, grade: '#1s')
+      visit new_lot_path
+
+      select('#1s', from: 'Contents')
+    end
+
     context 'when submitting valid lot data' do
       it 'adds lot to the database' do
         sign_in(user = create(:user))

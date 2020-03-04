@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20200228220216) do
   end
 
   create_table "content_classes", force: :cascade do |t|
-    t.string   "type"
+    t.string   "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

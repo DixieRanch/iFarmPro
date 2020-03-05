@@ -10,7 +10,6 @@ class LotsController < ApplicationController
     @lot = Lot.new(lot_params)
     @lots = lots_list
     if @lot.save
-
       flash[:success] = 'Lot successfully created'
       redirect_to new_lot_path
     else

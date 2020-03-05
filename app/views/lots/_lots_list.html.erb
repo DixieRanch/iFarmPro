@@ -4,6 +4,7 @@
     <tr>
       <th>Lot Name</th>
       <th>Lot Weight</th>
+      <th>Contents</th>
       <th>Box Name</th>
       <th>Storage Location</th>
       <th>Block</th>
@@ -17,6 +18,8 @@
       
       <td id="full_weight<%=l%>"><%= lot.full_weight %></td>
       
+      <td id="content_class_id<%=l%>"><%= lot.content_class.grade unless lot.content_class == nil %></td>
+      
       <td id="box_id<%=l%>"><%= lot.box.name %></td>
       
       <td id="freezer_location_id<%=l%>">
@@ -25,6 +28,7 @@
       <td id="block_id<%=l%>"><%= lot.block.name %></td>
 
       <td id="field_id<%=l%>"><%= lot.field.name unless lot.field == nil %></td>
+      
       
       <td>
         <%= link_to 'edit', edit_lot_path(lot), 

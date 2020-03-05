@@ -10,6 +10,7 @@ class LotsController < ApplicationController
     @lot = Lot.new(lot_params)
     @lots = lots_list
     if @lot.save
+
       flash[:success] = 'Lot successfully created'
       redirect_to new_lot_path
     else
@@ -50,7 +51,8 @@ class LotsController < ApplicationController
   end
 
   def permitted_params
-    [:name, :full_weight, :freezer_location_id, :box_id, :block_id, :field_id]
+    [:name, :full_weight, :freezer_location_id, :box_id, :block_id, :field_id,
+     :content_class_id]
   end
 
   def find_box_id_for(box_name)

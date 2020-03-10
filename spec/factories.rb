@@ -132,6 +132,5 @@ FactoryGirl.define do
 
   factory :content do
     name '#1s'
-    initialize_with { Content.find_or_create_by name: name }
   end
 end

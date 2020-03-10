@@ -11,10 +11,6 @@ describe Content, :not_a_tenant_model do
     end
   end
 
-  describe 'relationships' do
-    it { should have_many :lots }
-  end
-
   describe 'validations' do
     it { should validate_presence_of :name }
   end

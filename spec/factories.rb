@@ -121,7 +121,7 @@ FactoryGirl.define do
     box
     freezer_location
     block
-    content_class
+    content
   end
 
   factory :shipment do
@@ -130,8 +130,8 @@ FactoryGirl.define do
     destination 'Sheller'
   end
 
-  factory :content_class do
-    grade '#1s'
-    initialize_with { ContentClass.find_or_create_by grade: grade }
+  factory :content do
+    name '#1s'
+    initialize_with { Content.find_or_create_by name: name }
   end
 end

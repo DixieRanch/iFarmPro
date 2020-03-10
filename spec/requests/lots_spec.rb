@@ -280,7 +280,7 @@ RSpec.describe 'Lots', type: :request do
 
     it 'has contents dropdown' do
       sign_in create(:user)
-      create(:content_class, grade: '#1s')
+      create(:content, name: '#1s')
       visit new_lot_path
 
       select('#1s', from: 'Contents')
@@ -291,7 +291,7 @@ RSpec.describe 'Lots', type: :request do
         sign_in(user = create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        create(:content_class, grade: '#1s')
+        create(:content, name: '#1s')
         visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
@@ -309,7 +309,7 @@ RSpec.describe 'Lots', type: :request do
         sign_in(create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        create(:content_class, grade: '#1s')
+        create(:content, name: '#1s')
         visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
@@ -331,7 +331,7 @@ RSpec.describe 'Lots', type: :request do
         create(:field, name: '1', block: block_a)
         block_b = create(:block, name: 'B')
         field_b = create(:field, name: '1', block: block_b)
-        create(:content_class, grade: '#1s')
+        create(:content, name: '#1s')
         visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')

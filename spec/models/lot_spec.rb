@@ -5,7 +5,7 @@ describe Lot do
                        box_id: 1,
                        freezer_location_id: 1,
                        block_id: 1,
-                       content_class_id: 1 }
+                       content_id: 1 }
 
   it 'is valid' do
     set_tenant_company
@@ -28,7 +28,7 @@ describe Lot do
     it { should have_db_column :freezer_location_id }
     it { should have_db_column :block_id }
     it { should have_db_column :field_id }
-    it { should have_db_column :content_class_id }
+    it { should have_db_column :content_id }
   end
 
   describe 'validations' do
@@ -40,7 +40,7 @@ describe Lot do
     it { should validate_presence_of :box_id }
     it { should validate_presence_of :freezer_location_id }
     it { should validate_presence_of :block_id }
-    it { should validate_presence_of :content_class_id }
+    it { should validate_presence_of :content_id }
   end
 
   describe 'association' do
@@ -54,9 +54,9 @@ describe Lot do
     it 'calculates the net weight of a lot' do
       set_tenant_company
       box = create(:box, empty_weight: 200)
-      contents = create(:content_class)
+      contents = create(:content)
       lot = create(:lot, full_weight: 1000, box_id: box.id,
-                         content_class_id: contents.id)
+                         content_id: contents.id)
       new_weight = lot.full_weight - box.empty_weight
 
       expect(lot.net_weight).to eq new_weight
@@ -66,9 +66,9 @@ describe Lot do
       it 'uses default value to calculate net weight of a lot' do
         set_tenant_company
         box = create(:box, empty_weight: nil)
-        contents = create(:content_class)
+        contents = create(:content)
         lot = create(:lot, full_weight: 1000, box_id: box.id,
-                           content_class_id: contents.id)
+                           content_id: contents.id)
         net_weight = lot.full_weight - 200
 
         expect(lot.net_weight).to eq net_weight
@@ -82,9 +82,9 @@ describe Lot do
         set_tenant_company
         current_location = create(:freezer_location)
         new_location = create(:freezer_location)
-        contents = create(:content_class)
+        contents = create(:content)
         lot = create(:lot, freezer_location_id: current_location.id,
-                           content_class_id: contents.id)
+                           content_id: contents.id)
 
         lot.move_to(new_location)
         lot.reload

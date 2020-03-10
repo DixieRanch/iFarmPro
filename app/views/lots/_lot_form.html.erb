@@ -30,10 +30,10 @@
                       label: 'Field',
                       wrapper_html: {class: 'col-xs-3'} %> 
     
-    <%= f.association :content_class,
-                      collection: ContentClass.all.sort_by(&:grade),
+    <%= f.association :content,
+                      collection: Content.all.sort_by(&:name),
                       label: 'Contents',
-                      label_method: :grade,
+                      label_method: :name,
                       include_blank: false,
                       wrapper_html: {class: 'col-sm-3'} %> 
     

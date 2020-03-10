@@ -52,8 +52,14 @@ ActiveRecord::Schema.define(version: 20200228220216) do
     t.datetime "updated_at"
   end
 
-  create_table "content_classes", force: :cascade do |t|
-    t.string   "grade"
+  create_table "content", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contents", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -166,10 +172,10 @@ ActiveRecord::Schema.define(version: 20200228220216) do
     t.integer  "field_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "content_class_id"
+    t.integer  "content_id"
   end
 
-  add_index "lots", ["content_class_id"], name: "index_lots_on_content_class_id", using: :btree
+  add_index "lots", ["content_id"], name: "index_lots_on_content_id", using: :btree
 
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"

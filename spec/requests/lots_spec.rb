@@ -291,13 +291,11 @@ RSpec.describe 'Lots', type: :request do
         sign_in(user = create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        create(:content, name: '#1s')
         visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
         fill_in('Box Name', with: '005')
-        select('#1s', from: 'Contents')
 
         expect do
           click_button('Save')
@@ -309,13 +307,11 @@ RSpec.describe 'Lots', type: :request do
         sign_in(create(:user))
         create(:box, name: '005')
         create(:freezer_location)
-        create(:content, name: '#1s')
         visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
         fill_in('Box Name', with: '005')
-        select('#1s', from: 'Contents')
         click_button 'Save'
 
         expect(page).to have_css '.alert-success'
@@ -331,14 +327,12 @@ RSpec.describe 'Lots', type: :request do
         create(:field, name: '1', block: block_a)
         block_b = create(:block, name: 'B')
         field_b = create(:field, name: '1', block: block_b)
-        create(:content, name: '#1s')
         visit new_lot_path
 
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
         fill_in('Box Name', with: box.name)
         select(block_b.name, from: 'Block')
-        select('#1s', from: 'Contents')
         fill_in('Field', with: field_b.name)
         click_button 'Save'
 

@@ -52,9 +52,7 @@ describe Lot do
     it 'calculates the net weight of a lot' do
       set_tenant_company
       box = create(:box, empty_weight: 200)
-      contents = create(:content)
-      lot = create(:lot, full_weight: 1000, box_id: box.id,
-                         content_id: contents.id)
+      lot = create(:lot, full_weight: 1000, box_id: box.id)
       new_weight = lot.full_weight - box.empty_weight
 
       expect(lot.net_weight).to eq new_weight
@@ -64,9 +62,7 @@ describe Lot do
       it 'uses default value to calculate net weight of a lot' do
         set_tenant_company
         box = create(:box, empty_weight: nil)
-        contents = create(:content)
-        lot = create(:lot, full_weight: 1000, box_id: box.id,
-                           content_id: contents.id)
+        lot = create(:lot, full_weight: 1000, box_id: box.id)
         net_weight = lot.full_weight - 200
 
         expect(lot.net_weight).to eq net_weight
@@ -80,9 +76,7 @@ describe Lot do
         set_tenant_company
         current_location = create(:freezer_location)
         new_location = create(:freezer_location)
-        contents = create(:content)
-        lot = create(:lot, freezer_location_id: current_location.id,
-                           content_id: contents.id)
+        lot = create(:lot, freezer_location_id: current_location.id)
 
         lot.move_to(new_location)
         lot.reload
@@ -99,7 +93,7 @@ describe Lot do
       expect(lot.content_name).to eq 'contentName'
     end
 
-    context 'when lot has nil content' do
+    context 'when lot has no content' do
       it 'returns empty string' do
         lot = Lot.new
 
@@ -110,14 +104,13 @@ describe Lot do
 
   describe '.box_name' do
     it 'returns lot box name' do
-      set_tenant_company
-      box = create(:box, name: 'boxName')
+      box = build(:box, name: 'boxName')
       lot = Lot.new(box: box)
 
       expect(lot.box_name).to eq 'boxName'
     end
 
-    context 'when lit has nil box name' do
+    context 'when lot has no box' do
       it 'returns empty string' do
         lot = Lot.new
 

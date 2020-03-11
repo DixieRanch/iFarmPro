@@ -27,4 +27,20 @@ class Lot < ActiveRecord::Base
   def move_to(location)
     update(freezer_location_id: location.id)
   end
+
+  def content_name
+    if content
+      content.name
+    else
+      ''
+    end
+  end
+
+  def box_name
+    if box
+      box.name
+    else
+      ''
+    end
+  end
 end

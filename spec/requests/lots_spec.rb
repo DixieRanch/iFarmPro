@@ -278,6 +278,14 @@ RSpec.describe 'Lots', type: :request do
       click_button 'Save'
     end
 
+    it 'has contents dropdown' do
+      sign_in create(:user)
+      create(:content, name: '#1s')
+      visit new_lot_path
+
+      select('#1s', from: 'Contents')
+    end
+
     context 'when submitting valid lot data' do
       it 'adds lot to the database' do
         sign_in(user = create(:user))
@@ -304,33 +312,32 @@ RSpec.describe 'Lots', type: :request do
         fill_in('Lot Name', with: '2019-001')
         fill_in('Full Weight', with: 1000)
         fill_in('Box Name', with: '005')
-
         click_button 'Save'
 
         expect(page).to have_css '.alert-success'
       end
+    end
 
-      context 'with field' do
-        it 'saves lot with correct field' do
-          sign_in user = create(:user)
-          box = create(:box)
-          create(:freezer_location)
-          block_a = create(:block, name: 'A')
-          create(:field, name: '1', block: block_a)
-          block_b = create(:block, name: 'B')
-          field_b = create(:field, name: '1', block: block_b)
-          visit new_lot_path
+    context 'with field' do
+      it 'saves lot with correct field' do
+        sign_in user = create(:user)
+        box = create(:box)
+        create(:freezer_location)
+        block_a = create(:block, name: 'A')
+        create(:field, name: '1', block: block_a)
+        block_b = create(:block, name: 'B')
+        field_b = create(:field, name: '1', block: block_b)
+        visit new_lot_path
 
-          fill_in('Lot Name', with: '2019-001')
-          fill_in('Full Weight', with: 1000)
-          fill_in('Box Name', with: box.name)
-          select(block_b.name, from: 'Block')
-          fill_in('Field', with: field_b.name)
-          click_button 'Save'
+        fill_in('Lot Name', with: '2019-001')
+        fill_in('Full Weight', with: 1000)
+        fill_in('Box Name', with: box.name)
+        select(block_b.name, from: 'Block')
+        fill_in('Field', with: field_b.name)
+        click_button 'Save'
 
-          Company.current_id = user.company_id
-          expect(Lot.first.field).to eq field_b
-        end
+        Company.current_id = user.company_id
+        expect(Lot.first.field).to eq field_b
       end
     end
 

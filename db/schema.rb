@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190919151205) do
+ActiveRecord::Schema.define(version: 20200228220216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 20190919151205) do
   end
 
   create_table "companies", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contents", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -160,7 +172,10 @@ ActiveRecord::Schema.define(version: 20190919151205) do
     t.integer  "field_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "content_id"
   end
+
+  add_index "lots", ["content_id"], name: "index_lots_on_content_id", using: :btree
 
   create_table "meter_readings", force: :cascade do |t|
     t.integer  "irrigation_id"

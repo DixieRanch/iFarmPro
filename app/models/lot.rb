@@ -5,6 +5,7 @@ class Lot < ActiveRecord::Base
   belongs_to :freezer_location
   belongs_to :block
   belongs_to :field
+  belongs_to :content
 
   validates :name, presence: true,
                    uniqueness: { scope: :company_id },
@@ -25,5 +26,21 @@ class Lot < ActiveRecord::Base
 
   def move_to(location)
     update(freezer_location_id: location.id)
+  end
+
+  def content_name
+    if content
+      content.name
+    else
+      ''
+    end
+  end
+
+  def box_name
+    if box
+      box.name
+    else
+      ''
+    end
   end
 end

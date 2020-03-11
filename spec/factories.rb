@@ -128,4 +128,8 @@ FactoryGirl.define do
     date Time.zone.today
     destination 'Sheller'
   end
+
+  factory :content do
+    name '#1s'
+  end
 end

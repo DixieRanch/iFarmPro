@@ -27,6 +27,7 @@ describe Lot do
     it { should have_db_column :freezer_location_id }
     it { should have_db_column :block_id }
     it { should have_db_column :field_id }
+    it { should have_db_column :content_id }
   end
 
   describe 'validations' do
@@ -47,7 +48,7 @@ describe Lot do
     it { should belong_to :field }
   end
 
-  describe 'net_weight' do
+  describe '.net_weight' do
     it 'calculates the net weight of a lot' do
       set_tenant_company
       box = create(:box, empty_weight: 200)
@@ -80,6 +81,40 @@ describe Lot do
         lot.move_to(new_location)
         lot.reload
         expect(lot.freezer_location_id).to eq new_location.id
+      end
+    end
+  end
+
+  describe '.content_name' do
+    it 'returns lot content name' do
+      content = create(:content, name: 'contentName')
+      lot = Lot.new(content: content)
+
+      expect(lot.content_name).to eq 'contentName'
+    end
+
+    context 'when lot has no content' do
+      it 'returns empty string' do
+        lot = Lot.new
+
+        expect(lot.content_name).to eq ''
+      end
+    end
+  end
+
+  describe '.box_name' do
+    it 'returns lot box name' do
+      box = build(:box, name: 'boxName')
+      lot = Lot.new(box: box)
+
+      expect(lot.box_name).to eq 'boxName'
+    end
+
+    context 'when lot has no box' do
+      it 'returns empty string' do
+        lot = Lot.new
+
+        expect(lot.box_name).to eq ''
       end
     end
   end

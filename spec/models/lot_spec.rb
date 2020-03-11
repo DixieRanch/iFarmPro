@@ -4,8 +4,7 @@ describe Lot do
                        full_weight: 2000,
                        box_id: 1,
                        freezer_location_id: 1,
-                       block_id: 1,
-                       content_id: 1 }
+                       block_id: 1 }
 
   it 'is valid' do
     set_tenant_company

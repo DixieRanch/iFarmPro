@@ -34,4 +34,12 @@ class Load
   def persisted?
     true
   end
+
+  def content
+    if !lots.first.nil?
+      lots.first.content_name
+    else
+      ''
+    end
+  end
 end

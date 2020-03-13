@@ -130,6 +130,6 @@ FactoryGirl.define do
   end
 
   factory :content do
-    name '#1s'
+    sequence(:name) { |n| "type-#{n}" }
   end
 end

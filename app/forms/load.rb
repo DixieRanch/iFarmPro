@@ -34,4 +34,22 @@ class Load
   def persisted?
     true
   end
+
+  def location_contents
+    if lots.any?
+      unique_content_list
+    else
+      ''
+    end
+  end
+
+  private
+
+  def unique_content_list
+    contents = []
+    lots.each do |lot|
+      contents << lot.content_name
+    end
+    contents.uniq { |x| x }.join(', ')
+  end
 end

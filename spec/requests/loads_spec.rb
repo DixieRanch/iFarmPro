@@ -76,6 +76,53 @@ RSpec.describe 'Loads', type: :request do
       expect(page).to have_selector 'td', text: location_lot_count
     end
 
+    context 'with one lot in the location' do
+      it 'displays the content type' do
+        sign_in create(:user)
+        content = create(:content)
+        location = create(:freezer_location)
+        lot = create(:lot, freezer_location_id: location.id,
+                           content_id: content.id)
+        location_content = lot.content.name
+        visit loads_path
+
+        expect(page).to have_selector 'td', text: location_content
+      end
+    end
+
+    context 'with multiple content types in the location' do
+      it 'displays the content types' do
+        sign_in create(:user)
+        content1 = create(:content)
+        content2 = create(:content)
+        location = create(:freezer_location)
+        lot = create(:lot, freezer_location_id: location.id,
+                           content_id: content1.id)
+        lot2 = create(:lot, freezer_location_id: location.id,
+                            content_id: content2.id)
+        location_content1 = lot.content.name
+        location_content2 = lot2.content.name
+        visit loads_path
+
+        expect(page).to have_selector 'td', text: location_content1
+        expect(page).to have_selector 'td', text: location_content2
+      end
+
+      it 'displays each content type once' do
+        sign_in create(:user)
+        content = create(:content)
+        location = create(:freezer_location)
+        lot = create(:lot, freezer_location_id: location.id,
+                           content_id: content.id)
+        create(:lot, freezer_location_id: location.id,
+                     content_id: content.id)
+        location_content1 = lot.content.name
+        visit loads_path
+
+        expect(page).to have_content(location_content1, count: 1)
+      end
+    end
+
     it 'displays the total storage weight' do
       sign_in create(:user)
       location1 = create(:freezer_location)

@@ -79,7 +79,7 @@ RSpec.describe 'Loads', type: :request do
     context 'with one lot in the location' do
       it 'displays the content type' do
         sign_in create(:user)
-        content = create(:content)
+        content = create(:content, name: '#1s')
         location = create(:freezer_location)
         lot = create(:lot, freezer_location_id: location.id,
                            content_id: content.id)
@@ -93,8 +93,8 @@ RSpec.describe 'Loads', type: :request do
     context 'with multiple content types in the location' do
       it 'displays the content types' do
         sign_in create(:user)
-        content1 = create(:content)
-        content2 = create(:content)
+        content1 = create(:content, name: '#1s')
+        content2 = create(:content, name: '#2s')
         location = create(:freezer_location)
         lot = create(:lot, freezer_location_id: location.id,
                            content_id: content1.id)
@@ -123,6 +123,38 @@ RSpec.describe 'Loads', type: :request do
       end
     end
 
+    it 'displays total weight by content type' do
+      sign_in create(:user)
+      content1 = create(:content, name: '#1s')
+      content2 = create(:content, name: '#2s')
+      content3 = create(:content, name: '#3s')
+      content4 = create(:content, name: 'Blacks')
+      content5 = create(:content, name: 'Cracks')
+      location = create(:freezer_location)
+      box1 = create(:box, empty_weight: 200)
+      box2 = create(:box, empty_weight: 200)
+      box3 = create(:box, empty_weight: 200)
+      box4 = create(:box, empty_weight: 200)
+      box5 = create(:box, empty_weight: 200)
+      create(:lot, full_weight: 3000, freezer_location_id: location.id,
+                   box_id: box1.id, content_id: content1.id)
+      create(:lot, full_weight: 4000, freezer_location_id: location.id,
+                   box_id: box2.id, content_id: content2.id)
+      create(:lot, full_weight: 4100, freezer_location_id: location.id,
+                   box_id: box3.id, content_id: content3.id)
+      create(:lot, full_weight: 4200, freezer_location_id: location.id,
+                   box_id: box4.id, content_id: content4.id)
+      create(:lot, full_weight: 4300, freezer_location_id: location.id,
+                   box_id: box5.id, content_id: content5.id)
+      visit loads_path
+
+      expect(page).to have_text '#1 Weight: 2800'
+      expect(page).to have_text '#2 Weight: 3800'
+      expect(page).to have_text '#3 Weight: 3900'
+      expect(page).to have_text 'Blacks Weight: 4000'
+      expect(page).to have_text 'Cracks Weight: 4100'
+    end
+
     it 'displays the total storage weight' do
       sign_in create(:user)
       location1 = create(:freezer_location)
@@ -136,7 +168,7 @@ RSpec.describe 'Loads', type: :request do
       storage_weight = Lot.all.map(&:net_weight).sum
       visit loads_path
 
-      expect(page).to have_text storage_weight
+      expect(page).to have_text storage_weight.to_s
     end
 
     it 'displays the total lot count' do

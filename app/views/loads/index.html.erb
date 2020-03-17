@@ -5,11 +5,16 @@
     <h1>Location Overview</h1>
     <h3>Total Net Weight: <%= @totals[:weight] %></h3>
     <h3>Total Lot Count: <%= @totals[:count] %></h3>
+    <h3>#1 Weight: <%= @totals[:content][:type1s] %></h3>
+    <h3>#2 Weight: <%= @totals[:content][:type2s] %></h3>
+    <h3>#3 Weight: <%= @totals[:content][:type3s] %></h3>
+    <h3>Blacks Weight: <%= @totals[:content][:typeBlacks] %></h3>
+    <h3>Cracks Weight: <%= @totals[:content][:typeCracks] %></h3>
     <tr>
       <th>Location Name</th>
       <th>Net Weight</th>
       <th>Location Contents</th>
-      <th>Lot Count</th>
+      <th>Lot Count</th> 
     </tr>
   </thead>
   <tbody>

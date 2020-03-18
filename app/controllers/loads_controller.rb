@@ -22,11 +22,20 @@ class LoadsController < ApplicationController
   def totals_for_all_loads
     weight = 0
     count = 0
-
     Load.all.each do |ld|
       weight += ld.lots.all.map(&:net_weight).sum
       count += ld.lots.all.count
     end
-    { weight: weight, count: count }
+    { weight: weight, count: count, content: content_weights }
+  end
+
+  def content_weights
+    weights = {}
+    Content.all.each do |c|
+      weight = Lot.where(content_id: c.id).map(&:net_weight).sum
+      name = ('type' + c.name.delete('#')).to_sym
+      weights = weights.merge!(name => weight)
+    end
+    weights
   end
 end

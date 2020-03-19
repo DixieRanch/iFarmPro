@@ -1,33 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Lots', type: :request do
-  describe 'link' do
-    context 'with signed in user' do
-      it 'is present' do
-        sign_in create(:user)
-
-        click_link 'Lots'
-      end
-
-      context 'when clicked' do
-        it 'redirects to lots new' do
-          sign_in create(:user)
-
-          click_link 'Lots'
-          expect(page).to have_title full_title 'Lots'
-        end
-      end
-    end
-
-    context 'with signed out user' do
-      it 'is absent' do
-        visit root_path
-
-        expect(page).not_to have_link 'Lots'
-      end
-    end
-  end
-
   describe 'list' do
     it 'has correct title' do
       sign_in create(:user)

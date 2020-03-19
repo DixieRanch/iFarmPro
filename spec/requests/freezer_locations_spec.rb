@@ -1,17 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'FreezerLocations', type: :request do
-  describe 'Storage Locations link' do
-    context 'when clicked' do
-      it 'redirects to storage locations page' do
-        sign_in(create(:user))
-
-        click_link 'Storage Locations'
-
-        expect(page).to have_title full_title 'Storage Locations'
-      end
-    end
-  end
   describe 'form' do
     it 'has location_name field' do
       sign_in(create(:user))

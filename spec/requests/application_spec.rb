@@ -18,55 +18,42 @@ describe 'Application' do
 
         expect(page).to have_css('#sidebar', text: farm_name)
 
-        click_link 'Farms'
-
-        expect(page).to have_selector 'title', text: full_title('Farms')
-
         click_link 'Containers'
-
         expect(page).to have_selector 'title', text: full_title('Containers')
 
-        click_link 'Storage Locations'
-
-        expect(page).to have_selector 'title',
-                                      text: full_title('Storage Locations')
-
-        click_link 'Lots'
-
-        expect(page).to have_selector 'title', text: full_title('Lots')
+        click_link 'Farms'
+        expect(page).to have_selector 'title', text: full_title('Farms')
 
         click_link 'Inventory'
-
-        expect(page).to have_selector 'title',
-                                      text: full_title('Inventory')
+        expect(page).to have_selector 'title', text: full_title('Inventory')
 
         click_link 'Irrigations'
-
         expect(page).to have_selector 'title', text: full_title('Irrigations')
 
-        click_link 'Rain'
-
-        expect(page).to have_selector 'title', text: full_title('Rain')
-
-        click_link 'Soil Products'
-
-        expect(page).to have_title full_title('Soil Products')
-
-        click_link 'Soil Applications'
-
-        expect(page).to have_title full_title 'Soil Applications'
-
         click_link 'Irrigation Schedule'
-
         expect(page).to have_selector 'title', text: full_title('Schedule')
 
-        click_link 'Nutrition'
+        click_link 'Lots'
+        expect(page).to have_selector 'title', text: full_title('Lots')
 
+        click_link 'Nutrition'
         expect(page).to have_title full_title 'Nutrition'
 
-        click_link 'Spray Schedule'
+        click_link 'Rain'
+        expect(page).to have_selector 'title', text: full_title('Rain')
 
+        click_link 'Soil Applications'
+        expect(page).to have_title full_title 'Soil Applications'
+
+        click_link 'Soil Products'
+        expect(page).to have_title full_title('Soil Products')
+
+        click_link 'Spray Schedule'
         expect(page).to have_title full_title 'Spray Schedule'
+
+        click_link 'Storage Locations'
+        expect(page).to have_selector 'title',
+                                      text: full_title('Storage Locations')
       end
     end
   end

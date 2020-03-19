@@ -1,26 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'EmailChanges', type: :request do
-  describe 'link' do
-    context 'with logged in user' do
-      it 'is present' do
-        sign_in(create(:user))
-
-        expect(page).to have_link 'Change Email'
-      end
-    end
-
-    context 'when clicked' do
-      it 'redirects to change email page' do
-        sign_in(create(:user))
-
-        click_link 'Change Email'
-
-        expect(page).to have_title full_title 'Request Email Change'
-      end
-    end
-  end
-
   describe 'new email form' do
     context 'when submiting new email' do
       it 'persists new_email to user'  do

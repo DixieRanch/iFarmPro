@@ -1,18 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Loads', type: :request do
-  describe 'Inventory link' do
-    context 'when clicked' do
-      it 'redirects to inventory page' do
-        sign_in(create(:user))
-
-        click_link 'Inventory'
-
-        expect(page).to have_title full_title 'Inventory'
-      end
-    end
-  end
-
   describe 'location index' do
     it 'has correct title' do
       sign_in create(:user)

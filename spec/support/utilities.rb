@@ -34,14 +34,14 @@ def scope_current_company_to(user)
   Company.current_id = user.company.id
 end
 
+def set_tenant_company
+  Company.current_id = build_stubbed(:company).id
+end
+
 private
 
 def submit_signin_form_for(user)
   fill_in 'Email', with: user.email
   fill_in 'Password', with: user.password
   click_button 'Sign in'
-end
-
-def set_tenant_company
-  Company.current_id = build_stubbed(:company).id
 end

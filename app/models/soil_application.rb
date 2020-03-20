@@ -50,7 +50,7 @@ class SoilApplication < ActiveRecord::Base
 
   def next_application_date
     app_date = date + 60.days
-    irrigation_date = Irrigation.last_for(field).next_irrigation_date
+    irrigation_date = NextIrrigation.call(Irrigation.last_for(field), field)
     [app_date, irrigation_date - 2.days].max
   end
 

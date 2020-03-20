@@ -5,6 +5,10 @@ class NextIrrigation
     next_date
   end
 
+  def self.call(*args)
+    NextIrrigation.new(*args).next_date
+  end
+
   def next_date
     date = @irrigation.time.to_date
     aw = max_aw * mad # initialize available water -> assumes field capacity
@@ -66,5 +70,9 @@ class NextIrrigation
 
   def et
     @et ||= Et.order('doy')
+  end
+
+  def rain_coefficient
+    0.8 # % of rain added to available water
   end
 end

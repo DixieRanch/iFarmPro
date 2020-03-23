@@ -127,7 +127,7 @@ describe SoilApplication do
                                            time: application.date + 60.days)
 
           expect(application.next_application_date)
-            .to eq irrigation.next_irrigation_date - 2.days
+            .to eq NextIrrigation.call(irrigation, irrigation.field) - 2.days
         end
       end
     end

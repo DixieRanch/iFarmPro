@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe NextIrrigation, :not_a_tenant_model do
+describe NextIrrigation do
   it 'should return the next irrigation date' do
     irrigation = build_stubbed :irrigation
     field = irrigation.field

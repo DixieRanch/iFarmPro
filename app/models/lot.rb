@@ -17,7 +17,6 @@ class Lot < ActiveRecord::Base
   validates :block_id, presence: true
 
   def net_weight
-    box_weight = box.empty_weight || NullBoxWeight.new.weight
     full_weight - box_weight
   end
 
@@ -39,5 +38,11 @@ class Lot < ActiveRecord::Base
     else
       ''
     end
+  end
+
+  private
+
+  def box_weight
+    box.empty_weight
   end
 end

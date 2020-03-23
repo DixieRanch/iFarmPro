@@ -11,4 +11,8 @@ class Box < ActiveRecord::Base
                                             greater_than: 150,
                                             less_than: 300 }
   validates :company_id, presence: true
+
+  def empty_weight
+    super || 200
+  end
 end

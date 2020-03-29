@@ -14,13 +14,13 @@
                 wrapper_html: {class: 'col-xs-3'},
                 error: 'Box not found'%>
                   
-    <%= f.association :freezer_location,
+    <%= f.input :freezer_location_id,
                       collection: FreezerLocation.all.sort_by(&:name),
                       label_method: :name,
                       include_blank: false,
                       wrapper_html: {class: 'col-sm-3'} %>   
                   
-    <%= f.association :block,
+    <%= f.input :block_id,
                       collection: Block.all.sort_by(&:name),
                       label_method: :name,
                       include_blank: false,
@@ -30,7 +30,7 @@
                       label: 'Field',
                       wrapper_html: {class: 'col-xs-3'} %> 
     
-    <%= f.association :content,
+    <%= f.input :content_id,
                       collection: Content.all.sort_by(&:name),
                       label: 'Contents',
                       label_method: :name,

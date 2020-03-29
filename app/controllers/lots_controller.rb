@@ -1,13 +1,13 @@
 class LotsController < ApplicationController
   def new
-    @lot = Lot.new
+    @lot = LotForm.new
     @lots = lots_list
   end
 
   def create
     find_field_id_for(params[:lot][:field_id], params[:lot][:block_id])
     find_box_id_for(params[:lot][:box_id])
-    @lot = Lot.new(lot_params)
+    @lot = LotForm.new(lot_params)
     @lots = lots_list
     if @lot.save
       flash[:success] = 'Lot successfully created'

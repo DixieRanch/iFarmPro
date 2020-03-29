@@ -3,7 +3,7 @@ class LotForm
 
   attr_reader :lot
 
-  validate :lot_is_valid
+  validate :models_are_valid
 
   delegate :model_name, to: :Lot
 
@@ -30,7 +30,7 @@ class LotForm
 
   private
 
-  def lot_is_valid
+  def models_are_valid
     promote_errors(lot.errors) if lot.invalid?
   end
 

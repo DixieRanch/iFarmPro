@@ -1,21 +1,19 @@
 class LotForm
   include ActiveModel::Model
 
-  attr_accessor(
-    :name,
-    :full_weight,
-    :box_id,
-    :freezer_location_id,
-    :block_id,
-    :field_id,
-    :content_id
-  )
-
   attr_reader :lot
 
   validate :lot_is_valid
 
   delegate :model_name, to: :Lot
+
+  def self.lot_attributes
+    Lot.column_names.push(Lot.reflections.keys).flatten
+  end
+
+  lot_attributes.each do |attr|
+    delegate attr.to_sym, "#{attr}=".to_sym, to: :lot
+  end
 
   def initialize(params = {})
     @lot = Lot.new(params)

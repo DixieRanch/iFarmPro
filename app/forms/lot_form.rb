@@ -8,6 +8,7 @@ class LotForm
   validate :models_are_valid
 
   delegate :model_name, to: :Lot
+  delegate :persisted?, to: :lot
 
   def self.lot_attributes
     Lot.column_names.push(Lot.reflections.keys).flatten
@@ -18,11 +19,16 @@ class LotForm
   end
 
   def initialize(params = {})
-    @lot = Lot.new(params)
-    super(params)
+    if params[:id]
+      @lot = Lot.find(params[:id])
+    else
+      @lot = Lot.new(params)
+      super(params)
+    end
   end
 
-  def submit
+  def self.find(id)
+    new(id: id)
   end
 
   def save

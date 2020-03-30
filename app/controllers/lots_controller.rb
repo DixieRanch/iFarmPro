@@ -6,7 +6,7 @@ class LotsController < ApplicationController
 
   def create
     find_field_id_for(params[:lot][:field_id], params[:lot][:block_id])
-    find_box_id_for(params[:lot][:box_id])
+    find_box_id_for(params[:lot][:box_name])
     @lot = LotForm.new(lot_params)
     @lots = lots_list
     if @lot.save
@@ -26,7 +26,7 @@ class LotsController < ApplicationController
   end
 
   def update
-    find_box_id_for(params[:lot][:box_id])
+    find_box_id_for(params[:lot][:box_name])
     find_field_id_for(params[:lot][:field_id], params[:lot][:block_id])
     @lot = Lot.find(params[:id])
 
@@ -61,7 +61,7 @@ class LotsController < ApplicationController
   end
 
   def find_box_name_for(lot)
-    @lot.box_id = Box.find_by(id: lot.box_id).name
+    @lot.box_name = Box.find_by(id: lot.box_id).name
   end
 
   def find_field_id_for(field, block)

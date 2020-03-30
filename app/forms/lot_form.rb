@@ -3,6 +3,8 @@ class LotForm
 
   attr_reader :lot
 
+  attr_accessor :box_name
+
   validate :models_are_valid
 
   delegate :model_name, to: :Lot
@@ -37,6 +39,7 @@ class LotForm
   def promote_errors(model_errors)
     model_errors.each do |attribute, message|
       errors.add(attribute, message)
+      errors.add(:box_name, message) if attribute == :box_id
     end
   end
 end

@@ -28,7 +28,7 @@ class LotsController < ApplicationController
   def update
     find_box_id_for(params[:lot][:box_name])
     find_field_id_for(params[:lot][:field_name], params[:lot][:block_id])
-    @lot = Lot.find(params[:id])
+    @lot = LotForm.find(params[:id])
 
     if @lot.update(lot_params)
       flash[:success] = 'Lot successfully updated'

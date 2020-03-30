@@ -36,6 +36,12 @@ class LotForm
     lot.save
   end
 
+  def update(params)
+    lot.assign_attributes(params)
+    return false if invalid?
+    lot.save
+  end
+
   private
 
   def models_are_valid

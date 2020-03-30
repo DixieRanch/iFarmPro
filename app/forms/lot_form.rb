@@ -3,7 +3,7 @@ class LotForm
 
   attr_reader :lot
 
-  attr_accessor :box_name
+  attr_accessor :box_name, :field_name
 
   validate :models_are_valid
 

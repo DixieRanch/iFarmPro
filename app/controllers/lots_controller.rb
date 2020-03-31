@@ -19,7 +19,7 @@ class LotsController < ApplicationController
 
   def edit
     @lot = LotForm.find(params[:id])
-    find_box_name_for(@lot)
+    @lot.find_box_name
     find_field_name_for(@lot)
     @lots = lots_list
     render :new
@@ -60,9 +60,9 @@ class LotsController < ApplicationController
                             end
   end
 
-  def find_box_name_for(lot)
-    @lot.box_name = Box.find_by(id: lot.box_id).name
-  end
+  # def find_box_name_for(lot)
+  #   @lot.box_name = Box.find_by(id: lot.box_id).name
+  # end
 
   def find_field_id_for(field, block)
     params[:lot][:field_id] = if Field.find_by(name: field, block_id: block)

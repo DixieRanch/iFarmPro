@@ -42,6 +42,10 @@ class LotForm
     lot.save
   end
 
+  def find_box_name
+    self.box_name = Box.find_by(id: lot.box_id).name
+  end
+
   private
 
   def models_are_valid

@@ -35,12 +35,14 @@ class LotForm
   end
 
   def save
+    lot.box_id = find_box_id_for(box_name)
     return false if invalid?
     lot.save
   end
 
   def update(params)
     lot.assign_attributes(params)
+    lot.box_id = find_box_id_for(params[:box_name])
     return false if invalid?
     lot.save
   end
@@ -53,6 +55,10 @@ class LotForm
     self.field_name = if Field.find_by(id: lot.field_id)
                         Field.find_by(id: lot.field_id).name
                       end
+  end
+
+  def find_box_id_for(name)
+    Box.find_by(name: name).id if Box.find_by(name: name)
   end
 
   private

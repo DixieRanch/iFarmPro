@@ -28,7 +28,10 @@ class LotForm
   end
 
   def self.find(id)
-    new(id: id)
+    lot_form = new(id: id)
+    lot_form.find_box_name
+    lot_form.find_field_name
+    lot_form
   end
 
   def save

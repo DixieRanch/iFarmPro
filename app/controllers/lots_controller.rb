@@ -19,8 +19,6 @@ class LotsController < ApplicationController
 
   def edit
     @lot = LotForm.find(params[:id])
-    @lot.find_box_name
-    @lot.find_field_name
     @lots = lots_list
     render :new
   end

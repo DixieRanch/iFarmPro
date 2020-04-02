@@ -3,7 +3,7 @@ class LotForm
 
   attr_reader :lot
 
-  attr_accessor :box_name, :field_name, :block_id
+  attr_accessor :box_name, :field_name
 
   validate :models_are_valid
 
@@ -45,6 +45,7 @@ class LotForm
     lot.assign_attributes(params)
     lot.box_id = find_box_id_for(params[:box_name])
     lot.field_id = find_field_id_for(params[:field_name], params[:block_id])
+
     return false if invalid?
     lot.save
   end

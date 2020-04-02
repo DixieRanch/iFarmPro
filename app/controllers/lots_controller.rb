@@ -5,7 +5,6 @@ class LotsController < ApplicationController
   end
 
   def create
-    find_field_id_for(params[:lot][:field_name], params[:lot][:block_id])
     @lot = LotForm.new(lot_params)
     @lots = lots_list
     if @lot.save
@@ -23,7 +22,6 @@ class LotsController < ApplicationController
   end
 
   def update
-    find_field_id_for(params[:lot][:field_name], params[:lot][:block_id])
     @lot = LotForm.find(params[:id])
     if @lot.update(lot_params)
       flash[:success] = 'Lot successfully updated'
@@ -46,12 +44,6 @@ class LotsController < ApplicationController
 
   def permitted_params
     [:name, :full_weight, :freezer_location_id, :box_name, :block_id,
-     :field_id, :content_id]
-  end
-
-  def find_field_id_for(field, block)
-    params[:lot][:field_id] = if Field.find_by(name: field, block_id: block)
-                                Field.find_by(name: field, block_id: block).id
-                              end
+     :field_name, :content_id]
   end
 end

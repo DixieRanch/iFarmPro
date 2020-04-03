@@ -22,7 +22,7 @@ class LotForm
     if params[:id]
       @lot = Lot.find(params[:id])
     else
-      @lot = Lot.new(params)
+      @lot = Lot.new(params.slice(*Lot.column_names))
       super(params)
     end
   end
@@ -42,10 +42,9 @@ class LotForm
   end
 
   def update(params)
-    lot.assign_attributes(params)
+    lot.assign_attributes(params.slice(*Lot.column_names))
     lot.box_id = find_box_id_for(params[:box_name])
     lot.field_id = find_field_id_for(params[:field_name], params[:block_id])
-
     return false if invalid?
     lot.save
   end

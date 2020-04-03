@@ -59,6 +59,8 @@ class LotForm
                       end
   end
 
+  private
+
   def find_box_id_for(name)
     Box.find_by(name: name).id if Box.find_by(name: name)
   end
@@ -67,8 +69,6 @@ class LotForm
     Field.find_by(name: field, block_id: block).id if
     Field.find_by(name: field, block_id: block)
   end
-
-  private
 
   def models_are_valid
     promote_errors(lot.errors) if lot.invalid?

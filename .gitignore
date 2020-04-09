@@ -29,7 +29,7 @@
 /spring/*.pid
 
 # Ignore Guardfile to allow personalization
-Guardfile
+# Guardfile
 
 # # bundler state
 # /.bundle

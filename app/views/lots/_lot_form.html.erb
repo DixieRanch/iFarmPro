@@ -2,40 +2,33 @@
 
   <fieldset>
     <%= f.input :name,
-                label: 'Lot Name',
-                wrapper_html: {class: 'col-xs-3'} %>
+                label: 'Lot Name' %>
     
     <%= f.input :full_weight,
-                label: 'Full Weight',
-                wrapper_html: {class: 'col-xs-3'} %>
+                label: 'Full Weight' %>
                 
     <%= f.input :box_name,
                 label: 'Box Name',
-                wrapper_html: {class: 'col-xs-3'},
                 error: 'Box not found'%>
                   
     <%= f.input :freezer_location_id,
                       collection: FreezerLocation.all.sort_by(&:name),
                       label_method: :name,
-                      include_blank: false,
-                      wrapper_html: {class: 'col-sm-3'} %>   
+                      include_blank: false %>   
                   
     <%= f.input :block_id,
                       collection: Block.all.sort_by(&:name),
                       label_method: :name,
-                      include_blank: false,
-                      wrapper_html: {class: 'col-sm-3'} %> 
+                      include_blank: false %> 
     
     <%= f.input :field_name,
-                      label: 'Field',
-                      wrapper_html: {class: 'col-xs-3'} %> 
+                      label: 'Field' %> 
     
     <%= f.input :content_id,
                       collection: Content.all.sort_by(&:name),
                       label: 'Contents',
                       label_method: :name,
-                      include_blank: true,
-                      wrapper_html: {class: 'col-sm-3'} %> 
+                      include_blank: true %> 
     
   </fieldset>
   

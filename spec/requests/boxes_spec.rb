@@ -128,6 +128,21 @@ RSpec.describe 'Boxes' do
         expect(page).to have_css '.alert-success'
       end
     end
+
+    context 'with blank empty weight' do
+      it 'saves the container' do
+        sign_in(user = create(:user))
+        visit boxes_path
+
+        fill_in 'Name', with: '2019-001'
+        fill_in 'Empty Weight', with: ''
+
+        expect do
+          click_button 'Save Container'
+          Company.current_id = user.company_id
+        end.to(change { Box.count }.by(1))
+      end
+    end
   end
 
   describe 'edit link' do

@@ -17,7 +17,7 @@ class Lot < ActiveRecord::Base
   validates :block_id, presence: true
 
   def net_weight
-    full_weight - box_weight
+    full_weight - (box_weight || 200)
   end
 
   def move_to(location)

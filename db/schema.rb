@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200312221709) do
+ActiveRecord::Schema.define(version: 20200618200829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20200312221709) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "content_id"
+    t.integer  "shipment_id"
   end
 
   add_index "lots", ["content_id"], name: "index_lots_on_content_id", using: :btree
@@ -267,6 +268,12 @@ ActiveRecord::Schema.define(version: 20200312221709) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
+  create_table "weather_data", force: :cascade do |t|
+    t.date    "date"
+    t.float   "eth"
+    t.integer "station_id"
+  end
+
   create_table "weather_stations", force: :cascade do |t|
     t.string   "name"
     t.string   "id_code"
@@ -277,6 +284,12 @@ ActiveRecord::Schema.define(version: 20200312221709) do
   end
 
   add_index "weather_stations", ["website_id"], name: "index_weather_stations_on_website_id", using: :btree
+
+  create_table "weathers", force: :cascade do |t|
+    t.date    "date"
+    t.decimal "et"
+    t.integer "station_id"
+  end
 
   create_table "websites", force: :cascade do |t|
     t.string   "name"

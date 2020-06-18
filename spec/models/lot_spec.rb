@@ -28,6 +28,7 @@ describe Lot do
     it { should have_db_column :block_id }
     it { should have_db_column :field_id }
     it { should have_db_column :content_id }
+    it { should have_db_column :shipment_id }
   end
 
   describe 'validations' do

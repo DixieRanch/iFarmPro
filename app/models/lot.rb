@@ -41,7 +41,7 @@ class Lot < ActiveRecord::Base
   end
 
   def location
-    location_error if freezer_location_id.present? && shipment_id.present?
+    location_error unless freezer_location_id.present? ^ shipment_id.present?
   end
 
   private

@@ -47,10 +47,10 @@ class Lot < ActiveRecord::Base
   private
 
   def location_error
-    errors.add(:shipment_id, "Lots can not have a shipment
-                               and a storage location")
-    errors.add(:freezer_location_id, "Lots can not have a shipment
-                               and a storage location")
+    errors.add(:shipment_id, "A lot must have either a shipment or a location,
+                              not both")
+    errors.add(:freezer_location_id, "A lot must have either a shipment or a
+                              location, not both")
   end
 
   def box_weight

@@ -14,7 +14,7 @@ class Lot < ActiveRecord::Base
   validates :company_id, presence: true
   validates :box_id, presence: true
   validates :block_id, presence: true
-  validate :location
+  validate :single_location_id
 
   def net_weight
     full_weight - (box_weight || 200)
@@ -40,7 +40,7 @@ class Lot < ActiveRecord::Base
     end
   end
 
-  def location
+  def single_location_id
     location_error unless freezer_location_id.present? ^ shipment_id.present?
   end
 

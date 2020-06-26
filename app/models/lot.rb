@@ -13,8 +13,8 @@ class Lot < ActiveRecord::Base
   validates :full_weight, numericality: { greater_than: 150 }
   validates :company_id, presence: true
   validates :box_id, presence: true
-  validates :freezer_location_id, presence: true
   validates :block_id, presence: true
+  validate :location
 
   def net_weight
     full_weight - (box_weight || 200)
@@ -40,7 +40,18 @@ class Lot < ActiveRecord::Base
     end
   end
 
+  def location
+    location_error if !freezer_location_id.nil? && !shipment_id.nil?
+  end
+
   private
+
+  def location_error
+    errors.add(:shipment_id, "Lots can not have a shipment
+                               and a storage location")
+    errors.add(:freezer_location_id, "Lots can not have a shipment
+                               and a storage location")
+  end
 
   def box_weight
     box.empty_weight

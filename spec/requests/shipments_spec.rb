@@ -19,19 +19,19 @@ RSpec.describe 'Shipments', type: :request do
       expect(page).to have_selector 'td', text: shipment.destination
     end
   end
-  
+
   describe 'new page' do
     it 'has correct title' do
       sign_in create(:user)
       visit new_shipment_path
-      
-      expect(page).to have_selector 'h1', text: "New Shipment"
+
+      expect(page).to have_selector 'h1', text: 'New Shipment'
     end
-    
+
     it 'has name text field' do
       sign_in create(:user)
       visit new_shipment_path
-      
+
       fill_in('Shipment Name', with: 'Shipment1')
     end
   end

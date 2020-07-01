@@ -40,13 +40,40 @@ describe Lot do
     it { should validate_presence_of :box_id }
     it { should validate_presence_of :block_id }
 
-    it 'validates that lot has a freezer_location_id or a shipment_id' do
+    it 'validates that lot has a freezer_location_id or a shipment_id not
+        both' do
       set_tenant_company
       location = create(:freezer_location)
       lot = create(:lot, freezer_location_id: location.id)
-      expect(lot).to be_valid
-
       lot.shipment_id = 1
+
+      expect(lot).to_not be_valid
+    end
+
+    it 'validates that a lot can have freezer_location_id and
+    a nil shipment_id' do
+      set_tenant_company
+      location = create(:freezer_location)
+      lot = create(:lot, freezer_location_id: location.id)
+
+      expect(lot).to be_valid
+    end
+
+    it 'validates that a lot can have shipment_id and
+    a nil freezer_location_id' do
+      set_tenant_company
+      lot = create(:lot, shipment_id: 1, freezer_location_id: nil)
+
+      expect(lot).to be_valid
+    end
+
+    it 'validates that a lot must have either a shipment_id
+    or a freezer_location_id' do
+      set_tenant_company
+      lot = create(:lot)
+      lot.freezer_location_id = nil
+      lot.shipment_id = nil
+
       expect(lot).to_not be_valid
     end
   end

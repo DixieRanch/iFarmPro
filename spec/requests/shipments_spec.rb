@@ -43,5 +43,12 @@ RSpec.describe 'Shipments', type: :request do
       select('August', from: 'shipment_date_2i')
       select('25', from: 'shipment_date_3i')
     end
+
+    it 'has a destination text field' do
+      sign_in create(:user)
+      visit new_shipment_path
+
+      fill_in('Destination', with: 'Sheller')
+    end
   end
 end

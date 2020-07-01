@@ -1,0 +1,21 @@
+<% provide :title, 'Shipping' %>
+<div class="row col-md-6">
+<table id='shipments' class='table table-striped'>
+    <thead>
+       <h1>Shipment Overview</h1> 
+       <th>Name</th>
+       <th>Date</th>
+       <th>Destination</th>
+    </thead>
+    
+    <tbody>
+        <% @shipments.each do |shipment, s| %>
+        <tr>
+            <td id="name<%=s%>"><%= shipment.name %></td>
+            <td id="date<%=s%>"><%= shipment.date %></td>
+            <td id="destination<%=s%>"><%= shipment.destination %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+</div>

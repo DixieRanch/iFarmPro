@@ -34,5 +34,14 @@ RSpec.describe 'Shipments', type: :request do
 
       fill_in('Shipment Name', with: 'Shipment1')
     end
+
+    it 'has a date input' do
+      sign_in create(:user)
+      visit new_shipment_path
+
+      select('2020', from: 'shipment_date_1i')
+      select('August', from: 'shipment_date_2i')
+      select('25', from: 'shipment_date_3i')
+    end
   end
 end

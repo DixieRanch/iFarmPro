@@ -5,11 +5,12 @@ class ShipmentsController < ApplicationController
 
   def new
     @shipment = Shipment.new
+    @shipments = Shipment.all
   end
 
   def create
     @shipment = Shipment.new(shipment_params)
-
+    @shipments = Shipment.all
     if @shipment.save
       flash[:success] = 'Shipment successfully created'
       redirect_to new_shipment_path

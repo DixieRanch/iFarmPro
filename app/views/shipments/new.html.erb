@@ -17,6 +17,24 @@
             
             <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>
         <% end %>
+        
   </div>
 </div>
+    <table id='shipments' class='table table-striped'>
+    <thead>
+       <th>Name</th>
+       <th>Date</th>
+       <th>Destination</th>
+    </thead>
+    
+    <tbody>
+        <% @shipments.each do |shipment, s| %>
+        <tr>
+            <td id="name<%=s%>"><%= shipment.name %></td>
+            <td id="date<%=s%>"><%= shipment.date %></td>
+            <td id="destination<%=s%>"><%= shipment.destination %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
 </div>

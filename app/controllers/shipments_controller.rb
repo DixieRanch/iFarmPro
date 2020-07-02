@@ -11,6 +11,7 @@ class ShipmentsController < ApplicationController
     @shipment = Shipment.new(shipment_params)
 
     if @shipment.save
+      flash[:success] = 'Shipment successfully created'
       redirect_to new_shipment_path
     else
       render :new

@@ -76,6 +76,22 @@ RSpec.describe 'Shipments', type: :request do
           Company.current_id = user.company_id
         end.to(change { Shipment.count }.by(1))
       end
+
+      it 'flashes a success message' do
+        sign_in create(:user)
+        visit new_shipment_path
+
+        fill_in('Shipment Name', with: 'Shipment1')
+
+        select('2020', from: 'shipment_date_1i')
+        select('August', from: 'shipment_date_2i')
+        select('25', from: 'shipment_date_3i')
+
+        fill_in('Destination', with: 'Sheller')
+        click_button 'Save'
+
+        expect(page).to have_css '.alert-success'
+      end
     end
   end
 end

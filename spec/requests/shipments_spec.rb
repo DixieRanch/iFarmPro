@@ -93,5 +93,25 @@ RSpec.describe 'Shipments', type: :request do
         expect(page).to have_css '.alert-success'
       end
     end
+
+    context 'when submitting a blank form' do
+      it 'rerenders the page with correct title' do
+        sign_in create(:user)
+        visit new_shipment_path
+
+        click_button 'Save'
+
+        expect(page).to have_title full_title 'New Shipment'
+      end
+
+      it 'indicates field with error' do
+        sign_in create(:user)
+        visit new_shipment_path
+
+        click_button 'Save'
+
+        expect(page).to have_css('div.has-error')
+      end
+    end
   end
 end

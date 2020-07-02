@@ -50,5 +50,12 @@ RSpec.describe 'Shipments', type: :request do
 
       fill_in('Destination', with: 'Sheller')
     end
+
+    it 'has a submit button' do
+      sign_in create(:user)
+      visit new_shipment_path
+
+      click_button 'Save'
+    end
   end
 end

@@ -57,5 +57,25 @@ RSpec.describe 'Shipments', type: :request do
 
       click_button 'Save'
     end
+
+    context 'when submitting valid shipment data' do
+      it 'adds the shipment to the database' do
+        sign_in(user = create(:user))
+        visit new_shipment_path
+
+        fill_in('Shipment Name', with: 'Shipment1')
+
+        select('2020', from: 'shipment_date_1i')
+        select('August', from: 'shipment_date_2i')
+        select('25', from: 'shipment_date_3i')
+
+        fill_in('Destination', with: 'Sheller')
+
+        expect do
+          click_button 'Save'
+          Company.current_id = user.company_id
+        end.to(change { Shipment.count }.by(1))
+      end
+    end
   end
 end

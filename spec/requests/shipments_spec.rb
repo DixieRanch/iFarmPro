@@ -37,7 +37,23 @@ RSpec.describe 'Shipments', type: :request do
       expect(page).to have_selector 'td', text: shipment.date
       expect(page).to have_selector 'td', text: shipment.destination
     end
+  end
 
+  describe 'edit link' do
+    context 'when clicked' do
+      it 'renders the new shipment page' do
+        sign_in create(:user)
+        create(:shipment)
+        visit new_shipment_path
+        
+        click_link 'edit'
+        
+        expect(page).to have_title full_title 'New Shipment'
+      end
+    end
+  end    
+  
+  describe 'new form' do
     it 'has name text field' do
       sign_in create(:user)
       visit new_shipment_path

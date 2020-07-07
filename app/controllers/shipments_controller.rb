@@ -21,7 +21,8 @@ class ShipmentsController < ApplicationController
 
   def edit
     @shipment = Shipment.find(params[:id])
-    redirect_to new_shipment_path
+    @shipments = Shipment.all
+    render :new
   end
 
   private

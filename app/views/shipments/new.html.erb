@@ -1,49 +1,14 @@
 <% provide :title, 'New Shipment' %>
 <div class="row">
-<div class="panel panel-primary">
-    <div class="panel-heading"><h1>New Shipment</h1></div>
-    <div class="panel-body">
-        <%= simple_form_for @shipment, html: {class: 'form-inline'} do |f| %>
-            <fieldset>
-                <%= f.input :name,
-                            label: 'Shipment Name' %>
-                            
-                <%= f.input :date,
-                            label: 'Date of Shipment' %>
-                            
-                <%= f.input :destination,
-                            label: 'Destination' %>
-            </fieldset>
-            
-            <%= f.submit 'Save', class: 'btn btn-primary pull-left' %>
-        <% end %>
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1>New Shipment</h1></div>
         
-  </div>
-</div>
-    <table id='shipments' class='table table-striped'>
-    <thead>
-       <th>Name</th>
-       <th>Date</th>
-       <th>Destination</th>
-    </thead>
+        <div class="panel-body">
+            <%= render 'shipment_form' %>
+        </div>
+    </div>
     
-    <tbody>
-        <% @shipments.each do |shipment, s| %>
-        <tr>
-            <td id="name<%=s%>"><%= shipment.name %></td>
-            <td id="date<%=s%>"><%= shipment.date %></td>
-            <td id="destination<%=s%>"><%= shipment.destination %></td>
-            
-             <td>
-                <%= link_to 'edit', edit_shipment_path(shipment),
-                            id: "link_#{s}",
-                            class: 'btn-sm btn-primary',
-                            role: 'button'
-                %>
-            </td>
-
-        </tr>
-        <% end %>
-    </tbody>
-</table>
+    <div class="row col-md-6">
+        <%= render 'shipments_list' %>
+    </div>
 </div>

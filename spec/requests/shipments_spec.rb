@@ -41,18 +41,30 @@ RSpec.describe 'Shipments', type: :request do
 
   describe 'edit link' do
     context 'when clicked' do
-      it 'renders the new shipment page' do
+      it 'renders the edit shipment page' do
         sign_in create(:user)
         create(:shipment)
         visit new_shipment_path
-        
+
         click_link 'edit'
-        
+
         expect(page).to have_title full_title 'New Shipment'
       end
     end
-  end    
-  
+  end
+
+  describe 'edit form' do
+    it 'displays the correct shipment name' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      visit new_shipment_path
+
+      click_link 'edit'
+
+      expect(page).to have_field('Shipment Name', with: shipment.name)
+    end
+  end
+
   describe 'new form' do
     it 'has name text field' do
       sign_in create(:user)

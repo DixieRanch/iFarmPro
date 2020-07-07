@@ -25,6 +25,17 @@ class ShipmentsController < ApplicationController
     render :new
   end
 
+  def update
+    @shipment = Shipment.find(params[:id])
+    if @shipment.update(shipment_params)
+      flash[:success] = 'Shipment successfully updated'
+      redirect_to new_shipment_path
+    else
+      @shipments = Shipment.all
+      render :new
+    end
+  end
+
   private
 
   def shipment_params

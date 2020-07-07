@@ -63,6 +63,21 @@ RSpec.describe 'Shipments', type: :request do
 
       expect(page).to have_field('Shipment Name', with: shipment.name)
     end
+    
+    context 'when submitting valid edits' do
+      it 'updates the record' do
+        sign_in create(:user)
+        create(:shipment, name: 'shipment1')
+        visit new_shipment_path
+        click_link 'edit'
+        
+        fill_in('Shipment Name', with: 'shipment2')
+        click_button 'Save'
+        
+        expect(page).to have_selector 'td', text: 'shipment2'
+        expect(page).to_not have_selector 'td', text: 'shipment1'
+      end
+    end
   end
 
   describe 'new form' do

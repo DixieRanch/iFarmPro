@@ -118,7 +118,7 @@ RSpec.describe 'Shipments', type: :request do
     end
 
     context 'when submitting valid shipment data' do
-      it 'adds the shipment to the database' do
+      it 'adds a shipment to the database' do
         sign_in(user = create(:user))
         visit new_shipment_path
 

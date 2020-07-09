@@ -6,7 +6,7 @@ RSpec.describe 'Shipments', type: :request do
       sign_in create(:user)
       visit new_shipment_path
 
-      expect(page).to have_selector 'h1', text: 'New Shipment'
+      expect(page).to have_selector 'h1', text: 'Shipments'
     end
 
     it 'displays created shipments' do
@@ -29,7 +29,7 @@ RSpec.describe 'Shipments', type: :request do
 
         click_link 'edit'
 
-        expect(page).to have_title full_title 'New Shipment'
+        expect(page).to have_title full_title 'Shipments'
       end
     end
   end
@@ -160,7 +160,7 @@ RSpec.describe 'Shipments', type: :request do
 
         click_button 'Save'
 
-        expect(page).to have_title full_title 'New Shipment'
+        expect(page).to have_title full_title 'Shipments'
       end
 
       it 'indicates field with error' do

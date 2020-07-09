@@ -55,9 +55,9 @@ describe 'Application' do
         expect(page).to have_selector 'title',
                                       text: full_title('Storage Locations')
 
-        click_link 'New Shipment'
+        click_link 'Shipments'
         expect(page).to have_selector 'title',
-                                      text: full_title('New Shipment')
+                                      text: full_title('Shipments')
       end
     end
   end

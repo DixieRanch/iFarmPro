@@ -98,9 +98,7 @@ RSpec.describe 'Shipments', type: :request do
       sign_in create(:user)
       visit new_shipment_path
 
-      select('2020', from: 'shipment_date_1i')
-      select('August', from: 'shipment_date_2i')
-      select('25', from: 'shipment_date_3i')
+      fill_in('Date', with: '07/06/2020')
     end
 
     it 'has a destination text field' do
@@ -123,11 +121,7 @@ RSpec.describe 'Shipments', type: :request do
         visit new_shipment_path
 
         fill_in('Shipment Name', with: 'Shipment1')
-
-        select('2020', from: 'shipment_date_1i')
-        select('August', from: 'shipment_date_2i')
-        select('25', from: 'shipment_date_3i')
-
+        fill_in('Date', with: '07/06/2020')
         fill_in('Destination', with: 'Sheller')
 
         expect do
@@ -141,11 +135,7 @@ RSpec.describe 'Shipments', type: :request do
         visit new_shipment_path
 
         fill_in('Shipment Name', with: 'Shipment1')
-
-        select('2020', from: 'shipment_date_1i')
-        select('August', from: 'shipment_date_2i')
-        select('25', from: 'shipment_date_3i')
-
+        fill_in('Date', with: '07/06/2020')
         fill_in('Destination', with: 'Sheller')
         click_button 'Save'
 

@@ -22,7 +22,7 @@ RSpec.describe 'Shipments', type: :request do
 
   describe 'edit link' do
     context 'when clicked' do
-      it 'renders the edit shipment page' do
+      it 'renders the shipments page' do
         sign_in create(:user)
         create(:shipment)
         visit new_shipment_path

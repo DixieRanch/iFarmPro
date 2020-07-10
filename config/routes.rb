@@ -83,7 +83,7 @@ Ifarm::Application.routes.draw do
                     constraints: { id: /[^\/]+/ }
   resources :lots, only: [:new, :create, :edit, :update]
   resources :loads, only: [:index, :edit, :update]
-  resources :shipments, only: [:index]
+  resources :shipments, only: [:new, :create, :edit, :update]
 
   root to: 'static_pages#home'
 

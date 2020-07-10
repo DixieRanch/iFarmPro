@@ -144,7 +144,7 @@ RSpec.describe 'Shipments', type: :request do
     end
 
     context 'when submitting a blank form' do
-      it 'rerenders the page with correct title' do
+      it 'renders the shipments page' do
         sign_in create(:user)
         visit new_shipment_path
 

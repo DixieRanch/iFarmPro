@@ -84,7 +84,7 @@ Ifarm::Application.routes.draw do
   resources :lots, only: [:new, :create, :edit, :update]
   resources :loads, only: [:index, :edit, :update]
   resources :shipments, only: [:new, :create, :edit, :update]
-  resources :shipment_selections, only: [:new]
+  resources :shipment_selections, only: [:new, :create]
   root to: 'static_pages#home'
 
   get '/signup',    to: 'companies#new'

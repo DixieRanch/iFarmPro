@@ -181,6 +181,15 @@ RSpec.describe 'Loads', type: :request do
       expect(page).to have_link 'Move All Lots'
     end
 
+    it 'has ship location link' do
+      sign_in create(:user)
+      location = create(:freezer_location)
+      create(:lot, freezer_location_id: location.id)
+      visit loads_path
+
+      expect(page).to have_link 'Ship Location'
+    end
+
     context 'with numerical names' do
       it 'sorts in assending order' do
         set_tenant_company

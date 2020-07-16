@@ -30,6 +30,12 @@
                                      class: 'btn-sm btn-primary',
                                      role: 'button'
         %>
+        
+        <%= link_to 'Ship Location', new_shipment_selection_path, 
+                                     id:"link_#{l}",
+                                     class: 'btn-sm btn-primary',
+                                     role: 'button'
+        %>
       </td>
     </tr>
     <% end %>

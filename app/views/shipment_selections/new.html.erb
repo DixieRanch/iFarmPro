@@ -1,7 +1,7 @@
  <% provide :title, 'Shipment Selection' %>
  
  <%= simple_form_for @shipment_selection, html: {class: 'form-inline'} do |f| %>
-     
+    <fieldset> 
      <%= f.input :shipment_id,
                  collection: Shipment.all.sort_by(&:name),
                  label_method: :name,
@@ -9,4 +9,7 @@
      %>
      
      <%= f.hidden_field :location, value: 'location_id', label: 'location' %>
+     <fieldset>
+     
+     <%= f.submit 'Select', class: 'btn btn-primary pull-left' %>
  <% end %>

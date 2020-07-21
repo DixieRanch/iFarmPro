@@ -4,6 +4,7 @@ class ShipmentSelectionsController < ApplicationController
   end
 
   def create
-    redirect_to new_shipping_path
+    redirect_to new_shipping_path(shipment:
+                                  params[:shipment_selection][:shipment_id])
   end
 end

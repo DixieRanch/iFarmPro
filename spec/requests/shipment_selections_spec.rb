@@ -19,7 +19,9 @@ RSpec.describe 'ShipmentSelections', type: :request do
 
     it 'has submit button' do
       sign_in create(:user)
+      shipment = create(:shipment)
       visit new_shipment_selection_path
+      select(shipment.name, from: 'Shipment')
 
       click_button 'Select'
     end

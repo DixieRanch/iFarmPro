@@ -10,7 +10,7 @@
                  include_blank: false 
      %>
      
-     <%= f.hidden_field :location, value: 'location_id', label: 'location' %>
+     <%= f.hidden_field :location, value: @location.id, label: 'location' %>
      <fieldset>
      
      <%= f.submit 'Select', class: 'btn btn-primary pull-left' %>

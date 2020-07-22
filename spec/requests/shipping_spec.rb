@@ -5,7 +5,9 @@ RSpec.describe 'Shipping', type: :request do
     it 'displays the title of the shipment' do
       sign_in create(:user)
       shipment = create(:shipment)
-      visit new_shipment_selection_path
+      create(:freezer_location)
+      visit loads_path
+      click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 

@@ -11,6 +11,13 @@
           <% @location.lots.each_with_index do |lt, l| %>
           <tr>
               <td id="name<%=l%>"><%= lt.name %></td>
+              <td>
+                  <%= link_to 'Ship Lot', edit_shipping_path(lt.id),
+                                          id:"link_#{l}",
+                                          class: 'btn-sm btn-primary',
+                                          role: 'button'
+                   %>
+              </td>
           </tr>
           <% end %>
       </tbody>

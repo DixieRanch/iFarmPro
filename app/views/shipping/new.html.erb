@@ -12,7 +12,8 @@
           <tr>
               <td id="name<%=l%>"><%= lt.name %></td>
               <td>
-                  <%= link_to 'Ship Lot', edit_shipping_path(lt.id),
+                  <%= link_to 'Ship Lot', edit_shipping_path(lot: lt.id, 
+                                              id: @shipment.id),
                                           id:"link_#{l}",
                                           class: 'btn-sm btn-primary',
                                           role: 'button'

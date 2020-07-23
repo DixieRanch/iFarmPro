@@ -42,4 +42,22 @@ RSpec.describe 'Shipping', type: :request do
       expect(page).to have_link 'Ship Lot'
     end
   end
+
+  describe 'ship lot link' do
+    it 'updates the shipment_id of the lot' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      location = create(:freezer_location)
+      lot = create(:lot, freezer_location: location)
+      visit loads_path
+      click_link 'Ship Location'
+      select(shipment.name, from: 'Shipment')
+      click_button 'Select'
+
+      click_link 'Ship Lot'
+
+      lot.reload
+      expect(lot.shipment_id).to eq shipment.id
+    end
+  end
 end

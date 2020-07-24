@@ -41,6 +41,19 @@ RSpec.describe 'Shipping', type: :request do
 
       expect(page).to have_link 'Ship Lot'
     end
+
+    it 'has submit button' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      location = create(:freezer_location)
+      create(:lot, freezer_location: location)
+      visit loads_path
+      click_link 'Ship Location'
+      select(shipment.name, from: 'Shipment')
+      click_button 'Select'
+
+      click_button 'Ship'
+    end
   end
 
   describe 'ship lot link' do

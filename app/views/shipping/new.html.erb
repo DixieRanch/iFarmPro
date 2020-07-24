@@ -10,6 +10,15 @@
       <tbody>
           <% @location.lots.each_with_index do |lt, l| %>
           <tr>
+              <td
+              <%= simple_form_for lt, html: {class: 'form-inline'} do |f| %>
+                <fieldset>
+                  <%= f.hidden_field :lot, value: lt.id, label: 'lot' %>
+                  <%= f.submit 'Ship', class: 'btn btn-primary pull-left' %>
+                </fieldset>
+              
+              <% end %>
+              </td>
               <td id="name<%=l%>"><%= lt.name %></td>
               <td>
                   <%= link_to 'Ship Lot', edit_shipping_path(lot: lt.id, 

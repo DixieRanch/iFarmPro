@@ -190,6 +190,28 @@ RSpec.describe 'Loads', type: :request do
       expect(page).to have_link 'Ship Location'
     end
 
+    describe 'ship location link' do
+      context 'when clicked' do
+        it 'sends the correct paramater' do
+          sign_in create(:user)
+          shipment = create(:shipment)
+          location1 = create(:freezer_location)
+          location2 = create(:freezer_location)
+          lot1 = create(:lot, freezer_location_id: location1.id)
+          lot2 = create(:lot, freezer_location_id: location2.id)
+          visit loads_path
+
+          click_link 'Ship Location', href:
+                        '/shipment_selections/new?location=' + location2.id.to_s
+          select(shipment.name, from: 'Shipment')
+          click_button 'Select'
+
+          expect(page).to have_text lot2.name
+          expect(page).to_not have_text lot1.name
+        end
+      end
+    end
+
     context 'with numerical names' do
       it 'sorts in assending order' do
         set_tenant_company

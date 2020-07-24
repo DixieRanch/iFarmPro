@@ -1,7 +1,7 @@
 class ShipmentSelectionsController < ApplicationController
   def new
     @shipment_selection = ShipmentSelection.new
-    @location = FreezerLocation.find_by(params[:location])
+    @location = FreezerLocation.find_by(id: params[:location])
   end
 
   def create

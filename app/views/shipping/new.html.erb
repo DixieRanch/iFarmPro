@@ -8,25 +8,17 @@
           </tr>
       </thead>
       <tbody>
-          <% @location.lots.each_with_index do |lt, l| %>
+          <% @location.lots.each_with_index do |lot, l| %>
           <tr>
-              <td
-              <%= simple_form_for lt, html: {class: 'form-inline'} do |f| %>
+              <td id="name<%=l%>"><%= lot.name %></td>
+              <td>
+              <%= simple_form_for lot, :url => shipping_path(id: @shipment.id), html: {class: 'form-inline'} do |f| %>
                 <fieldset>
-                  <%= f.hidden_field :lot, value: lt.id, label: 'lot' %>
-                  <%= f.submit 'Ship', class: 'btn btn-primary pull-left' %>
+                  <%= f.hidden_field :id, value: lot.id, label: 'lot' %>
                 </fieldset>
+                  <%= f.submit 'Ship', class: 'btn btn-primary pull-left' %>
               
               <% end %>
-              </td>
-              <td id="name<%=l%>"><%= lt.name %></td>
-              <td>
-                  <%= link_to 'Ship Lot', edit_shipping_path(lot: lt.id, 
-                                              id: @shipment.id),
-                                          id:"link_#{l}",
-                                          class: 'btn-sm btn-primary',
-                                          role: 'button'
-                   %>
               </td>
           </tr>
           <% end %>

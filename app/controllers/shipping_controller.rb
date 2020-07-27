@@ -8,20 +8,27 @@ class ShippingController < ApplicationController
     @shipment = Shipment.find(params[:id])
     @lot = Lot.find_by(id: params[:lot])
     @location = @lot.freezer_location
-    update
   end
 
   def update
-    @shipment = Shipment.find(params[:id])
-    @lot = Lot.find_by(id: params[:lot])
+    @lot = Lot.find_by(id: params[:lot][:id])
     @location = @lot.freezer_location
 
-    @lot.shipment_id = @shipment.id
-    @lot.freezer_location_id = nil
+    update_lot(@lot, params)
+
     if @lot.save
-      redirect_to new_shipping_path(shipment: @shipment.id, location: @location)
+      redirect_to new_shipping_path(
+        shipment: @lot.shipment_id, location: @location
+      )
     else
-      render new_shipping_path
+      redirect_to new_shipping_path
     end
+  end
+
+  private
+
+  def update_lot(lot, params)
+    lot.shipment_id = Shipment.find(params[:id]).id
+    lot.freezer_location_id = nil
   end
 end

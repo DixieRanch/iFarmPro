@@ -29,20 +29,7 @@ RSpec.describe 'Shipping', type: :request do
       expect(page).to have_selector 'td', text: lot.name
     end
 
-    it 'has link to ship a lot' do
-      sign_in create(:user)
-      shipment = create(:shipment)
-      location = create(:freezer_location)
-      create(:lot, freezer_location: location)
-      visit loads_path
-      click_link 'Ship Location'
-      select(shipment.name, from: 'Shipment')
-      click_button 'Select'
-
-      expect(page).to have_link 'Ship Lot'
-    end
-
-    it 'has submit button' do
+    it 'has ship button' do
       sign_in create(:user)
       shipment = create(:shipment)
       location = create(:freezer_location)
@@ -56,7 +43,7 @@ RSpec.describe 'Shipping', type: :request do
     end
   end
 
-  describe 'ship lot link' do
+  describe 'ship button' do
     it 'updates the shipment_id of the lot' do
       sign_in create(:user)
       shipment = create(:shipment)
@@ -67,7 +54,7 @@ RSpec.describe 'Shipping', type: :request do
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
-      click_link 'Ship Lot'
+      click_button 'Ship'
 
       lot.reload
       expect(lot.shipment_id).to eq shipment.id
@@ -83,7 +70,7 @@ RSpec.describe 'Shipping', type: :request do
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
-      click_link 'Ship Lot'
+      click_button 'Ship'
 
       lot.reload
       expect(lot.freezer_location_id).to eq nil

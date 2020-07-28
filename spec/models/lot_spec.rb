@@ -28,6 +28,7 @@ describe Lot do
     it { should have_db_column :block_id }
     it { should have_db_column :field_id }
     it { should have_db_column :content_id }
+    it { should have_db_column :shipment_id }
   end
 
   describe 'validations' do
@@ -37,8 +38,40 @@ describe Lot do
     it { should validate_numericality_of(:full_weight).is_greater_than(150) }
     it { should validate_presence_of :company_id }
     it { should validate_presence_of :box_id }
-    it { should validate_presence_of :freezer_location_id }
     it { should validate_presence_of :block_id }
+
+    it 'validates that lot with location and shipment is invalid' do
+      set_tenant_company
+      location = create(:freezer_location)
+      lot = create(:lot, freezer_location_id: location.id)
+      lot.shipment_id = 1
+
+      expect(lot).to_not be_valid
+    end
+
+    it 'validates that lot with a freexer location is valid' do
+      set_tenant_company
+      location = create(:freezer_location)
+      lot = create(:lot, freezer_location_id: location.id)
+
+      expect(lot).to be_valid
+    end
+
+    it 'validates that lot with a shipment is valid' do
+      set_tenant_company
+      lot = create(:lot, shipment_id: 1, freezer_location_id: nil)
+
+      expect(lot).to be_valid
+    end
+
+    it 'validates that lot without location or shipment is invalid' do
+      set_tenant_company
+      lot = create(:lot)
+      lot.freezer_location_id = nil
+      lot.shipment_id = nil
+
+      expect(lot).to_not be_valid
+    end
   end
 
   describe 'association' do
@@ -115,6 +148,19 @@ describe Lot do
         lot = Lot.new
 
         expect(lot.box_name).to eq ''
+      end
+    end
+  end
+
+  describe 'freezer_location.name' do
+    context 'with nil freezer_location' do
+      it 'returns default name' do
+        set_tenant_company
+        location = create(:freezer_location)
+        lot = create(:lot, freezer_location_id: location.id)
+
+        lot.freezer_location_id = nil
+        expect(lot.freezer_location.name).to eq 'shipped'
       end
     end
   end

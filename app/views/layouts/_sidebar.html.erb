@@ -35,6 +35,11 @@
       
     <%= link_to 'Lots', new_lot_path, class: "list-group-item" %>
     
-    <%= link_to 'Inventory', loads_path,
-                                            class: "list-group-item" %>
-</ul>
+    <%= link_to 'Inventory', loads_path, class: "list-group-item" %>
+                                            
+    <li class="nav-header list-group-item"></li>           
+    <li class="nav-header list-group-item"><b>Shipping</b></li>
+    
+    <%= link_to 'Shipments', new_shipment_path, class: "list-group-item" %>
+    
+    </ul>

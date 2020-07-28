@@ -151,4 +151,17 @@ describe Lot do
       end
     end
   end
+
+  describe 'freezer_location.name' do
+    context 'with nil freezer_location' do
+      it 'returns default name' do
+        set_tenant_company
+        location = create(:freezer_location)
+        lot = create(:lot, freezer_location_id: location.id)
+
+        lot.freezer_location_id = nil
+        expect(lot.freezer_location.name).to eq 'shipped'
+      end
+    end
+  end
 end

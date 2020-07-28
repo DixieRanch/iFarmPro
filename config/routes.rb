@@ -60,6 +60,7 @@
 #
 
 Ifarm::Application.routes.draw do
+
   resources :sessions, only: [:new, :create, :destroy]
   resources :companies, only: [:create, :show]
   resources :users, only: [:create]
@@ -84,7 +85,10 @@ Ifarm::Application.routes.draw do
   resources :lots, only: [:new, :create, :edit, :update]
   resources :loads, only: [:index, :edit, :update]
   resources :shipments, only: [:new, :create, :edit, :update]
-
+  resources :shipment_selections, only: [:new, :create]
+  resources :shipping, only: [:show, :new, :edit, :update],
+                              constraints: { id: /[^\/]+/ }
+                                  
   root to: 'static_pages#home'
 
   get '/signup',    to: 'companies#new'

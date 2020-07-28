@@ -44,6 +44,10 @@ class Lot < ActiveRecord::Base
     location_error unless freezer_location_id.present? ^ shipment_id.present?
   end
 
+  def freezer_location
+    super || NullFreezerLocation.new
+  end
+
   private
 
   def location_error

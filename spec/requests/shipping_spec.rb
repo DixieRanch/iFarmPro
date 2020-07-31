@@ -29,6 +29,19 @@ RSpec.describe 'Shipping', type: :request do
       expect(page).to have_selector 'td', text: lot.name
     end
 
+    it 'displays the box name for the lot' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      location = create(:freezer_location)
+      lot = create(:lot, freezer_location: location)
+      visit loads_path
+      click_link 'Ship Location'
+      select(shipment.name, from: 'Shipment')
+      click_button 'Select'
+
+      expect(page).to have_selector 'td', text: lot.box.name
+    end
+
     it 'has ship button' do
       sign_in create(:user)
       shipment = create(:shipment)

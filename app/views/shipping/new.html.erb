@@ -5,12 +5,14 @@
       <thead>
           <tr>
               <th>Lot Name</th>
+              <th>Box Name</th>
           </tr>
       </thead>
       <tbody>
           <% @location.lots.each_with_index do |lot, l| %>
           <tr>
               <td id="name<%=l%>"><%= lot.name %></td>
+              <td id="name<%=l%>"><%= lot.box.name %></td>
               <td>
               <%= simple_form_for lot, :url => shipping_path(id: @shipment.id), html: {class: 'form-inline'} do |f| %>
                 <fieldset>

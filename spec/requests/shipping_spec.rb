@@ -29,6 +29,21 @@ RSpec.describe 'Shipping', type: :request do
       expect(page).to have_selector 'td', text: lot.name
     end
 
+    it 'displays the total shipped weight' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      location = create(:freezer_location)
+      lot = create(:lot, freezer_location: location)
+      visit loads_path
+      click_link 'Ship Location'
+      select(shipment.name, from: 'Shipment')
+      click_button 'Select'
+      click_button 'Ship'
+
+      expect(page).to have_selector 'h3', text: 'Total shipped weight: '
+      + lot.net_weight.to_s
+    end
+
     it 'has ship button' do
       sign_in create(:user)
       shipment = create(:shipment)

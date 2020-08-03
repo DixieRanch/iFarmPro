@@ -7,6 +7,7 @@ class ShippingController < ApplicationController
 
   def edit
     @shipment = Shipment.find(params[:id])
+    @lot = Lot.find_by(id: params[:lot])
     @location = @lot.freezer_location
   end
 

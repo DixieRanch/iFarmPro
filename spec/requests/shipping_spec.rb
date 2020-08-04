@@ -19,8 +19,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'displays lots in the location' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      lot = create(:lot, freezer_location: location)
+      lot = create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')
@@ -48,8 +47,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'displays the box name for the lot' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      lot = create(:lot, freezer_location: location)
+      lot = create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')
@@ -61,8 +59,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'has ship button' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      create(:lot, freezer_location: location)
+      create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')
@@ -76,8 +73,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'updates the shipment_id of the lot' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      lot = create(:lot, freezer_location: location)
+      lot = create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')
@@ -92,8 +88,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'update the freezer_location_id of the lot to nil' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      lot = create(:lot, freezer_location: location)
+      lot = create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')

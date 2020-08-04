@@ -43,8 +43,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'has ship button' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      create(:lot, freezer_location: location)
+      create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')

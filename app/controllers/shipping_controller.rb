@@ -38,5 +38,6 @@ class ShippingController < ApplicationController
     Lot.all.where(shipment_id: shipment.id).each do |lot|
       weight += lot.net_weight
     end
+    weight
   end
 end

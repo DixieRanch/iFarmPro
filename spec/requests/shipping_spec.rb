@@ -31,8 +31,7 @@ RSpec.describe 'Shipping', type: :request do
     it 'displays the box name for the lot' do
       sign_in create(:user)
       shipment = create(:shipment)
-      location = create(:freezer_location)
-      lot = create(:lot, freezer_location: location)
+      lot = create(:lot)
       visit loads_path
       click_link 'Ship Location'
       select(shipment.name, from: 'Shipment')

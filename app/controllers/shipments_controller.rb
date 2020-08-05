@@ -17,7 +17,7 @@ class ShipmentsController < ApplicationController
 
   def edit
     @shipment = Shipment.find(params[:id])
-    @shipments = Shipment.all
+    @shipments = shipments_list
     render :new
   end
 

@@ -9,7 +9,7 @@ class Shipping
 
   def shipped_weight
     weight = 0
-    Lot.all.where(shipment_id: shipment.id).each do |lot|
+    shipment.lots.each do |lot|
       weight += lot.net_weight
     end
     weight

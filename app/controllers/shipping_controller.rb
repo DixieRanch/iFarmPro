@@ -24,12 +24,4 @@ class ShippingController < ApplicationController
     lot.shipment_id = Shipment.find(params[:id]).id
     lot.freezer_location_id = nil
   end
-
-  def shipped_weight(shipment)
-    weight = 0
-    Lot.all.where(shipment_id: shipment.id).each do |lot|
-      weight += lot.net_weight
-    end
-    weight
-  end
 end

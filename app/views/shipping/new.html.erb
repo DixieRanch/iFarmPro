@@ -1,4 +1,4 @@
-<h1>Shipping <%= @location.name %> to <%= @shipment.name %> </h1>
+<h1>Shipping <%= @shipping.location.name %> to <%= @shipment.name %> </h1>
 
 <div class="row col-md-6">
   
@@ -11,7 +11,7 @@
           </tr>
       </thead>
       <tbody>
-          <% @location.lots.each_with_index do |lot, l| %>
+          <% @shipping.location.lots.each_with_index do |lot, l| %>
           <tr>
               <td id="name<%=l%>"><%= lot.name %></td>
               <td id="name<%=l%>"><%= lot.box.name %></td>

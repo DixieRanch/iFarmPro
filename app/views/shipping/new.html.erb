@@ -1,4 +1,4 @@
-<h1>Shipping <%= @shipping.location.name %> to <%= @shipment.name %> </h1>
+<h1>Shipping <%= @shipping.location.name %> to <%= @shipping.shipment.name %> </h1>
 
 <div class="row col-md-6">
   
@@ -16,7 +16,7 @@
               <td id="name<%=l%>"><%= lot.name %></td>
               <td id="name<%=l%>"><%= lot.box.name %></td>
               <td>
-              <%= simple_form_for lot, :url => shipping_path(id: @shipment.id), html: {class: 'form-inline'} do |f| %>
+              <%= simple_form_for lot, :url => shipping_path(id: @shipping.shipment.id), html: {class: 'form-inline'} do |f| %>
                 <fieldset>
                   <%= f.hidden_field :id, value: lot.id, label: 'lot' %>
                 </fieldset>

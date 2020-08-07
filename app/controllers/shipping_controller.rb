@@ -1,8 +1,6 @@
 class ShippingController < ApplicationController
   def new
     @shipping = Shipping.new(params)
-    @shipment = @shipping.shipment
-    @location = @shipping.location
   end
 
   def edit

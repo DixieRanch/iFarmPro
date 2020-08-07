@@ -3,12 +3,6 @@ class ShippingController < ApplicationController
     @shipping = Shipping.new(params)
   end
 
-  def edit
-    @shipment = Shipment.find(params[:id])
-    @lot = Lot.find_by(id: params[:lot])
-    @location = @lot.freezer_location
-  end
-
   def update
     @lot = Lot.find_by(id: params[:lot][:id])
     @location = @lot.freezer_location

@@ -17,6 +17,13 @@ class Shipping
     weight
   end
 
+  def save
+    update_lot
+    lot.save
+  end
+
+  private
+
   def update_lot
     lot.shipment_id = shipment.id
     lot.freezer_location_id = nil

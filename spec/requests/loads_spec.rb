@@ -192,7 +192,7 @@ RSpec.describe 'Loads', type: :request do
 
     describe 'ship location link' do
       context 'when clicked' do
-        it 'sends the correct paramater' do
+        it 'sends the correct location paramater' do
           sign_in create(:user)
           shipment = create(:shipment)
           location1 = create(:freezer_location)
@@ -208,6 +208,23 @@ RSpec.describe 'Loads', type: :request do
 
           expect(page).to have_text lot2.name
           expect(page).to_not have_text lot1.name
+        end
+
+        it 'sends the correct shipping paramater' do
+          sign_in create(:user)
+          shipment1 = create(:shipment)
+          shipment2 = create(:shipment)
+          location = create(:freezer_location)
+          visit loads_path
+
+          click_link 'Ship Location', href:
+                        '/shipment_selections/new?location=' + location.id.to_s
+
+          select(shipment2.name, from: 'Shipment')
+          click_button 'Select'
+
+          expect(page).to have_text shipment2.name
+          expect(page).to_not have_text shipment1.name
         end
       end
     end

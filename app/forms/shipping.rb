@@ -1,12 +1,10 @@
 class Shipping
   def initialize(params)
     @location = FreezerLocation.find_by(id: params[:location])
+    @shipment = Shipment.find_by(id: params[:shipment])
   end
 
-  def shipment
-    Shipment.first
-  end
-
+  attr_reader :shipment
   attr_reader :location
 
   def shipped_weight

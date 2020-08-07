@@ -40,8 +40,7 @@ RSpec.describe 'Shipping', type: :request do
 
       click_button 'Ship'
 
-      expect(page).to have_selector 'h3', text: 'Total shipped weight: '
-      + lot.net_weight.to_s
+      expect(page).to have_selector 'h3', text: 'weight: ' + lot.net_weight.to_s
     end
 
     it 'displays the box name for the lot' do

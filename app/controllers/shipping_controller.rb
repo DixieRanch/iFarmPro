@@ -1,8 +1,12 @@
 class ShippingController < ApplicationController
   def new
-    @shipment = Shipment.find_by(id: params[:shipment])
-    @location = FreezerLocation.find_by(id: params[:location])
-    @shipped_weight = shipped_weight(@shipment)
+    @shipping = Shipping.new(params)
+    @shipment = @shipping.shipment
+    @location = @shipping.location
+    @shipped_weight = @shipping.shipped_weight
+    # @shipment = Shipment.find_by(id: params[:shipment])
+    # @location = FreezerLocation.find_by(id: params[:location])
+    # @shipped_weight = shipped_weight(@shipment)
   end
 
   def edit

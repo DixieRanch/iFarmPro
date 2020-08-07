@@ -107,7 +107,7 @@ FactoryGirl.define do
   end
 
   factory :freezer_location do
-    sequence(:name) { |n| "A-#{n}" }
+    sequence(:name) { |n| "loc#{n}" }
     farm
   end
 
@@ -124,7 +124,7 @@ FactoryGirl.define do
   end
 
   factory :shipment do
-    sequence(:name) { |n| "2018-#{n}" }
+    sequence(:name) { |n| "shipment#{n}" }
     date Time.zone.today
     destination 'Sheller'
   end

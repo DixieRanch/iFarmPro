@@ -214,11 +214,10 @@ RSpec.describe 'Loads', type: :request do
           sign_in create(:user)
           shipment1 = create(:shipment)
           shipment2 = create(:shipment)
-          location = create(:freezer_location)
+          create(:freezer_location)
           visit loads_path
 
-          click_link 'Ship Location', href:
-                        '/shipment_selections/new?location=' + location.id.to_s
+          click_link 'Ship Location'
 
           select(shipment2.name, from: 'Shipment')
           click_button 'Select'

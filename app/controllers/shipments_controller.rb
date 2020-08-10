@@ -1,7 +1,7 @@
 class ShipmentsController < ApplicationController
   def new
     @shipment = Shipment.new
-    @shipments = Shipment.all
+    @shipments = shipments_list
   end
 
   def create
@@ -17,7 +17,7 @@ class ShipmentsController < ApplicationController
 
   def edit
     @shipment = Shipment.find(params[:id])
-    @shipments = Shipment.all
+    @shipments = shipments_list
     render :new
   end
 
@@ -40,5 +40,9 @@ class ShipmentsController < ApplicationController
 
   def permitted_params
     [:name, :date, :destination]
+  end
+
+  def shipments_list
+    Shipment.all.order('name DESC')
   end
 end

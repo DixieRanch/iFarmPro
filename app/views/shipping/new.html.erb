@@ -1,8 +1,8 @@
-<h1>Shipping <%= @location.name %> to <%= @shipment.name %> </h1>
+<h1>Shipping <%= @shipping.location.name %> to <%= @shipping.shipment.name %> </h1>
 
 <div class="row col-md-6">
   
-    <h3>Total shipped weight: <%= @shipped_weight %></h3>
+    <h3>Total shipped weight: <%= @shipping.shipped_weight %></h3>
     <table id='shipping_lots' class='table table-striped'>
       <thead>
           <tr>
@@ -11,12 +11,12 @@
           </tr>
       </thead>
       <tbody>
-          <% @location.lots.each_with_index do |lot, l| %>
+          <% @shipping.location.lots.each_with_index do |lot, l| %>
           <tr>
               <td id="name<%=l%>"><%= lot.name %></td>
               <td id="name<%=l%>"><%= lot.box.name %></td>
               <td>
-              <%= simple_form_for lot, :url => shipping_path(id: @shipment.id), html: {class: 'form-inline'} do |f| %>
+              <%= simple_form_for lot, :url => shipping_path(id: @shipping.shipment.id, shipment: @shipping.shipment.id, location: @shipping.location.id), html: {class: 'form-inline'} do |f| %>
                 <fieldset>
                   <%= f.hidden_field :id, value: lot.id, label: 'lot' %>
                 </fieldset>

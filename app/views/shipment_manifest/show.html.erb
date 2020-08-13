@@ -14,12 +14,14 @@
                     <td id="name<%=l%>"><%= lot.name %></td>  
                     <td id="name<%=l%>"><%= lot.box.name %></td>
                     
-                    <%= link_to 'remove', 
+                    <td>
+                          <%= link_to 'remove', 
                             edit_shipment_manifest_path(lot.id),
                             id: "link_#{l}",
                             class: 'btn-sm btn-primary',
                             role: 'button'
-                    %>
+                          %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>

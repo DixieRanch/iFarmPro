@@ -42,4 +42,16 @@ RSpec.describe 'ShipmentManifests', type: :request do
       click_link 'remove'
     end
   end
+
+  describe 'edit page' do
+    it 'has correct title' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      lot = create(:lot, shipment_id: shipment.id, freezer_location_id: nil)
+      visit edit_shipment_manifest_path(lot.id)
+
+      expect(page).to have_selector 'h1', text:
+                                    'Return ' + lot.name.to_s + ' to Storage'
+    end
+  end
 end

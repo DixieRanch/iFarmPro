@@ -5,5 +5,6 @@ class ShipmentManifestController < ApplicationController
   end
 
   def edit
+    @lot = Lot.find_by(id: params[:id])
   end
 end

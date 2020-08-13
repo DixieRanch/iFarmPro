@@ -32,5 +32,14 @@ RSpec.describe 'ShipmentManifests', type: :request do
       expect(page).to have_selector 'td', text: lot1.box.name
       expect(page).to have_selector 'td', text: lot2.box.name
     end
+
+    it 'has link to remove lot from shipment' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      create(:lot, shipment_id: shipment.id, freezer_location_id: nil)
+      visit shipment_manifest_path(shipment.id)
+
+      click_link 'remove'
+    end
   end
 end

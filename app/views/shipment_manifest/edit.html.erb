@@ -1,1 +1,10 @@
 <h1>Return <%= @lot.name %> to Storage</h1>
+
+<%= simple_form_for @lot, html: {class: 'form-inline'} do |f| %>
+    <%= f.input :freezer_location_id,
+                    collection: FreezerLocation.all.sort_by(&:name),
+                    label: 'Location',
+                    label_method: :name,
+                    include_blank: false
+    %>
+<% end %>

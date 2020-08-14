@@ -17,6 +17,13 @@
                             role: 'button'
                 %>
             </td>
+            <td>
+                <%= link_to 'inspect', shipment_manifest_path(shipment),
+                            id: "link_#{s}",
+                            class: 'btn-sm btn-primary',
+                            role: 'button'
+                %>
+            </td>
 
         </tr>
         <% end %>

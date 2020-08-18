@@ -4,8 +4,8 @@ class ShipmentManifestController < ApplicationController
   end
 
   def edit
-    @lot = Lot.find_by(id: params[:id])
-    params[:id] = @lot.shipment_id
+    params[:lot_id] = params[:id]
+    params[:id] = Lot.find_by(id: params[:id]).shipment_id
     @manifest = ShipmentManifest.new(params)
   end
 end

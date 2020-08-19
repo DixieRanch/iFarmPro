@@ -74,5 +74,19 @@ RSpec.describe 'ShipmentManifests', type: :request do
       select(location.name, from: 'Location')
       click_button 'Move Lot'
     end
+
+    it 'updates the lot location' do
+      sign_in create(:user)
+      shipment = create(:shipment)
+      lot = create(:lot, shipment_id: shipment.id, freezer_location_id: nil)
+      location = create(:freezer_location)
+      visit edit_shipment_manifest_path(lot.id)
+
+      select(location.name, from: 'Location')
+      click_button 'Move Lot'
+
+      lot.reload
+      expect(lot.freezer_location_id).to eq location.id
+    end
   end
 end

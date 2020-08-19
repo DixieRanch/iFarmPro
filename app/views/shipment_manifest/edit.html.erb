@@ -1,12 +1,21 @@
-<h1>Return <%= @manifest.lot.name %> to Storage</h1>
+<div class="row">
+  <div class="panel panel-primary">
+   <div class="panel-heading">
+     <h1>Return <%= @manifest.lot.name %> to Storage</h1>
+   </div>
+    <div class="panel-body">
 
-<%= simple_form_for @manifest.lot, html: {class: 'form-inline'} do |f| %>
-    <%= f.input :freezer_location_id,
-                    collection: FreezerLocation.all.sort_by(&:name),
-                    label: 'Location',
-                    label_method: :name,
-                    include_blank: false
-    %>
-    
-    <%= f.submit 'Move Lot', class: 'btn btn-primary pull-left' %>
-<% end %>
+      <%= simple_form_for @manifest.lot, :url => shipment_manifest_path(id: @manifest.shipment.id, lot_id: @manifest.lot.id), html: {class: 'form-inline'} do |f| %>
+          <fieldset>
+          <%= f.input :freezer_location_id,
+                          collection: FreezerLocation.all.sort_by(&:name),
+                          label: 'Location',
+                          label_method: :name,
+                          include_blank: false
+          %>
+            </fieldset>            
+          <%= f.submit 'Move Lot', class: 'btn btn-primary pull-left' %>
+      <% end %>
+    </div>
+  </div>
+</div>

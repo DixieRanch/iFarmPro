@@ -29,6 +29,23 @@ describe 'app lib tasks import.rake' do
     expect(CurrentEt.find_by(doy: 360).fabian_garcia).to be_nil
   end
 
+  it 'makes a request to check nmsu api', :slow do
+    WebMock.allow_net_connect!
+    weather_station = create(:weather_station)
+    start_date = '2018-01-01'
+    end_date = '2018-01-02'
+    update_et = Tasks::UpdateEt.new('https://weather.nmsu.edu/ziamet/request/station')
+
+    page = update_et.fetch(weather_station.id_code, start_date, end_date)
+
+    array = update_et.parse(page)
+    update_et.update(array, weather_station)
+    update_et.pad(weather_station)
+
+    expect(CurrentEt.find_by(doy: 1).fabian_garcia).to eq 0.080
+    expect(CurrentEt.find_by(doy: 2).fabian_garcia).to eq 0.070.to_d
+  end
+
   private
 
   def form_file
@@ -40,7 +57,7 @@ describe 'app lib tasks import.rake' do
   end
 
   def weather_url
-    'https://weather.nmsu.edu/ziamet/request/station//nmcc-da-1/etref/gdd/data/'
+    'https://weather.nmsu.edu/ziamet/request/station//nmcc-da-1/data/daily/gr/'
   end
 
   def weather_post_url

@@ -104,7 +104,7 @@ describe Tasks::UpdateEt do
   end
 
   def url
-    'https://weather.nmsu.edu/ziamet/request/station/nmcc-da-1/etref/gdd/data/'
+    'https://weather.nmsu.edu/ziamet/request/station/nmcc-da-1/data/daily/gr/'
   end
 
   def url_prefix

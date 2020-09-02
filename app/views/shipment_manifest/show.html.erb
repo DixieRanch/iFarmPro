@@ -1,6 +1,6 @@
 <div class="row">
  <div class="row col-md-6">
-    <h1><%= @shipment.name %> Manifest</h1>
+    <h1><%= @manifest.shipment.name %> Manifest</h1>
     
     <table id='lots' class='table table-striped'>
         <thead>
@@ -9,10 +9,19 @@
         </thead>
         
         <tbody>
-            <% @lots.each_with_index do |lot, l| %>
+            <% @manifest.lots.each_with_index do |lot, l| %>
                 <tr>
                     <td id="name<%=l%>"><%= lot.name %></td>  
-                    <td id="name<%=l%>"><%= lot.box.name %></td>  
+                    <td id="name<%=l%>"><%= lot.box.name %></td>
+                    
+                    <td>
+                          <%= link_to 'remove', 
+                            edit_shipment_manifest_path(id: lot.id),
+                            id: "link_#{l}",
+                            class: 'btn-sm btn-primary',
+                            role: 'button'
+                          %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>

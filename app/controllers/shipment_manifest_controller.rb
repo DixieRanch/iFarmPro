@@ -1,6 +1,18 @@
 class ShipmentManifestController < ApplicationController
   def show
-    @shipment = Shipment.find_by(id: params[:id])
-    @lots = Lot.all.where(shipment_id: @shipment.id)
+    @manifest = ShipmentManifest.new(params)
+  end
+
+  def edit
+    params[:lot_id] = params[:id]
+    params[:id] = Lot.find_by(id: params[:id]).shipment_id
+    @manifest = ShipmentManifest.new(params)
+  end
+
+  def update
+    manifest = ShipmentManifest.new(params)
+
+    manifest.save
+    redirect_to shipment_manifest_path(id: manifest.shipment.id)
   end
 end

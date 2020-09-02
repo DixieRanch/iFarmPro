@@ -89,7 +89,7 @@ Ifarm::Application.routes.draw do
   resources :shipment_selections, only: [:new, :create]
   resources :shipping, only: [:show, :new, :edit, :update],
                               constraints: { id: /[^\/]+/ }
- resources :shipment_manifest, only: [:show]      
+ resources :shipment_manifest, only: [:show, :edit, :update]      
  
   root to: 'static_pages#home'
 

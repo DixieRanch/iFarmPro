@@ -24,12 +24,12 @@ module Tasks
 
     def fetch(weather_station, start_date, end_date)
       # get weather page
-      agent = Mechanize.new
-      agent.get("#{@url}/#{weather_station}/etref/gdd/data/")
-      # edit start and end date
-      agent.page.forms[0]['start_date'] = start_date
-      agent.page.forms[0]['end_date'] = end_date
 
+      agent = Mechanize.new
+      agent.get("#{@url}/#{weather_station}/data/daily/gr/")
+      # edit start and end date
+      agent.page.forms[0]['sd'] = start_date
+      agent.page.forms[0]['ed'] = end_date
       # submit
       agent.page.forms[0].submit
     end

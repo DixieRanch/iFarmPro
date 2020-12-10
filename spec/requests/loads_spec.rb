@@ -118,12 +118,14 @@ RSpec.describe 'Loads', type: :request do
       content3 = create(:content, name: '#3s')
       content4 = create(:content, name: 'Blacks')
       content5 = create(:content, name: 'Cracks')
+      content6 = create(:content, name: 'Pre-Clean')
       location = create(:freezer_location)
       box1 = create(:box, empty_weight: 200)
       box2 = create(:box, empty_weight: 200)
       box3 = create(:box, empty_weight: 200)
       box4 = create(:box, empty_weight: 200)
       box5 = create(:box, empty_weight: 200)
+      box6 = create(:box, empty_weight: 200)
       create(:lot, full_weight: 3000, freezer_location_id: location.id,
                    box_id: box1.id, content_id: content1.id)
       create(:lot, full_weight: 4000, freezer_location_id: location.id,
@@ -134,6 +136,8 @@ RSpec.describe 'Loads', type: :request do
                    box_id: box4.id, content_id: content4.id)
       create(:lot, full_weight: 4300, freezer_location_id: location.id,
                    box_id: box5.id, content_id: content5.id)
+      create(:lot, full_weight: 4400, freezer_location_id: location.id,
+                   box_id: box6.id, content_id: content6.id)
       visit loads_path
 
       expect(page).to have_text '#1 Weight: 2800'
@@ -141,6 +145,7 @@ RSpec.describe 'Loads', type: :request do
       expect(page).to have_text '#3 Weight: 3900'
       expect(page).to have_text 'Blacks Weight: 4000'
       expect(page).to have_text 'Cracks Weight: 4100'
+      expect(page).to have_text 'Pre-Clean Weight: 4200'
     end
 
     context 'with shipped weight' do

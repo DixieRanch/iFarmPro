@@ -32,7 +32,8 @@ class LoadsController < ApplicationController
   def content_weights
     weights = {}
     Content.all.each do |c|
-      weight = Lot.where(content_id: c.id).map(&:net_weight).sum
+      weight = Lot.where(content_id: c.id, shipment_id: nil)
+                  .map(&:net_weight).sum
       name = ('type' + c.name.delete('#')).to_sym
       weights = weights.merge!(name => weight)
     end

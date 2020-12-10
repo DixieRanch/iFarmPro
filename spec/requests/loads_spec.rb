@@ -143,6 +143,28 @@ RSpec.describe 'Loads', type: :request do
       expect(page).to have_text 'Cracks Weight: 4100'
     end
 
+    context 'with shipped weight' do
+      it 'updates the displayed content weight' do
+        sign_in(create(:user))
+        location = create(:freezer_location)
+        box = create(:box)
+        content = create(:content, name: 'Cracks')
+        shipment = create(:shipment)
+        lot = create(:lot,
+                     box: box,
+                     freezer_location_id: location.id,
+                     content: content)
+        visit loads_path
+        expect(page).to have_text 'Cracks Weight: 1800'
+
+        lot.freezer_location_id = nil
+        lot.shipment_id = shipment.id
+        lot.save
+
+        visit loads_path
+        expect(page).to have_text 'Cracks Weight: 0'
+      end
+    end
     it 'displays the total storage weight' do
       sign_in create(:user)
       location1 = create(:freezer_location)

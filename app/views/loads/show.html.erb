@@ -9,6 +9,7 @@
             <th> Contents</th>
             <th> Weight</th>
             <th> Block</th>
+            <th> Field</th>
         </thead>
         
         <tbody>
@@ -19,6 +20,7 @@
                 <td id="name<%=l%>"><%= lot.content.name %></td>
                 <td id="name<%=l%>"><%= lot.full_weight %></td>
                 <td id="name<%=l%>"><%= lot.block.name %></td>
+                <td id="name<%=l%>"><%=  lot.field.name unless lot.field == nil  %></td>
             </tr>
              <% end %>
         </tbody>

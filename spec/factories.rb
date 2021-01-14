@@ -121,6 +121,7 @@ FactoryGirl.define do
     box
     freezer_location
     block
+    content
   end
 
   factory :shipment do

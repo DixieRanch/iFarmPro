@@ -447,5 +447,15 @@ RSpec.describe 'Loads', type: :request do
 
       expect(page).to have_selector 'td', text: lot.full_weight
     end
+
+    it 'shows the block for the lots' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit load_path(location.id)
+
+      expect(page).to have_selector 'td', text: lot.block.name
+    end
   end
 end

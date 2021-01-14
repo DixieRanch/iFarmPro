@@ -203,5 +203,21 @@ RSpec.describe 'FreezerLocations', type: :request do
 
       expect(page).to have_selector 'td', text: lot.name
     end
+
+    context 'with multiple locations' do
+      it 'only shows lots in the selected location' do
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
+        location = create(:freezer_location, name: 'location1', farm: farm)
+        lot1 = create(:lot, freezer_location_id: location.id)
+        location2 = create(:freezer_location, name: 'location2', farm: farm)
+        lot2 = create(:lot, freezer_location_id: location2.id)
+
+        visit freezer_location_path(location.id)
+
+        expect(page).to have_selector 'td', text: lot1.name
+        expect(page).to_not have_selector 'td', text: lot2.name
+      end
+    end
   end
 end

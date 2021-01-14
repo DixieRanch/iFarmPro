@@ -90,6 +90,16 @@ RSpec.describe 'FreezerLocations', type: :request do
                                 href: edit_freezer_location_path(location1)
     end
 
+    it 'has inspect links' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location1 = create(:freezer_location, name: 'location1', farm: farm)
+      visit freezer_locations_path
+
+      expect(page).to have_link 'inspect',
+                                href: freezer_locations_path(location1)
+    end
+
     context 'with 31 locations' do
       it 'has pagination links' do
         sign_in(user = create(:user))

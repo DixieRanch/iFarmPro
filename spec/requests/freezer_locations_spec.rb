@@ -219,5 +219,17 @@ RSpec.describe 'FreezerLocations', type: :request do
         expect(page).to_not have_selector 'td', text: lot2.name
       end
     end
+
+    it 'shows the box name for the lots' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit freezer_locations_path
+
+      click_link 'inspect'
+
+      expect(page).to have_selector 'td', text: lot.box.name
+    end
   end
 end

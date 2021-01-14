@@ -371,4 +371,81 @@ RSpec.describe 'Loads', type: :request do
       expect(lot2.freezer_location).to eq new_location
     end
   end
+
+  describe 'inspect link' do
+    context 'when clicked' do
+      it 'renders the location inspection page' do
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
+        create(:freezer_location, name: 'location1', farm: farm)
+        visit loads_path
+
+        click_link 'Inspect'
+
+        expect(page).to have_title full_title 'location1'
+      end
+    end
+  end
+
+  describe 'inspect page' do
+    it 'shows all lots in the inspected location' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit loads_path
+
+      click_link 'Inspect'
+
+      expect(page).to have_selector 'td', text: lot.name
+    end
+
+    context 'with multiple locations' do
+      it 'only shows lots in the selected location' do
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
+        location = create(:freezer_location, name: 'location1', farm: farm)
+        lot1 = create(:lot, freezer_location_id: location.id)
+        location2 = create(:freezer_location, name: 'location2', farm: farm)
+        lot2 = create(:lot, freezer_location_id: location2.id)
+
+        visit load_path(location.id)
+
+        expect(page).to have_selector 'td', text: lot1.name
+        expect(page).to_not have_selector 'td', text: lot2.name
+      end
+    end
+
+    it 'shows the box name for the lots' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit loads_path
+
+      click_link 'Inspect'
+
+      expect(page).to have_selector 'td', text: lot.box.name
+    end
+
+    it 'shows the contents for the lots' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit load_path(location.id)
+
+      expect(page).to have_selector 'td', text: lot.content.name
+    end
+
+    it 'shows the weights for the lots' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit load_path(location.id)
+
+      expect(page).to have_selector 'td', text: lot.full_weight
+    end
+  end
 end

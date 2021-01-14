@@ -1,4 +1,9 @@
 class FreezerLocationsController < ApplicationController
+  def show
+    @freezer_location = FreezerLocation.find(params[:id])
+    @lots = Lot.all.where(freezer_location_id: params[:id])
+  end
+
   def index
     @freezer_location = FreezerLocation.new
     @freezer_locations = locations_list

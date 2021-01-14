@@ -97,7 +97,7 @@ RSpec.describe 'FreezerLocations', type: :request do
       visit freezer_locations_path
 
       expect(page).to have_link 'inspect',
-                                href: freezer_locations_path(location1)
+                                href: freezer_location_path(location1)
     end
 
     context 'with 31 locations' do
@@ -173,6 +173,35 @@ RSpec.describe 'FreezerLocations', type: :request do
 
         expect(page).to have_css('div.has-error')
       end
+    end
+  end
+
+  describe 'inspect link' do
+    context 'when clicked' do
+      it 'renders the location inspection page' do
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
+        create(:freezer_location, name: 'location1', farm: farm)
+        visit freezer_locations_path
+
+        click_link 'inspect'
+
+        expect(page).to have_title full_title 'location1'
+      end
+    end
+  end
+
+  describe 'inspect page' do
+    it 'shows all lots in the inspected location' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit freezer_locations_path
+
+      click_link 'inspect'
+
+      expect(page).to have_selector 'td', text: lot.name
     end
   end
 end

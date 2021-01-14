@@ -1,0 +1,14 @@
+<% provide :title,  @freezer_location.name%>
+    <table id='lots' class='table table-striped'>
+        <thead>
+            <th> Lot Name</th>
+        </thead>
+        
+        <tbody>
+            <% @lots.each_with_index do |lot, l| %>
+            <tr>
+                <td id="name<%=l%>"><%= lot.name %></td>
+            </tr>
+             <% end %>
+        </tbody>
+    </table>

@@ -84,7 +84,7 @@ Ifarm::Application.routes.draw do
   resources :boxes, only: [:index, :create, :edit, :update],
                     constraints: { id: /[^\/]+/ }
   resources :lots, only: [:new, :create, :edit, :update]
-  resources :loads, only: [:index, :edit, :update]
+  resources :loads, only: [:show, :index, :edit, :update]
   resources :shipments, only: [:new, :create, :edit, :update]
   resources :shipment_selections, only: [:new, :create]
   resources :shipping, only: [:show, :new, :edit, :update],

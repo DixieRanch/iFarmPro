@@ -1,0 +1,28 @@
+<% provide :title,  @freezer_location.name%>
+<div class="row">
+ <div class="row col-md-6">
+     <h1>Location <%= @freezer_location.name %> Inspection</h1>
+    <table id='lots' class='table table-striped'>
+        <thead>
+            <th> Lot Name</th>
+            <th> Box Name</th>
+            <th> Contents</th>
+            <th> Weight</th>
+            <th> Block</th>
+            <th> Field</th>
+        </thead>
+        
+        <tbody>
+            <% @lots.each_with_index do |lot, l| %>
+            <tr>
+                <td id="name<%=l%>"><%= lot.name %></td>
+                <td id="name<%=l%>"><%= lot.box.name %></td>
+                <td id="name<%=l%>"><%= lot.content.name %></td>
+                <td id="name<%=l%>"><%= lot.full_weight %></td>
+                <td id="name<%=l%>"><%= lot.block.name %></td>
+                <td id="name<%=l%>"><%=  lot.field.name unless lot.field == nil  %></td>
+            </tr>
+             <% end %>
+        </tbody>
+    </table>
+</div>

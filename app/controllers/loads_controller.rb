@@ -1,5 +1,10 @@
 require 'will_paginate/array'
 class LoadsController < ApplicationController
+  def show
+    @freezer_location = FreezerLocation.find(params[:id])
+    @lots = Lot.all.where(freezer_location_id: params[:id])
+  end
+
   def index
     @loads = Load.all.paginate(page: params[:page], per_page: 30)
     @totals = totals_for_all_loads

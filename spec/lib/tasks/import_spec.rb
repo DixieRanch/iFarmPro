@@ -29,7 +29,7 @@ describe 'app lib tasks import.rake' do
     expect(CurrentEt.find_by(doy: 360).fabian_garcia).to be_nil
   end
 
-  it 'makes a request to check nmsu api', :slow do
+  xit 'makes a request to check nmsu api', :slow do
     WebMock.allow_net_connect!
     weather_station = create(:weather_station)
     start_date = '2018-01-01'

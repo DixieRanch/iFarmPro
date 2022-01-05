@@ -103,6 +103,17 @@ RSpec.describe 'FreezerLocations', type: :request do
         expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
       end
     end
+
+    describe 'inspect link' do
+      it 'is present' do
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
+        create(:freezer_location, name: 'location', farm: farm)
+        visit freezer_locations_path
+
+        expect(page).to have_link 'inspect'
+      end
+    end
   end
 
   describe 'edit link' do

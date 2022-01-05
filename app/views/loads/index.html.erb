@@ -26,18 +26,20 @@
       <td id="location_contents<%=l%>"><%= ld.location_contents %></td>
       <td id="lot_count<%=l%>"><%= ld.lot_count %></td>
       <td>
-        <%= link_to 'Move All Lots', edit_load_path(ld.location), 
+        <%= link_to 'Move', edit_load_path(ld.location), 
                                      id:"link_#{l}",
                                      class: 'btn-sm btn-primary',
                                      role: 'button'
         %>
-        
-        <%= link_to 'Ship Location', new_shipment_selection_path(location: ld.location.id), 
+      </td>
+      <td>
+        <%= link_to 'Ship', new_shipment_selection_path(location: ld.location.id), 
                                      id:"link_#{l}",
                                      class: 'btn-sm btn-primary',
                                      role: 'button'
         %>
-        
+      </td>
+      <td>
         <%= link_to 'Inspect', load_path(ld.location.id),
                                     id: "link_#{l}",
                                     class: 'btn-sm btn-primary',

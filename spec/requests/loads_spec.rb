@@ -205,7 +205,7 @@ RSpec.describe 'Loads', type: :request do
       create(:lot, freezer_location_id: location.id)
       visit loads_path
 
-      expect(page).to have_link 'Move All Lots'
+      expect(page).to have_link 'Move'
     end
 
     it 'has ship location link' do
@@ -214,7 +214,7 @@ RSpec.describe 'Loads', type: :request do
       create(:lot, freezer_location_id: location.id)
       visit loads_path
 
-      expect(page).to have_link 'Ship Location'
+      expect(page).to have_link 'Ship'
     end
 
     describe 'ship location link' do
@@ -228,7 +228,7 @@ RSpec.describe 'Loads', type: :request do
           lot2 = create(:lot, freezer_location_id: location2.id)
           visit loads_path
 
-          click_link 'Ship Location', href:
+          click_link 'Ship', href:
                         '/shipment_selections/new?location=' + location2.id.to_s
           select(shipment.name, from: 'Shipment')
           click_button 'Select'
@@ -244,7 +244,7 @@ RSpec.describe 'Loads', type: :request do
           create(:freezer_location)
           visit loads_path
 
-          click_link 'Ship Location'
+          click_link 'Ship'
 
           select(shipment2.name, from: 'Shipment')
           click_button 'Select'
@@ -308,9 +308,9 @@ RSpec.describe 'Loads', type: :request do
         create(:freezer_location)
         visit loads_path
 
-        click_link 'Move All Lots'
+        click_link 'Move'
 
-        expect(page).to have_title full_title 'Move All Lots'
+        expect(page).to have_title full_title 'Move'
       end
     end
   end
@@ -322,7 +322,7 @@ RSpec.describe 'Loads', type: :request do
       location2 = create(:freezer_location)
       create(:lot, freezer_location: location)
       visit loads_path
-      click_link 'Move All Lots'
+      click_link 'Move'
 
       select(location2.name, from: 'New Location')
     end
@@ -347,7 +347,7 @@ RSpec.describe 'Loads', type: :request do
       create(:lot, freezer_location: location)
       visit loads_path
 
-      click_link 'Move All Lots'
+      click_link 'Move'
 
       click_button 'Move'
     end
@@ -360,7 +360,7 @@ RSpec.describe 'Loads', type: :request do
       lot2 = create(:lot, freezer_location: location)
       visit loads_path
 
-      click_link 'Move All Lots'
+      click_link 'Move'
       select(new_location.name, from: 'New Location')
       click_button 'Move'
       Company.current_id = user.company.id

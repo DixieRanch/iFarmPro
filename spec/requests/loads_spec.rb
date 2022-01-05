@@ -416,6 +416,16 @@ RSpec.describe 'Loads', type: :request do
       end
     end
 
+    it 'has link to the edit page for listed lots' do
+      sign_in(user = create(:user))
+      farm = user.company.farms.first
+      location = create(:freezer_location, name: 'location1', farm: farm)
+      lot = create(:lot, freezer_location_id: location.id)
+      visit load_path(location.id)
+
+      expect(page).to have_link(lot.name, href: edit_lot_path(lot))
+    end
+
     it 'shows the box name for the lots' do
       sign_in(user = create(:user))
       farm = user.company.farms.first

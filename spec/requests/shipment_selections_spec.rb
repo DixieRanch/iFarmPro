@@ -6,7 +6,7 @@ RSpec.describe 'ShipmentSelections', type: :request do
       sign_in create(:user)
       create(:freezer_location)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
 
       expect(page).to have_title 'Shipment Selection'
     end
@@ -15,7 +15,7 @@ RSpec.describe 'ShipmentSelections', type: :request do
       sign_in create(:user)
       location = create(:freezer_location)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
 
       expect(page).to have_selector 'h1',
                                     text: 'Shipping location ' + location.name
@@ -26,7 +26,7 @@ RSpec.describe 'ShipmentSelections', type: :request do
       shipment = create(:shipment)
       create(:freezer_location)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
 
       select(shipment.name, from: 'Shipment')
     end
@@ -36,7 +36,7 @@ RSpec.describe 'ShipmentSelections', type: :request do
       shipment = create(:shipment)
       create(:freezer_location)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
 
       click_button 'Select'

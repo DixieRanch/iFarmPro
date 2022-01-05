@@ -7,7 +7,7 @@ RSpec.describe 'Shipping', type: :request do
       shipment = create(:shipment)
       location = create(:freezer_location)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
@@ -21,7 +21,7 @@ RSpec.describe 'Shipping', type: :request do
       shipment = create(:shipment)
       lot = create(:lot)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
@@ -34,7 +34,7 @@ RSpec.describe 'Shipping', type: :request do
       location = create(:freezer_location)
       lot = create(:lot, freezer_location: location)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
@@ -48,7 +48,7 @@ RSpec.describe 'Shipping', type: :request do
       shipment = create(:shipment)
       lot = create(:lot)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
@@ -60,7 +60,7 @@ RSpec.describe 'Shipping', type: :request do
       shipment = create(:shipment)
       create(:lot)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
@@ -74,7 +74,7 @@ RSpec.describe 'Shipping', type: :request do
       shipment = create(:shipment)
       lot = create(:lot)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 
@@ -89,7 +89,7 @@ RSpec.describe 'Shipping', type: :request do
       shipment = create(:shipment)
       lot = create(:lot)
       visit loads_path
-      click_link 'Ship Location'
+      click_link 'Ship'
       select(shipment.name, from: 'Shipment')
       click_button 'Select'
 

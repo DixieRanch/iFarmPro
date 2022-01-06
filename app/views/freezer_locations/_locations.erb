@@ -18,7 +18,10 @@
                                     role: 'button'%>
             </td>
             <td>
-                <%= link_to 'inspect', '#' %>
+                <%= link_to 'inspect', '#',
+                                    id: "link_#{l}",
+                                    class: 'btn-sm btn-primary',
+                                    role: 'button'%>
             </td>
         </tr>
         <% end %>

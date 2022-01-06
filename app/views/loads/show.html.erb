@@ -15,7 +15,7 @@
         <tbody>
             <% @lots.each_with_index do |lot, l| %>
             <tr>
-                <td id="name<%=l%>"><%= lot.name %></td>
+                <td id="name<%=l%>"><%= link_to lot.name, edit_lot_path(lot) %></td>
                 <td id="name<%=l%>"><%= lot.box.name %></td>
                 <td id="name<%=l%>"><%= lot.content.name %></td>
                 <td id="name<%=l%>"><%= lot.full_weight %></td>

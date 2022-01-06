@@ -103,6 +103,30 @@ RSpec.describe 'FreezerLocations', type: :request do
         expect(page).to have_css "//*[@class='pagination']//a[text()='2']"
       end
     end
+
+    describe 'inspect link' do
+      it 'is present' do
+        sign_in(user = create(:user))
+        farm = user.company.farms.first
+        create(:freezer_location, name: 'location', farm: farm)
+        visit freezer_locations_path
+
+        expect(page).to have_link 'inspect'
+      end
+
+      context 'when clicked' do
+        it 'renders the location inspection page' do
+          sign_in(user = create(:user))
+          farm = user.company.farms.first
+          create(:freezer_location, name: 'location1', farm: farm)
+          visit freezer_locations_path
+
+          click_link 'inspect'
+
+          expect(page).to have_title full_title 'location1'
+        end
+      end
+    end
   end
 
   describe 'edit link' do

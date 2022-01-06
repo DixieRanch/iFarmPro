@@ -17,6 +17,12 @@
                                     class: 'btn-sm btn-primary',
                                     role: 'button'%>
             </td>
+            <td>
+                <%= link_to 'inspect', load_path(location),
+                                    id: "link_#{l}",
+                                    class: 'btn-sm btn-primary',
+                                    role: 'button'%>
+            </td>
         </tr>
         <% end %>
     </tbody>

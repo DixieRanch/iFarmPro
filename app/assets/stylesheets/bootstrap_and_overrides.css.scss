@@ -117,8 +117,10 @@ body > .navbar .navbar-brand:hover{
 
 // Responsive Tables
 
-.table {
+table {
+  max-width: 100%;
   overflow-x:auto;
+  display: block;
 }
 
 /* miscellaneous */ 

@@ -7,9 +7,7 @@
     },
     // Postgres is now provided via Docker Compose service. See docker-compose.yml.
   },
-  "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "devcontainer",
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libpq-dev && bundle install",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libpq-dev nodejs postgresql && sudo service postgresql start && bundle install",
   "customizations": {
     "vscode": {
       "settings": {},

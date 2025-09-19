@@ -5,9 +5,9 @@
     "ghcr.io/devcontainers/features/ruby": {
       "version": "2.4.2"
     },
-    // PostgreSQL version downgraded from 16.3 to 15.2 due to compatibility requirements with the 'pg' gem (ActiveRecord PostgreSQL adapter) and legacy migration scripts.
+    // PostgreSQL version downgraded from 16.3 to 15.12 due to compatibility requirements with the 'pg' gem (ActiveRecord PostgreSQL adapter) and legacy migration scripts.
     "ghcr.io/devcontainers/features/postgres": {
-      "version": "15.2"
+      "version": "15.12"
     }
   },
   "postCreateCommand": "bundle install",

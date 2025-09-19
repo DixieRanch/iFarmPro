@@ -1,0 +1,21 @@
+{
+  "name": "iFarmPro Ruby 2.4.2 Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-20.04",
+  "features": {
+    "ghcr.io/devcontainers/features/ruby": {
+      "version": "2.4.2"
+    },
+    "ghcr.io/devcontainers/features/postgres": {
+      "version": "16.3"
+    }
+  },
+  "postCreateCommand": "bundle install",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "castwide.solargraph"
+      ]
+    }
+  }
+}

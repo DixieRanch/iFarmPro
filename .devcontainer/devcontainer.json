@@ -9,7 +9,7 @@
   },
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "devcontainer",
-  "postCreateCommand": "bundle install",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libpq-dev && bundle install",
   "customizations": {
     "vscode": {
       "settings": {},

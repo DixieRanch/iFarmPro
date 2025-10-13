@@ -4,14 +4,22 @@ FROM ubuntu:20.04
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update package lists and install essential development tools
+# Update package lists and install essential development tools, including PostgreSQL client and locales
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     curl \
     vim \
+    postgresql-client \
+    locales \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Generate and set locale
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # Set up a working directory
 WORKDIR /workspace

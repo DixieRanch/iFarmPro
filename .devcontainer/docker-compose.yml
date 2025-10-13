@@ -1,28 +1,13 @@
 version: '3.8'
+
 services:
-  devcontainer:
+  dev-environment:
     build:
       context: .
-      dockerfile: .devcontainer/Dockerfile
+      dockerfile: Dockerfile
     volumes:
-      - ..:/workspaces/iFarmPro:cached
-    environment:
-      DATABASE_HOST: postgres
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: postgres
-      DATABASE_NAME: ifarmpro_development
-    depends_on:
-      - postgres
-  postgres:
-    image: postgres:15.12
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ifarmpro_development
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-volumes:
-  postgres-data:
+      - ..:/workspace:cached
+    working_dir: /workspace
+    command: /bin/bash
+    tty: true
+    stdin_open: true

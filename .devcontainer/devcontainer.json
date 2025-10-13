@@ -1,19 +1,7 @@
+// .devcontainer/devcontainer.json
 {
-  "name": "iFarmPro Ruby 2.4.2 Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-20.04",
-  "features": {
-    "ghcr.io/devcontainers/features/ruby": {
-      "version": "2.4.2"
-    },
-    // Postgres is now provided via Docker Compose service. See docker-compose.yml.
-  },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libpq-dev nodejs postgresql && sudo service postgresql start && bundle install",
-  "customizations": {
-    "vscode": {
-      "settings": {},
-      "extensions": [
-        "castwide.solargraph"
-      ]
-    }
-  }
+  "name": "Ubuntu 20.04 Dev Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev-environment",
+  "workspaceFolder": "/workspace"
 }

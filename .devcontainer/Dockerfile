@@ -21,7 +21,12 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-# Set up a working directory
+
+# Create 'codespaces' user and ensure /workspace exists with correct ownership
+RUN useradd -m -s /bin/bash codespaces && \
+    mkdir -p /workspace && \
+    chown -R codespaces:codespaces /workspace
+USER codespaces
 WORKDIR /workspace
 
 # Set the default shell to bash

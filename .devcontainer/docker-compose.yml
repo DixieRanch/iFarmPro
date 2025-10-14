@@ -11,6 +11,7 @@ services:
     command: /bin/bash
     tty: true
     stdin_open: true
+
   postgres:
     image: postgres:14
     restart: always

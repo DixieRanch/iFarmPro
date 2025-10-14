@@ -33,7 +33,7 @@ WORKDIR /workspaces/iFarmPro
 
 # Set the default shell to bash
 
-# Install rbenv and Ruby 2.4.2 for the codespaces user
+# Install rbenv, Ruby 2.4.2, and Bundler 1.17.3 for the codespaces user
 USER root
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -47,8 +47,13 @@ RUN apt-get update && apt-get install -y \
     && echo 'eval "$(rbenv init -)"' >> /home/codespaces/.bashrc \
     && export PATH="/home/codespaces/.rbenv/bin:$PATH" \
     && git clone https://github.com/rbenv/ruby-build.git /home/codespaces/.rbenv/plugins/ruby-build \
-    && chown -R codespaces:codespaces /home/codespaces/.rbenv \
-    && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv install 2.4.2' \
-    && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv global 2.4.2'
+    && chown -R codespaces:codespaces /home/codespaces/.rbenv
+
+
 USER codespaces
+RUN /home/codespaces/.rbenv/bin/rbenv install 2.4.2 \
+    && /home/codespaces/.rbenv/bin/rbenv global 2.4.2 \
+    && /home/codespaces/.rbenv/bin/rbenv exec gem install bundler -v 1.17.3
+    # && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv install 2.4.2' \
+    # && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv global 2.4.2'
 CMD ["/bin/bash"]

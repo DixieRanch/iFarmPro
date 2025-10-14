@@ -11,6 +11,10 @@ services:
     command: /bin/bash
     tty: true
     stdin_open: true
+    environment:
+      USERNAME: postgres
+      PASSWORD: postgres
+      IP: postgres
 
   postgres:
     image: postgres:14

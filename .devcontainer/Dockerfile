@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install PhantomJS for Capybara Poltergeist
+RUN apt-get update && apt-get install -y phantomjs && rm -rf /var/lib/apt/lists/*
+
 # Generate and set locale
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8

@@ -23,9 +23,11 @@ ENV LC_ALL en_US.UTF-8
 
 
 # Create 'codespaces' user and ensure /workspace exists with correct ownership
-RUN useradd -m -s /bin/bash codespaces && \
-    mkdir -p /workspace && \
-    chown -R codespaces:codespaces /workspace
+RUN apt-get update && apt-get install -y sudo \
+    && useradd -m -s /bin/bash codespaces \
+    && echo 'codespaces ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+    && mkdir -p /workspace \
+    && chown -R codespaces:codespaces /workspace
 USER codespaces
 WORKDIR /workspace
 

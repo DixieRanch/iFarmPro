@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 
-# Update package lists and install essential development tools, including PostgreSQL client, dev headers, and locales
+# Update package lists and install essential development tools, including PostgreSQL client, dev headers, locales, and nodejs for ExecJS
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     libpq-dev \
     locales \
+    nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

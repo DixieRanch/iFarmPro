@@ -4,5 +4,5 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev-environment",
   "workspaceFolder": "/workspaces/iFarmPro",
-  "postCreateCommand": "/home/codespaces/.rbenv/bin/rbenv exec bundle install"
+  "postCreateCommand": "/home/codespaces/.rbenv/bin/rbenv exec bundle install && bundle exec rake db:setup db:test:prepare"
 }

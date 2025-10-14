@@ -4,13 +4,15 @@ FROM ubuntu:20.04
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update package lists and install essential development tools, including PostgreSQL client and locales
+
+# Update package lists and install essential development tools, including PostgreSQL client, dev headers, and locales
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     curl \
     vim \
     postgresql-client \
+    libpq-dev \
     locales \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -33,11 +35,11 @@ WORKDIR /workspaces/iFarmPro
 
 # Set the default shell to bash
 
-# Install rbenv, Ruby 2.4.2, and Bundler 1.17.3 for the codespaces user
+# Install rbenv
 USER root
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libssl-dev \
+build-essential \
+libssl-dev \
     libreadline-dev \
     zlib1g-dev \
     git \
@@ -49,11 +51,14 @@ RUN apt-get update && apt-get install -y \
     && git clone https://github.com/rbenv/ruby-build.git /home/codespaces/.rbenv/plugins/ruby-build \
     && chown -R codespaces:codespaces /home/codespaces/.rbenv
 
-
+# Install Ruby 2.4.2, Bundler 1.17.3, and project gems for the codespaces user
 USER codespaces
 RUN /home/codespaces/.rbenv/bin/rbenv install 2.4.2 \
     && /home/codespaces/.rbenv/bin/rbenv global 2.4.2 \
     && /home/codespaces/.rbenv/bin/rbenv exec gem install bundler -v 1.17.3
-    # && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv install 2.4.2' \
-    # && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv global 2.4.2'
-CMD ["/bin/bash"]
+
+# # # Install gems
+# # COPY --chown=codespaces:codespaces Gemfile Gemfile.lock /workspaces/iFarmPro/
+# # RUN /home/codespaces/.rbenv/bin/rbenv exec bundle install
+
+# CMD ["/bin/bash"]

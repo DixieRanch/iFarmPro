@@ -3,5 +3,5 @@
   "name": "Ubuntu 20.04 Dev Environment",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev-environment",
-  "workspaceFolder": "/workspace"
+  "workspaceFolder": "/workspaces/iFarmPro"
 }

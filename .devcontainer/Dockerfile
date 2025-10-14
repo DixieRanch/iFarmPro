@@ -26,10 +26,10 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update && apt-get install -y sudo \
     && useradd -m -s /bin/bash codespaces \
     && echo 'codespaces ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
-    && mkdir -p /workspace \
-    && chown -R codespaces:codespaces /workspace
+    && mkdir -p /workspaces/iFarmPro \
+    && chown -R codespaces:codespaces /workspaces/iFarmPro
 USER codespaces
-WORKDIR /workspace
+WORKDIR /workspaces/iFarmPro
 
 # Set the default shell to bash
 

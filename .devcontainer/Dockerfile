@@ -32,4 +32,23 @@ USER codespaces
 WORKDIR /workspace
 
 # Set the default shell to bash
+
+# Install rbenv and Ruby 2.4.2 for the codespaces user
+USER root
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libssl-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    git \
+    && git clone https://github.com/rbenv/rbenv.git /home/codespaces/.rbenv \
+    && cd /home/codespaces/.rbenv && src/configure && make -C src \
+    && echo 'export PATH="/home/codespaces/.rbenv/bin:$PATH"' >> /home/codespaces/.bashrc \
+    && echo 'eval "$(rbenv init -)"' >> /home/codespaces/.bashrc \
+    && export PATH="/home/codespaces/.rbenv/bin:$PATH" \
+    && git clone https://github.com/rbenv/ruby-build.git /home/codespaces/.rbenv/plugins/ruby-build \
+    && chown -R codespaces:codespaces /home/codespaces/.rbenv \
+    && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv install 2.4.2' \
+    && su - codespaces -c '/home/codespaces/.rbenv/bin/rbenv global 2.4.2'
+USER codespaces
 CMD ["/bin/bash"]

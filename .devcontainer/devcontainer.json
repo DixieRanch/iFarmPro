@@ -5,5 +5,7 @@
   "service": "dev-environment",
   "workspaceFolder": "/workspaces/iFarmPro",
   "postCreateCommand": "/home/codespaces/.rbenv/bin/rbenv exec bundle install &&
-                        bundle exec rake db:setup db:test:prepare db:seed RAILS_ENV=test"
+                        bundle exec rake db:setup &&
+                        bundle exec rake db:test:prepare &&
+                        bundle exec rake db:seed RAILS_ENV=test"
 }

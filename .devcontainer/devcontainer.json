@@ -4,5 +4,9 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev-environment",
   "workspaceFolder": "/workspaces/iFarmPro",
-  "postCreateCommand": "/home/codespaces/.rbenv/bin/rbenv exec bundle install && bundle exec rake db:setup db:test:prepare db:seed RAILS_ENV=test"
+  "postCreateCommand": [
+    "export PATH=\"/workspaces/iFarmPro/bin:$PATH\"",
+    "/home/codespaces/.rbenv/bin/rbenv exec bundle install",
+    "bundle exec rake db:setup db:test:prepare db:seed RAILS_ENV=test"
+  ]
 }

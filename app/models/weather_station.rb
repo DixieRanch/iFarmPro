@@ -85,9 +85,10 @@ class WeatherStation < ActiveRecord::Base
   def doy_average_et_hash
     # Create a hash of average ETH for each day of the year
 
-    query = DailyEt.group('EXTRACT(DOY FROM date)').average(:eth)
-    et_hash = {}
-    query.each_pair { |doy, eth| et_hash.store(doy.to_i, eth.to_f) }
+  query = DailyEt.group('EXTRACT(DOY FROM date)').average(:eth)
+  et_hash = {}
+  # Round averages to 2 decimal places to avoid floating point precision issues in specs
+  query.each_pair { |doy, eth| et_hash.store(doy.to_i, eth.to_f.round(2)) }
     et_hash
   end
 

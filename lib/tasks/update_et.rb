@@ -1,11 +1,14 @@
 require 'open-uri'
+require 'net/http'
+require 'uri'
+require 'nokogiri'
 
 module Tasks
   class UpdateEt
     attr_reader :url
     attr_writer :doy
 
-    def initialize(url)
+    def initialize(url = nil)
       @url = url
     end
 
@@ -26,19 +29,43 @@ module Tasks
       # get weather page
 
       agent = Mechanize.new
-      agent.get("#{@url}/#{weather_station}/data/daily/gr/")
-      # edit start and end date
-      agent.page.forms[0]['sd'] = start_date
-      agent.page.forms[0]['ed'] = end_date
-      # submit
-      agent.page.forms[0].submit
+      token_uri = URI('https://weather.nmsu.edu/ziamet/station/data/daldkr/')
+      token_res = Net::HTTP.get_response(token_uri)
+
+      token_page = Nokogiri::HTML(token_res.body)
+      csrf_token = token_page.at('[name="csrfmiddlewaretoken"]')['value']
+
+      post_uri = URI('https://weather.nmsu.edu/ziamet/station/dret/dly/daldkr/')
+      params = {
+                'csrfmiddlewaretoken' => csrf_token,
+                'dtype'               => 'dret',
+                'sid'                 => 'daldkr',
+                'sdate'               => start_date,
+                'edate'               => end_date,
+                'output'              => 'tbl',
+                'units'               => 'iu'
+              }
+
+      # res = Net::HTTP.post_form(post_uri, params)
+      http = Net::HTTP.start(post_uri.hostname, post_uri.port, use_ssl: post_uri.scheme == 'https')
+      req = Net::HTTP::Post.new(post_uri.request_uri)
+      req.set_form_data(params)
+      # Referer should point at the page that issued the CSRF token
+      req['Referer'] = token_uri.to_s
+      # req['User-Agent'] = 'iFarmPro/1.0'
+      if token_res.get_fields('set-cookie')
+        req['Cookie'] = Array(token_res.get_fields('set-cookie')).map { |c| c.split(';', 2).first }.join('; ')
+      end
+
+      res = http.request(req)
+      return Mechanize::Page.new(post_uri, res.to_hash, res.body, res.code.to_i, agent)
     end
 
     def parse(page)
       array = []
       page.search('table')[0].search('tbody').search('tr').each do |row|
         array << { doy: row.search('td')[0].text.to_date.yday,
-                   eth: row.search('td')[10].text }
+                   eth: row.search('td')[7].text }
       end
       array
     end

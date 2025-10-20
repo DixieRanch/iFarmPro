@@ -33,28 +33,37 @@ describe Tasks::UpdateEt do
   end
 
   describe '#fetch' do
-    it 'returns a Mechanize::Page from weather station url' do
+    it 'returns a Mechanize::Page from weather station url', :slow do
       weather_station_code = create(:weather_station).id_code
-      update_et = Tasks::UpdateEt.new(url_prefix)
-      stub_request(:get,  url).to_return(form_file)
-      stub_request(:post, post_url).to_return(response_file)
-
-      page = update_et.fetch(weather_station_code, '2017-06-25', '2017-06-30')
-
+      update_et = Tasks::UpdateEt.new
+      allow_any_instance_of(Tasks::UpdateEt).to receive(:start_date).and_return('2018-06-25')
+      allow_any_instance_of(Tasks::UpdateEt).to receive(:end_date).and_return('2018-06-30')
+      
+      WebMock.allow_net_connect!
+      begin
+        page = update_et.fetch(weather_station_code, '2017-06-25', '2017-06-30')
+      ensure
+        WebMock.disable_net_connect!(allow_localhost: true)
+      end
+      
       expect(page.class).to eq Mechanize::Page.new.class
     end
   end
-
+  
   describe '#parse(page)' do
-    it 'returns an array of ET hashes' do
-      stub_request(:get, url).to_return(response_file)
-      page = Mechanize.new.get(url)
+    it 'returns an array of ET hashes', :slow do
+      WebMock.allow_net_connect!
+      begin
+        page = Tasks::UpdateEt.new.fetch('nmcc-da-1', '2018-06-25', '2018-06-30')
+      ensure
+        WebMock.disable_net_connect!(allow_localhost: true)
+      end
 
-      array = Tasks::UpdateEt.new(url).parse(page)
+      array = Tasks::UpdateEt.new.parse(page)
 
-      expect(array[0][:eth]).to eq '0.304'
+      expect(array[0][:eth]).to eq '0.30'
       expect(array[0][:doy]).to eq 176
-      expect(array[5][:eth]).to eq '0.274'
+      expect(array[5][:eth]).to eq '0.27'
       expect(array[5][:doy]).to eq 181
     end
   end
@@ -74,19 +83,23 @@ describe Tasks::UpdateEt do
     it 'downloads, updates, and pads CurrentEt', :slow do
       weather_station = create(:weather_station)
       station_symbol = weather_station.db_col.to_sym
-      update_et = Tasks::UpdateEt.new(url_prefix)
       366.times do |doy|
         CurrentEt.find_or_create_by(doy: doy)
                  .update_attributes(station_symbol => 0.05)
       end
-      stub_request(:get,  url).to_return(form_file)
-      stub_request(:post, post_url).to_return(response_file)
-
-      update_et.fetch_parse_update_pad_table
+      allow_any_instance_of(Tasks::UpdateEt).to receive(:start_date).and_return('2018-06-25')
+      allow_any_instance_of(Tasks::UpdateEt).to receive(:end_date).and_return('2018-06-30')
+      
+      WebMock.allow_net_connect!
+      begin
+        Tasks::UpdateEt.new.fetch_parse_update_pad_table
+      ensure
+        WebMock.disable_net_connect!(allow_localhost: true)
+      end
 
       expect(CurrentEt.find_by(doy: 175)[weather_station.db_col]).to eq 0.05
-      expect(CurrentEt.find_by(doy: 176)[weather_station.db_col]).to eq 0.304
-      expect(CurrentEt.find_by(doy: 181)[weather_station.db_col]).to eq 0.274
+      expect(CurrentEt.find_by(doy: 176)[weather_station.db_col]).to eq 0.30
+      expect(CurrentEt.find_by(doy: 181)[weather_station.db_col]).to eq 0.27
       expect(CurrentEt.find_by(doy: 182)[weather_station.db_col]).to be_nil
       expect(CurrentEt.find_by(doy: 366)[weather_station.db_col]).to be_nil
       expect(CurrentEt.find_by(doy: 1)[weather_station.db_col]).to eq 0.05

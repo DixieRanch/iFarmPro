@@ -1,5 +1,5 @@
-# Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+# Use Microsoft devcontainer base image for Ubuntu 22.04
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PhantomJS for Capybara Poltergeist
-RUN apt-get update && apt-get install -y phantomjs xvfb && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y phantomjs xvfb && rm -rf /var/lib/apt/lists/*
 
 # Generate and set locale
 RUN locale-gen en_US.UTF-8
@@ -28,13 +28,13 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 
-# Create 'codespaces' user and ensure /workspace exists with correct ownership
+# Create (or reuse) 'vscode' user and ensure /workspace exists with correct ownership
 RUN apt-get update && apt-get install -y sudo \
-    && useradd -m -s /bin/bash codespaces \
-    && echo 'codespaces ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+    && if ! id -u vscode >/dev/null 2>&1; then useradd -m -s /bin/bash vscode; fi \
+    && echo 'vscode ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && mkdir -p /workspaces/iFarmPro \
-    && chown -R codespaces:codespaces /workspaces/iFarmPro
-USER codespaces
+    && chown -R vscode:vscode /workspaces/iFarmPro
+USER vscode
 WORKDIR /workspaces/iFarmPro
 
 # Set the default shell to bash
@@ -47,22 +47,22 @@ libssl-dev \
     libreadline-dev \
     zlib1g-dev \
     git \
-    && git clone https://github.com/rbenv/rbenv.git /home/codespaces/.rbenv \
-    && cd /home/codespaces/.rbenv && src/configure && make -C src \
-    && echo 'export PATH="/home/codespaces/.rbenv/bin:$PATH"' >> /home/codespaces/.bashrc \
-    && echo 'eval "$(rbenv init -)"' >> /home/codespaces/.bashrc \
-    && export PATH="/home/codespaces/.rbenv/bin:$PATH" \
-    && git clone https://github.com/rbenv/ruby-build.git /home/codespaces/.rbenv/plugins/ruby-build \
-    && chown -R codespaces:codespaces /home/codespaces/.rbenv
+    && git clone https://github.com/rbenv/rbenv.git /home/vscode/.rbenv \
+    && cd /home/vscode/.rbenv && src/configure && make -C src \
+    && echo 'export PATH="/home/vscode/.rbenv/bin:$PATH"' >> /home/vscode/.bashrc \
+    && echo 'eval "$(rbenv init -)"' >> /home/vscode/.bashrc \
+    && export PATH="/home/vscode/.rbenv/bin:$PATH" \
+    && git clone https://github.com/rbenv/ruby-build.git /home/vscode/.rbenv/plugins/ruby-build \
+    && chown -R vscode:vscode /home/vscode/.rbenv
 
 # Install Ruby 2.4.2, Bundler 1.17.3, and project gems for the codespaces user
-USER codespaces
-RUN /home/codespaces/.rbenv/bin/rbenv install 2.4.2 \
-    && /home/codespaces/.rbenv/bin/rbenv global 2.4.2 \
-    && /home/codespaces/.rbenv/bin/rbenv exec gem install bundler -v 1.17.3
+USER vscode
+RUN /home/vscode/.rbenv/bin/rbenv install 2.4.2 \
+    && /home/vscode/.rbenv/bin/rbenv global 2.4.2 \
+    && /home/vscode/.rbenv/bin/rbenv exec gem install bundler -v 1.17.3
 
 # # # Install gems
-# # COPY --chown=codespaces:codespaces Gemfile Gemfile.lock /workspaces/iFarmPro/
-# # RUN /home/codespaces/.rbenv/bin/rbenv exec bundle install
+# # COPY --chown=vscode:vscode Gemfile Gemfile.lock /workspaces/iFarmPro/
+# # RUN /home/vscode/.rbenv/bin/rbenv exec bundle install
 
 # CMD ["/bin/bash"]

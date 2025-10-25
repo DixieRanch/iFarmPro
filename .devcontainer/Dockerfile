@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:2.5
 
 # Update apt sources for Debian Buster (EOL)
 RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \

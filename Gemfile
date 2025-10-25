@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.10'
+ruby '2.5.9'
 
 gem 'american_date',          '1.1.1'
 gem 'bcrypt',                 '3.1.20'

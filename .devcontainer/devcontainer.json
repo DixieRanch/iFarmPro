@@ -1,6 +1,6 @@
 // .devcontainer/devcontainer.json
 {
-  "name": "Ruby 2.4 Dev Environment",
+  "name": "Ruby 2.5 Dev Environment",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev-environment",
   "workspaceFolder": "/workspaces/iFarmPro",

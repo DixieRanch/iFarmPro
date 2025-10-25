@@ -1,5 +1,5 @@
-# Use Microsoft devcontainer base image for Ubuntu 22.04
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+# Use Microsoft devcontainer base image for Ubuntu 24.04
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive

@@ -4,7 +4,7 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev-environment",
   "workspaceFolder": "/workspaces/iFarmPro",
-  "postCreateCommand": "/home/vscode/.rbenv/bin/rbenv exec bundle install &&
+  "postCreateCommand": "bundle install &&
                         bundle exec rake db:setup &&
                         bundle exec rake db:test:prepare &&
                         bundle exec rake db:seed RAILS_ENV=test"

@@ -1,39 +1,37 @@
-# Use Microsoft devcontainer base image for Ubuntu 24.04
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+FROM ruby:2.4
+
+# Update apt sources for Debian Buster (EOL)
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    sed -i 's|http://deb.debian.org/debian buster-updates|http://archive.debian.org/debian buster-updates|g' /etc/apt/sources.list
 
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
-
 
 # Update package lists and install essential development tools, including PostgreSQL client, dev headers, locales, and nodejs for ExecJS
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     libpq-dev \
     nodejs \
+    locales \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Generate and set locale
-RUN locale-gen en_US.UTF-8
+RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+# Create vscode user
+RUN useradd -m -s /bin/bash vscode
 
-# Install rbenv
-RUN git clone https://github.com/rbenv/rbenv.git /home/vscode/.rbenv \
-    && cd /home/vscode/.rbenv && src/configure && make -C src \
-    && echo 'export PATH="/home/vscode/.rbenv/bin:$PATH"' >> /home/vscode/.bashrc \
-    && echo 'eval "$(rbenv init -)"' >> /home/vscode/.bashrc \
-    && export PATH="/home/vscode/.rbenv/bin:$PATH" \
-    && git clone https://github.com/rbenv/ruby-build.git /home/vscode/.rbenv/plugins/ruby-build \
-    && chown -R vscode:vscode /home/vscode/.rbenv
+# Install Bundler 1.17.3
+RUN gem install bundler -v 1.17.3
+
+# Change ownership of gem directories
+RUN chown -R vscode:vscode /usr/local/bundle
 
 # Set working directory
 USER vscode
 WORKDIR /workspaces/iFarmPro
-
-# Install Ruby 2.4.2, Bundler 1.17.3, and project gems for the codespaces user
-RUN /home/vscode/.rbenv/bin/rbenv install 2.4.2 \
-    && /home/vscode/.rbenv/bin/rbenv global 2.4.2 \
-    && /home/vscode/.rbenv/bin/rbenv exec gem install bundler -v 1.17.3

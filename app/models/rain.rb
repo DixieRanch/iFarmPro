@@ -23,7 +23,7 @@ class Rain < ActiveRecord::Base
   validates :farm_id, presence: true
 
   def formatted_date
-    date.to_s(:long).squeeze(' ') if date
+    date.strftime('%B %-d, %Y') if date
   end
 
   def date=(value)

@@ -4,17 +4,17 @@ ruby '2.5.9'
 gem 'american_date',          '1.1.1'
 gem 'bcrypt',                 '3.1.20'
 gem 'bootstrap-sass',         '3.3.6'
-gem 'coffee-rails',           '4.1.1'
+gem 'coffee-rails',           '5.0.0'
 gem 'jquery-rails',           '4.1.1'
 gem 'mechanize',              '2.7.4'
 gem 'pg',                     '0.18.4'
-gem 'rails',                  '5.0.7.2'
+gem 'rails',                  '5.2.8.1'
 gem 'sass',                   '3.4.22'
 gem 'sass-rails',             '5.0.7'
-gem 'simple_form',            '3.5.0'
+gem 'simple_form',            '4.1.0'
 gem 'sprockets',              '3.7.2'
 gem 'uglifier',               '3.0.0'
-gem 'will_paginate',          '3.1.6'
+gem 'will_paginate',          '3.3.1'
 
 group :production do
   gem 'rails_12factor',       '0.0.2'
@@ -34,9 +34,9 @@ end
 # in production environments by default.
 
 group :test do
-  gem 'capybara',           '2.7.0'
+  gem 'capybara',           '2.18.0'
   gem 'capybara-email',     '2.5.0'
-  gem 'database_cleaner',   '1.5.3'
+  gem 'database_cleaner',   '1.7.0'
   gem 'factory_girl_rails', '4.7.0'
   gem 'ffi', '< 1.17'
   gem 'poltergeist',        '1.9.0'

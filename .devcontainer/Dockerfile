@@ -3,12 +3,13 @@ FROM ruby:3.1
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update package lists and install essential development tools, including PostgreSQL client, dev headers, locales, and nodejs for ExecJS
+# Update package lists and install essential development tools, including PostgreSQL client, dev headers, locales, nodejs for ExecJS, and sudo
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     libpq-dev \
     nodejs \
     locales \
+    sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -20,6 +21,8 @@ ENV LC_ALL en_US.UTF-8
 
 # Create vscode user
 RUN useradd -m -s /bin/bash vscode
+RUN usermod -aG sudo vscode
+RUN echo 'vscode ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Install Bundler 2.4.0 (compatible with Ruby 3.1)
 RUN gem install bundler -v 2.4.0

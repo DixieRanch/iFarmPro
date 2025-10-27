@@ -14,6 +14,7 @@ This is a Rails 7.0 irrigation management application with multi-tenant architec
 
 ## Code Patterns
 - **Multi-tenancy**: All models use `default_scope { where(company_id: Company.current_id) }` - ensure new records set `company_id`.
+  > **Note**: Using `default_scope` for multi-tenancy is intentional here to enforce tenant isolation at the model level. While `default_scope` is often considered an anti-pattern in Rails due to potential for unexpected behavior (e.g., in associations or when bypassing scopes is needed), it provides a simple way to ensure all queries are tenant-aware. Alternatives include explicit scoping via class methods (e.g., `for_company(id)`), but this requires discipline across the codebase. Consider the trade-offs and test thoroughly for edge cases.
 - **Form Objects**: Complex forms use ActiveModel classes in `app/forms/` (e.g., `LotForm`) with delegation to underlying models and custom validation.
 - **Associations**: Use `dependent: :restrict_with_error` to prevent deletion of referenced records.
 - **Validation**: Email uniqueness is case-insensitive (`uniqueness: { case_sensitive: false }`).
@@ -27,8 +28,7 @@ This is a Rails 7.0 irrigation management application with multi-tenant architec
 - `lib/tasks/import.rake`: CSV data import patterns for reference tables
 
 ## Testing Conventions
-- **Factories**: Use FactoryBot for test data creation
-- **Database Cleaning**: Uses `DatabaseCleaner` with transaction strategy, preserving reference tables (`ets`, `kcs`, `current_ets`)
+- **Database Cleaning**: Uses `DatabaseCleaner` with transaction strategy, preserving reference tables (`ets` - evapotranspiration rates, `kcs` - crop coefficients, `current_ets` - current evapotranspiration values)
 - **Feature Tests**: Capybara with Poltergeist for JavaScript testing, email testing with `capybara-email`
 
 ## Common Gotchas

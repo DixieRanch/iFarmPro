@@ -11,7 +11,7 @@ class LotForm
   delegate :persisted?, to: :lot
 
   def self.lot_attributes
-    Lot.column_names + Lot.reflections.keys
+    Lot.column_names + Lot.reflections.keys.map(&:to_s)
   end
 
   lot_attributes.each do |attr|

@@ -55,7 +55,7 @@ class SoilApplication < ActiveRecord::Base
   end
 
   private_class_method def self.current_applications
-    Field.all.map do |field|
+    Field.includes(:soil_applications).map do |field|
       last_application(field) || default_application(field)
     end
   end

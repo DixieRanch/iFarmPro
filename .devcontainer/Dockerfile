@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Heroku CLI
+RUN curl https://cli-assets.heroku.com/install.sh | sh
+
 # Generate and set locale
 RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 ENV LANG en_US.UTF-8

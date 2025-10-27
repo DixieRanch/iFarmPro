@@ -38,7 +38,7 @@ class SoilProductsController < ApplicationController
 
   def update
     @product = SoilProduct.find(params[:id])
-    if @product.update_attributes(soil_product_params)
+    if @product.update(soil_product_params)
       flash[:success] = 'Soil Product successfully updated.'
       redirect_to soil_products_path
     else

@@ -16,7 +16,7 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   # Factory Girl shortened syntax; FactoryGirl.create()-> create(), etc.
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   # ## Mock Framework
   #

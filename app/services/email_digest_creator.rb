@@ -17,7 +17,7 @@ class EmailDigestCreator
   private
 
   def save_email_digest_to_user
-    user.update_attributes(email_digest: create_digest_from_token)
+    user.update(email_digest: create_digest_from_token)
   end
 
   def create_digest_from_token

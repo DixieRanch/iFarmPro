@@ -55,13 +55,13 @@ class SoilApplication < ActiveRecord::Base
   end
 
   private_class_method def self.current_applications
-    Field.includes(:soil_applications).map do |field|
+    Field.all.map do |field|
       last_application(field) || default_application(field)
     end
   end
 
   private_class_method def self.last_application(field)
-    field.soil_applications.herbicide.order('date').last
+    field.soil_applications.joins(:soil_product).where('lower(soil_products.name) like ? OR lower(soil_products.name) like ?', '%pindar%', '%prowl%').order('soil_applications.date').last
   end
 
   private_class_method def self.default_application(field)

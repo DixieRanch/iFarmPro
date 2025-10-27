@@ -1,9 +1,4 @@
-FROM ruby:2.5
-
-# Update apt sources for Debian Buster (EOL)
-RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
-    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
-    sed -i 's|http://deb.debian.org/debian buster-updates|http://archive.debian.org/debian buster-updates|g' /etc/apt/sources.list
+FROM ruby:3.1
 
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -26,8 +21,8 @@ ENV LC_ALL en_US.UTF-8
 # Create vscode user
 RUN useradd -m -s /bin/bash vscode
 
-# Install Bundler 1.17.3
-RUN gem install bundler -v 1.17.3
+# Install Bundler 2.4.0 (compatible with Ruby 3.1)
+RUN gem install bundler -v 2.4.0
 
 # Change ownership of gem directories
 RUN chown -R vscode:vscode /usr/local/bundle

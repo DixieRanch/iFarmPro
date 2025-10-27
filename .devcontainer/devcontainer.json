@@ -4,6 +4,9 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev-environment",
   "workspaceFolder": "/workspaces/iFarmPro",
+  "containerEnv": {
+    "HEROKU_API_KEY": "${localEnv:HEROKU_API_KEY}"
+  },
   "customizations": {
     "vscode": {
       "settings": {
@@ -11,5 +14,9 @@
       }
     }
   },
-  "postCreateCommand": "bundle install && bundle exec rake db:setup && bundle exec rake db:test:prepare && bundle exec rake db:seed RAILS_ENV=test"
+  "postCreateCommand": "bundle install && 
+                        bundle exec rake db:setup && 
+                        bundle exec rake db:test:prepare && 
+                        bundle exec rake db:seed RAILS_ENV=test && 
+                        git remote add heroku-staging https://:$HEROKU_API_KEY@git.heroku.com/ifarmpro-staging.git || true"
 }

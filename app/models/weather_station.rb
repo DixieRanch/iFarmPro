@@ -78,7 +78,7 @@ class WeatherStation < ActiveRecord::Base
     # Update the AverageEts for a weather station
 
     doy_average_et_hash.each do |doy, eth|
-      average_ets.find_or_create_by(doy: doy).update_attributes(eth: eth)
+      average_ets.find_or_create_by(doy: doy).update(eth: eth)
     end
   end
 

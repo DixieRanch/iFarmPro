@@ -90,7 +90,7 @@ Ifarm::Application.routes.draw do
   resources :shipping, only: [:show, :new, :edit, :update],
                               constraints: { id: /[^\/]+/ }
  resources :shipment_manifest, only: [:show, :edit, :update]      
- 
+
   root to: 'static_pages#home'
 
   get '/signup',    to: 'companies#new'
@@ -131,14 +131,6 @@ Ifarm::Application.routes.draw do
   #   resources :products do
   #     resources :comments, :sales
   #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
   #   end
 
   # Sample resource route within a namespace:

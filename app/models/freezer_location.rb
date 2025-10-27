@@ -2,10 +2,10 @@ class FreezerLocation < ActiveRecord::Base
   default_scope { where(company_id: Company.current_id) }
   scope :by_name_numerically, (
   lambda do
-    order("COALESCE(SUBSTRING(name FROM '^(\\d+)')::INTEGER),
+    order(Arel.sql("COALESCE(SUBSTRING(name FROM '^(\\d+)')::INTEGER),
            SUBSTRING(name FROM '^\\d*(.*?)(\\d+)?$'),
            COALESCE(SUBSTRING(name FROM '(\\d+)$')::INTEGER),
-           name")
+           name"))
   end
   )
 

@@ -180,7 +180,7 @@ RSpec.describe 'Lots', type: :request do
         fill_in('Lot Name', with: '')
         click_button 'Save'
 
-        expect(page).to have_css('div.has-error')
+        expect(page).to have_content("can't be blank")
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe 'Lots', type: :request do
         fill_in('Box Name', with: 'No Box')
         click_button 'Save'
 
-        expect(page).to have_css('div.has-error')
+        expect(page).to have_content('Box not found')
       end
     end
   end
@@ -330,7 +330,7 @@ RSpec.describe 'Lots', type: :request do
 
         click_button 'Save'
 
-        expect(page).to have_css('div.has-error')
+        expect(page).to have_content("can't be blank")
       end
     end
 
@@ -346,7 +346,7 @@ RSpec.describe 'Lots', type: :request do
         fill_in('Box Name', with: '003')
         click_button 'Save'
 
-        expect(page).to have_css('div.has-error')
+        expect(page).to have_content('Box not found')
       end
     end
   end

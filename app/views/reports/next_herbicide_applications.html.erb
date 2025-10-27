@@ -15,8 +15,8 @@
           <% @report.each do |application| %>
             <tr>
               <td><%= application.field.name_with_block %></td>
-              <td><%= application.next_application.to_s(:long) %></td>
-              <td><%= application.date.to_s(:long) %></td>
+              <td><%= application.next_application.strftime('%B %-d, %Y') %></td>
+              <td><%= application.date.strftime('%B %-d, %Y') %></td>
             </tr>
           <% end %>
         </tbody>

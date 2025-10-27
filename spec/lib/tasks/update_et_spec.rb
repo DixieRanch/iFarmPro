@@ -17,7 +17,7 @@ describe Tasks::UpdateEt do
       update_et = Tasks::UpdateEt.new(url)
       366.times do |doy|
         CurrentEt.find_or_create_by(doy: doy)
-                 .update_attributes(station_symbol => 0.05)
+                 .update(station_symbol => 0.05)
       end
       update_et.doy = 200
 
@@ -85,7 +85,7 @@ describe Tasks::UpdateEt do
       station_symbol = weather_station.db_col.to_sym
       366.times do |doy|
         CurrentEt.find_or_create_by(doy: doy)
-                 .update_attributes(station_symbol => 0.05)
+                 .update(station_symbol => 0.05)
       end
       allow_any_instance_of(Tasks::UpdateEt).to receive(:start_date).and_return('2018-06-25')
       allow_any_instance_of(Tasks::UpdateEt).to receive(:end_date).and_return('2018-06-30')

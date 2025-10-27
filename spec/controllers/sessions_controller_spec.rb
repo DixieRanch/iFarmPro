@@ -7,7 +7,7 @@ describe SessionsController do
       Company.current_id = user.company.id
       farm = create :farm
 
-      post :create, session: { email: user.email, password: user.password }
+      post :create, params: { session: { email: user.email, password: user.password } }
       Company.current_id = user.company.id
 
       expect(session[:remember_token]).to eq user.remember_token

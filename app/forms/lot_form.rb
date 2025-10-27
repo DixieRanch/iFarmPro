@@ -11,7 +11,7 @@ class LotForm
   delegate :persisted?, to: :lot
 
   def self.lot_attributes
-    Lot.column_names.push(Lot.reflections.keys).flatten
+    Lot.column_names + Lot.reflections.keys.map(&:to_s)
   end
 
   lot_attributes.each do |attr|
@@ -75,9 +75,10 @@ class LotForm
   end
 
   def promote_errors(model_errors)
-    model_errors.each do |attribute, message|
-      errors.add(attribute, message)
-      errors.add(:box_name, message) if attribute == :box_id
+    model_errors.each do |error|
+      attr_name = error.attribute
+      errors.add(attr_name, error.message)
+      errors.add(:box_name, error.message) if attr_name == :box_id
     end
   end
 end

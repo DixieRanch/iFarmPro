@@ -168,7 +168,7 @@ describe 'UserInvitations' do
         click_button 'Send Invitation'
         open_email('newUser@example.com')
         invitation = UserInvitation.with_email('newUser@example.com')
-        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+        invitation.update(invitation_sent_at: 8.days.ago)
 
         current_email.click_link 'Finish Signup'
 
@@ -186,7 +186,7 @@ describe 'UserInvitations' do
         invitation.invitation_digest = UserInvitation.digest(invitation_token)
         visit edit_user_invitation_path(invitation_token,
                                         email: invitation.email)
-        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+        invitation.update(invitation_sent_at: 8.days.ago)
 
         fill_in 'Password',     with: 'password'
         fill_in 'Confirmation', with: 'password'
@@ -204,7 +204,7 @@ describe 'UserInvitations' do
         click_button 'Send Invitation'
         open_email('newUser@example.com')
         invitation = UserInvitation.with_email('newUser@example.com')
-        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+        invitation.update(invitation_sent_at: 8.days.ago)
 
         current_email.click_link 'Finish Signup'
 
@@ -222,7 +222,7 @@ describe 'UserInvitations' do
         invitation.invitation_digest = UserInvitation.digest(invitation_token)
         visit edit_user_invitation_path(invitation_token,
                                         email: invitation.email)
-        invitation.update_attributes(invitation_sent_at: 8.days.ago)
+        invitation.update(invitation_sent_at: 8.days.ago)
 
         click_button 'Finish Signup'
 

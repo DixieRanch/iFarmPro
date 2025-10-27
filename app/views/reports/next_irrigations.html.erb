@@ -15,8 +15,8 @@
           <% @report.each do |irrigation| %>
             <tr>
               <td><%= irrigation.field.name_with_block %></td>
-              <td><%= irrigation.next_irrigation.to_s(:long) %></td>
-              <td><%= irrigation.time.to_date.to_s(:long) %></td>
+              <td><%= irrigation.next_irrigation.strftime('%B %-d, %Y') %></td>
+              <td><%= irrigation.time.to_date.strftime('%B %-d, %Y') %></td>
             </tr>
           <% end %>
         </tbody>

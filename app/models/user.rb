@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
 
   def activate
     return if activated?
-    update_attributes(activated: true, activated_at: Time.zone.now)
+    update(activated: true, activated_at: Time.zone.now)
   end
 
   def send_activation_email
@@ -96,6 +96,6 @@ class User < ActiveRecord::Base
   def create_email_digest
     self.email_token = TokenCreator.call
     EmailDigestCreator.call(self, email_token)
-    update_attributes(email_digest_created_at: Time.zone.now)
+    update(email_digest_created_at: Time.zone.now)
   end
 end

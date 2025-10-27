@@ -16,9 +16,9 @@ describe 'app lib tasks import.rake' do
 
   it 'updates CurrentEt with Rake task', :slow do
     create(:weather_station)
-    CurrentEt.find_by(doy: 176).update_attributes(fabian_garcia: nil)
-    CurrentEt.find_by(doy: 182).update_attributes(fabian_garcia: 0.15)
-    CurrentEt.find_by(doy: 360).update_attributes(fabian_garcia: 0.20)
+    CurrentEt.find_by(doy: 176).update(fabian_garcia: nil)
+    CurrentEt.find_by(doy: 182).update(fabian_garcia: 0.15)
+    CurrentEt.find_by(doy: 360).update(fabian_garcia: 0.20)
     
     allow_any_instance_of(Tasks::UpdateEt).to receive(:start_date).and_return('2018-06-25')
     allow_any_instance_of(Tasks::UpdateEt).to receive(:end_date).and_return('2018-06-30')

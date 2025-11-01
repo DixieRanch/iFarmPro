@@ -27,7 +27,7 @@ group :development, :test do
   gem 'guard-rubocop',        '1.5.0'
   gem 'rspec-rails',          '>= 6.0.0'
   gem 'rubocop',              '0.50.0', require: false
-  gem 'spring',               '2.1.1'
+  gem 'spring',               '4.4.0'
   gem 'spring-commands-rspec', '1.0.4'
 end
 

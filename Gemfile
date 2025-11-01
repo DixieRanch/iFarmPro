@@ -41,5 +41,5 @@ group :test do
   gem 'factory_bot_rails',  '4.8.2'
   gem 'ffi', '>= 1.15.5'
   gem 'shoulda-matchers',   '3.1.3'
-  gem 'webmock',            '>= 3.18.1'
+  gem 'webmock',            '>= 3.26.1'
 end

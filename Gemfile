@@ -23,7 +23,7 @@ end
 
 group :development, :test do
   gem 'annotate',             '>= 3.1.0'
-  gem 'guard-rspec',          '4.6.5'
+  gem 'guard-rspec',          '4.7.3'
   gem 'guard-rubocop',        '1.3.0'
   gem 'rspec-rails',          '>= 6.0.0'
   gem 'rubocop',              '0.50.0', require: false

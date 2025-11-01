@@ -40,7 +40,6 @@ group :test do
   gem 'database_cleaner',   '1.7.0'
   gem 'factory_bot_rails',  '4.8.2'
   gem 'ffi', '>= 1.15.5'
-  gem 'poltergeist',        '1.9.0'
   gem 'shoulda-matchers',   '3.1.3'
   gem 'webmock',            '>= 3.18.1'
 end

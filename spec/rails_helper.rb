@@ -1,7 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
-require 'capybara/poltergeist'
 require 'shoulda/matchers'
 require 'capybara/email/rspec'
 require 'webmock/rspec'
@@ -57,7 +56,6 @@ RSpec.configure do |config|
 
   # Capybara DSL
   config.include Capybara::DSL
-  Capybara.javascript_driver = :poltergeist
 
   # Rspec config to selectively run tests
   config.filter_run focus: true

@@ -35,8 +35,8 @@ end
 # in production environments by default.
 
 group :test do
-  gem 'capybara',           '2.18.0'
-  gem 'capybara-email',     '2.5.0'
+  gem 'capybara',           '3.40.0'
+  gem 'capybara-email',     '3.0.2'
   gem 'database_cleaner',       '2.1.0'
   gem 'factory_bot_rails',  '4.8.2'
   gem 'ffi', '>= 1.15.5'

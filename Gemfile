@@ -14,7 +14,7 @@ gem 'sass',                   '3.7.4'
 gem 'sassc-rails',            '>= 2.1.0'
 gem 'simple_form',            '4.1.0'
 gem 'sprockets',              '>= 3.7.2', '< 4.1'
-gem 'uglifier',               '>= 4.2.0'
+gem 'uglifier',               '4.2.1'
 gem 'will_paginate',          '3.3.1'
 
 group :production do

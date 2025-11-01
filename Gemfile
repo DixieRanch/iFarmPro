@@ -18,7 +18,7 @@ gem 'uglifier',               '4.2.1'
 gem 'will_paginate',          '3.3.1'
 
 group :production do
-  gem 'rails_12factor',       '0.0.2'
+  gem 'rails_12factor',       '0.0.3'
 end
 
 group :development, :test do

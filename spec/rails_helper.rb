@@ -90,11 +90,22 @@ RSpec.configure do |config|
   config.after(:each) { Company.current_id = nil }
 end
 
+Capybara.register_driver :selenium_chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--disable-gpu')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
 Capybara.configure do |config|
   # config.exact_options = true
   # config.visible_text_only = true
   config.match = :prefer_exact
   config.ignore_hidden_elements = false
+  config.server = :webrick
+  config.javascript_driver = :selenium_chrome_headless
 end
 
 Shoulda::Matchers.configure do |config|

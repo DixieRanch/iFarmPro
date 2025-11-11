@@ -13,6 +13,9 @@ module Ifarm
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # Disable legacy connection handling to resolve deprecation warnings
+    config.active_record.legacy_connection_handling = false
+
     # Set default URL options for Action Mailer
     config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   end

@@ -177,6 +177,7 @@ def complete_signup_form
   fill_in 'Password', with: 'password'
   fill_in 'Confirmation', with: 'password'
   click_button 'Create my account'
+  sleep 1
 end
 
 def activate_account_with_activation_email

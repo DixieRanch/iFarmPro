@@ -74,9 +74,10 @@ describe 'Farm' do
       click_on 'Add Field'
       fill_in  'Field', with: 'A'
       fill_in 'Acres', with: 7.5
-
+      
       expect do
         click_button 'Save'
+        sleep 1
         Company.current_id = user.company.id
       end.to(change { IrrigationWell.count }.by(1)
         .and(change { Block.count }.by(1))

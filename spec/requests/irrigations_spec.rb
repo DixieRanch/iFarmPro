@@ -80,6 +80,7 @@ describe 'Irrigations' do
 
         expect do
           click_button 'Save'
+          sleep 1
           Company.current_id = user.company.id
         end.to change { MeterReading.count }.by 1
       end
